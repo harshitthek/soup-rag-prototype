@@ -5,7 +5,7 @@ backend: transformers
 data:
   train: ./prototype/data/train_triplets.jsonl
   format: embedding
-  val_split: 0.1
+  val_split: 0.0
   max_length: 256
 
 training:
