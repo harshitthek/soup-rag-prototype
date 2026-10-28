@@ -1,0 +1,29 @@
+base: sentence-transformers/all-MiniLM-L6-v2
+task: embedding
+backend: transformers
+
+data:
+  train: ./prototype/data/train_triplets.jsonl
+  format: embedding
+  val_split: 0.1
+  max_length: 256
+
+training:
+  epochs: 3
+  lr: 2e-5
+  batch_size: 4
+  gradient_accumulation_steps: 1
+  seed: 42
+  data_seed: 42
+  quantization: none
+
+  embedding_loss: triplet
+  embedding_margin: 0.5
+  embedding_pooling: mean
+
+  lora:
+    r: 16
+    alpha: 32
+    target_modules: auto
+
+output: ./prototype/output_embedding

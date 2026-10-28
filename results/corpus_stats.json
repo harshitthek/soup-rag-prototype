@@ -1,0 +1,28 @@
+{
+  "total_files": 12,
+  "train_files": 8,
+  "test_files": 4,
+  "total_chunks": 1068,
+  "train_chunks": 761,
+  "test_chunks": 307,
+  "corpus_fingerprint": "76ab5e88af6e82bb1892296c7d3a854b722466466b6ae2fb7dc8c4831be75b2c",
+  "section_lengths_before_split": {
+    "count": 673,
+    "min": 8,
+    "median": 76,
+    "p75": 184,
+    "p90": 358,
+    "max": 11164,
+    "exceeding_256": 118,
+    "exceeding_512": 38
+  },
+  "chunk_lengths_after_split": {
+    "count": 1068,
+    "min": 7,
+    "median": 109.0,
+    "p75": 182,
+    "p90": 214,
+    "max": 224,
+    "exceeding_256": 0
+  }
+}

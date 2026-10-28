@@ -1,0 +1,18 @@
+{
+  "train": [
+    "backends-and-ops.md",
+    "commands.md",
+    "data.md",
+    "models.md",
+    "performance-and-quantization.md",
+    "README.md",
+    "serving-and-export.md",
+    "training.md"
+  ],
+  "test": [
+    "adapters-and-governance.md",
+    "compliance.md",
+    "evaluation.md",
+    "peft-and-efficiency.md"
+  ]
+}

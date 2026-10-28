@@ -1,0 +1,92 @@
+{
+  "upstream_commit": "8ab26641ed34e724018e696a93a06460f26c153e",
+  "model_id": "sentence-transformers/all-MiniLM-L6-v2",
+  "max_chunk_tokens": 220,
+  "overlap_tokens": 28,
+  "files": [
+    {
+      "file": "adapters-and-governance.md",
+      "doc_name": "adapters-and-governance",
+      "split": "test",
+      "content_sha256": "9d3946e4927a53eb45b4d58e1a933f6ad6617801a19704d38cf9579680be00cb",
+      "size_bytes": 34207
+    },
+    {
+      "file": "backends-and-ops.md",
+      "doc_name": "backends-and-ops",
+      "split": "train",
+      "content_sha256": "ad8b844558fcf82c65b25e207a69ef85c8d6fd158d47ffb54ac8ca3080f03138",
+      "size_bytes": 35794
+    },
+    {
+      "file": "commands.md",
+      "doc_name": "commands",
+      "split": "train",
+      "content_sha256": "adb4def7ee283ee00e76f1d9e84cf51158c35f62259a19902da88fd23681816d",
+      "size_bytes": 39100
+    },
+    {
+      "file": "compliance.md",
+      "doc_name": "compliance",
+      "split": "test",
+      "content_sha256": "9f68667a3d7b87d45cc2735997a80ab152982a7af498373c4f836da99614ed5c",
+      "size_bytes": 5510
+    },
+    {
+      "file": "data.md",
+      "doc_name": "data",
+      "split": "train",
+      "content_sha256": "6fc0ca77c8d94a34318c447442fdad7441b4a7f05b1b95a5ad24a047326b925a",
+      "size_bytes": 36621
+    },
+    {
+      "file": "evaluation.md",
+      "doc_name": "evaluation",
+      "split": "test",
+      "content_sha256": "5908cf7a966ed71858ece8b0a22c2e1a6c6f1be0a268bc0fc420c8d1a02e3a52",
+      "size_bytes": 40344
+    },
+    {
+      "file": "models.md",
+      "doc_name": "models",
+      "split": "train",
+      "content_sha256": "c75bae4c1cfa957c10d05536e517745cd015c715852da775174dc3fe8931580f",
+      "size_bytes": 7268
+    },
+    {
+      "file": "peft-and-efficiency.md",
+      "doc_name": "peft-and-efficiency",
+      "split": "test",
+      "content_sha256": "0d22ea56de294407b6333b9365b53b496bae174b070a03dc59201d264c7ad241",
+      "size_bytes": 28298
+    },
+    {
+      "file": "performance-and-quantization.md",
+      "doc_name": "performance-and-quantization",
+      "split": "train",
+      "content_sha256": "1530f87142fc419be914adf6960fdde29634fc9022ea2b72f195865f45b4a85b",
+      "size_bytes": 50321
+    },
+    {
+      "file": "README.md",
+      "doc_name": "README",
+      "split": "train",
+      "content_sha256": "4cb577c5a35dd3a02aa1466fabfc1bcaf62407eb07fbc98dfe93c626572885a7",
+      "size_bytes": 2716
+    },
+    {
+      "file": "serving-and-export.md",
+      "doc_name": "serving-and-export",
+      "split": "train",
+      "content_sha256": "1482c7666f33b196310be415d4929c3be94b2ccb880e8b8fcc926dcf9b424a2d",
+      "size_bytes": 31536
+    },
+    {
+      "file": "training.md",
+      "doc_name": "training",
+      "split": "train",
+      "content_sha256": "f5652edfeecf151061cba31a53e665405779285e52f0c5109e645655feb3f5b3",
+      "size_bytes": 65501
+    }
+  ]
+}
