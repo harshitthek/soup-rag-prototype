@@ -13,8 +13,12 @@ from __future__ import annotations
 import argparse
 import json
 import time
-import numpy as np
+import warnings
 from pathlib import Path
+import numpy as np
+
+# Filter benign NumPy 2.x BLAS warning on Apple Silicon Accelerate
+warnings.filterwarnings("ignore", category=RuntimeWarning, message=".*encountered in matmul.*")
 
 from encoder import SharedEncoder
 
@@ -56,9 +60,19 @@ def dense_retrieve(
     chunk_ids: list[str],
     top_k: int = 10,
 ) -> list[dict]:
-    """Rank chunks by cosine similarity (dot product on L2-normalized vecs).
+    """Rank corpus chunks by cosine similarity for a single query vector.
 
-    Deterministic tie-breaking on chunk_id (lexicographic).
+    Calculates the exact dot product between the L2-normalized query vector and
+    corpus matrix. Applies deterministic tie-breaking on chunk_id (lexicographic).
+
+    Args:
+        query_vec: L2-normalized query embedding vector of shape (D,).
+        corpus_vecs: Matrix of L2-normalized passage embeddings of shape (N, D).
+        chunk_ids: List of unique chunk IDs corresponding to corpus_vecs rows.
+        top_k: Maximum number of ranked chunks to return (default: 10).
+
+    Returns:
+        List of dictionaries with 'rank', 'chunk_id', and 'score' keys.
     """
     scores = corpus_vecs @ query_vec  # (N,)
 
@@ -83,7 +97,16 @@ def compute_metrics(
     top_k_values: tuple[int, ...] = (1, 3, 5),
     mrr_cutoff: int = 10,
 ) -> dict:
-    """Compute Recall@k and MRR@cutoff from per-query results."""
+    """Compute Recall@k and MRR@cutoff from per-query ranked results.
+
+    Args:
+        query_results: List of query result dicts containing 'ranked' and 'relevant_chunk_ids'.
+        top_k_values: Tuple of k cutoffs for Recall calculation (default: 1, 3, 5).
+        mrr_cutoff: Maximum rank cutoff for reciprocal rank computation (default: 10).
+
+    Returns:
+        Dictionary containing aggregate recall and MRR metrics along with raw per-query scores.
+    """
     recalls = {k: [] for k in top_k_values}
     mrr_scores = []
 
@@ -123,7 +146,22 @@ def evaluate(
     adapter_dir: str | None = None,
     output_path: str | None = None,
 ) -> dict:
-    """Run the full evaluation pipeline."""
+    """Run the dense retrieval evaluation pipeline against the held-out test suite.
+
+    Loads the corpus chunks and evaluation queries, encodes passages using either the
+    baseline base model or fine-tuned LoRA adapter, performs dense retrieval, computes
+    ranking metrics (Recall@1/3/5, MRR@10), and optionally saves JSON output.
+
+    Args:
+        adapter_dir: Optional path to directory containing fine-tuned PEFT LoRA adapter.
+        output_path: Optional path to write evaluated results JSON.
+
+    Returns:
+        Dictionary with mode, metrics, encode timings, and per-query predictions.
+
+    Raises:
+        FileNotFoundError: If corpus.jsonl or eval_queries.jsonl are missing.
+    """
     corpus_path = DATA_DIR / "corpus.jsonl"
     queries_path = DATA_DIR / "eval_queries.jsonl"
 
@@ -201,7 +239,8 @@ def evaluate(
     return result
 
 
-def main():
+def main() -> None:
+    """Parse CLI options and execute retrieval evaluation."""
     parser = argparse.ArgumentParser(description="Evaluate dense retrieval")
     parser.add_argument(
         "--adapter-dir",
