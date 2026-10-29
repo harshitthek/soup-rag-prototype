@@ -6,20 +6,20 @@ This guide provides exact, copy-pasteable instructions to verify the benchmark n
 
 ## 1. Quick Verification (Fast Path: ~30 Seconds)
 
-If you already have the repository cloned and the pre-trained weights in `output_embedding_v2/`, you can verify the benchmark numbers immediately without retraining:
+If you already have the repository cloned and the fine-tuned adapter weights in `output_embedding/`, you can verify the benchmark numbers immediately without retraining:
 
 ### Step 1: Run the Automated Test Suite
-Verify that all formatting, section deduplication, and configuration invariants pass:
+Verify that all formatting, section deduplication, model adapter loading, and configuration invariants pass:
 ```bash
-pytest tests/test_v2_changes.py -v
+pytest tests/test_retrieval_pipeline.py -v
 ```
-*Expected: 11 passed in ~10s.*
+*Expected: 12 passed in ~20s.*
 
 ### Step 2: Evaluate the Fine-Tuned Model on Held-Out Queries
 ```bash
 python scripts/evaluate_retrieval.py \
-    --adapter-dir output_embedding_v2 \
-    --output results/candidate_v2.json
+    --adapter-dir output_embedding \
+    --output results/candidate.json
 ```
 *Expected Terminal Output:*
 ```
@@ -36,10 +36,10 @@ python scripts/evaluate_retrieval.py \
 ```bash
 python scripts/compare_results.py \
     --baseline results/baseline.json \
-    --candidate results/candidate_v2.json \
-    --output results/comparison_v2.md
+    --candidate results/candidate.json \
+    --output results/comparison.md
 ```
-*Check output in `results/comparison_v2.md`: Recall@1 delta = +0.2113, p < 0.0001.*
+*Check output in `results/comparison.md`: Recall@1 delta = +0.2113, p < 0.0001.*
 
 ---
 
@@ -84,22 +84,22 @@ python scripts/evaluate_retrieval.py --output results/baseline.json
 *Expected: Recall@1: 0.5453, Recall@3: 0.7606, Recall@5: 0.8209, MRR@10: 0.6615.*
 
 ### Step 5: Fine-Tune with Soup
-Launches Soup's native embedding trainer using the version 2 configuration (`val_split: 0.0`, triplet loss, LoRA $r=16, \alpha=32$):
+Launches Soup's native embedding trainer (`val_split: 0.0`, triplet loss, LoRA $r=16, \alpha=32$):
 ```bash
-soup train -y --config config/embedding_v2.yaml
+soup train -y --config config/embedding.yaml
 ```
 *Runtime:*
 - **Apple Silicon (MPS)**: ~6 minutes (2,427 steps at ~6.5–8.5 it/s)
 - **NVIDIA GPU (CUDA)**: ~2–4 minutes
 - **CPU**: ~80 minutes
-*Output: Checkpoints and final LoRA adapter in `output_embedding_v2/`.*
+*Output: Checkpoints and final LoRA adapter in `output_embedding/`.*
 
 ### Step 6: Evaluate Fine-Tuned Retrieval (After Fine-Tuning)
 Evaluates the newly trained LoRA adapter on the exact same 497 held-out test queries:
 ```bash
 python scripts/evaluate_retrieval.py \
-    --adapter-dir output_embedding_v2 \
-    --output results/candidate_v2.json
+    --adapter-dir output_embedding \
+    --output results/candidate.json
 ```
 *Expected: Recall@1: 0.7565, Recall@3: 0.9336, Recall@5: 0.9718, MRR@10: 0.8477.*
 
@@ -108,26 +108,13 @@ Runs paired bootstrap resampling (10,000 iterations) to compute confidence inter
 ```bash
 python scripts/compare_results.py \
     --baseline results/baseline.json \
-    --candidate results/candidate_v2.json \
-    --output results/comparison_v2.md
+    --candidate results/candidate.json \
+    --output results/comparison.md
 ```
 
 ---
 
-## 3. Comparing Version 1 vs Version 2 (Ablation)
-
-To inspect the performance difference between the initial prototype (v1) and the final optimized pipeline (v2):
-```bash
-python scripts/compare_results.py \
-    --baseline results/candidate.json \
-    --candidate results/candidate_v2.json \
-    --output results/comparison_v1_vs_v2.md
-```
-*Check output in `results/comparison_v1_vs_v2.md`: Demonstrates a statistically significant +8.65% Recall@1 gain driven by prefix representation alignment (P0), multi-negative section deduplication (P1), and data recovery (P2).*
-
----
-
-## 4. Troubleshooting & Notes
+## 3. Troubleshooting & Notes
 
 - **Apple Silicon Warning**: During training or matrix multiplication on macOS, you may see benign PyTorch/NumPy runtime warnings regarding BLAS floating-point exception status registers. These do not affect numerical correctness and are safely filtered in testing scripts.
 - **Paths**: All configuration paths are relative to the repository root. Ensure commands are executed from the repository root directory.

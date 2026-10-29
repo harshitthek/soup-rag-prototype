@@ -1,10 +1,11 @@
-"""Unit and integration tests for RAG prototype v2 changes (P0, P1, P2).
+"""Unit and integration tests for the Soup dense retrieval pipeline.
 
 Tests:
-1. P0: Prepend heading_prefix to positive and negative in triplets
-2. P1: Mine top-3 negatives per query with section deduplication
-3. P2: Verify val_split is 0.0 in config/embedding.yaml
-4. Defer: Verify margin is 0.5, target_modules is auto (no premature changes)
+1. Pipeline Configuration: Verify val_split is 0.0, output path, margin is 0.5, LoRA target_modules is auto.
+2. Chunk Formatting & Section Extraction: Heading prefix prepending and base section deduplication helpers.
+3. Mining Logic (Synthetic): Hard negative mining with section deduplication and heading prefix retention.
+4. Dataset Invariants (Corpus Integration): Exactly 3,234 triplets, 3 negatives per query, section deduplication, 0 self-negatives.
+5. Model & Adapter Integrity: Verify output_embedding loads with SharedEncoder, produces 384-dim unit-normalized vectors.
 """
 
 from __future__ import annotations
@@ -20,11 +21,12 @@ import yaml
 REPO_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO_ROOT / "scripts"))
 
+from encoder import SharedEncoder
 from mine_hard_negatives import format_chunk_text, get_base_section, mine_hard_negatives
 
 
-class TestP2Config:
-    """Tests for P2 and deferred items in config/embedding.yaml."""
+class TestPipelineConfig:
+    """Tests for configuration in config/embedding.yaml."""
 
     def test_val_split_is_zero(self):
         config_path = REPO_ROOT / "config" / "embedding.yaml"
@@ -35,22 +37,21 @@ class TestP2Config:
             f"Expected val_split to be 0.0, got {cfg['data']['val_split']}"
         )
 
-    def test_deferred_items_unchanged(self):
+    def test_paths_and_model_settings(self):
         config_path = REPO_ROOT / "config" / "embedding.yaml"
         with open(config_path, "r", encoding="utf-8") as f:
             cfg = yaml.safe_load(f)
 
-        # Margin should remain 0.5 (deferred)
-        assert cfg["training"]["embedding_margin"] == 0.5, (
-            f"Expected embedding_margin to remain 0.5, got {cfg['training']['embedding_margin']}"
-        )
-        # LoRA target modules should remain auto (deferred)
-        assert cfg["training"]["lora"]["target_modules"] == "auto", (
-            f"Expected target_modules to remain 'auto', got {cfg['training']['lora']['target_modules']}"
-        )
+        assert cfg["data"]["train"] == "data/train_triplets.jsonl"
+        assert cfg["output"] == "output_embedding"
+        assert cfg["training"]["embedding_loss"] == "triplet"
+        assert cfg["training"]["embedding_margin"] == 0.5
+        assert cfg["training"]["lora"]["target_modules"] == "auto"
+        assert cfg["training"]["lora"]["r"] == 16
+        assert cfg["training"]["lora"]["alpha"] == 32
 
 
-class TestP0P1Helpers:
+class TestChunkFormattingAndSections:
     """Tests for format_chunk_text and get_base_section."""
 
     def test_format_chunk_text_with_heading_prefix(self):
@@ -94,12 +95,6 @@ class TestMiningLogicSynthetic:
 
     @pytest.fixture
     def synthetic_data(self, monkeypatch, tmp_path):
-        # 5 sections across doc1:
-        # sec_pos: sub_000 (relevant), sub_001 (same section as relevant)
-        # sec_neg1: sub_000, sub_001 (should only pick one of these due to section dedup)
-        # sec_neg2: sub_000
-        # sec_neg3: sub_000
-        # sec_neg4: sub_000
         corpus = [
             {
                 "chunk_id": "doc1::sec_pos::sub_000",
@@ -171,24 +166,13 @@ class TestMiningLogicSynthetic:
         triplets_file = tmp_path / "train_triplets.jsonl"
         hn_file = tmp_path / "hard_negatives.jsonl"
 
-        # Mock SharedEncoder:
-        # Predefined vectors so that:
-        # chunk 0 (sec_pos sub_0): dot = 0.95
-        # chunk 1 (sec_pos sub_1): dot = 0.90 (same section, must be excluded)
-        # chunk 2 (sec_neg1 sub_0): dot = 0.85 (rank 1 negative)
-        # chunk 3 (sec_neg1 sub_1): dot = 0.80 (must be deduplicated because sec_neg1 is already taken)
-        # chunk 4 (sec_neg2 sub_0): dot = 0.75 (rank 2 negative)
-        # chunk 5 (sec_neg3 sub_0): dot = 0.70 (rank 3 negative)
-        # chunk 6 (sec_neg4 sub_0): dot = 0.65 (not picked because top-3 reached)
         class MockEncoder:
             def encode(self, texts: list[str]) -> np.ndarray:
                 dim = 8
-                # If encoding query
                 if len(texts) == 1 and texts[0] == "How does synthetic test work?":
                     v = np.zeros((1, dim), dtype=np.float32)
                     v[0, 0] = 1.0
                     return v
-                # If encoding corpus chunks (7 chunks)
                 vecs = np.zeros((len(texts), dim), dtype=np.float32)
                 weights = [0.95, 0.90, 0.85, 0.80, 0.75, 0.70, 0.65]
                 for idx, w in enumerate(weights):
@@ -211,22 +195,18 @@ class TestMiningLogicSynthetic:
             output_hard_negatives=hn_file,
         )
 
-        # 1 query * 3 negatives = 3 triplets
         assert len(triplets) == 3
 
-        # P0 Check: heading_prefix prepended to positive in all triplets
         for t in triplets:
             assert t["anchor"] == "How does synthetic test work?"
             assert t["positive"] == "doc1: Positive Section\n\nRelevant chunk text."
             assert "\n\n" in t["positive"]
             assert "\n\n" in t["negative"]
 
-        # Check negative texts
         assert triplets[0]["negative"] == "doc1: Negative 1 Part 0\n\nHigh score negative 1 part 0."
         assert triplets[1]["negative"] == "doc1: Negative 2\n\nNegative 2 text."
         assert triplets[2]["negative"] == "doc1: Negative 3\n\nNegative 3 text."
 
-        # Verify hard negative annotations
         with open(hn_file, "r", encoding="utf-8") as f:
             hn_records = [json.loads(line) for line in f]
 
@@ -238,9 +218,6 @@ class TestMiningLogicSynthetic:
         assert hn_records[2]["negative_chunk_id"] == "doc1::sec_neg3::sub_000"
         assert hn_records[2]["negative_rank"] == 3
 
-        # Verify section deduplication:
-        # sec_neg1::sub_001 was skipped because sec_neg1::sub_000 was already selected
-        # sec_pos::sub_001 was skipped because it shares section with relevant chunk
         picked_sections = [get_base_section(r["negative_chunk_id"]) for r in hn_records]
         assert len(picked_sections) == len(set(picked_sections)), "Negatives must belong to unique sections"
         assert "doc1::sec_pos" not in picked_sections, "Negative cannot share section with relevant chunk"
@@ -281,7 +258,6 @@ class TestMiningRealCorpusIntegration:
     def test_total_triplets_count(self, mined_results):
         triplets = mined_results["triplets"]
         queries = mined_results["queries"]
-        # Exactly 3 negatives per query: 1078 * 3 = 3234
         assert len(triplets) == len(queries) * 3
         assert len(triplets) == 3234
 
@@ -304,7 +280,6 @@ class TestMiningRealCorpusIntegration:
                 f"Negative text mismatch for query {hn['query_id']}"
             )
 
-            # Explicitly verify heading_prefix is present at start
             assert t["positive"].startswith(pos_chunk["heading_prefix"]), (
                 f"Positive text missing heading prefix {pos_chunk['heading_prefix']}"
             )
@@ -314,7 +289,6 @@ class TestMiningRealCorpusIntegration:
 
     def test_section_deduplication_per_query(self, mined_results):
         hn_records = mined_results["hn_records"]
-        # Group hn_records by query_id
         from collections import defaultdict
         query_negatives = defaultdict(list)
         for r in hn_records:
@@ -325,25 +299,40 @@ class TestMiningRealCorpusIntegration:
         for qid, negs in query_negatives.items():
             assert len(negs) == 3, f"Query {qid} does not have exactly 3 negatives"
 
-            # Check ranks
             ranks = [n["negative_rank"] for n in negs]
             assert ranks == [1, 2, 3]
 
-            # Check scores are descending
             scores = [n["negative_score"] for n in negs]
             assert scores[0] >= scores[1] >= scores[2], (
                 f"Scores not descending for query {qid}: {scores}"
             )
 
-            # Check section deduplication among negatives
             neg_sections = [get_base_section(n["negative_chunk_id"]) for n in negs]
             assert len(neg_sections) == len(set(neg_sections)), (
                 f"Duplicate negative section found for query {qid}: {neg_sections}"
             )
 
-            # Check negative does not share section with positive
             pos_section = get_base_section(negs[0]["positive_chunk_id"])
             assert pos_section not in neg_sections, (
                 f"Negative section shares base section with positive for query {qid}: {pos_section}"
             )
 
+
+class TestModelAdapter:
+    """Tests for the fine-tuned LoRA adapter in output_embedding."""
+
+    def test_adapter_load_and_encode(self):
+        adapter_path = REPO_ROOT / "output_embedding"
+        assert adapter_path.exists(), "output_embedding must exist"
+        assert (adapter_path / "adapter_model.safetensors").exists(), "adapter weights must exist"
+
+        encoder = SharedEncoder(adapter_dir=str(adapter_path))
+        test_texts = [
+            "commands: soup train\n\nTrain an embedding model.",
+            "evaluation: probes\n\nEvaluate retrieval quality.",
+        ]
+        vecs = encoder.encode(test_texts)
+
+        assert vecs.shape == (2, 384), f"Expected shape (2, 384), got {vecs.shape}"
+        norms = np.linalg.norm(vecs, axis=1)
+        assert np.allclose(norms, 1.0, atol=1e-5), "Vectors must be L2 normalized"

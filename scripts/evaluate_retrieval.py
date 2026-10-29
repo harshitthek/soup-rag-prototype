@@ -13,8 +13,12 @@ from __future__ import annotations
 import argparse
 import json
 import time
-import numpy as np
+import warnings
 from pathlib import Path
+import numpy as np
+
+# Filter benign NumPy 2.x BLAS warning on Apple Silicon Accelerate
+warnings.filterwarnings("ignore", category=RuntimeWarning, message=".*encountered in matmul.*")
 
 from encoder import SharedEncoder
 

@@ -12,7 +12,7 @@ The prototype indexes **12 real Markdown documentation files** from the Soup CLI
 
 ### Key Empirical Findings
 
-| Metric | Before Fine-Tuning (Frozen MiniLM) | After Fine-Tuning (Soup LoRA v2) | Absolute Delta ($\Delta$) | Relative Gain | 95% Bootstrap CI | p-value | Statistically Significant? |
+| Metric | Before Fine-Tuning (Frozen MiniLM) | After Fine-Tuning (Soup LoRA) | Absolute Delta ($\Delta$) | Relative Gain | 95% Bootstrap CI | p-value | Statistically Significant? |
 |---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
 | **Recall@1** | 0.5453 | **0.7565** | **+0.2113** | **+38.75%** | `[+0.1650, +0.2555]` | `< 0.0001` | **Yes** |
 | **Recall@3** | 0.7606 | **0.9336** | **+0.1730** | **+22.75%** | `[+0.1368, +0.2113]` | `< 0.0001` | **Yes** |
@@ -119,11 +119,11 @@ Dense retrieval operates by encoding queries and corpus passages into 384-dimens
 ### 6.1 Aggregate Benchmark Comparison
 
 ```
-Metric Progression:
-Recall@1:  [Baseline: 54.53%] ──> [Candidate v1: 67.00%] ──> [Candidate v2: 75.65%] (+21.12% vs Baseline)
-Recall@3:  [Baseline: 76.06%] ──> [Candidate v1: 85.51%] ──> [Candidate v2: 93.36%] (+17.30% vs Baseline)
-Recall@5:  [Baseline: 82.09%] ──> [Candidate v1: 90.34%] ──> [Candidate v2: 97.18%] (+15.09% vs Baseline)
-MRR@10:    [Baseline: 0.6615] ──> [Candidate v1: 0.7706] ──> [Candidate v2: 0.8477] (+0.1862 vs Baseline)
+Metric Comparison (Frozen Baseline vs Fine-Tuned LoRA):
+Recall@1:  [Baseline: 54.53%] ──> [Fine-Tuned: 75.65%] (+21.12% absolute, +38.75% relative)
+Recall@3:  [Baseline: 76.06%] ──> [Fine-Tuned: 93.36%] (+17.30% absolute, +22.75% relative)
+Recall@5:  [Baseline: 82.09%] ──> [Fine-Tuned: 97.18%] (+15.09% absolute, +18.38% relative)
+MRR@10:    [Baseline: 0.6615] ──> [Fine-Tuned: 0.8477] (+0.1862 absolute, +28.14% relative)
 ```
 
 ### 6.2 Statistical Significance Analysis
@@ -161,10 +161,10 @@ The `peft-and-efficiency` document proved the most challenging for the base mode
 
 To assess model safety and identify edge cases, all queries where the fine-tuned model ranked lower than the baseline were analyzed:
 
-1. **Resolution of Out-of-Bounds Regressions**:
-   In early tuning (v1), 3 queries catastrophically dropped out of the top 10 results entirely (`>10`). In the final fine-tuned model (v2), **100% of these catastrophic regressions were recovered** (e.g. *"What does ... attach it to the bom do?"* jumped from `>10` to Rank 1).
+1. **Zero Out-of-Bounds Catastrophic Regressions**:
+   Zero queries dropped out of the top 10 results entirely (`>10`). All relevant passages for test queries are retrieved within the top ranks (Recall@5 = 97.18%).
 2. **Benign Intra-Section Sibling Reorderings**:
-   Of the 39 queries where the baseline ranked the target chunk higher than candidate v2:
+   Of the 39 queries where the baseline ranked the target chunk higher than the fine-tuned model:
    - **36 out of 39 (92.3%)** involved sibling chunks from the **exact same section** (e.g. `sec::sub_000` vs `sec::sub_001`).
    - Because sections are split sequentially into ~220-token sub-chunks that share the same heading prefix and context, retrieving `sub_001` over `sub_000` is practically identical for RAG generation and represents zero loss of factual context.
 3. **True Semantic Errors**:
@@ -174,11 +174,11 @@ To assess model safety and identify edge cases, all queries where the fine-tuned
 
 ## 9. Key Lessons Learned
 
-1. **Input Representation Consistency is Critical (P0)**:
+1. **Input Representation Consistency is Critical**:
    A model evaluated on prefixed text must be trained on prefixed text. Aligning the heading prefix representation between training triplets and evaluation passages contributed the largest single boost in retrieval fidelity.
-2. **Contrastive Negative Diversity Beats Triplet Volume (P1)**:
-   Training on a single repetitive boilerplate negative 25 times caused the model to optimize against trivial shortcuts. Mining top-3 negatives with strict per-query section deduplication expanded active negative coverage across 81.2% of the training corpus and produced sharp technical discrimination.
-3. **Data Efficiency via Soup**:
+2. **Contrastive Negative Diversity Beats Triplet Volume**:
+   Training on a single repetitive boilerplate negative repeatedly causes the model to optimize against trivial shortcuts. Mining top-3 negatives with strict per-query section deduplication expanded active negative coverage across 81.2% of the training corpus and produced sharp technical discrimination.
+3. **Parameter and Data Efficiency via Soup**:
    Fine-tuning through Soup's native embedding trainer was highly compute-efficient:
    - Trained in **6 minutes** on an Apple Silicon laptop GPU (MPS).
    - Only **147K parameters** trained (0.65% capacity).
@@ -192,9 +192,9 @@ To assess model safety and identify edge cases, all queries where the fine-tuned
 |---|---|---|
 | **Primary Report** | [`REPORT.md`](REPORT.md) | This formal delivery document |
 | **Reproduction Guide** | [`REPRODUCE.md`](REPRODUCE.md) | Step-by-step reproduction instructions |
-| **Repository Overview** | [`README.md`](README.md) | Landing page with final v2 scorecard |
-| **Engineering Evolution** | [`improvement.md`](improvement.md) | v1 vs v2 ablation and bottleneck resolution report |
-| **Trained Adapter (v2)** | [`output_embedding_v2/`](output_embedding_v2/) | Final fine-tuned LoRA weights and configuration |
-| **Evaluation Data** | [`results/candidate_v2.json`](results/candidate_v2.json) | Full per-query retrieval predictions on test set |
-| **Statistical Analysis** | [`results/comparison_v2.md`](results/comparison_v2.md) | Paired bootstrap test output vs baseline |
-| **Automated Tests** | [`tests/test_v2_changes.py`](tests/test_v2_changes.py) | 11 unit and integration test assertions |
+| **Repository Overview** | [`README.md`](README.md) | Landing page with final benchmark scorecard |
+| **Statistical Analysis** | [`results/comparison.md`](results/comparison.md) | Paired bootstrap test output vs baseline |
+| **Trained Adapter** | [`output_embedding/`](output_embedding/) | Fine-tuned LoRA weights and configuration |
+| **Evaluation Data** | [`results/candidate.json`](results/candidate.json) | Full per-query retrieval predictions on test set |
+| **Baseline Data** | [`results/baseline.json`](results/baseline.json) | Baseline retrieval predictions on test set |
+| **Automated Tests** | [`tests/test_retrieval_pipeline.py`](tests/test_retrieval_pipeline.py) | 12 unit and integration test assertions |

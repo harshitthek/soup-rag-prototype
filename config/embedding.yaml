@@ -3,7 +3,7 @@ task: embedding
 backend: transformers
 
 data:
-  train: ./prototype/data/train_triplets.jsonl
+  train: data/train_triplets.jsonl
   format: embedding
   val_split: 0.0
   max_length: 256
@@ -26,4 +26,4 @@ training:
     alpha: 32
     target_modules: auto
 
-output: ./prototype/output_embedding
+output: output_embedding

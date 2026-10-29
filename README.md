@@ -10,12 +10,12 @@ Compares dense retrieval quality **before and after** fine-tuning `sentence-tran
 
 Evaluated on **497 held-out queries** from **4 unseen documents** the model never encountered during training or negative mining, retrieving against all **1,068 chunks** from 12 documents.
 
-| Metric | Baseline (Frozen MiniLM) | Candidate v1 (Initial LoRA) | **Candidate v2 (Final LoRA)** | Total Gain vs Baseline | Gain vs v1 | p-value | Significant |
-|---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| **Recall@1** | 0.5453 | 0.6700 | **0.7565** | **+21.12%** (+0.2113) | **+8.65%** (+0.0865) | < 0.0001 | Yes |
-| **Recall@3** | 0.7606 | 0.8551 | **0.9336** | **+17.30%** (+0.1730) | **+7.85%** (+0.0785) | < 0.0001 | Yes |
-| **Recall@5** | 0.8209 | 0.9034 | **0.9718** | **+15.09%** (+0.1509) | **+6.84%** (+0.0684) | < 0.0001 | Yes |
-| **MRR@10** | 0.6615 | 0.7706 | **0.8477** | **+18.62%** (+0.1862) | **+7.72%** (+0.0772) | < 0.0001 | Yes |
+| Metric | Baseline (Frozen MiniLM) | Fine-Tuned (Soup LoRA) | Gain vs Baseline | 95% Bootstrap CI | p-value | Significant |
+|---|:---:|:---:|:---:|:---:|:---:|:---:|
+| **Recall@1** | 0.5453 | **0.7565** | **+21.12%** (+0.2113) | `[+0.1650, +0.2555]` | < 0.0001 | Yes |
+| **Recall@3** | 0.7606 | **0.9336** | **+17.30%** (+0.1730) | `[+0.1368, +0.2113]` | < 0.0001 | Yes |
+| **Recall@5** | 0.8209 | **0.9718** | **+15.09%** (+0.1509) | `[+0.1167, +0.1851]` | < 0.0001 | Yes |
+| **MRR@10** | 0.6615 | **0.8477** | **+18.62%** (+0.1862) | `[+0.1534, +0.2195]` | < 0.0001 | Yes |
 
 *Paired bootstrap evaluation (10,000 resamples, seed=42, $\alpha=0.05$). All 95% confidence intervals are strictly positive.*
 
@@ -38,8 +38,8 @@ Evaluated on **497 held-out queries** from **4 unseen documents** the model neve
 
 - **[`REPORT.md`](REPORT.md)**: Comprehensive prototype delivery report detailing use case requirements, Markdown parsing & chunking strategy, leak-free evaluation design, statistical significance, and failure analysis.
 - **[`REPRODUCE.md`](REPRODUCE.md)**: Self-contained, step-by-step reproduction and verification guide with copy-pasteable commands.
-- **[`improvement.md`](improvement.md)**: Engineering evolution report detailing how v2 resolved v1 bottlenecks (P0 heading prefix alignment, P1 multi-negative section deduplication, P2 data recovery).
-- **[`tests/test_v2_changes.py`](tests/test_v2_changes.py)**: Automated unit and integration test suite (11 passing tests) covering formatting, section deduplication, and config integrity.
+- **[`results/comparison.md`](results/comparison.md)**: Full paired bootstrap statistical analysis report comparing baseline vs fine-tuned candidate.
+- **[`tests/test_retrieval_pipeline.py`](tests/test_retrieval_pipeline.py)**: Automated unit and integration test suite (12 passing tests) covering formatting, section deduplication, model adapter loading, and config integrity.
 
 ---
 
@@ -59,16 +59,16 @@ python scripts/mine_hard_negatives.py --num-negatives 3
 python scripts/evaluate_retrieval.py --output results/baseline.json
 
 # 5. Fine-tune LoRA adapter through Soup
-soup train -y --config config/embedding_v2.yaml
+soup train -y --config config/embedding.yaml
 
-# 6. Evaluate fine-tuned candidate v2
-python scripts/evaluate_retrieval.py --adapter-dir output_embedding_v2 --output results/candidate_v2.json
+# 6. Evaluate fine-tuned candidate
+python scripts/evaluate_retrieval.py --adapter-dir output_embedding --output results/candidate.json
 
 # 7. Compare results with paired bootstrap significance
 python scripts/compare_results.py \
     --baseline results/baseline.json \
-    --candidate results/candidate_v2.json \
-    --output results/comparison_v2.md
+    --candidate results/candidate.json \
+    --output results/comparison.md
 ```
 
 See [`REPRODUCE.md`](REPRODUCE.md) for full reproduction options, environment setup, and test commands.

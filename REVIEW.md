@@ -1,4 +1,4 @@
-# RAG Prototype v2 — Review Assessment
+# RAG Prototype — Review Assessment
 
 Independent evaluation of the external architectural review against the actual codebase.
 
@@ -71,7 +71,7 @@ The current adapter targets `query` and `value` (PEFT's default `auto` for BERT-
 
 However, on a 1,078-triplet (or even 3,234-triplet) dataset, wider adapters risk overfitting to the training queries rather than learning generalizable representations. The prefix fix and multi-negative mining should be evaluated first. If there is still headroom, then expanding targets makes sense.
 
-**Decision:** Defer. Try after v2 results are in.
+**Decision:** Defer. Prioritize the prefix fix and multi-negative mining first.
 
 ### Bottleneck 6: Two-Stage Iterative Mining (ANCE)
 
@@ -104,7 +104,7 @@ The actual magnitude is unknown until measured.
 
 ---
 
-## Recommended v2 Changes
+## Implemented Architectural Improvements
 
 | Priority | Change | File(s) | Risk |
 |---|---|---|---|
