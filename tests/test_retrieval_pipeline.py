@@ -222,6 +222,25 @@ class TestMiningLogicSynthetic:
         assert len(picked_sections) == len(set(picked_sections)), "Negatives must belong to unique sections"
         assert "doc1::sec_pos" not in picked_sections, "Negative cannot share section with relevant chunk"
 
+    def test_synthetic_mining_creates_nested_output_directories(self, synthetic_data, tmp_path):
+        corpus_file, queries_file, _, _ = synthetic_data
+        nested_triplets = tmp_path / "nested" / "dir" / "triplets.jsonl"
+        nested_hn = tmp_path / "another" / "deeply" / "nested" / "hn.jsonl"
+
+        assert not nested_triplets.parent.exists()
+        assert not nested_hn.parent.exists()
+
+        mine_hard_negatives(
+            num_negatives=1,
+            corpus_path=corpus_file,
+            queries_path=queries_file,
+            output_triplets=nested_triplets,
+            output_hard_negatives=nested_hn,
+        )
+
+        assert nested_triplets.exists()
+        assert nested_hn.exists()
+
 
 class TestMiningRealCorpusIntegration:
     """Integration test running mine_hard_negatives on real corpus to temp files."""

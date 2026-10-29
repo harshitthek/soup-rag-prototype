@@ -51,7 +51,7 @@ To rebuild the corpus, regenerate queries, mine triplets, train the LoRA adapter
 
 Python 3.10+ is required. Install required dependencies:
 ```bash
-pip install torch transformers peft datasets numpy pyyaml rich pytest
+pip install torch transformers "peft>=0.14.0" datasets numpy pyyaml rich pytest
 pip install soup-cli
 ```
 

@@ -78,5 +78,5 @@ See [`REPRODUCE.md`](REPRODUCE.md) for full reproduction options, environment se
 ## Requirements
 
 - Python 3.10+
-- PyTorch 2.0+, Transformers 4.40+, PEFT 0.10+
+- PyTorch 2.0+, Transformers 4.40+, PEFT 0.14+ (tested on PEFT 0.21.2)
 - [Soup CLI](https://github.com/MakazhanAlpamys/Soup) (for `soup train`)

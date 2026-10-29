@@ -162,13 +162,15 @@ The `peft-and-efficiency` document proved the most challenging for the base mode
 To assess model safety and identify edge cases, all queries where the fine-tuned model ranked lower than the baseline were analyzed:
 
 1. **Zero Out-of-Bounds Catastrophic Regressions**:
-   Zero queries dropped out of the top 10 results entirely (`>10`). All relevant passages for test queries are retrieved within the top ranks (Recall@5 = 97.18%).
-2. **Benign Intra-Section Sibling Reorderings**:
-   Of the 39 queries where the baseline ranked the target chunk higher than the fine-tuned model:
-   - **36 out of 39 (92.3%)** involved sibling chunks from the **exact same section** (e.g. `sec::sub_000` vs `sec::sub_001`).
-   - Because sections are split sequentially into ~220-token sub-chunks that share the same heading prefix and context, retrieving `sub_001` over `sub_000` is practically identical for RAG generation and represents zero loss of factual context.
-3. **True Semantic Errors**:
-   True cross-document false positive failures are less than **0.6%** across the entire 497-query test suite.
+   Zero queries dropped out of the top 10 results entirely (`>10`). In contrast to early unaligned iterations, all relevant passages are retrieved within the top ranks (Recall@5 = 97.18%).
+2. **Intra-Section Sibling Ranking Discrepancies**:
+   Of the 39 queries where the baseline ranked the labeled target chunk higher than the fine-tuned model:
+   - **36 out of 39 (92.3%)** involved sibling chunks from the **exact same section** (e.g., `adapters-and-governance::audit-log-soup-audit-log::sub_001` outranking labeled `sub_000`).
+   - While the model successfully localized the correct section, these cases represent **genuine retrieval failures** whenever answer-bearing text is concentrated in a specific sub-chunk. For example, for *"How do you use audit log (soup audit-log) in Soup CLI?"*, the labeled `sub_000` specifies `soup audit-log tail`, `rotate`, and `--no-audit-log`, whereas `sub_001` contains adjacent documentation. Because the chunker uses a 28-token overlap, non-overlapping content is not duplicated, so returning `sub_001` at Rank 1 omits vital command usage.
+   - **Root Cause**: Sibling chunks share the identical section heading prefix and dense conceptual terminology. Without exact keyword matching, the dense representation can assign slightly higher cosine similarity to an adjacent sibling paragraph.
+   - **Production Remedy**: In production RAG deployments, this failure mode is cleanly resolved by combining dense embeddings with a lightweight BM25 sparse index (hybrid search) to pin exact keyword mentions, or by expanding the context window to retrieve adjacent sibling chunks during RAG generation.
+3. **True Cross-Document Semantic Errors**:
+   Cross-document false positive failures (where the model retrieved chunks from an entirely unrelated document) occurred in only **3 out of 497 queries (0.6%)**, demonstrating high domain precision.
 
 ---
 

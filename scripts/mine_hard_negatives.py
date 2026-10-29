@@ -24,7 +24,14 @@ DATA_DIR = REPO_ROOT / "data"
 
 
 def format_chunk_text(chunk: dict) -> str:
-    """Format chunk text with heading prefix (matches evaluation format)."""
+    """Format chunk text with prepended heading prefix to match evaluation format.
+
+    Args:
+        chunk: Dictionary containing 'text', optional 'heading_prefix', and 'doc_name'.
+
+    Returns:
+        Formatted string combining prefix and body text separated by double newline.
+    """
     prefix = chunk.get("heading_prefix")
     if not prefix or not prefix.strip():
         prefix = chunk.get("doc_name", "")
@@ -36,7 +43,14 @@ def format_chunk_text(chunk: dict) -> str:
 
 
 def get_base_section(chunk_id: str) -> str:
-    """Extract base section identifier by stripping sub-split suffix."""
+    """Extract base section identifier by stripping sequential sub-chunk suffix.
+
+    Args:
+        chunk_id: Unique chunk identifier (e.g., 'doc::sec::sub_000').
+
+    Returns:
+        Base section identifier without the sub-split suffix (e.g., 'doc::sec').
+    """
     return chunk_id.rsplit("::sub_", 1)[0]
 
 
@@ -47,7 +61,25 @@ def mine_hard_negatives(
     output_triplets: Path | None = None,
     output_hard_negatives: Path | None = None,
 ) -> list[dict]:
-    """Mine hard negatives for training queries using frozen baseline model."""
+    """Mine hard negatives for training queries using frozen baseline model.
+
+    Selects top-k scoring non-relevant chunks per query while enforcing section-level
+    deduplication to ensure diversity. Streamed query-by-query to avoid large memory
+    allocations for cross-similarity matrices.
+
+    Args:
+        num_negatives: Number of contrastive negatives to mine per query (default: 3).
+        corpus_path: Optional path to corpus JSONL (defaults to data/corpus.jsonl).
+        queries_path: Optional path to train queries JSONL (defaults to data/train_query_labels.jsonl).
+        output_triplets: Optional path to output triplets JSONL (defaults to data/train_triplets.jsonl).
+        output_hard_negatives: Optional path to hard negative annotations JSONL.
+
+    Returns:
+        List of generated triplet dictionaries with 'anchor', 'positive', and 'negative' keys.
+
+    Raises:
+        FileNotFoundError: If corpus_path or queries_path do not exist.
+    """
     corpus_file = corpus_path or (DATA_DIR / "corpus.jsonl")
     queries_file = queries_path or (DATA_DIR / "train_query_labels.jsonl")
     triplets_file = output_triplets or (DATA_DIR / "train_triplets.jsonl")
@@ -92,76 +124,80 @@ def mine_hard_negatives(
     triplets = []
     hard_neg_records = []
 
-    # Compute similarity matrix (Q, C)
+    # Stream query similarity computations to avoid large (Q, C) matrix allocation
     with warnings.catch_warnings():
         warnings.filterwarnings("ignore", category=RuntimeWarning, message=".*encountered in matmul.*")
-        similarity_matrix = query_vecs @ chunk_vecs.T
 
-    for i, q in enumerate(queries):
-        relevant = set(q["relevant_chunk_ids"])
-        relevant_bases = {get_base_section(r) for r in relevant}
-        scores = similarity_matrix[i]
+        for i, q in enumerate(queries):
+            relevant = set(q["relevant_chunk_ids"])
+            relevant_bases = {get_base_section(r) for r in relevant}
+            # Vector-matrix product (C,) avoids allocating full (Q, C) float32 matrix
+            scores = chunk_vecs @ query_vecs[i]
 
-        # Sort candidate indices by similarity descending
-        ranked_indices = np.argsort(-scores)
+            # Sort candidate indices by similarity descending
+            ranked_indices = np.argsort(-scores)
 
-        # Find positive chunk and text (with heading prefix)
-        positive_chunk = None
-        positive_chunk_id = None
-        for cid in q["relevant_chunk_ids"]:
-            if cid in train_chunk_map:
-                positive_chunk = train_chunk_map[cid]
-                positive_chunk_id = cid
-                break
+            # Find positive chunk and text (with heading prefix)
+            positive_chunk = None
+            positive_chunk_id = None
+            for cid in q["relevant_chunk_ids"]:
+                if cid in train_chunk_map:
+                    positive_chunk = train_chunk_map[cid]
+                    positive_chunk_id = cid
+                    break
 
-        if not positive_chunk:
-            print(f"  WARNING: No positive chunk found for {q['query_id']}")
-            continue
-
-        positive_text = format_chunk_text(positive_chunk)
-
-        # Find top-N hard negatives with section deduplication
-        mined_negatives = []
-        seen_sections = set(relevant_bases)
-
-        for idx in ranked_indices:
-            cid = train_ids[idx]
-            if cid in relevant:
+            if not positive_chunk:
+                print(f"  WARNING: No positive chunk found for {q['query_id']}")
                 continue
 
-            base_section = get_base_section(cid)
-            if base_section in seen_sections:
+            positive_text = format_chunk_text(positive_chunk)
+
+            # Find top-N hard negatives with section deduplication
+            mined_negatives = []
+            seen_sections = set(relevant_bases)
+
+            for idx in ranked_indices:
+                cid = train_ids[idx]
+                if cid in relevant:
+                    continue
+
+                base_section = get_base_section(cid)
+                if base_section in seen_sections:
+                    continue
+
+                seen_sections.add(base_section)
+                mined_negatives.append({
+                    "chunk_id": cid,
+                    "text": format_chunk_text(train_chunks[idx]),
+                    "score": float(scores[idx]),
+                })
+
+                if len(mined_negatives) >= num_negatives:
+                    break
+
+            if not mined_negatives:
+                print(f"  WARNING: No valid hard negatives for {q['query_id']}")
                 continue
 
-            seen_sections.add(base_section)
-            mined_negatives.append({
-                "chunk_id": cid,
-                "text": format_chunk_text(train_chunks[idx]),
-                "score": float(scores[idx]),
-            })
+            for rank, neg in enumerate(mined_negatives, 1):
+                triplets.append({
+                    "anchor": q["query"],
+                    "positive": positive_text,
+                    "negative": neg["text"],
+                })
 
-            if len(mined_negatives) >= num_negatives:
-                break
+                hard_neg_records.append({
+                    "query_id": q["query_id"],
+                    "query": q["query"],
+                    "positive_chunk_id": positive_chunk_id,
+                    "negative_chunk_id": neg["chunk_id"],
+                    "negative_score": neg["score"],
+                    "negative_rank": rank,
+                })
 
-        if not mined_negatives:
-            print(f"  WARNING: No valid hard negatives for {q['query_id']}")
-            continue
-
-        for rank, neg in enumerate(mined_negatives, 1):
-            triplets.append({
-                "anchor": q["query"],
-                "positive": positive_text,
-                "negative": neg["text"],
-            })
-
-            hard_neg_records.append({
-                "query_id": q["query_id"],
-                "query": q["query"],
-                "positive_chunk_id": positive_chunk_id,
-                "negative_chunk_id": neg["chunk_id"],
-                "negative_score": neg["score"],
-                "negative_rank": rank,
-            })
+    # Ensure parent output directories exist before writing
+    triplets_file.parent.mkdir(parents=True, exist_ok=True)
+    hn_file.parent.mkdir(parents=True, exist_ok=True)
 
     # Write triplets (SOUP format)
     with open(triplets_file, "w", encoding="utf-8") as f:
@@ -187,7 +223,8 @@ def mine_hard_negatives(
     return triplets
 
 
-if __name__ == "__main__":
+def main() -> None:
+    """Parse command line arguments and execute hard negative mining."""
     parser = argparse.ArgumentParser(
         description="Mine hard negatives for training triplets using baseline embeddings."
     )
@@ -215,3 +252,7 @@ if __name__ == "__main__":
         output_triplets=args.output_triplets,
         output_hard_negatives=args.output_hard_negatives,
     )
+
+
+if __name__ == "__main__":
+    main()
