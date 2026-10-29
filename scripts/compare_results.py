@@ -33,10 +33,10 @@ def paired_bootstrap_ci(
     seed: int = BOOTSTRAP_SEED,
     alpha: float = 0.05,
 ) -> dict:
-    """Paired bootstrap confidence interval on the delta (candidate - baseline).
+    """Paired percentile bootstrap confidence interval on the delta (candidate - baseline).
 
-    Returns observed delta, CI bounds, and p-value for the null hypothesis
-    that the true delta is zero.
+    Computes empirical uncertainty bounds for the paired metric difference across
+    the evaluation query sample.
     """
     rng = np.random.RandomState(seed)
     b = np.array(baseline_scores)
@@ -45,27 +45,19 @@ def paired_bootstrap_ci(
     observed_delta = float(np.mean(c) - np.mean(b))
 
     boot_deltas = []
-    count_extreme = 0
     for _ in range(n_bootstrap):
         indices = rng.choice(n, size=n, replace=True)
         boot_delta = float(np.mean(c[indices]) - np.mean(b[indices]))
         boot_deltas.append(boot_delta)
-        # Two-sided test: count how often the bootstrap delta is at least
-        # as extreme as 2*observed (Berg-Kirkpatrick et al., 2012)
-        if abs(boot_delta) >= abs(2 * observed_delta):
-            count_extreme += 1
 
     boot_deltas = sorted(boot_deltas)
     lo = boot_deltas[int(alpha / 2 * n_bootstrap)]
     hi = boot_deltas[int((1 - alpha / 2) * n_bootstrap)]
-    p_value = count_extreme / n_bootstrap
 
     return {
         "delta": round(observed_delta, 4),
         "ci_lower": round(lo, 4),
         "ci_upper": round(hi, 4),
-        "p_value": round(p_value, 4),
-        "significant": p_value < alpha,
     }
 
 
@@ -195,6 +187,8 @@ def generate_report(
     # Per-doc breakdown
     b_per_doc = build_per_doc_metrics(baseline)
     c_per_doc = build_per_doc_metrics(candidate)
+    all_docs = sorted(set(list(b_per_doc.keys()) + list(c_per_doc.keys())))
+    doc_count_str = f"{len(all_docs)} held-out docs" if all_docs else "held-out docs"
 
     # Build report
     lines = [
@@ -203,31 +197,29 @@ def generate_report(
         f"**Baseline:** Frozen `{baseline['model_id']}`  ",
         f"**Candidate:** Fine-tuned (adapter: `{candidate['adapter_dir']}`)  ",
         f"**Corpus:** {baseline['corpus_size']} chunks from 12 docs  ",
-        f"**Queries:** {baseline['query_count']} held-out test queries  ",
+        f"**Queries:** {baseline['query_count']} synthetic test queries (template-generated from held-out docs)  ",
         "",
         "## Aggregate Metrics",
         "",
-        "| Metric | Baseline | Candidate | Delta | 95% CI | p-value | Significant |",
-        "|--------|----------|-----------|-------|--------|---------|-------------|",
+        "| Metric | Baseline | Candidate | Delta | 95% Bootstrap CI |",
+        "|--------|----------|-----------|-------|------------------|",
     ]
 
     for metric in metrics_to_compare:
         b_val = baseline["metrics"].get(metric, 0)
         c_val = candidate["metrics"].get(metric, 0)
         bs = bootstrap_results[metric]
-        sig = "Yes" if bs["significant"] else "No"
         lines.append(
             f"| {metric} | {b_val:.4f} | {c_val:.4f} | "
-            f"{bs['delta']:+.4f} | [{bs['ci_lower']:+.4f}, {bs['ci_upper']:+.4f}] | "
-            f"{bs['p_value']:.4f} | {sig} |"
+            f"{bs['delta']:+.4f} | [{bs['ci_lower']:+.4f}, {bs['ci_upper']:+.4f}] |"
         )
 
     lines.extend(
         [
             "",
             f"> Bootstrap: {BOOTSTRAP_N} resamples, seed={BOOTSTRAP_SEED}, "
-            f"paired query-level. With n={baseline['query_count']} queries from "
-            f"4 docs, treat these intervals as exploratory.",
+            f"paired query-level percentile interval. With n={baseline['query_count']} queries from "
+            f"{doc_count_str}, treat these intervals as exploratory uncertainty estimates on the paired difference.",
             "",
             "## Per-Document Breakdown",
             "",
@@ -236,7 +228,6 @@ def generate_report(
         ]
     )
 
-    all_docs = sorted(set(list(b_per_doc.keys()) + list(c_per_doc.keys())))
     for doc in all_docs:
         b = b_per_doc.get(doc, {})
         c = c_per_doc.get(doc, {})

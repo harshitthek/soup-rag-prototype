@@ -10,20 +10,23 @@ This report delivers the prototype evaluation comparing retrieval quality **befo
 
 The prototype indexes **12 real Markdown documentation files** from the Soup CLI ecosystem. To evaluate real-world generalization, the corpus was divided using a strict **document-level split** (8 training documents / 4 completely unseen test documents). Dense retrieval was evaluated on **497 held-out queries** before fine-tuning (Frozen MiniLM baseline) and after fine-tuning (LoRA adapter fine-tuned through Soup).
 
+> [!NOTE]
+> **Evaluation query limitation:** The evaluation queries are synthetically generated from the held-out documents using predefined templates and content-derived patterns. The documents are excluded from the training-document split, but the queries are not independently authored human search requests. This controlled benchmark supports comparing the base and fine-tuned retrievers on the same evaluation set; template structure and lexical overlap may influence the measured performance. The results should not be interpreted as a direct estimate of performance on real-world user queries.
+
 ### Key Empirical Findings
 
-| Metric | Before Fine-Tuning (Frozen MiniLM) | After Fine-Tuning (Soup LoRA) | Absolute Delta ($\Delta$) | Relative Gain | 95% Bootstrap CI | p-value | Statistically Significant? |
-|---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| **Recall@1** | 0.5453 | **0.7565** | **+0.2113** | **+38.75%** | `[+0.1650, +0.2555]` | `< 0.0001` | **Yes** |
-| **Recall@3** | 0.7606 | **0.9336** | **+0.1730** | **+22.75%** | `[+0.1368, +0.2113]` | `< 0.0001` | **Yes** |
-| **Recall@5** | 0.8209 | **0.9718** | **+0.1509** | **+18.38%** | `[+0.1167, +0.1851]` | `< 0.0001` | **Yes** |
-| **MRR@10** | 0.6615 | **0.8477** | **+0.1862** | **+28.14%** | `[+0.1534, +0.2195]` | `< 0.0001` | **Yes** |
+| Metric | Before Fine-Tuning (Frozen MiniLM) | After Fine-Tuning (Soup LoRA) | Absolute Delta ($\Delta$) | Relative Gain | 95% Bootstrap CI |
+|---|:---:|:---:|:---:|:---:|:---:|
+| **Recall@1** | 0.5453 | **0.7565** | **+0.2113** | **+38.75%** | `[+0.1650, +0.2555]` |
+| **Recall@3** | 0.7606 | **0.9336** | **+0.1730** | **+22.75%** | `[+0.1368, +0.2113]` |
+| **Recall@5** | 0.8209 | **0.9718** | **+0.1509** | **+18.38%** | `[+0.1167, +0.1851]` |
+| **MRR@10** | 0.6615 | **0.8477** | **+0.1862** | **+28.14%** | `[+0.1534, +0.2195]` |
 
 > [!IMPORTANT]
 > **Summary Highlights:**
 > 1. **Recall@1 rose from 54.53% to 75.65%**: Over 3 out of 4 test queries now return the exact relevant section at Rank 1.
 > 2. **Recall@5 reached 97.18%**: In over 97% of queries, the correct technical answer is within the top-5 retrieved passages.
-> 3. **Statistical Confidence**: All metrics exhibit strictly positive 95% bootstrap confidence intervals with $p < 0.0001$.
+> 3. **Uncertainty Intervals**: All metrics exhibit strictly positive 95% paired bootstrap percentile intervals on this evaluation set (e.g., Recall@1 95% CI `[+0.1650, +0.2555]`).
 > 4. **Parameter Efficiency**: Achieved using a lightweight LoRA adapter modifying only **147,456 parameters** (0.65% of the 22.86M base model).
 
 ---
@@ -84,6 +87,9 @@ Using deterministic templating over the 4 test documents, **497 test queries** w
 
 Each query is paired with exactly one ground-truth relevant chunk ID from the held-out documents.
 
+> [!NOTE]
+> **Synthetic Query Generation Details:** Evaluation queries are generated programmatically by `scripts/generate_queries.py` using regex and template patterns over held-out document content (ATX headings and command-line flags). The documents are strictly excluded from the training split, but the queries are not independently authored human queries. Controlled query generation ensures reproducible evaluation against held-out text, though template phrasing and lexical overlap may influence measured absolute scores.
+
 ---
 
 ## 5. Embedding Fine-Tuning through Soup
@@ -126,15 +132,15 @@ Recall@5:  [Baseline: 82.09%] ──> [Fine-Tuned: 97.18%] (+15.09% absolute, +1
 MRR@10:    [Baseline: 0.6615] ──> [Fine-Tuned: 0.8477] (+0.1862 absolute, +28.14% relative)
 ```
 
-### 6.2 Statistical Significance Analysis
-Evaluated using paired query-level bootstrap resampling (10,000 resamples, $\alpha = 0.05$):
+### 6.2 Paired Bootstrap Uncertainty Analysis
+Evaluated using paired query-level percentile bootstrap resampling (10,000 resamples, seed = 42, $\alpha = 0.05$):
 
-- **Recall@1**: $\Delta = +0.2113$, 95% CI `[+0.1650, +0.2555]`, $p = 0.0000$
-- **Recall@3**: $\Delta = +0.1730$, 95% CI `[+0.1368, +0.2113]`, $p = 0.0000$
-- **Recall@5**: $\Delta = +0.1509$, 95% CI `[+0.1167, +0.1851]`, $p = 0.0000$
-- **MRR@10**: $\Delta = +0.1862$, 95% CI `[+0.1534, +0.2195]`, $p = 0.0000$
+- **Recall@1**: $\Delta = +0.2113$, 95% CI `[+0.1650, +0.2555]`
+- **Recall@3**: $\Delta = +0.1730$, 95% CI `[+0.1368, +0.2113]`
+- **Recall@5**: $\Delta = +0.1509$, 95% CI `[+0.1167, +0.1851]`
+- **MRR@10**: $\Delta = +0.1862$, 95% CI `[+0.1534, +0.2195]`
 
-The probability of observing these gains by chance is less than $10^{-4}$.
+All 95% empirical bootstrap intervals exclude zero, indicating that the mean paired difference is positive within this held-out evaluation set. The intervals do not show that every individual query improved (39 queries exhibited lower ranks, detailed in Section 8). As noted in the methodology, these intervals measure sample uncertainty across the 497 evaluated queries rather than serving as a formal null-hypothesis significance test.
 
 ---
 
@@ -195,8 +201,8 @@ To assess model safety and identify edge cases, all queries where the fine-tuned
 | **Primary Report** | [`REPORT.md`](REPORT.md) | This formal delivery document |
 | **Reproduction Guide** | [`REPRODUCE.md`](REPRODUCE.md) | Step-by-step reproduction instructions |
 | **Repository Overview** | [`README.md`](README.md) | Landing page with final benchmark scorecard |
-| **Statistical Analysis** | [`results/comparison.md`](results/comparison.md) | Paired bootstrap test output vs baseline |
+| **Bootstrap Analysis** | [`results/comparison.md`](results/comparison.md) | Paired bootstrap uncertainty analysis report vs baseline |
 | **Trained Adapter** | [`output_embedding/`](output_embedding/) | Fine-tuned LoRA weights and configuration |
 | **Evaluation Data** | [`results/candidate.json`](results/candidate.json) | Full per-query retrieval predictions on test set |
 | **Baseline Data** | [`results/baseline.json`](results/baseline.json) | Baseline retrieval predictions on test set |
-| **Automated Tests** | [`tests/test_retrieval_pipeline.py`](tests/test_retrieval_pipeline.py) | 12 unit and integration test assertions |
+| **Automated Tests** | [`tests/test_retrieval_pipeline.py`](tests/test_retrieval_pipeline.py) | 15 unit and integration test assertions |

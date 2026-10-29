@@ -3,18 +3,18 @@
 **Baseline:** Frozen `sentence-transformers/all-MiniLM-L6-v2`  
 **Candidate:** Fine-tuned (adapter: `output_embedding`)  
 **Corpus:** 1068 chunks from 12 docs  
-**Queries:** 497 held-out test queries  
+**Queries:** 497 synthetic test queries (template-generated from held-out docs)  
 
 ## Aggregate Metrics
 
-| Metric | Baseline | Candidate | Delta | 95% CI | p-value | Significant |
-|--------|----------|-----------|-------|--------|---------|-------------|
-| recall@1 | 0.5453 | 0.7565 | +0.2113 | [+0.1650, +0.2555] | 0.0000 | Yes |
-| recall@3 | 0.7606 | 0.9336 | +0.1730 | [+0.1368, +0.2113] | 0.0000 | Yes |
-| recall@5 | 0.8209 | 0.9718 | +0.1509 | [+0.1167, +0.1851] | 0.0000 | Yes |
-| mrr@10 | 0.6615 | 0.8477 | +0.1862 | [+0.1534, +0.2195] | 0.0000 | Yes |
+| Metric | Baseline | Candidate | Delta | 95% Bootstrap CI |
+|--------|----------|-----------|-------|------------------|
+| recall@1 | 0.5453 | 0.7565 | +0.2113 | [+0.1650, +0.2555] |
+| recall@3 | 0.7606 | 0.9336 | +0.1730 | [+0.1368, +0.2113] |
+| recall@5 | 0.8209 | 0.9718 | +0.1509 | [+0.1167, +0.1851] |
+| mrr@10 | 0.6615 | 0.8477 | +0.1862 | [+0.1534, +0.2195] |
 
-> Bootstrap: 10000 resamples, seed=42, paired query-level. With n=497 queries from 4 docs, treat these intervals as exploratory.
+> Bootstrap: 10000 resamples, seed=42, paired query-level percentile interval. With n=497 queries from 4 held-out docs, treat these intervals as exploratory uncertainty estimates on the paired difference.
 
 ## Per-Document Breakdown
 
