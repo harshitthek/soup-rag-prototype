@@ -187,6 +187,8 @@ def generate_report(
     # Per-doc breakdown
     b_per_doc = build_per_doc_metrics(baseline)
     c_per_doc = build_per_doc_metrics(candidate)
+    all_docs = sorted(set(list(b_per_doc.keys()) + list(c_per_doc.keys())))
+    doc_count_str = f"{len(all_docs)} held-out docs" if all_docs else "held-out docs"
 
     # Build report
     lines = [
@@ -217,7 +219,7 @@ def generate_report(
             "",
             f"> Bootstrap: {BOOTSTRAP_N} resamples, seed={BOOTSTRAP_SEED}, "
             f"paired query-level percentile interval. With n={baseline['query_count']} queries from "
-            f"4 held-out docs, treat these intervals as exploratory uncertainty estimates on the paired difference.",
+            f"{doc_count_str}, treat these intervals as exploratory uncertainty estimates on the paired difference.",
             "",
             "## Per-Document Breakdown",
             "",
@@ -226,7 +228,6 @@ def generate_report(
         ]
     )
 
-    all_docs = sorted(set(list(b_per_doc.keys()) + list(c_per_doc.keys())))
     for doc in all_docs:
         b = b_per_doc.get(doc, {})
         c = c_per_doc.get(doc, {})

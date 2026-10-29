@@ -140,7 +140,7 @@ Evaluated using paired query-level percentile bootstrap resampling (10,000 resam
 - **Recall@5**: $\Delta = +0.1509$, 95% CI `[+0.1167, +0.1851]`
 - **MRR@10**: $\Delta = +0.1862$, 95% CI `[+0.1534, +0.2195]`
 
-All 95% empirical bootstrap intervals exclude zero, indicating consistent positive deltas across queries within this held-out evaluation set. As noted in the methodology, these intervals measure sample uncertainty across the 497 evaluated queries rather than serving as a formal null-hypothesis significance test.
+All 95% empirical bootstrap intervals exclude zero, indicating that the mean paired difference is positive within this held-out evaluation set. The intervals do not show that every individual query improved (39 queries exhibited lower ranks, detailed in Section 8). As noted in the methodology, these intervals measure sample uncertainty across the 497 evaluated queries rather than serving as a formal null-hypothesis significance test.
 
 ---
 

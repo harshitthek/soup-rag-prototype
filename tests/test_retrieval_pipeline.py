@@ -372,6 +372,8 @@ class TestCompareResults:
         assert "p_value" not in res
         assert "significant" not in res
         assert res["delta"] == 0.2
+        assert res["ci_lower"] == 0.2
+        assert res["ci_upper"] == 0.2
 
     def test_generate_report_no_p_value_columns(self, tmp_path):
         with open(REPO_ROOT / "results" / "baseline.json", "r", encoding="utf-8") as f:

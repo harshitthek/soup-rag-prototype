@@ -13,7 +13,7 @@ Verify that all formatting, section deduplication, model adapter loading, and co
 ```bash
 pytest tests/test_retrieval_pipeline.py -v
 ```
-*Expected: 12 passed in ~20s.*
+*Expected: 15 passed in ~23s.*
 
 ### Step 2: Evaluate the Fine-Tuned Model on Held-Out Queries
 ```bash
