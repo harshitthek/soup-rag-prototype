@@ -8,16 +8,19 @@ Compares dense retrieval quality **before and after** fine-tuning `sentence-tran
 
 ## Benchmark Results
 
-Evaluated on **497 held-out queries** from **4 unseen documents** the model never encountered during training or negative mining, retrieving against all **1,068 chunks** from 12 documents.
+Evaluated on **497 synthetic evaluation queries** template-generated from **4 held-out documents** the model never encountered during training or negative mining, retrieving against all **1,068 chunks** from 12 documents.
 
-| Metric | Baseline (Frozen MiniLM) | Fine-Tuned (Soup LoRA) | Gain vs Baseline | 95% Bootstrap CI | p-value | Significant |
-|---|:---:|:---:|:---:|:---:|:---:|:---:|
-| **Recall@1** | 0.5453 | **0.7565** | **+21.12%** (+0.2113) | `[+0.1650, +0.2555]` | < 0.0001 | Yes |
-| **Recall@3** | 0.7606 | **0.9336** | **+17.30%** (+0.1730) | `[+0.1368, +0.2113]` | < 0.0001 | Yes |
-| **Recall@5** | 0.8209 | **0.9718** | **+15.09%** (+0.1509) | `[+0.1167, +0.1851]` | < 0.0001 | Yes |
-| **MRR@10** | 0.6615 | **0.8477** | **+18.62%** (+0.1862) | `[+0.1534, +0.2195]` | < 0.0001 | Yes |
+| Metric | Baseline (Frozen MiniLM) | Fine-Tuned (Soup LoRA) | Gain vs Baseline | 95% Bootstrap CI |
+|---|:---:|:---:|:---:|:---:|
+| **Recall@1** | 0.5453 | **0.7565** | **+21.12%** (+0.2113) | `[+0.1650, +0.2555]` |
+| **Recall@3** | 0.7606 | **0.9336** | **+17.30%** (+0.1730) | `[+0.1368, +0.2113]` |
+| **Recall@5** | 0.8209 | **0.9718** | **+15.09%** (+0.1509) | `[+0.1167, +0.1851]` |
+| **MRR@10** | 0.6615 | **0.8477** | **+18.62%** (+0.1862) | `[+0.1534, +0.2195]` |
 
-*Paired bootstrap evaluation (10,000 resamples, seed=42, $\alpha=0.05$). All 95% confidence intervals are strictly positive.*
+*95% paired bootstrap percentile intervals computed over 10,000 resamples (seed=42) on the paired metric differences across the 497 evaluation queries.*
+
+> [!NOTE]
+> **Evaluation query limitation:** The evaluation queries are synthetically generated from the held-out documents using predefined templates and content-derived patterns (commands, flags, headings). The documents are strictly excluded from the training-document split, but the queries are not independently authored human search requests. This controlled benchmark supports comparing the base and fine-tuned retrievers on the same evaluation set; template structure and lexical overlap may influence the measured performance. The results should not be interpreted as a direct estimate of performance on real-world user queries.
 
 ---
 
@@ -36,10 +39,10 @@ Evaluated on **497 held-out queries** from **4 unseen documents** the model neve
 
 ## Deliverables & Documentation
 
-- **[`REPORT.md`](REPORT.md)**: Comprehensive prototype delivery report detailing use case requirements, Markdown parsing & chunking strategy, leak-free evaluation design, statistical significance, and failure analysis.
+- **[`REPORT.md`](REPORT.md)**: Comprehensive prototype delivery report detailing use case requirements, Markdown parsing & chunking strategy, leak-free evaluation design, synthetic query disclosure, bootstrap uncertainty analysis, and failure analysis.
 - **[`REPRODUCE.md`](REPRODUCE.md)**: Self-contained, step-by-step reproduction and verification guide with copy-pasteable commands.
-- **[`results/comparison.md`](results/comparison.md)**: Full paired bootstrap statistical analysis report comparing baseline vs fine-tuned candidate.
-- **[`tests/test_retrieval_pipeline.py`](tests/test_retrieval_pipeline.py)**: Automated unit and integration test suite (12 passing tests) covering formatting, section deduplication, model adapter loading, and config integrity.
+- **[`results/comparison.md`](results/comparison.md)**: Paired bootstrap uncertainty analysis report comparing baseline vs fine-tuned candidate.
+- **[`tests/test_retrieval_pipeline.py`](tests/test_retrieval_pipeline.py)**: Automated unit and integration test suite (15 passing tests) covering formatting, section deduplication, model adapter loading, and config integrity.
 
 ---
 
@@ -64,7 +67,7 @@ soup train -y --config config/embedding.yaml
 # 6. Evaluate fine-tuned candidate
 python scripts/evaluate_retrieval.py --adapter-dir output_embedding --output results/candidate.json
 
-# 7. Compare results with paired bootstrap significance
+# 7. Compare results with paired bootstrap uncertainty intervals
 python scripts/compare_results.py \
     --baseline results/baseline.json \
     --candidate results/candidate.json \

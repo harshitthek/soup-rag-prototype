@@ -6,6 +6,7 @@ Tests:
 3. Mining Logic (Synthetic): Hard negative mining with section deduplication and heading prefix retention.
 4. Dataset Invariants (Corpus Integration): Exactly 3,234 triplets, 3 negatives per query, section deduplication, 0 self-negatives.
 5. Model & Adapter Integrity: Verify output_embedding loads with SharedEncoder, produces 384-dim unit-normalized vectors.
+6. Comparison & Reporting: Verify paired bootstrap CI schema and report formatting without unsupported p-values.
 """
 
 from __future__ import annotations
@@ -23,6 +24,7 @@ sys.path.insert(0, str(REPO_ROOT / "scripts"))
 
 from encoder import SharedEncoder
 from mine_hard_negatives import format_chunk_text, get_base_section, mine_hard_negatives
+from compare_results import paired_bootstrap_ci, generate_report
 
 
 class TestPipelineConfig:
@@ -355,3 +357,34 @@ class TestModelAdapter:
         assert vecs.shape == (2, 384), f"Expected shape (2, 384), got {vecs.shape}"
         norms = np.linalg.norm(vecs, axis=1)
         assert np.allclose(norms, 1.0, atol=1e-5), "Vectors must be L2 normalized"
+
+
+class TestCompareResults:
+    """Tests for paired bootstrap uncertainty calculations and report formatting."""
+
+    def test_paired_bootstrap_ci_schema(self):
+        b = [0.5, 0.6, 0.7, 0.8]
+        c = [0.7, 0.8, 0.9, 1.0]
+        res = paired_bootstrap_ci(b, c, n_bootstrap=100)
+        assert "delta" in res
+        assert "ci_lower" in res
+        assert "ci_upper" in res
+        assert "p_value" not in res
+        assert "significant" not in res
+        assert res["delta"] == 0.2
+
+    def test_generate_report_no_p_value_columns(self, tmp_path):
+        with open(REPO_ROOT / "results" / "baseline.json", "r", encoding="utf-8") as f:
+            baseline = json.load(f)
+        with open(REPO_ROOT / "results" / "candidate.json", "r", encoding="utf-8") as f:
+            candidate = json.load(f)
+
+        output_file = tmp_path / "comparison.md"
+        report = generate_report(baseline, candidate, output_file)
+
+        assert output_file.exists()
+        assert "p-value" not in report
+        assert "Significant" not in report
+        assert "95% Bootstrap CI" in report
+        assert "synthetic test queries (template-generated from held-out docs)" in report
+

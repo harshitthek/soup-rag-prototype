@@ -32,14 +32,14 @@ python scripts/evaluate_retrieval.py \
 ==================================================
 ```
 
-### Step 3: Run Paired Bootstrap Statistical Comparison
+### Step 3: Run Paired Bootstrap Comparison
 ```bash
 python scripts/compare_results.py \
     --baseline results/baseline.json \
     --candidate results/candidate.json \
     --output results/comparison.md
 ```
-*Check output in `results/comparison.md`: Recall@1 delta = +0.2113, p < 0.0001.*
+*Check output in `results/comparison.md`: Recall@1 delta = +0.2113, 95% CI [+0.1650, +0.2555].*
 
 ---
 
@@ -103,8 +103,8 @@ python scripts/evaluate_retrieval.py \
 ```
 *Expected: Recall@1: 0.7565, Recall@3: 0.9336, Recall@5: 0.9718, MRR@10: 0.8477.*
 
-### Step 7: Compute Statistical Significance
-Runs paired bootstrap resampling (10,000 iterations) to compute confidence intervals and p-values:
+### Step 7: Compute Paired Bootstrap Uncertainty Intervals
+Runs paired bootstrap resampling (10,000 iterations) to compute 95% confidence intervals on paired metric deltas:
 ```bash
 python scripts/compare_results.py \
     --baseline results/baseline.json \
