@@ -9,7 +9,7 @@ outstanding dependencies. Canonical methodology: `docs/EVALUATION_V2_SPEC.md`.
 |---|---|---|
 | 0 — spec, contracts, branch | done 2026-10-30 | `feat/evaluation-v2` from `origin/main` (`a5d608f`) |
 | 1 — vendoring, worksheet, validator | done (Qoder side) | **BLOCKED for Phase 4 only: owner must author + freeze 54 queries** |
-| 2 — metrics, classifier, overlap detector | next | independent of query authoring |
+| 2 — metrics, classifier, overlap detector | done (core) | `scripts/retrieval.py` + 21 tests; semantic overlap stage deferred to Phase 3 encoder |
 | 3 — four retrievers | after Phase 2 | independent of query authoring |
 | 4 — four-way run | gated | requires frozen `data/manual_queries.jsonl` |
 | 5 — analysis/report | after Phase 4 | |
@@ -56,8 +56,8 @@ outstanding dependencies. Canonical methodology: `docs/EVALUATION_V2_SPEC.md`.
 ## Test results (this session)
 
 ```
-python3 -m pytest tests/test_manual_queries_validation.py -q
-18 passed in 0.03s
+python3 -m pytest tests/test_manual_queries_validation.py -q    # 18 passed
+python3 -m pytest tests/test_retrieval_metrics.py -q            # 21 passed
 ```
 
 The v1 suite (`tests/test_retrieval_pipeline.py`) cannot run yet in this
@@ -65,6 +65,25 @@ environment: the default interpreter lacks torch/transformers/peft/numpy
 (pytest 9.1.1 and uv 0.11.8 are available). Phase 3 creates
 `requirements.txt` and a project venv; running the full suite then becomes a
 Phase 3 checkpoint.
+
+## Phase 2 — done (core)
+
+- `scripts/retrieval.py` (stdlib-only): `rank_corpus` (descending score,
+  lexicographic chunk_id tie-break — identical ordering rule to v1
+  `dense_retrieve`), `get_base_section`, `section_ranking` (unique sections,
+  first-occurrence ranks), `compute_query_metrics`/`compute_metrics`
+  (hit@k, recall@k fractional, mrr@10; chunk + section levels),
+  `classify_failure` (7 mutually exclusive leaves incl. `empty_ranking`;
+  `no_relevant_result_top10` aggregate = `wrong_section_same_document` +
+  `wrong_document`).
+- 21 tests cover the four spec edge cases (single item, multi-chunk one
+  section, multi-section, |relevant| > K), MRR first-rank semantics,
+  section-collapse ordering, classifier exclusivity/exhaustiveness, and
+  derivation of section/doc from chunk IDs.
+- **Decision (correction 3):** v1 scripts stay byte-identical; the shared
+  module duplicates the 20-line ranking rule instead of refactoring
+  `evaluate_retrieval.py`. The v1 exact-reproduction check is therefore
+  trivially satisfied (v1 file unchanged).
 
 ## Decisions logged
 
