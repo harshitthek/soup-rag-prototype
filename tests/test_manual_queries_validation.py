@@ -96,7 +96,7 @@ def write_queries(tmp_path: Path, records: list[dict]) -> Path:
     return path
 
 
-def run_validate(tmp_path, mini_corpus, records, check_globals=False):
+def run_validate(tmp_path, mini_corpus, records, check_globals=False, semantic=False):
     queries = write_queries(tmp_path, records)
     return validate(
         corpus_path=mini_corpus,
@@ -104,6 +104,7 @@ def run_validate(tmp_path, mini_corpus, records, check_globals=False):
         scripts_dir=tmp_path,
         config_dir=tmp_path,
         check_globals=check_globals,
+        semantic=semantic,
     )
 
 
@@ -269,3 +270,37 @@ def test_non_coupling_scan(tmp_path, mini_corpus):
         config_dir=tmp_path,
     )
     assert any("coupling" in e for e in report["errors"])
+
+
+def test_semantic_stage_wiring(monkeypatch, tmp_path, mini_corpus):
+    import validate_manual_queries as vq
+
+    monkeypatch.setattr(
+        vq,
+        "semantic_overlap_flags",
+        lambda records, maps, threshold, max_flags: (
+            ["manual_001: semantic similarity 0.99 with train chunk 'train_doc::x'"],
+            None,
+        ),
+    )
+    report = run_validate(tmp_path, mini_corpus, [base_record()], semantic=True)
+    assert report["semantic_stage"] is None
+    assert any("semantic similarity" in f for f in report["flags"])
+    assert "semantic cosine >= 0.65" in report["note"]
+
+
+def test_semantic_stage_unavailable_is_a_note(tmp_path, mini_corpus):
+    import validate_manual_queries as vq
+
+    original = vq.semantic_overlap_flags
+
+    def unavailable(records, maps, threshold, max_flags):
+        return [], "semantic stage unavailable: no torch"
+
+    vq.semantic_overlap_flags = unavailable
+    try:
+        report = run_validate(tmp_path, mini_corpus, [base_record()], semantic=True)
+    finally:
+        vq.semantic_overlap_flags = original
+    assert "unavailable" in report["semantic_stage"]
+    assert report["valid"]

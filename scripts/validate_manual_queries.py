@@ -265,6 +265,58 @@ def scan_v1_non_coupling(scripts_dir: Path, config_dir: Path) -> list[str]:
     return errors
 
 
+def semantic_overlap_flags(
+    records: list[dict[str, Any]],
+    maps: dict[str, Any],
+    threshold: float,
+    max_flags_per_query: int,
+) -> tuple[list[str], str | None]:
+    """Embedding-based cross-corpus overlap flags (provisional, review only).
+
+    Uses the frozen MiniLM retriever. Returns (flags, note); note is None on
+    success or an explanation when the encoder is unavailable.
+    """
+    from pathlib import Path as _Path
+
+    sys.path.insert(0, str(_Path(__file__).resolve().parent))
+    try:
+        from retrievers import MINILM_MODEL_ID, MINILM_REVISION, DenseRetriever
+    except Exception as exc:  # heavy deps unavailable
+        return [], f"semantic stage unavailable: {exc}"
+
+    try:
+        encoder = DenseRetriever(
+            "mini_lm_frozen",
+            MINILM_MODEL_ID,
+            revision=MINILM_REVISION,
+            max_length=256,
+        )
+    except Exception as exc:
+        return [], f"semantic stage unavailable: {exc}"
+
+    train_chunks = maps["train_chunks"]
+    queries = [r.get("query", "") for r in records]
+    try:
+        query_vecs = encoder.encode(queries)
+        chunk_vecs = encoder.encode_corpus(train_chunks)
+    except Exception as exc:
+        return [], f"semantic stage failed: {exc}"
+
+    flags: list[str] = []
+    for i, record in enumerate(records):
+        qid = record.get("query_id")
+        sims = chunk_vecs @ query_vecs[i]
+        order = sorted(range(len(sims)), key=lambda j: -sims[j])
+        hits = [
+            f"{qid}: semantic similarity {sims[j]:.2f} with train chunk '{train_chunks[j]['chunk_id']}'"
+            for j in order
+            if float(sims[j]) >= threshold
+        ][:max_flags_per_query]
+        if hits:
+            flags.extend(hits)
+    return flags, None
+
+
 def validate(
     corpus_path: Path,
     queries_path: Path,
@@ -273,6 +325,8 @@ def validate(
     lex_threshold: float = 0.25,
     max_flags_per_query: int = 5,
     check_globals: bool = True,
+    semantic: bool = False,
+    sem_threshold: float = 0.65,
 ) -> dict[str, Any]:
     errors: list[str] = []
     warnings: list[str] = []
@@ -330,6 +384,13 @@ def validate(
                     f"allocation for '{doc}': {count} queries, target {target} (tolerance ±{ALLOCATION_TOLERANCE})"
                 )
 
+    semantic_note = "semantic stage not requested"
+    if semantic:
+        sem_flags, semantic_note = semantic_overlap_flags(
+            records, maps, sem_threshold, max_flags_per_query
+        )
+        flags += sem_flags
+
     return {
         "valid": not errors,
         "checked_at": datetime.datetime.now(datetime.timezone.utc).isoformat(),
@@ -339,9 +400,12 @@ def validate(
         "warnings": warnings,
         "flags": flags,
         "per_record": per_record,
+        "semantic_stage": semantic_note,
         "note": (
             "Overlap flags use provisional review thresholds "
-            f"(lexical Jaccard >= {lex_threshold}); they are review material, "
+            f"(lexical Jaccard >= {lex_threshold}"
+            + (f", semantic cosine >= {sem_threshold}" if semantic else "")
+            + "); they are review material, "
             "not calibrated thresholds, and never relabel queries."
         ),
     }
@@ -357,6 +421,10 @@ def main() -> int:
     parser.add_argument("--lex-overlap-threshold", type=float, default=0.25,
                         help="provisional lexical flag threshold (uncalibrated)")
     parser.add_argument("--max-flags-per-query", type=int, default=5)
+    parser.add_argument("--semantic", action="store_true",
+                        help="run the optional embedding-based overlap stage (frozen MiniLM)")
+    parser.add_argument("--sem-overlap-threshold", type=float, default=0.65,
+                        help="provisional semantic flag threshold (uncalibrated)")
     args = parser.parse_args()
 
     report = validate(
@@ -366,6 +434,8 @@ def main() -> int:
         config_dir=args.config_dir,
         lex_threshold=args.lex_overlap_threshold,
         max_flags_per_query=args.max_flags_per_query,
+        semantic=args.semantic,
+        sem_threshold=args.sem_overlap_threshold,
     )
 
     args.output.parent.mkdir(parents=True, exist_ok=True)

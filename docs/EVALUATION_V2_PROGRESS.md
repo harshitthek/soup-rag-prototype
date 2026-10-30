@@ -12,8 +12,8 @@ outstanding dependencies. Canonical methodology: `docs/EVALUATION_V2_SPEC.md`.
 | 2 — metrics, classifier, overlap detector | done (core) | `scripts/retrieval.py` + 21 tests; semantic overlap stage deferred to Phase 3 encoder |
 | 3 — four retrievers | done (code + env) | E5 weights download deferred to Phase 4 run |
 | 4 — four-way run | gated | requires frozen `data/manual_queries.jsonl` |
-| 5 — analysis/report | after Phase 4 | |
-| 6 — docs + hygiene | after Phase 5 | checkpoint deletion gated on adapter load test |
+| 5 — analysis/report | code done; execution gated on Phase 4 | `scripts/compare_retrievers.py` + 10 tests; cluster-bootstrap decision made on frozen data |
+| 6 — docs + hygiene | next | checkpoint-removal gate conditions 1–5 all verified; deletion still deferred to Phase 6 per plan |
 | 7 — verification | last | |
 
 ## Phase 0 — done
@@ -78,6 +78,27 @@ outstanding dependencies. Canonical methodology: `docs/EVALUATION_V2_SPEC.md`.
   v1 adapter-load test — the latter also satisfies Phase 6 checkpoint-removal
   gate condition 3 (root adapter loads via the existing inference path in a
   fresh venv). E5's 127 MB weights are downloaded at the Phase 4 run.
+
+## Phase 5 — code done; execution gated on Phase 4
+
+- `scripts/compare_retrievers.py`: micro/macro metrics for all 14 metrics,
+  doc-stratified paired bootstrap (10k, seed 42) with one shared
+  `StratifiedResampler` applied to all retrievers (pairedness), three Soup
+  deltas, leave-one-doc-out micro/macro sensitivity, failure-category tables
+  with the `no_relevant_result_top10` aggregate, chunk/section regression
+  counts (sibling-first never counts as a section regression), primary vs
+  overlap subset tables, and a data-driven section-cluster bootstrap
+  decision (implemented only if >= 30% of query-occupied sections hold >= 2
+  queries; decision recorded in the report). Caveat text hardcoded: no
+  p-values, four-document limitation.
+- 10 fixture tests: micro/macro semantics, stratification preserving doc
+  counts, resampler determinism, CI behavior on constant deltas,
+  leave-one-doc-out, cluster decision both ways, sibling-not-section-
+  regression, aggregate category counts, report content (disclaimer-only
+  "p-value" occurrence) and report determinism.
+- Validator gained the optional `--semantic` stage (frozen MiniLM cosine
+  flags, provisional 0.65 threshold, review-only) — completing the deferred
+  Phase 2/3 item; 2 additional tests.
 
 ## v1 suite status (pre-existing condition, not a v2 regression)
 
