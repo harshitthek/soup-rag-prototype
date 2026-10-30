@@ -166,7 +166,13 @@ def check_query_record(
     if not isinstance(evidence, list) or not evidence:
         errors.append(f"{qid}: evidence_chunk_ids must be a non-empty list")
     if errors:
-        return {"query_id": qid, "errors": errors, "warnings": warnings, "flags": flags}
+        return {
+            "query_id": qid,
+            "errors": errors,
+            "warnings": warnings,
+            "flags": flags,
+            "lex_top_matches": [],
+        }
 
     for sid in sections:
         if sid in EXCLUDED_SECTIONS:
@@ -237,6 +243,7 @@ def check_query_record(
 
         # --- provisional cross-corpus overlap flags (review only, never errors) ---
         q_set = set(q_tokens)
+        candidates: list[tuple[float, str]] = []
         for c in maps["train_chunks"]:
             c_tokens = normalize_tokens(c["heading_prefix"] + " " + c["text"])
             c_set = set(c_tokens)
@@ -244,12 +251,22 @@ def check_query_record(
             if not inter:
                 continue
             jacc = len(inter) / len(q_set | c_set)
-            if jacc >= lex_threshold:
-                flags.append(f"{qid}: lexical overlap {jacc:.2f} with train chunk '{c['chunk_id']}'")
-        if len(flags) > max_flags_per_query:
-            flags = flags[:max_flags_per_query] + [f"{qid}: … {len(flags) - max_flags_per_query} more overlap flags suppressed"]
+            candidates.append((jacc, c["chunk_id"]))
+        candidates.sort(reverse=True)
+        lex_top_matches = [
+            {"chunk_id": cid, "jaccard": round(j, 4)} for j, cid in candidates[:5]
+        ]
+        for j, cid in candidates[:5]:
+            if j >= lex_threshold and len(flags) < max_flags_per_query:
+                flags.append(f"{qid}: lexical overlap {j:.2f} with train chunk '{cid}'")
 
-    return {"query_id": qid, "errors": errors, "warnings": warnings, "flags": flags}
+    return {
+        "query_id": qid,
+        "errors": errors,
+        "warnings": warnings,
+        "flags": flags,
+        "lex_top_matches": lex_top_matches,
+    }
 
 
 def scan_v1_non_coupling(scripts_dir: Path, config_dir: Path) -> list[str]:

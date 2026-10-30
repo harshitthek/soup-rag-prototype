@@ -257,6 +257,17 @@ def test_overlap_flag_is_review_material(tmp_path, mini_corpus):
     assert report["valid"], report["errors"]
     assert any("lexical overlap" in f for f in report["flags"])
     assert "provisional" in report["note"]
+    top = report["per_record"][0]["lex_top_matches"]
+    assert top and top[0]["chunk_id"] == "train_doc::x"
+
+
+def test_lex_top_matches_reported_below_threshold(tmp_path, mini_corpus):
+    record = base_record(query="merge strategy")
+    report = run_validate(tmp_path, mini_corpus, [record], )
+    assert report["valid"], report["errors"]
+    top = report["per_record"][0]["lex_top_matches"]
+    assert any(m["chunk_id"] == "train_doc::x" for m in top)
+    assert all("lexical overlap" not in f for f in report["flags"])
 
 
 def test_non_coupling_scan(tmp_path, mini_corpus):
