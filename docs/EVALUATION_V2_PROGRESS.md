@@ -100,6 +100,25 @@ outstanding dependencies. Canonical methodology: `docs/EVALUATION_V2_SPEC.md`.
   flags, provisional 0.65 threshold, review-only) — completing the deferred
   Phase 2/3 item; 2 additional tests.
 
+## Phase 4/5 rehearsal (smoke fixtures, /tmp only — not the benchmark)
+
+A clean-room rehearsal of the Phase 4+5 command paths ran against 3 temporary
+smoke queries in `/tmp/v2_smoke/` (clearly labeled fixtures; never committed,
+never part of the manual dataset):
+
+- `run_retrieval.py` executed for all four retrievers: frozen MiniLM (11.0 s),
+  Soup adapter (9.9 s), BM25 (0.05 s), E5-small-v2 (99.5 s, weights
+  downloaded and cached; revision `ffb93f3b…` confirmed in
+  `retriever_config`). All four result files parse, share identical corpus
+  and query-set fingerprints, and carry per-query failure categories.
+- `compare_retrievers.py` produced a 299-line report with all sections
+  (metric tables, leave-one-doc-out, failure categories, regression counts,
+  subset tables, cluster-bootstrap decision).
+- Observed behavior sanity-checked: fixtures labeled one sub-chunk of
+  multi-chunk sections, and retrievers correctly returned siblings at top-1 —
+  classified `relevant_section_unlabeled_chunk_top1` (chunk miss, section
+  hit), exactly the intended multi-label semantics.
+
 ## Phase 6 — done
 
 - **Checkpoint removal (owner-approved, gates verified):** reversible
@@ -165,13 +184,10 @@ in `tests/test_v1_dataset_invariants.py`.
 
 ## Outstanding dependencies
 
-1. **Owner-authored 54 queries** (blocks Phase 4 only). Owner fills
-   `docs/EVALUATION_V2_COVERAGE.md` slots; Qoder transcribes verbatim into
-   `data/manual_queries.jsonl`, runs the validator, owner reviews flags and
-   freezes.
-2. ML environment for Phases 3+ — done: `.venv` created with `uv`, pinned
-   `requirements.txt` installed (torch, transformers, peft, numpy, pyyaml,
-   rank_bm25, pytest<9).
-3. `backends-and-ops.md` provenance gap (see above) — cosmetic; owner input
+1. **Owner-authored 54 queries** (blocks Phase 4 + Phase 5 execution + Phase 7
+   clean-room rerun; everything else is implemented and rehearsed). Owner
+   fills `docs/EVALUATION_V2_COVERAGE.md` slots; Qoder transcribes verbatim
+   into `data/manual_queries.jsonl`, runs the validator, owner reviews flags
+   and freezes.
+2. `backends-and-ops.md` provenance gap (see above) — cosmetic; owner input
    optional.
-4. Cluster-bootstrap decision — deferred to Phase 5 on the frozen dataset.
