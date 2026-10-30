@@ -10,7 +10,7 @@ outstanding dependencies. Canonical methodology: `docs/EVALUATION_V2_SPEC.md`.
 | 0 — spec, contracts, branch | done 2026-10-30 | `feat/evaluation-v2` from `origin/main` (`a5d608f`) |
 | 1 — vendoring, worksheet, validator | done (Qoder side) | **BLOCKED for Phase 4 only: owner must author + freeze 54 queries** |
 | 2 — metrics, classifier, overlap detector | done (core) | `scripts/retrieval.py` + 21 tests; semantic overlap stage deferred to Phase 3 encoder |
-| 3 — four retrievers | after Phase 2 | independent of query authoring |
+| 3 — four retrievers | done (code + env) | E5 weights download deferred to Phase 4 run |
 | 4 — four-way run | gated | requires frozen `data/manual_queries.jsonl` |
 | 5 — analysis/report | after Phase 4 | |
 | 6 — docs + hygiene | after Phase 5 | checkpoint deletion gated on adapter load test |
@@ -56,15 +56,40 @@ outstanding dependencies. Canonical methodology: `docs/EVALUATION_V2_SPEC.md`.
 ## Test results (this session)
 
 ```
-python3 -m pytest tests/test_manual_queries_validation.py -q    # 18 passed
-python3 -m pytest tests/test_retrieval_metrics.py -q            # 21 passed
+.venv/bin/python -m pytest tests/test_manual_queries_validation.py -q   # 18 passed
+.venv/bin/python -m pytest tests/test_retrieval_metrics.py -q           # 21 passed
+.venv/bin/python -m pytest tests/test_retrievers.py -q                  # 14 passed (real MiniLM encode + BM25)
+.venv/bin/python -m pytest tests/test_v1_dataset_invariants.py -q       # 5 passed (stdlib, locks v1 artifacts)
+.venv/bin/python -m pytest tests/test_retrieval_pipeline.py::TestModelAdapter -q  # 1 passed → Phase 6 gate condition 3 verified in fresh venv
 ```
 
-The v1 suite (`tests/test_retrieval_pipeline.py`) cannot run yet in this
-environment: the default interpreter lacks torch/transformers/peft/numpy
-(pytest 9.1.1 and uv 0.11.8 are available). Phase 3 creates
-`requirements.txt` and a project venv; running the full suite then becomes a
-Phase 3 checkpoint.
+## Phase 3 — done (code + environment)
+
+- `scripts/retrievers.py`: `DenseRetriever` (mean pooling, L2, revision-pinned
+  MiniLM `1110a243…` / E5 `ffb93f3b…`, per-model query/passage prefixes,
+  256/512 truncation, optional PEFT adapter) and `BM25Retriever`
+  (BM25Okapi k1=1.5 b=0.75, lowercase whitespace tokenization, no tuning).
+  Heavy imports are lazy; config is inspectable without loading models.
+- `scripts/run_retrieval.py`: one shared ranking path for all retrievers,
+  v2 result schema (retriever_config, fingerprints, chunk+section metrics,
+  per-query failure category); hard gate on the missing frozen query dataset.
+- `requirements.txt` (`pytest<9`) + project venv at `.venv` (gitignored).
+- Tests: 14 retriever tests including a real MiniLM encode smoke test and the
+  v1 adapter-load test — the latter also satisfies Phase 6 checkpoint-removal
+  gate condition 3 (root adapter loads via the existing inference path in a
+  fresh venv). E5's 127 MB weights are downloaded at the Phase 4 run.
+
+## v1 suite status (pre-existing condition, not a v2 regression)
+
+12 of 15 v1 tests pass. The 3 `TestMiningRealCorpusIntegration` tests fail at
+fixture collection: their `mined_results` fixture is declared
+`@classmethod`-above-`@pytest.fixture`, which pytest >= 8.4 no longer
+discovers. Evidence this predates v2: the original environment's
+`.pytest_cache/v/cache/lastfailed` (committed-era artifact on this machine)
+lists exactly these three tests as failed. Correction 3 forbids modifying v1
+files, so the same invariants (3,234 triplets, 3 negatives/query, section
+dedup, heading-prefix retention, dataset counts) are re-verified stdlib-only
+in `tests/test_v1_dataset_invariants.py`.
 
 ## Phase 2 — done (core)
 
@@ -101,8 +126,9 @@ Phase 3 checkpoint.
    `docs/EVALUATION_V2_COVERAGE.md` slots; Qoder transcribes verbatim into
    `data/manual_queries.jsonl`, runs the validator, owner reviews flags and
    freezes.
-2. ML environment for Phases 3+ (torch, transformers, peft, numpy, rank_bm25)
-   — install into a project venv via `uv` at Phase 3.
+2. ML environment for Phases 3+ — done: `.venv` created with `uv`, pinned
+   `requirements.txt` installed (torch, transformers, peft, numpy, pyyaml,
+   rank_bm25, pytest<9).
 3. `backends-and-ops.md` provenance gap (see above) — cosmetic; owner input
    optional.
 4. Cluster-bootstrap decision — deferred to Phase 5 on the frozen dataset.

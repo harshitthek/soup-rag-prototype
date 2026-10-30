@@ -1,0 +1,7 @@
+torch>=2.0
+transformers>=4.40
+peft>=0.14
+numpy
+pyyaml
+rank_bm25
+pytest<9
