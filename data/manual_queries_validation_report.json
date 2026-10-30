@@ -1,0 +1,13 @@
+{
+  "valid": false,
+  "checked_at": "2026-10-30T11:18:10.983472+00:00",
+  "n_queries": 0,
+  "per_doc_counts": {},
+  "note": "queries file not found: /Users/pernavjain/Documents/soup-rag-prototype/data/manual_queries.jsonl",
+  "errors": [
+    "queries file not found: /Users/pernavjain/Documents/soup-rag-prototype/data/manual_queries.jsonl"
+  ],
+  "warnings": [],
+  "flags": [],
+  "per_record": []
+}
