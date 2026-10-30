@@ -118,3 +118,40 @@ python scripts/compare_results.py \
 
 - **Apple Silicon Warning**: During training or matrix multiplication on macOS, you may see benign PyTorch/NumPy runtime warnings regarding BLAS floating-point exception status registers. These do not affect numerical correctness and are safely filtered in testing scripts.
 - **Paths**: All configuration paths are relative to the repository root. Ensure commands are executed from the repository root directory.
+
+---
+
+## 4. Evaluation v2 (manual benchmark)
+
+The v2 layer evaluates the existing adapter and baselines on 54 owner-authored
+manual queries. It never retrains the adapter and never modifies v1 data.
+
+Environment (once):
+
+```bash
+uv venv .venv
+uv pip install --python .venv/bin/python -r requirements.txt
+```
+
+Dataset workflow:
+
+```bash
+# 1. Author 54 queries in docs/EVALUATION_V2_COVERAGE.md (owner; no LLM text)
+# 2. Transcribe them verbatim into data/manual_queries.jsonl
+# 3. Validate (errors block; overlap flags are provisional review material)
+.venv/bin/python scripts/validate_manual_queries.py
+.venv/bin/python scripts/validate_manual_queries.py --semantic   # optional embedding-based flags
+# 4. Freeze the dataset (record the query-set fingerprint)
+```
+
+Four-way retrieval run (after the dataset is frozen):
+
+```bash
+.venv/bin/python scripts/run_retrieval.py --retriever mini_lm_frozen --output results/v2/mini_lm_frozen.json
+.venv/bin/python scripts/run_retrieval.py --retriever mini_lm_soup   --output results/v2/mini_lm_soup.json
+.venv/bin/python scripts/run_retrieval.py --retriever bm25           --output results/v2/bm25.json
+.venv/bin/python scripts/run_retrieval.py --retriever e5_small       --output results/v2/e5_small.json
+.venv/bin/python scripts/compare_retrievers.py                       # -> results/v2/comparison.md
+```
+
+Methodology and gates: `docs/EVALUATION_V2_SPEC.md`.

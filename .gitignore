@@ -8,3 +8,8 @@ Thumbs.db
 
 # Project virtualenv
 .venv/
+
+# v2: future training checkpoints and redundant artifacts stay out of git
+output_embedding/checkpoint-*/
+output_embedding/tokenizer*.json
+output_embedding/training_args.bin

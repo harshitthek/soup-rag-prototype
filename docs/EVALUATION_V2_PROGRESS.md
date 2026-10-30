@@ -13,7 +13,7 @@ outstanding dependencies. Canonical methodology: `docs/EVALUATION_V2_SPEC.md`.
 | 3 — four retrievers | done (code + env) | E5 weights download deferred to Phase 4 run |
 | 4 — four-way run | gated | requires frozen `data/manual_queries.jsonl` |
 | 5 — analysis/report | code done; execution gated on Phase 4 | `scripts/compare_retrievers.py` + 10 tests; cluster-bootstrap decision made on frozen data |
-| 6 — docs + hygiene | next | checkpoint-removal gate conditions 1–5 all verified; deletion still deferred to Phase 6 per plan |
+| 6 — docs + hygiene | done (deletions + docs) | all five D3 gate conditions + tokenizer-requirement check verified; `.gitignore` rules added |
 | 7 — verification | last | |
 
 ## Phase 0 — done
@@ -99,6 +99,28 @@ outstanding dependencies. Canonical methodology: `docs/EVALUATION_V2_SPEC.md`.
 - Validator gained the optional `--semantic` stage (frozen MiniLM cosine
   flags, provisional 0.65 threshold, review-only) — completing the deferred
   Phase 2/3 item; 2 additional tests.
+
+## Phase 6 — done
+
+- **Checkpoint removal (owner-approved, gates verified):** reversible
+  rename-test proved the root `tokenizer.json`/`tokenizer_config.json` and
+  `training_args.bin` are not required for inference (adapter-load + dense
+  encode tests passed without them, then files were restored).
+  `git rm -r` applied to `checkpoint-2300/2400/2427` and the redundant root
+  tokenizer copies + `training_args.bin`; post-removal verification:
+  adapter tests + full v2 suite green (20 + 70 tests). `.gitignore` now
+  excludes future `output_embedding/checkpoint-*/`, `tokenizer*.json`, and
+  `training_args.bin`. Root adapter (580 KB, MD5 `05e30132…`),
+  `adapter_config.json`, `soup_run.json` remain tracked.
+- **`output_embedding/README.md`** rewritten as a real model card (base
+  revision, LoRA config, training data, seeds, run_id, reproduction steps).
+- **`REVIEW.md`** rewritten: current architecture, key decisions, labeled
+  "Historical decisions (v1)" section preserving durable reasoning (prefix
+  bug, negative mining, val_split, margin math, ANCE/InfoNCE rationale),
+  known limitations.
+- **README/REPORT/REPRODUCE** gained additive "Evaluation v2" sections
+  (existing v1 content untouched per correction 3); REPRODUCE documents the
+  v2 venv, validator, four-way run, and comparison commands.
 
 ## v1 suite status (pre-existing condition, not a v2 regression)
 

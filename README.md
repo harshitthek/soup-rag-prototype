@@ -83,3 +83,25 @@ See [`REPRODUCE.md`](REPRODUCE.md) for full reproduction options, environment se
 - Python 3.10+
 - PyTorch 2.0+, Transformers 4.40+, PEFT 0.14+ (tested on PEFT 0.21.2)
 - [Soup CLI](https://github.com/MakazhanAlpamys/Soup) (for `soup train`)
+
+---
+
+## Evaluation v2 (in progress)
+
+A second evaluation layer is under construction on branch `feat/evaluation-v2`
+to test whether the fine-tuned adapter generalizes beyond the synthetic
+queries (whose template/heading shortcut is disclosed above):
+
+- **54 manually authored queries** (owner-written; no LLM generation) with
+  multi-chunk and multi-section relevance labels — `data/manual_queries.jsonl`
+  (frozen when ready). Authoring worksheet: `docs/EVALUATION_V2_COVERAGE.md`.
+- **Chunk- and section-level metrics** — Hit@K, fractional Recall@K, MRR@10
+  (`scripts/retrieval.py`).
+- **Four retrievers** — frozen MiniLM, Soup adapter, BM25, frozen
+  `intfloat/e5-small-v2` (`scripts/retrievers.py`, `scripts/run_retrieval.py`).
+- **Honest uncertainty** — micro/macro averages, doc-stratified paired
+  bootstrap, leave-one-doc-out sensitivity; no p-values
+  (`scripts/compare_retrievers.py` → `results/v2/comparison.md`).
+
+Full methodology: `docs/EVALUATION_V2_SPEC.md`; progress:
+`docs/EVALUATION_V2_PROGRESS.md`.

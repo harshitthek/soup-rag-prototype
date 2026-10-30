@@ -206,3 +206,19 @@ To assess model safety and identify edge cases, all queries where the fine-tuned
 | **Evaluation Data** | [`results/candidate.json`](results/candidate.json) | Full per-query retrieval predictions on test set |
 | **Baseline Data** | [`results/baseline.json`](results/baseline.json) | Baseline retrieval predictions on test set |
 | **Automated Tests** | [`tests/test_retrieval_pipeline.py`](tests/test_retrieval_pipeline.py) | 15 unit and integration test assertions |
+
+---
+
+## 11. Evaluation v2 Extension (in progress)
+
+This report describes the v1 controlled benchmark. An Evaluation v2 layer is
+being added on branch `feat/evaluation-v2` to measure generalization on
+**54 manually authored queries** (owner-written, no LLM generation) with
+multi-chunk/multi-section labels, chunk- and section-level Hit@K/Recall@K/MRR,
+and a four-way comparison (frozen MiniLM, Soup adapter, BM25, frozen
+`intfloat/e5-small-v2`) with doc-stratified paired bootstrap and
+leave-one-doc-out sensitivity. See `docs/EVALUATION_V2_SPEC.md`,
+`docs/EVALUATION_V2_PROGRESS.md`, and (when complete)
+`results/v2/comparison.md`. The v1 numbers above remain the canonical record
+of the controlled synthetic benchmark; in v1, labels were singleton chunks,
+so the binary "recall@k" values equal Hit@K.
