@@ -278,15 +278,20 @@ def test_semantic_stage_wiring(monkeypatch, tmp_path, mini_corpus):
     monkeypatch.setattr(
         vq,
         "semantic_overlap_flags",
-        lambda records, maps, threshold, max_flags: (
-            ["manual_001: semantic similarity 0.99 with train chunk 'train_doc::x'"],
-            None,
-        ),
+        lambda records, maps, threshold, max_flags: {
+            "flags": ["manual_001: semantic similarity 0.99 with train chunk 'train_doc::x'"],
+            "top_matches": [
+                {"query_id": "manual_001", "top_train_chunks": [{"chunk_id": "train_doc::x", "cosine": 0.99}]}
+            ],
+            "note": None,
+        },
     )
     report = run_validate(tmp_path, mini_corpus, [base_record()], semantic=True)
     assert report["semantic_stage"] is None
     assert any("semantic similarity" in f for f in report["flags"])
+    assert report["semantic_top_matches"][0]["query_id"] == "manual_001"
     assert "semantic cosine >= 0.65" in report["note"]
+    assert "top-5 train-chunk matches" in report["note"]
 
 
 def test_semantic_stage_unavailable_is_a_note(tmp_path, mini_corpus):
@@ -295,7 +300,7 @@ def test_semantic_stage_unavailable_is_a_note(tmp_path, mini_corpus):
     original = vq.semantic_overlap_flags
 
     def unavailable(records, maps, threshold, max_flags):
-        return [], "semantic stage unavailable: no torch"
+        return {"flags": [], "top_matches": [], "note": "semantic stage unavailable: no torch"}
 
     vq.semantic_overlap_flags = unavailable
     try:
@@ -304,3 +309,20 @@ def test_semantic_stage_unavailable_is_a_note(tmp_path, mini_corpus):
         vq.semantic_overlap_flags = original
     assert "unavailable" in report["semantic_stage"]
     assert report["valid"]
+
+
+def test_non_coupling_scan_ignores_v2_scripts(tmp_path, mini_corpus):
+    scripts = tmp_path / "scripts"
+    scripts.mkdir()
+    # v2 script legitimately references the manual dataset -> not a coupling error
+    (scripts / "run_retrieval.py").write_text("queries_path = DATA_DIR / 'manual_queries.jsonl'", encoding="utf-8")
+    (scripts / "mine_hard_negatives.py").write_text("data/manual_queries.jsonl", encoding="utf-8")
+    report = validate(
+        corpus_path=mini_corpus,
+        queries_path=write_queries(tmp_path, [base_record()]),
+        scripts_dir=scripts,
+        config_dir=tmp_path,
+    )
+    errors = report["errors"]
+    assert any("coupling" in e and "mine_hard_negatives" in e for e in errors)
+    assert not any("run_retrieval" in e for e in errors)

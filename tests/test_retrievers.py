@@ -160,3 +160,21 @@ class TestDenseEncoding:
         texts = ["test query"]
         assert r.query_prefix + texts[0] == "query: test query"
         assert r.passage_prefix + "doc text" == "passage: doc text"
+
+    def test_e5_real_encode_384d_unit_norm(self):
+        pytest.importorskip("torch")
+        pytest.importorskip("transformers")
+        r = DenseRetriever(
+            "e5_small",
+            E5_MODEL_ID,
+            revision=E5_REVISION,
+            max_length=512,
+            query_prefix="query: ",
+            passage_prefix="passage: ",
+        )
+        vecs = r.encode_queries(["what is a ship verdict", "define lora rank"])
+        assert vecs.shape == (2, 384)
+        norms = (vecs**2).sum(axis=1) ** 0.5
+        import numpy as np
+
+        assert np.allclose(norms, np.ones(2), atol=1e-5)

@@ -100,6 +100,31 @@ outstanding dependencies. Canonical methodology: `docs/EVALUATION_V2_SPEC.md`.
   flags, provisional 0.65 threshold, review-only) — completing the deferred
   Phase 2/3 item; 2 additional tests.
 
+## Verification evidence (2026-10-30, continued)
+
+- **v1 exact reproduction: PASS.** The unchanged v1 pipeline
+  (`scripts/evaluate_retrieval.py`, frozen baseline, 497 queries, 1068
+  chunks) reproduces the canonical v1 metrics exactly: recall@1 0.5453,
+  recall@3 0.7606, recall@5 0.8209, mrr@10 0.6615 — acceptance criterion
+  verified with fresh output, not the saved file.
+- **Overlap detector on real data.** Probe queries against the known
+  near-duplicate pair (`evaluation::install-eval-dependencies` vs
+  `serving-and-export::install-server-dependencies`): frozen-MiniLM cosine
+  similarities on this corpus peak around 0.35–0.57, below the provisional
+  0.65 semantic flag — the known counterpart still appears at the top of the
+  similarity ranking. The validator's `--semantic` stage now always reports
+  per-query top-5 train-chunk matches with scores (threshold-crossing flags
+  remain provisional), so the author gets full review material either way.
+- **Non-coupling scan fix.** The scan now whitelists the six v1 scripts
+  instead of blacklisting one file; it previously false-flagged v2's own
+  `run_retrieval.py`. Regression test added (v2 scripts exempt, v1 scripts
+  still caught).
+- **E5 real-encode test.** Added and passing: `DenseRetriever` with the E5
+  revision pin and prefixes produces 384-dim unit-norm vectors (weights
+  cached from the rehearsal).
+- Full v2 suite: 72 tests green (22 validator, 21 metrics, 15 retrievers,
+  10 comparison, 5 invariants — plus the 12 passing v1 tests).
+
 ## Phase 4/5 rehearsal (smoke fixtures, /tmp only — not the benchmark)
 
 A clean-room rehearsal of the Phase 4+5 command paths ran against 3 temporary

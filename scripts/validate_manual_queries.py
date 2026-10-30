@@ -253,14 +253,29 @@ def check_query_record(
 
 
 def scan_v1_non_coupling(scripts_dir: Path, config_dir: Path) -> list[str]:
-    """v1 training/eval scripts must never reference the manual query dataset."""
+    """v1 training/eval scripts must never reference the manual query dataset.
+
+    Whitelist of the actual v1 files; v2 scripts (run_retrieval.py etc.)
+    legitimately consume the manual dataset.
+    """
+    v1_scripts = (
+        "prepare_corpus.py",
+        "generate_queries.py",
+        "mine_hard_negatives.py",
+        "encoder.py",
+        "evaluate_retrieval.py",
+        "compare_results.py",
+    )
     errors = []
     needle = "manual_queries"
-    for path in list(scripts_dir.glob("*.py")) + list(config_dir.glob("*.yaml")):
-        if path.name == "validate_manual_queries.py":
+    for name in v1_scripts:
+        path = scripts_dir / name
+        if not path.exists():
             continue
-        text = path.read_text(encoding="utf-8")
-        if needle in text:
+        if needle in path.read_text(encoding="utf-8"):
+            errors.append(f"{path}: references 'manual_queries' (v1 coupling risk)")
+    for path in config_dir.glob("*.yaml"):
+        if needle in path.read_text(encoding="utf-8"):
             errors.append(f"{path}: references 'manual_queries' (v1 coupling risk)")
     return errors
 
@@ -270,11 +285,15 @@ def semantic_overlap_flags(
     maps: dict[str, Any],
     threshold: float,
     max_flags_per_query: int,
-) -> tuple[list[str], str | None]:
-    """Embedding-based cross-corpus overlap flags (provisional, review only).
+) -> dict[str, Any]:
+    """Embedding-based cross-corpus overlap review material.
 
-    Uses the frozen MiniLM retriever. Returns (flags, note); note is None on
-    success or an explanation when the encoder is unavailable.
+    Returns {"flags": [...], "top_matches": [...], "note": str|None}.
+    ``flags`` are threshold-crossing review flags; ``top_matches`` always
+    lists each query's top-5 train chunks by frozen-MiniLM cosine so the
+    author can review candidates even when nothing crosses the provisional
+    threshold (observed similarities on this corpus are typically well below
+    it). Never relabels queries.
     """
     from pathlib import Path as _Path
 
@@ -282,7 +301,7 @@ def semantic_overlap_flags(
     try:
         from retrievers import MINILM_MODEL_ID, MINILM_REVISION, DenseRetriever
     except Exception as exc:  # heavy deps unavailable
-        return [], f"semantic stage unavailable: {exc}"
+        return {"flags": [], "top_matches": [], "note": f"semantic stage unavailable: {exc}"}
 
     try:
         encoder = DenseRetriever(
@@ -292,7 +311,7 @@ def semantic_overlap_flags(
             max_length=256,
         )
     except Exception as exc:
-        return [], f"semantic stage unavailable: {exc}"
+        return {"flags": [], "top_matches": [], "note": f"semantic stage unavailable: {exc}"}
 
     train_chunks = maps["train_chunks"]
     queries = [r.get("query", "") for r in records]
@@ -300,13 +319,23 @@ def semantic_overlap_flags(
         query_vecs = encoder.encode(queries)
         chunk_vecs = encoder.encode_corpus(train_chunks)
     except Exception as exc:
-        return [], f"semantic stage failed: {exc}"
+        return {"flags": [], "top_matches": [], "note": f"semantic stage failed: {exc}"}
 
     flags: list[str] = []
+    top_matches: list[dict[str, Any]] = []
     for i, record in enumerate(records):
         qid = record.get("query_id")
         sims = chunk_vecs @ query_vecs[i]
         order = sorted(range(len(sims)), key=lambda j: -sims[j])
+        top_matches.append(
+            {
+                "query_id": qid,
+                "top_train_chunks": [
+                    {"chunk_id": train_chunks[j]["chunk_id"], "cosine": round(float(sims[j]), 4)}
+                    for j in order[:5]
+                ],
+            }
+        )
         hits = [
             f"{qid}: semantic similarity {sims[j]:.2f} with train chunk '{train_chunks[j]['chunk_id']}'"
             for j in order
@@ -314,7 +343,7 @@ def semantic_overlap_flags(
         ][:max_flags_per_query]
         if hits:
             flags.extend(hits)
-    return flags, None
+    return {"flags": flags, "top_matches": top_matches, "note": None}
 
 
 def validate(
@@ -385,11 +414,14 @@ def validate(
                 )
 
     semantic_note = "semantic stage not requested"
+    semantic_top_matches: list[dict[str, Any]] = []
     if semantic:
-        sem_flags, semantic_note = semantic_overlap_flags(
+        sem_result = semantic_overlap_flags(
             records, maps, sem_threshold, max_flags_per_query
         )
-        flags += sem_flags
+        flags += sem_result["flags"]
+        semantic_note = sem_result["note"]
+        semantic_top_matches = sem_result["top_matches"]
 
     return {
         "valid": not errors,
@@ -401,12 +433,15 @@ def validate(
         "flags": flags,
         "per_record": per_record,
         "semantic_stage": semantic_note,
+        "semantic_top_matches": semantic_top_matches,
         "note": (
             "Overlap flags use provisional review thresholds "
             f"(lexical Jaccard >= {lex_threshold}"
             + (f", semantic cosine >= {sem_threshold}" if semantic else "")
             + "); they are review material, "
-            "not calibrated thresholds, and never relabel queries."
+            "not calibrated thresholds, and never relabel queries. "
+            "When the semantic stage runs, top-5 train-chunk matches per query "
+            "are reported with scores regardless of the threshold."
         ),
     }
 
