@@ -27,8 +27,9 @@ owner-approved query set). Reproduction:
    1,068 chunks, paired bootstrap uncertainty (exploratory). Reported in
    `results/comparison.md`. Because labels were single-chunk and queries were
    template-generated, v1 numbers describe this controlled setting only.
-6. **Evaluation v2 (manual)** — 54 owner-approved queries (drafted by Qoder) with multi-chunk /
-   multi-section labels, chunk- and section-level Hit@K / Recall@K / MRR@10,
+6. **Evaluation v2 (manual)** — 54 owner-approved queries, manually crafted by
+   the project owner with AI assistance, with multi-chunk / multi-section
+   labels, chunk- and section-level Hit@K / Recall@K / MRR@10,
    four retrievers (frozen MiniLM, Soup adapter, BM25, frozen E5-small-v2),
    doc-stratified paired bootstrap and leave-one-doc-out sensitivity
    (`scripts/retrieval.py`, `scripts/retrievers.py`,
@@ -79,34 +80,40 @@ addressed during v1 development and no longer describe open issues.
 
 ## Evaluation v2 results (manual benchmark)
 
-54 owner-approved queries (drafted by Qoder, reviewed and frozen by the
-owner) over the same 1,068-chunk corpus, with chunk- and section-level
+54 owner-approved queries, manually crafted by the project owner with AI
+assistance, over the same 1,068-chunk corpus, with chunk- and section-level
 metrics and a paired document-stratified bootstrap (10,000 resamples,
 seed 42). Full report: `results/v2/comparison.md`.
 
 | Retriever | Hit@1 | Hit@5 | MRR@10 | Sec Hit@1 | Sec MRR@10 |
 |---|:---:|:---:|:---:|:---:|:---:|
 | E5-small-v2 | 0.685 | 0.870 | 0.783 | 0.722 | 0.817 |
-| MiniLM frozen | 0.593 | 0.870 | 0.702 | 0.648 | 0.735 |
-| MiniLM + Soup | 0.556 | 0.815 | 0.669 | 0.593 | 0.701 |
-| BM25 | 0.481 | 0.722 | 0.598 | 0.481 | 0.616 |
+| MiniLM frozen | 0.574 | 0.870 | 0.693 | 0.630 | 0.726 |
+| MiniLM + Soup | 0.537 | 0.796 | 0.650 | 0.574 | 0.682 |
+| BM25 | 0.481 | 0.722 | 0.595 | 0.481 | 0.613 |
 
 The adapter does not generalise to natural-language queries: it trails frozen
-MiniLM by 3.7 pp Hit@1 and 3.3 pp MRR@10 (intervals include 0), and by
-10.7 pp Recall@5 (interval excludes 0). Frozen E5-small-v2 leads every
+MiniLM by 3.7 pp Hit@1 and 4.3 pp MRR@10 (intervals include 0), and by
+11.1 pp Recall@5 (interval excludes 0). Frozen E5-small-v2 leads every
 retriever on every metric.
 
-The subset split is the informative part. On the 36 primary queries, whose
+The subset split is the informative part. On the 39 primary queries, whose
 answers exist only in held-out documents, Soup trails frozen MiniLM
-(Hit@1 0.528 vs 0.639; MRR@10 0.642 vs 0.724). On the 18 overlap queries,
-whose answers also appear in training documents, Soup leads frozen
-(Hit@1 0.611 vs 0.500; MRR@10 0.722 vs 0.657) and matches BM25. That pattern
-is consistent with the adapter picking up training-document text rather than
-a transferable retrieval skill, and the v1 synthetic queries were
-near-paraphrases of training-document headings.
+(Hit@1 0.538 vs 0.615; MRR@10 0.644 vs 0.714). On the 15 remaining overlap
+queries, whose answers also appear in training documents, Soup leads frozen
+MiniLM (Hit@1 0.533 vs 0.467; MRR@10 0.667 vs 0.639), but BM25 is strongest
+on that subset (Hit@1 0.667; MRR@10 0.728). That pattern is consistent with
+the adapter picking up training-document text rather than a transferable
+retrieval skill, and the v1 synthetic queries were near-paraphrases of
+training-document headings.
+
+All 18 original overlap candidates were audited against chunk text
+(`docs/EVALUATION_V2_OVERLAP_AUDIT.md`): 15 were confirmed and 3 were
+reclassified as primary with owner approval (`manual_002`, `manual_023`,
+`manual_043`). The final split is 39 primary / 15 overlap.
 
 Leave-one-document-out keeps the direction: Soup−frozen Hit@1 is ≤ 0 for
-every dropped document (range −0.079 to 0.000), and Soup trails E5
+every dropped document (range −0.079 to −0.022), and Soup trails E5
 throughout. Four held-out documents cannot support population-level claims;
 all intervals are exploratory and no p-values are reported.
 

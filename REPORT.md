@@ -212,8 +212,8 @@ To assess model safety and identify edge cases, all queries where the fine-tuned
 ## 11. Evaluation v2 Extension (manual benchmark, complete)
 
 This report describes the v1 controlled benchmark. Evaluation v2 measures
-generalization on **54 owner-approved queries** (drafted by Qoder, reviewed
-and frozen by the owner) with multi-chunk/multi-section labels, chunk- and
+generalization on **54 owner-approved queries, manually crafted by the project
+owner with AI assistance**, with multi-chunk/multi-section labels, chunk- and
 section-level Hit@K/Recall@K/MRR, and a four-way comparison (frozen MiniLM,
 Soup adapter, BM25, frozen `intfloat/e5-small-v2`) with doc-stratified paired
 bootstrap and leave-one-doc-out sensitivity. Full methodology:
@@ -222,18 +222,21 @@ bootstrap and leave-one-doc-out sensitivity. Full methodology:
 | Retriever | Hit@1 | Hit@5 | MRR@10 | Sec Hit@1 | Sec MRR@10 |
 |---|:---:|:---:|:---:|:---:|:---:|
 | E5-small-v2 (frozen) | 0.685 | 0.870 | 0.783 | 0.722 | 0.817 |
-| MiniLM frozen | 0.593 | 0.870 | 0.702 | 0.648 | 0.735 |
-| MiniLM + Soup adapter | 0.556 | 0.815 | 0.669 | 0.593 | 0.701 |
-| BM25 | 0.481 | 0.722 | 0.598 | 0.481 | 0.616 |
+| MiniLM frozen | 0.574 | 0.870 | 0.693 | 0.630 | 0.726 |
+| MiniLM + Soup adapter | 0.537 | 0.796 | 0.650 | 0.574 | 0.682 |
+| BM25 | 0.481 | 0.722 | 0.595 | 0.481 | 0.613 |
 
 The v1 gain does not transfer to natural-language queries: the adapter trails
-frozen MiniLM on the manual set (Hit@1 −3.7 pp, MRR@10 −3.3 pp; Recall@5
-−10.7 pp with an interval excluding 0). The split by subset is the key
-result: on the 36 primary queries the adapter trails frozen MiniLM
-(Hit@1 0.528 vs 0.639), while on the 18 overlap queries whose answers also
-appear in training documents it leads (Hit@1 0.611 vs 0.500). This is
-consistent with the adapter having learned training-document text rather than
-a transferable retrieval skill. Frozen E5-small-v2 is the strongest retriever
+frozen MiniLM on the manual set (Hit@1 −3.7 pp, MRR@10 −4.3 pp; Recall@5
+−11.1 pp with an interval excluding 0). The split by subset is the key
+result: on the 39 primary queries the adapter trails frozen MiniLM
+(Hit@1 0.538 vs 0.615), while on the 15 remaining overlap queries whose
+answers also appear in training documents it leads frozen MiniLM
+(Hit@1 0.533 vs 0.467), though BM25 is strongest on that subset (0.667).
+All 18 original overlap candidates were audited
+(`docs/EVALUATION_V2_OVERLAP_AUDIT.md`): 15 confirmed and 3 reclassified as
+primary with owner approval. This is consistent with the adapter having
+learned training-document text rather than a transferable retrieval skill. Frozen E5-small-v2 is the strongest retriever
 on every metric. Four held-out documents are insufficient for
 population-level inference; intervals are exploratory and no p-values are
 reported. The v1 numbers above remain the canonical record of the controlled

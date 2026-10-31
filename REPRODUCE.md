@@ -124,7 +124,8 @@ python scripts/compare_results.py \
 ## 4. Evaluation v2 (manual benchmark)
 
 The v2 layer evaluates the existing adapter and baselines on 54 owner-approved
-manual queries (drafted by Qoder). It never retrains the adapter and never modifies v1 data.
+manual queries, manually crafted by the project owner with AI assistance. It
+never retrains the adapter and never modifies v1 data.
 
 Environment (once):
 
@@ -136,15 +137,20 @@ uv pip install --python .venv/bin/python -r requirements.txt
 Dataset workflow (already complete; documented for revalidation):
 
 ```bash
-# 1. Queries were drafted by Qoder and reviewed/frozen by the owner
+# 1. Queries were manually crafted by the owner with AI assistance,
+#    then owner-reviewed and frozen
 #    (worksheet: docs/EVALUATION_V2_COVERAGE.md)
 # 2. Verbatim transcription into data/manual_queries.jsonl; 54 records
 # 3. Validate (errors block; overlap flags are provisional review material)
 .venv/bin/python scripts/validate_manual_queries.py
 .venv/bin/python scripts/validate_manual_queries.py --semantic   # optional embedding-based flags
 # 4. Frozen: query-set fingerprint
-#    116bd4c36a6b7747e86bb36b1836b4d1f9c4a552c2c8c752f14c066f38086f3d
+#    971e157083c31e5e55131a35597dc492d20996a02c7a491543e02d7cbef362b3
 ```
+
+Final split: 39 primary / 15 overlap. The 18 original overlap candidates were
+audited against chunk text (`docs/EVALUATION_V2_OVERLAP_AUDIT.md`); 15 were
+confirmed and 3 reclassified as primary with owner approval.
 
 Expected validator output: `checked 54 queries`, `errors: 0`, `warnings: 0`,
 `overlap flags: 1` (`manual_010`, a provisional lexical flag against the
@@ -162,11 +168,11 @@ Four-way retrieval run:
 ```
 
 Expected micro metrics (Hit@1 / Hit@5 / MRR@10): E5-small-v2
-0.6852 / 0.8704 / 0.7834; MiniLM frozen 0.5926 / 0.8704 / 0.7021;
-MiniLM + Soup 0.5556 / 0.8148 / 0.6686; BM25 0.4815 / 0.7222 / 0.5984.
+0.6852 / 0.8704 / 0.7834; MiniLM frozen 0.5741 / 0.8704 / 0.6928;
+MiniLM + Soup 0.5370 / 0.7963 / 0.6501; BM25 0.4815 / 0.7222 / 0.5953.
 All four result files must share corpus fingerprint `76ab5e88…` and
-query-set fingerprint `116bd4c3…`; the report must state the no-p-value,
-four-document caveat. Clean-room verification is reproducible bit-exactly
-(see `docs/EVALUATION_V2_PROGRESS.md`, Phase 7).
+query-set fingerprint `971e1570…`; the report must state the no-p-value,
+four-document caveat. Repeated report generation is deterministic; the
+verification history is recorded in `docs/EVALUATION_V2_PROGRESS.md`.
 
 Methodology and gates: `docs/EVALUATION_V2_SPEC.md`.

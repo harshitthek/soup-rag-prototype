@@ -6,9 +6,9 @@ Consumes the four retriever result JSONs produced by
 - micro-average (all queries equally) and macro-average (mean of the four
   per-document scores) for every chunk- and section-level metric;
 - paired document-stratified bootstrap intervals (10,000 resamples, seed 42)
-  with a single shared resampler so identical query indices are applied to
-  all retrievers, for the three pairwise comparisons Soup−frozen,
-  Soup−BM25, Soup−E5;
+  from one precomputed index plan, so the identical query indices are applied
+  to every metric, every retriever, and all three pairwise comparisons
+  Soup−frozen, Soup−BM25, Soup−E5;
 - leave-one-document-out sensitivity for the same comparisons;
 - a section-cluster bootstrap only if the frozen dataset's cluster structure
   makes it informative (>= 30% of query-occupied sections contain >= 2
@@ -47,6 +47,13 @@ CAVEAT = (
     "No p-values and no significance claims are made."
 )
 
+OVERLAP_AUDIT_NOTE = (
+    "The 18 original overlap labels were audited against training-chunk text "
+    "on 2026-10-31 (`docs/EVALUATION_V2_OVERLAP_AUDIT.md`): 15 confirmed and "
+    "3 reclassified as primary with owner approval. The subset tables below "
+    "use the final 39 primary / 15 overlap split."
+)
+
 
 def load_result(path: Path) -> dict[str, Any]:
     with open(path, "r", encoding="utf-8") as f:
@@ -77,10 +84,13 @@ def macro_metric(result: dict[str, Any], metric: str) -> float:
 
 
 class StratifiedResampler:
-    """Doc-stratified bootstrap: resamples query indices within each document.
+    """Precomputed document-stratified bootstrap plan.
 
-    One resampler instance generates identical indices for every retriever,
-    preserving pairedness across all comparisons.
+    All index draws are generated once at construction. Each resample keeps
+    every document's original query count. Because the draws are stored,
+    every metric and every pairwise comparison in a report reuses the exact
+    same query positions, and both retrievers in a comparison are always
+    scored on those same positions.
     """
 
     def __init__(
@@ -92,19 +102,18 @@ class StratifiedResampler:
         self.query_docs = list(query_docs)
         self.n_bootstrap = n_bootstrap
         self.seed = seed
-        self._rng = np.random.RandomState(seed)
-        self._doc_indices: dict[str, np.ndarray] = {}
+        rng = np.random.RandomState(seed)
+        doc_indices: dict[str, list[int]] = {}
         for i, doc in enumerate(self.query_docs):
-            self._doc_indices.setdefault(doc, []).append(i)
-        for doc in self._doc_indices:
-            self._doc_indices[doc] = np.array(self._doc_indices[doc])
-
-    def iterations(self):
-        for _ in range(self.n_bootstrap):
+            doc_indices.setdefault(doc, []).append(i)
+        indices: list[list[int]] = []
+        for _ in range(n_bootstrap):
             flat: list[int] = []
-            for doc, indices in self._doc_indices.items():
-                flat.extend(int(i) for i in self._rng.choice(indices, size=len(indices), replace=True))
-            yield flat
+            for doc, positions in doc_indices.items():
+                chosen = rng.choice(positions, size=len(positions), replace=True)
+                flat.extend(int(i) for i in chosen)
+            indices.append(flat)
+        self.indices: list[list[int]] = indices
 
 
 def paired_bootstrap_ci(
@@ -117,7 +126,7 @@ def paired_bootstrap_ci(
     b = np.asarray(b_scores, dtype=float)
     observed_delta = float(np.mean(a) - np.mean(b))
     deltas = []
-    for idx in resampler.iterations():
+    for idx in resampler.indices:
         deltas.append(float(np.mean(a[idx]) - np.mean(b[idx])))
     deltas = sorted(deltas)
     lo = deltas[int(alpha / 2 * len(deltas))]
@@ -278,10 +287,10 @@ def generate_report(
         "# Evaluation v2 — Four-Way Retrieval Comparison (Manual Queries)",
         "",
         f"**Retrievers:** {', '.join(RETRIEVER_IDS)}  ",
-        f"**Queries:** {len(query_ids)} manual queries (owner-approved; drafted by Qoder)  ",
+        f"**Queries:** {len(query_ids)} manual queries (owner-approved; manually crafted by the owner with AI assistance)  ",
         f"**Corpus fingerprint:** {results['mini_lm_frozen'].get('corpus_fingerprint', '?')}  ",
         f"**Query-set fingerprint:** {results['mini_lm_frozen'].get('query_set_fingerprint', '?')[:16]}…  ",
-        f"**Bootstrap:** {n_bootstrap} resamples, seed={seed}, paired document-stratified percentile intervals, shared indices across retrievers.",
+        f"**Bootstrap:** {n_bootstrap} resamples, seed={seed}, paired document-stratified percentile intervals, one precomputed index plan shared across every metric and retriever.",
         "",
         f"> {CAVEAT}",
         "",
@@ -353,6 +362,8 @@ def generate_report(
         "but a section-level hit and never counts as a section regression.",
         "",
     ]
+
+    lines += [f"> {OVERLAP_AUDIT_NOTE}", ""]
 
     for subset in subsets_present:
         subset_ids = [

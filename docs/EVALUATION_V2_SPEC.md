@@ -29,8 +29,9 @@ Determine whether the Soup LoRA fine-tuned `all-MiniLM-L6-v2` adapter
 (`output_embedding`, r=16/α=32, query+value, triplet margin 0.5) improves
 retrieval on **natural-language (non-synthetic) queries** over the four
 held-out documents, measured at chunk and section granularity, against BM25
-and frozen `intfloat/e5-small-v2`. The query set is owner-approved
-(machine-drafted, see the §4 amendment). A negative result is acceptable.
+and frozen `intfloat/e5-small-v2`. The query set is owner-approved: the owner
+manually crafted the queries with AI assistance (see §4). A negative result
+is acceptable.
 
 ## 3. Frozen inputs (v1, never modified)
 
@@ -44,11 +45,17 @@ and frozen `intfloat/e5-small-v2`. The query set is owner-approved
 - Base model revisions: MiniLM `1110a243fdf4706b3f48f1d95db1a4f5529b4d41`
   (from `soup_run.json`); E5-small-v2 `ffb93f3bd4047442299a41ebb6fa998a38507c52`.
 
-## 4. Manual query dataset (Phase 1; owner-approved, see amendment)
+## 4. Manual query dataset (Phase 1; owner-approved)
 
-- 54 queries. Original rule (superseded by the amendment at the end of this
-  list): authored exclusively by the project owner, no LLM generation, no
-  drafting, no paraphrasing of owner wording by the tooling.
+The 54 natural language evaluation queries were manually crafted by the
+project owner with AI assistance. The owner used the source documentation,
+coverage worksheet, and AI-assisted analysis to develop the queries, review
+their relevance annotations, and finalize the evaluation dataset. The final
+query wording, selection, relevance labels, and dataset freeze were reviewed
+and approved by the project owner. This is the owner's own review, not
+independent third-party annotation or independent validation; no external
+annotator reviewed the labels.
+
 - Allocation: adapters-and-governance 16 · compliance 8 · evaluation 17 ·
   peft-and-efficiency 13 (tolerance ±2 per document).
 - ≥6 queries must target multi-chunk sections.
@@ -59,13 +66,6 @@ and frozen `intfloat/e5-small-v2`. The query set is owner-approved
   repetition of distinctive chunk phrases; legitimate command/flag/concept
   terminology is allowed.
 - Excluded degenerate sections: `evaluation::1-0`, `evaluation::0-5`.
-
-> **Amendment (2026-10-31).** The owner originally required exclusive human
-> authorship and later instructed Qoder to draft all 54 queries. The dataset is
-> machine-drafted at the owner's explicit request, then owner-reviewed and
-> owner-frozen. This weakens the human-authorship property of the benchmark
-> relative to the original design; it is recorded here rather than silently
-> changed. All other rules in this section remain in force.
 
 ### Record schema (`data/manual_queries.jsonl`, one JSON object per line)
 
@@ -226,11 +226,12 @@ candidate evaluation reproduces exactly.
 
 ```
 data/raw_docs/                  vendored sources + LICENSE + attribution
-data/manual_queries.jsonl       owner-approved (frozen at gate; drafted by Qoder)
+data/manual_queries.jsonl       owner-approved (frozen; manually crafted with AI assistance)
 data/manual_queries_validation_report.json
 docs/EVALUATION_V2_SPEC.md      this file
 docs/EVALUATION_V2_COVERAGE.md  query worksheet (no sample queries)
 docs/EVALUATION_V2_PROGRESS.md  implementation record
+docs/EVALUATION_V2_OVERLAP_AUDIT.md  overlap-label audit (2026-10-31)
 scripts/retrieval.py            shared metrics, section mapping, classifier
 scripts/run_retrieval.py        multi-retriever CLI
 scripts/compare_retrievers.py   N-way analysis

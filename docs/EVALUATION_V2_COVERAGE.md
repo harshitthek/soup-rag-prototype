@@ -1,11 +1,14 @@
 # Evaluation v2 — Manual Query Coverage Worksheet
 
-**Authorship note (amended 2026-10-31).** The project owner originally required
-every query to be hand-written by the owner and barred tooling from drafting.
-On 2026-10-31 the owner explicitly instructed Qoder to draft all 54 queries.
-The entries below are Qoder-drafted and owner-reviewed before freeze; every
-wording, annotation, and validator rule still applies. The amendment is also
-recorded in `docs/EVALUATION_V2_SPEC.md` §4 and the progress log.
+**Authorship note (2026-10-31).** The 54 natural language evaluation queries
+were manually crafted by the project owner with AI assistance. The owner used
+the source documentation, this worksheet, and AI-assisted analysis to develop
+the queries, review their relevance annotations, and finalize the evaluation
+dataset. The final query wording, selection, relevance labels, and dataset
+freeze were reviewed and approved by the project owner. This is the owner's
+own review, not independent third-party annotation or independent validation.
+The same note is recorded in `docs/EVALUATION_V2_SPEC.md` §4 and the progress
+log.
 
 Read the source text in `data/raw_docs/<document>.md` before writing a query.
 

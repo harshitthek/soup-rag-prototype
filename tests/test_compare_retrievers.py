@@ -126,18 +126,70 @@ def test_micro_and_macro_metric(results):
 
 def test_stratified_resampler_preserves_doc_counts():
     docs = ["a", "a", "a", "b", "b"]
-    rs = StratifiedResampler(docs, n_bootstrap=5, seed=42)
-    for idx in rs.iterations():
+    plan = StratifiedResampler(docs, n_bootstrap=5, seed=42)
+    assert len(plan.indices) == 5
+    for idx in plan.indices:
         sampled_docs = [docs[i] for i in idx]
         assert sampled_docs.count("a") == 3
         assert sampled_docs.count("b") == 2
 
 
-def test_resampler_deterministic_given_seed():
+def test_bootstrap_plan_deterministic_given_seed():
     docs = ["a", "a", "b"]
-    a = list(StratifiedResampler(docs, n_bootstrap=3, seed=7).iterations())
-    b = list(StratifiedResampler(docs, n_bootstrap=3, seed=7).iterations())
-    assert a == b
+    p1 = StratifiedResampler(docs, n_bootstrap=10, seed=42)
+    p2 = StratifiedResampler(docs, n_bootstrap=10, seed=42)
+    p3 = StratifiedResampler(docs, n_bootstrap=10, seed=43)
+    assert p1.indices == p2.indices
+    assert p1.indices != p3.indices
+
+
+def test_paired_bootstrap_ci_uses_precomputed_positions_for_both_retrievers():
+    """The CI must be reproducible from plan.indices with the same positions
+    applied to both retrievers; no additional draws are made."""
+    docs = ["a", "a", "b"]
+    plan = StratifiedResampler(docs, n_bootstrap=50, seed=42)
+    a = np.asarray([1.0, 0.0, 0.5])
+    b = np.asarray([0.0, 1.0, 0.5])
+    ci = paired_bootstrap_ci(a, b, plan)
+
+    deltas = sorted(
+        float(a[np.asarray(idx)].mean() - b[np.asarray(idx)].mean())
+        for idx in plan.indices
+    )
+    assert ci["delta"] == pytest.approx(0.0)
+    assert ci["ci_lower"] == pytest.approx(round(deltas[int(0.025 * len(deltas))], 4))
+    assert ci["ci_upper"] == pytest.approx(round(deltas[int(0.975 * len(deltas))], 4))
+    # repeated evaluation is stable: the plan is not consumed
+    assert paired_bootstrap_ci(a, b, plan) == ci
+
+
+def test_generate_report_uses_one_plan_for_all_metrics_and_comparisons(
+    monkeypatch, results, tmp_path
+):
+    import compare_retrievers as cr
+
+    plans = []
+    calls = []
+    real_cls = cr.StratifiedResampler
+    real_ci = cr.paired_bootstrap_ci
+
+    class RecordingPlan(real_cls):
+        def __init__(self, *args, **kwargs):
+            super().__init__(*args, **kwargs)
+            plans.append(self)
+
+    def recording_ci(a, b, plan, alpha=0.05):
+        calls.append(id(plan))
+        return real_ci(a, b, plan, alpha)
+
+    monkeypatch.setattr(cr, "StratifiedResampler", RecordingPlan)
+    monkeypatch.setattr(cr, "paired_bootstrap_ci", recording_ci)
+    generate_report(results, tmp_path / "shared.md", n_bootstrap=20, seed=42)
+
+    n_metrics = len(results["mini_lm_frozen"]["_per_query_scores"])
+    assert len(plans) == 1
+    assert len(calls) == n_metrics * len(cr.COMPARISONS)
+    assert set(calls) == {id(plans[0])}
 
 
 def test_paired_bootstrap_ci_positive_and_zero_deltas():
@@ -211,6 +263,7 @@ def test_generate_report_no_p_values_and_caveats(results, tmp_path):
     assert CAVEAT in report
     assert "Section-Cluster Bootstrap Decision" in report
     assert "Overlap Subset" in report and "Primary Subset" in report
+    assert "docs/EVALUATION_V2_OVERLAP_AUDIT.md" in report
     assert "Leave-One-Document-Out Sensitivity" in report
 
 

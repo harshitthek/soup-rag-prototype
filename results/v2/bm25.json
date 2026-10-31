@@ -10,26 +10,26 @@
   },
   "corpus_fingerprint": "76ab5e88af6e82bb1892296c7d3a854b722466466b6ae2fb7dc8c4831be75b2c",
   "query_set": "manual",
-  "query_set_fingerprint": "116bd4c36a6b7747e86bb36b1836b4d1f9c4a552c2c8c752f14c066f38086f3d",
+  "query_set_fingerprint": "971e157083c31e5e55131a35597dc492d20996a02c7a491543e02d7cbef362b3",
   "corpus_size": 1068,
   "query_count": 54,
   "top_k": 10,
-  "encode_time_s": 0.129,
+  "encode_time_s": 0.078,
   "metrics": {
     "hit@1": 0.48148148148148145,
-    "recall@1": 0.24290123456790125,
+    "recall@1": 0.2521604938271605,
     "hit@3": 0.7037037037037037,
-    "recall@3": 0.43425925925925923,
+    "recall@3": 0.44969135802469135,
     "hit@5": 0.7222222222222222,
-    "recall@5": 0.5021604938271605,
-    "mrr@10": 0.5983980011757789,
+    "recall@5": 0.5114197530864197,
+    "mrr@10": 0.5953115814226926,
     "sec_hit@1": 0.48148148148148145,
-    "sec_recall@1": 0.3055555555555556,
+    "sec_recall@1": 0.3148148148148148,
     "sec_hit@3": 0.7592592592592593,
-    "sec_recall@3": 0.5833333333333334,
+    "sec_recall@3": 0.5925925925925926,
     "sec_hit@5": 0.7592592592592593,
-    "sec_recall@5": 0.632716049382716,
-    "sec_mrr@10": 0.615814226925338
+    "sec_recall@5": 0.6419753086419753,
+    "sec_mrr@10": 0.6127278071722516
   },
   "per_query_results": [
     {
@@ -114,15 +114,13 @@
     {
       "query_id": "manual_002",
       "query": "How do I bisect training checkpoints when an eval regresses?",
-      "subset": "overlap",
+      "subset": "primary",
       "source_document": "adapters-and-governance",
       "relevant_chunk_ids": [
-        "adapters-and-governance::4-bisect-a-training-history-to-find-the-step-that-broke-an-eval",
-        "commands::all-commands::sub_054"
+        "adapters-and-governance::4-bisect-a-training-history-to-find-the-step-that-broke-an-eval"
       ],
       "relevant_section_ids": [
-        "adapters-and-governance::4-bisect-a-training-history-to-find-the-step-that-broke-an-eval",
-        "commands::all-commands"
+        "adapters-and-governance::4-bisect-a-training-history-to-find-the-step-that-broke-an-eval"
       ],
       "ranked": [
         {
@@ -1723,15 +1721,13 @@
     {
       "query_id": "manual_023",
       "query": "which expectation checks can go in expectations.yaml",
-      "subset": "overlap",
+      "subset": "primary",
       "source_document": "compliance",
       "relevant_chunk_ids": [
-        "compliance::writes-github-workflows-soup-gate-yml::sub_000",
-        "data::expectations-suite-great-expectations-for-chat-data"
+        "compliance::writes-github-workflows-soup-gate-yml::sub_000"
       ],
       "relevant_section_ids": [
-        "compliance::writes-github-workflows-soup-gate-yml",
-        "data::expectations-suite-great-expectations-for-chat-data"
+        "compliance::writes-github-workflows-soup-gate-yml"
       ],
       "ranked": [
         {
@@ -3263,16 +3259,13 @@
     {
       "query_id": "manual_043",
       "query": "how does longlora shifted sparse attention work",
-      "subset": "overlap",
+      "subset": "primary",
       "source_document": "peft-and-efficiency",
       "relevant_chunk_ids": [
-        "peft-and-efficiency::longlora-forward-override",
-        "training::architecture-knobs-mixture-of-depths-llama-pro-longlora::sub_000",
-        "training::architecture-knobs-mixture-of-depths-llama-pro-longlora::sub_001"
+        "peft-and-efficiency::longlora-forward-override"
       ],
       "relevant_section_ids": [
-        "peft-and-efficiency::longlora-forward-override",
-        "training::architecture-knobs-mixture-of-depths-llama-pro-longlora"
+        "peft-and-efficiency::longlora-forward-override"
       ],
       "ranked": [
         {
@@ -4236,7 +4229,7 @@
     ],
     "recall@1": [
       0.3333333333333333,
-      0.5,
+      1.0,
       0.0,
       0.0,
       0.0,
@@ -4348,7 +4341,7 @@
     ],
     "recall@3": [
       0.3333333333333333,
-      0.5,
+      1.0,
       0.0,
       0.0,
       0.0,
@@ -4389,7 +4382,7 @@
       1.0,
       1.0,
       0.3333333333333333,
-      0.6666666666666666,
+      1.0,
       0.0,
       0.5,
       0.2,
@@ -4460,7 +4453,7 @@
     ],
     "recall@5": [
       0.3333333333333333,
-      0.5,
+      1.0,
       0.0,
       0.0,
       0.0,
@@ -4557,7 +4550,7 @@
       1.0,
       1.0,
       1.0,
-      0.5,
+      0.3333333333333333,
       0.16666666666666666,
       1.0,
       1.0,
@@ -4628,7 +4621,7 @@
     ],
     "sec_recall@1": [
       0.3333333333333333,
-      0.5,
+      1.0,
       0.0,
       0.0,
       0.0,
@@ -4740,7 +4733,7 @@
     ],
     "sec_recall@3": [
       0.3333333333333333,
-      0.5,
+      1.0,
       0.0,
       0.0,
       0.0,
@@ -4852,7 +4845,7 @@
     ],
     "sec_recall@5": [
       0.3333333333333333,
-      0.5,
+      1.0,
       0.0,
       0.0,
       0.0,
@@ -4949,7 +4942,7 @@
       1.0,
       1.0,
       1.0,
-      0.5,
+      0.3333333333333333,
       0.5,
       1.0,
       1.0,

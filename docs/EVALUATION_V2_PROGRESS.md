@@ -8,13 +8,14 @@ outstanding dependencies. Canonical methodology: `docs/EVALUATION_V2_SPEC.md`.
 | Phase | State | Notes |
 |---|---|---|
 | 0 — spec, contracts, branch | done 2026-10-30 | `feat/evaluation-v2` from `origin/main` (`a5d608f`) |
-| 1 — vendoring, worksheet, validator | done (Qoder side) | queries frozen 2026-10-31 (54; 36 primary / 18 overlap); dataset + validator report in place |
+| 1 — vendoring, worksheet, validator | done | 54 queries frozen 2026-10-31; final split 39 primary / 15 overlap after the owner-approved overlap audit; dataset + validator report in place |
 | 2 — metrics, classifier, overlap detector | done (core) | `scripts/retrieval.py` + 21 tests; semantic overlap stage deferred to Phase 3 encoder |
 | 3 — four retrievers | done (code + env) | E5 weights download deferred to Phase 4 run |
 | 4 — four-way run | done 2026-10-31 | 4 result files in `results/v2/`; shared corpus+query fingerprints; E5 best, Soup adapter below frozen MiniLM |
 | 5 — analysis/report | done 2026-10-31 | `results/v2/comparison.md` (332 lines); primary/overlap reversal; E5 strongest |
 | 6 — docs + hygiene | done 2026-10-31 | checkpoint gates, model card, REVIEW/README/REPORT/REPRODUCE updated with v2 results |
-| 7 — verification | done 2026-10-31 | clean-room rerun bit-exact; full suite 85 pass + 3 pre-existing v1 collection errors; v1 numbers exact; PR awaits owner instruction |
+| 7 — verification | done 2026-10-31 | clean-room rerun bit-exact; full suite 85 pass + 3 pre-existing v1 collection errors; v1 numbers exact; PR #3 opened on owner instruction |
+| PR #3 review fixes (P1) | done 2026-10-31 (local) | authorship docs corrected, 18-query overlap audit (15/2/1), shared precomputed bootstrap plan; not pushed |
 
 ## Phase 0 — done
 
@@ -26,7 +27,7 @@ outstanding dependencies. Canonical methodology: `docs/EVALUATION_V2_SPEC.md`.
   untouched (singleton-label hit/recall equivalence documented only in v2
   docs); branch from `origin/main`.
 
-## Phase 1 — Qoder side done; dataset frozen
+## Phase 1 — dataset frozen
 
 - **Vendored** `data/raw_docs/`: 12 upstream docs + `LICENSE-soup-upstream.txt`
   (Apache-2.0, verified via GitHub API) + `ATTRIBUTION.md`.
@@ -53,30 +54,37 @@ outstanding dependencies. Canonical methodology: `docs/EVALUATION_V2_SPEC.md`.
   until the owner supplies queries). Report:
   `data/manual_queries_validation_report.json`.
 
-## Phase 1 — query drafting (2026-10-31, at owner request)
+## Phase 1 — query development (2026-10-31)
 
-- The owner instructed Qoder to draft all 54 queries (authorship amendment in
-  spec §4 and the worksheet header). All 54 slots in
-  `docs/EVALUATION_V2_COVERAGE.md` are filled; wording is Qoder-drafted and
-  still requires owner review + freeze before `data/manual_queries.jsonl` is
-  created.
+- The 54 natural language evaluation queries were manually crafted by the
+  project owner with AI assistance. The owner used the source documentation,
+  the coverage worksheet, and AI-assisted analysis to develop the queries,
+  review their relevance annotations, and finalize the dataset. All 54 slots
+  in `docs/EVALUATION_V2_COVERAGE.md` are filled, and the final wording was
+  reviewed and approved by the owner before freeze. This is owner review,
+  not independent third-party annotation or independent validation.
 - Allocation: adapters 16, compliance 8, evaluation 17,
   peft-and-efficiency 13. Types: conceptual 14, how_to 13, config_behavior 10,
   troubleshooting 7, command_detail 6, relationship 4.
-- Cross-corpus audit: 18 queries have an equivalent answer in a training
-  document and are recorded as `overlap` with the train chunk IDs (terse
-  command-table entries, the README template list, the expectations guide, and
-  the architecture-knobs training section); 36 remain `primary`. Primary per
-  document: adapters 10, compliance 3, evaluation 13, peft 10.
+- Cross-corpus review: 18 queries were initially labeled `overlap` with train
+  chunk IDs because a training passage appeared to carry an equivalent answer
+  (terse command-table entries, the README template list, the expectations
+  guide, and the architecture-knobs training section); 36 were initially
+  `primary`. Primary per document at that time: adapters 10, compliance 3,
+  evaluation 13, peft 10. The 2026-10-31 overlap audit re-checked all 18
+  against actual chunk text; the owner approved 15 confirmations and 3
+  reclassifications, giving the final 39 / 15 split recorded in
+  `docs/EVALUATION_V2_OVERLAP_AUDIT.md`.
 - Validator on the draft (`/tmp/manual_queries_draft.jsonl`, not committed):
   54 checked, 0 errors, 0 warnings, 1 provisional lexical flag
   (`manual_010` vs `backends-and-ops::machine-readable-output`, a two-line
   `soup version --json` chunk; false positive — the real registry-diff
   duplicate is already labeled in `commands::all-commands::sub_022`).
   Semantic top-5 review found no threshold-crossing overlap.
-- The owner approved the drafted set on 2026-10-31; wording was transcribed
-  verbatim into `data/manual_queries.jsonl` (54 records; 36 primary /
-  18 overlap). Canonical validation report:
+- The owner approved the query set on 2026-10-31; wording was transcribed
+  verbatim into `data/manual_queries.jsonl` (54 records; initially 36 primary
+  / 18 overlap, final 39 / 15 after the owner-approved audit). Canonical
+  validation report:
   `data/manual_queries_validation_report.json` — 54 checked, 0 errors,
   0 warnings, 1 provisional lexical flag (`manual_010`, short-chunk false
   positive; the real registry-diff duplicate is labeled in the overlap
@@ -108,11 +116,12 @@ outstanding dependencies. Canonical methodology: `docs/EVALUATION_V2_SPEC.md`.
   gate condition 3 (root adapter loads via the existing inference path in a
   fresh venv). E5's 127 MB weights are downloaded at the Phase 4 run.
 
-## Phase 4 — done (frozen 54-query dataset, 2026-10-31)
+## Phase 4 — four-way run (final rerun 2026-11-01)
 
-Four retrievers ran on `data/manual_queries.jsonl` (54 queries, 1,068 chunks,
-top-10). All four result files share the corpus fingerprint `76ab5e88…` and
-query-set fingerprint `116bd4c3…`; each has `query_count=54` and the expected
+Four retrievers ran on the final dataset after the owner-approved overlap
+reclassification (54 queries, 1,068 chunks, top-10). All four result files
+share the corpus fingerprint `76ab5e88…` and query-set fingerprint
+`971e1570…`; each has `query_count=54` and the unchanged
 `retriever_config` (MiniLM revision `1110a243…`, Soup adapter dir
 `output_embedding`, BM25 k1=1.5/b=0.75, E5 revision `ffb93f3b…` with
 query/passage prefixes).
@@ -120,16 +129,18 @@ query/passage prefixes).
 | Retriever | Hit@1 | Hit@3 | Hit@5 | MRR@10 | Sec Hit@1 | Sec MRR@10 |
 |---|---|---|---|---|---|---|
 | E5-small-v2 | 0.6852 | 0.8704 | 0.8704 | 0.7834 | 0.7222 | 0.8165 |
-| MiniLM frozen | 0.5926 | 0.7778 | 0.8704 | 0.7021 | 0.6481 | 0.7349 |
-| MiniLM + Soup adapter | 0.5556 | 0.7222 | 0.8148 | 0.6686 | 0.5926 | 0.7007 |
-| BM25 | 0.4815 | 0.7037 | 0.7222 | 0.5984 | 0.4815 | 0.6158 |
+| MiniLM frozen | 0.5741 | 0.7778 | 0.8704 | 0.6928 | 0.6296 | 0.7257 |
+| MiniLM + Soup adapter | 0.5370 | 0.7037 | 0.7963 | 0.6501 | 0.5741 | 0.6822 |
+| BM25 | 0.4815 | 0.7037 | 0.7222 | 0.5953 | 0.4815 | 0.6127 |
 
 Headline: E5 is strongest; the Soup adapter scores below frozen MiniLM on the
-manual set (−3.7 pp Hit@1, −3.3 pp MRR@10) despite its large v1
+manual set (−3.7 pp Hit@1, −4.3 pp MRR@10) despite its large v1
 synthetic-benchmark gain. The manual queries are natural-language and
-distributionally different from the heading-derived synthetic v1 queries; this
-is a substantive negative result to report, not a bug. Phase 5 will quantify
-paired uncertainty and per-document sensitivity.
+distributionally different from the heading-derived synthetic v1 queries;
+this is a substantive negative result to report, not a bug.
+
+The pre-reclassification run (36 primary / 18 overlap, query-set fingerprint
+`116bd4c3…`) is superseded; those numbers remain in the PR #3 history.
 
 Artifacts: `results/v2/{mini_lm_frozen,mini_lm_soup,bm25,e5_small}.json`.
 
@@ -154,32 +165,35 @@ Artifacts: `results/v2/{mini_lm_frozen,mini_lm_soup,bm25,e5_small}.json`.
   flags, provisional 0.65 threshold, review-only) — completing the deferred
   Phase 2/3 item; 2 additional tests.
 
-### Phase 5 results (frozen dataset)
+### Phase 5 results (final dataset)
 
-- Report: `results/v2/comparison.md` (332 lines), 10,000 paired
-  document-stratified resamples, seed 42; all four retrievers share indices.
+- Report: `results/v2/comparison.md` (334 lines), 10,000 paired
+  document-stratified resamples, seed 42; one precomputed plan is shared by
+  every metric, retriever, and comparison.
 - Micro headline: E5 strongest on every metric. Soup adapter vs frozen MiniLM:
-  Hit@1 −0.037 [−0.185, +0.111], MRR@10 −0.034 [−0.130, +0.064] — intervals
-  include 0; recall@5 −0.107 [−0.195, −0.025] and sec_recall@5 −0.086
-  [−0.154, −0.022] exclude 0 on the negative side. Soup vs E5 is negative
+  Hit@1 −0.037 [−0.185, +0.111], MRR@10 −0.043 [−0.148, +0.063] — intervals
+  include 0; recall@5 −0.111 [−0.204, −0.024] and sec_recall@5 −0.086
+  [−0.164, −0.019] exclude 0 on the negative side. Soup vs E5 is negative
   with intervals excluding 0 for Hit@3, MRR@10, recall@3/5, and several
   section metrics.
-- **Subset reversal (key finding):** on the 36 primary queries the Soup
-  adapter trails frozen MiniLM (Hit@1 0.528 vs 0.639; MRR@10 0.642 vs 0.724),
-  while on the 18 overlap queries it leads (Hit@1 0.611 vs 0.500; MRR@10 0.722
-  vs 0.657, matching BM25's 0.611 Hit@1). The adapter's advantage is confined
+- **Subset reversal (key finding):** on the 39 primary queries the Soup
+  adapter trails frozen MiniLM (Hit@1 0.538 vs 0.615; MRR@10 0.644 vs 0.714),
+  while on the 15 remaining overlap queries it leads frozen MiniLM
+  (Hit@1 0.533 vs 0.467; MRR@10 0.667 vs 0.639), though BM25 is strongest on
+  that subset (Hit@1 0.667; MRR@10 0.728). The adapter's advantage is confined
   to queries whose answers also exist in training documents.
 - Leave-one-document-out: Soup−frozen Hit@1 is ≤ 0 for every dropped document
-  (range −0.079 to 0.000), Soup−E5 is negative throughout, Soup−BM25 is
-  non-negative throughout — direction stable, descriptively.
+  (range −0.079 to −0.022), Soup−E5 is negative throughout, Soup−BM25 is
+  positive throughout — direction stable, descriptively.
 - Failure categories: E5 37 exact-top-1 and 1 no-relevant-top-10; BM25 10
-  no-relevant; frozen and Soup 5 each. Soup has more
-  relevant-chunk-below-top-1 (17 vs 14) than frozen.
+  no-relevant; frozen 5, Soup 6. Soup has more
+  relevant-chunk-below-top-1 (17 vs 15) than frozen.
 - Section-cluster bootstrap skipped: 1 of 53 query-occupied sections holds
   ≥2 queries (1.9% < 30%), so resampling would degenerate to query-level.
 - Caveat honored: four documents are insufficient for population inference;
   intervals describe this fixed sample; no p-values (exactly one mention, the
-  disclaimer). Report header corrected to “owner-approved; drafted by Qoder”.
+  disclaimer). Report header states owner-approved; manually crafted by the
+  owner with AI assistance.
 
 ## Verification evidence (2026-10-30, continued)
 
@@ -287,17 +301,25 @@ in `tests/test_v1_dataset_invariants.py`.
 - Failure classifier: `empty_ranking` is a defensive leaf (unreachable with
   the fixed 1,068-chunk corpus); `no_relevant_result_top10` is the aggregate
   of `wrong_section_same_document` + `wrong_document`.
-- **Authorship change (2026-10-31):** the owner overrode the original
-  human-authorship rule and instructed Qoder to draft all 54 queries. Drafted
-  queries remain subject to owner review/freeze, the wording/annotation rules,
-  and the full validator gate. Recorded in the worksheet header and spec §4.
-- **Cross-corpus subsetting (2026-10-31):** 18 drafted queries are `overlap`
-  because a training chunk carries an equivalent answer (terse command-table
-  entries, README template list, expectations guide, architecture-knobs
-  section). 36 stay `primary`; the comparison report already separates subset
-  tables.
+- **Query authorship (2026-10-31):** the 54 queries were manually crafted by
+  the project owner with AI assistance; the owner reviewed and approved the
+  final wording, relevance annotations, and dataset freeze. This is owner
+  review, not independent third-party annotation. Recorded in the worksheet
+  header, spec §4, and the public docs.
+- **Cross-corpus subsetting (2026-10-31, resolved 2026-11-01):** 18 queries
+  were initially labeled `overlap` because a training chunk appeared to carry
+  an equivalent answer (terse command-table entries, README template list,
+  expectations guide, architecture-knobs section); 36 were initially
+  `primary`. The 2026-10-31 overlap audit re-checked every classification
+  against chunk text and the owner approved 15 confirmations plus 3
+  reclassifications to `primary`, giving the final 39 / 15 split. The
+  comparison report separates subset tables.
 
-## Phase 7 — verification (2026-10-31)
+## Phase 7 — verification (2026-10-31, pre-reclassification)
+
+This clean-room run predates the owner-approved overlap reclassification. The
+capabilities it verified still hold; final numbers are in the reclassification
+section above.
 
 Clean room built from the repo requirements only:
 
@@ -331,13 +353,94 @@ uv pip install --python /tmp/v2_phase7_venv/bin/python -r requirements.txt
   `05e301327de2278a040319d69394229f`; `git diff HEAD` over all v1 scripts,
   data, results, config, and `output_embedding/` is empty; checkpoints remain
   absent; no v1 file is modified in the working tree (only v2 files are).
-- **PR:** not opened and nothing committed — owner instruction. Suggested PR
-  title/body and file inventory are in the session record; the owner authors
-  commits/PRs.
+- **PR:** opened later on owner instruction as PR #3
+  (`feat/evaluation-v2` → `main`, 9 commits, 75 files). The P1 review fixes
+  below are local working-tree changes and are not pushed.
+
+## P1 review fixes for PR #3 (2026-10-31, local; not pushed)
+
+- **Authorship documentation corrected.** All public descriptions now state
+  that the 54 natural-language queries were manually crafted by the project
+  owner with AI assistance, and that the owner reviewed and approved the
+  final wording and relevance annotations. The earlier tool-drafting and
+  machine-drafting wording and the superseded authorship amendment were
+  removed. The docs also state that this is owner review, not independent
+  third-party annotation or independent validation. Files: README, REPORT,
+  REVIEW, REPRODUCE, the adapter model card, spec §2/§4, the coverage
+  worksheet header, this log, and the report generator header.
+- **Overlap audit.** `docs/EVALUATION_V2_OVERLAP_AUDIT.md` re-checked all 18
+  overlap labels against the actual held-out and training chunk text: 15
+  confirmed, 2 questionable (`manual_002`, `manual_023`), 1 unsupported
+  (`manual_043`). At that stage no dataset, query, label, or split change was
+  made; the cases were listed as owner decisions. The owner later approved all
+  three reclassifications (final section below), and the dataset and all
+  dependent artifacts were regenerated.
+- **Bootstrap plan precomputed.** `StratifiedResampler` now draws the full
+  10,000-resample document-stratified index plan once at construction, and
+  `paired_bootstrap_ci` consumes only `plan.indices`. Every metric and all
+  three comparisons reuse the same plan, both retrievers in a comparison
+  use the same sampled positions, and repeated calls consume no randomness.
+  Seed 42, 10,000 resamples, micro/macro formulas, and percentile CIs are
+  unchanged.
+- **CI values recomputed; point estimates unchanged.** The previous
+  implementation advanced the RNG between comparisons, so the corrected
+  shared plan changes some interval bounds (11 changed report lines). All
+  micro/macro values, subset tables, leave-one-out tables, failure counts,
+  regression counts, fingerprints, and the negative primary-subset result
+  are unchanged.
+- **Tests:** `tests/test_compare_retrievers.py` now has 12 tests, including
+  precomputed-plan determinism, a manual recomputation proving both
+  retrievers use identical sampled positions, and a spy test proving one
+  plan instance serves every metric and comparison. Report determinism, the
+  single-disclaimer check, and the audit-note check remain.
+- **Verification:** targeted suites 75 passed (12 comparison, 22 validator,
+  21 metrics, 15 retrievers, 5 v1 invariants); full suite 87 passed with the
+  same 3 pre-existing v1 fixture-collection errors. The report was generated
+  twice with identical output. All 14 metric tables keep identical
+  micro/macro and delta point estimates; only 9 interval-bound cells, the two
+  header lines, and the audit note changed. One interval that previously
+  touched zero (recall@3, Soup−frozen) now includes zero at +0.0015; no
+  significance is claimed from any interval.
+- **Constraints held at that stage:** `data/manual_queries.jsonl` untouched
+  (sha256 = query-set fingerprint `116bd4c3…`); corpus fingerprint unchanged
+  (`76ab5e88…`); adapter weights, `adapter_config.json`, and `soup_run.json`
+  unchanged; no v1 script, data, result, or config changed; retriever
+  configurations and metric definitions unchanged; no model inference was
+  run. The subsequent owner-approved reclassification is recorded below.
+
+## Owner-approved overlap reclassification (2026-11-01)
+
+- **Owner decisions.** Based on the audit evidence, the owner approved
+  reclassifying `manual_002`, `manual_023`, and `manual_043` from `overlap`
+  to `primary`. For each record, the training section/chunk IDs were removed
+  from the relevant sets, `cross_corpus_overlap` was cleared, the rationale
+  was rewritten to the held-out evidence only, and query wording, held-out
+  labels, and evidence chunks were preserved. The other 51 records were not
+  modified.
+- **Final dataset.** 54 unique query IDs: 39 `primary`, 15 `overlap`.
+  Query-set fingerprint
+  `971e157083c31e5e55131a35597dc492d20996a02c7a491543e02d7cbef362b3`.
+  Corpus fingerprint remains `76ab5e88…`. Validator: 54 checked, 0 errors,
+  0 warnings, 1 provisional lexical flag (`manual_010`, known false
+  positive).
+- **Artifacts regenerated.** All four retrievers were rerun with the
+  unchanged models, adapter, corpus, and configurations; the four result
+  files and `results/v2/comparison.md` were regenerated. Final micro
+  metrics (Hit@1 / Hit@5 / MRR@10): E5-small-v2 0.6852 / 0.8704 / 0.7834;
+  MiniLM frozen 0.5741 / 0.8704 / 0.6928; MiniLM + Soup 0.5370 / 0.7963 /
+  0.6501; BM25 0.4815 / 0.7222 / 0.5953. The negative result holds:
+  Soup−frozen Hit@1 −0.037 [−0.185, +0.111], MRR@10 −0.043
+  [−0.148, +0.063], recall@5 −0.111 [−0.204, −0.024]. The subset split is
+  39/15; Soup trails frozen on primary and leads on overlap, while BM25 is
+  strongest on overlap.
+- **Verification.** See the final report for the full evidence: validator,
+  test suite, fingerprint equality, report determinism, overlap-label
+  integrity, and v1 artifact preservation. Work remains local and unpushed.
 
 ## Outstanding dependencies
 
-1. **PR on owner instruction.** Phases 4–7 are complete; the working tree
-   holds only v2 additions/modifications.
+1. **Publishing authorization.** The P1 fixes and the owner-approved
+   reclassification are local working-tree changes; commit, push, and any PR
+   description update require explicit owner authorization.
 2. `backends-and-ops.md` provenance gap (see above) — cosmetic; owner input
    optional.

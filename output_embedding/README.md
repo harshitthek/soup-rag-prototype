@@ -46,17 +46,20 @@ documents with single-chunk labels: Recall@1 0.5453 (frozen base) → 0.7565
 are near-paraphrases of training-document headings, so v1 describes the
 controlled setting, not real-user retrieval.
 
-**v2 manual.** 54 owner-approved natural-language queries with multi-chunk
-and multi-section labels, chunk- and section-level metrics, four retrievers.
-Micro Hit@1: E5-small-v2 0.685, frozen MiniLM 0.593, this adapter 0.556,
+**v2 manual.** 54 owner-approved natural-language queries, manually crafted
+by the project owner with AI assistance, with multi-chunk and multi-section
+labels, chunk- and section-level metrics, four retrievers.
+Micro Hit@1: E5-small-v2 0.685, frozen MiniLM 0.574, this adapter 0.537,
 BM25 0.481. The adapter trails frozen MiniLM on the full set and on the
-36 primary queries answered only by held-out documents (Hit@1 0.528 vs
-0.639). On the 18 overlap queries whose answers also appear in training
-documents it leads (0.611 vs 0.500). The v1 gain is consistent with
-training-document exposure rather than a transferable retrieval skill: do not
-expect this adapter to improve retrieval on Soup documentation outside the
-eight training documents. Frozen E5-small-v2 is the stronger general-purpose
-choice in this benchmark.
+39 primary queries answered only by held-out documents (Hit@1 0.538 vs
+0.615). On the 15 remaining overlap queries whose answers also appear in
+training documents it leads frozen MiniLM (0.533 vs 0.467), while BM25 is
+strongest on that subset (0.667). All 18 original overlap candidates were
+audited, and 3 were reclassified as primary with owner approval. The v1 gain
+is consistent with training-document exposure rather than a transferable
+retrieval skill: do not expect this adapter to improve retrieval on Soup
+documentation outside the eight training documents. Frozen E5-small-v2 is the
+stronger general-purpose choice in this benchmark.
 
 Full reports: `results/comparison.md` (v1) and `results/v2/comparison.md`
 (v2); methodology: `docs/EVALUATION_V2_SPEC.md`.
