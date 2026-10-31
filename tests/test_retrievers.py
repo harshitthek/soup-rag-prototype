@@ -178,3 +178,12 @@ class TestDenseEncoding:
         import numpy as np
 
         assert np.allclose(norms, np.ones(2), atol=1e-5)
+
+    def test_retrieve_ranked_empty_queries(self):
+        chunks = make_chunks()
+        # Should return empty list immediately without calling fit/encode
+        bm25 = BM25Retriever()
+        assert retrieve_ranked(bm25, chunks, []) == []
+
+        dense = DenseRetriever("fake", "fake_model")
+        assert retrieve_ranked(dense, chunks, []) == []

@@ -204,6 +204,14 @@ def check_query_record(
     if not set(evidence) <= set(chunks):
         errors.append(f"{qid}: evidence_chunk_ids must be a subset of relevant_chunk_ids")
 
+    if subset == "overlap":
+        for eid in evidence:
+            ec = maps["by_id"].get(eid)
+            if ec is not None and ec["doc_name"] != doc:
+                errors.append(
+                    f"{qid}: overlap evidence chunk '{eid}' belongs to '{ec['doc_name']}' but source_document is '{doc}'"
+                )
+
     overlap = record.get("cross_corpus_overlap")
     if subset == "overlap":
         if not isinstance(overlap, dict) or not overlap.get("train_chunk_ids"):
@@ -409,10 +417,12 @@ def validate(
         if qid in seen_ids:
             errors.append(f"duplicate query_id '{qid}'")
         seen_ids.add(qid)
-        norm = " ".join(normalize_tokens(record.get("query", "")))
+        raw_query = record.get("query")
+        norm = " ".join(normalize_tokens(raw_query)) if isinstance(raw_query, str) else ""
         if norm and norm in seen_texts:
             errors.append(f"{qid}: duplicate query text")
-        seen_texts.add(norm)
+        if norm:
+            seen_texts.add(norm)
         doc = record.get("source_document")
         if doc:
             per_doc[doc] = per_doc.get(doc, 0) + 1

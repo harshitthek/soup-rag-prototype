@@ -253,6 +253,9 @@ def retrieve_ranked(
     produced by ``retrieval.rank_corpus``, so every retriever is evaluated by
     the same metric implementation.
     """
+    if not queries:
+        return []
+
     from retrieval import rank_corpus
 
     chunk_ids = [c["chunk_id"] for c in chunks]

@@ -193,6 +193,30 @@ def test_overlap_subset_valid(tmp_path, mini_corpus):
     assert report["valid"], report["errors"]
 
 
+def test_overlap_evidence_chunk_differs_from_source_doc(tmp_path, mini_corpus):
+    # evidence_chunk belongs to train_doc, not mydoc
+    record = base_record(
+        subset="overlap",
+        relevant_section_ids=["mydoc::registry", "train_doc::x"],
+        relevant_chunk_ids=["mydoc::registry::sub_000", "train_doc::x"],
+        evidence_chunk_ids=["train_doc::x"],
+        cross_corpus_overlap={
+            "train_chunk_ids": ["train_doc::x"],
+            "note": "Equivalent answer in training doc.",
+        },
+    )
+    report = run_validate(tmp_path, mini_corpus, [record])
+    assert any("overlap evidence chunk 'train_doc::x' belongs to 'train_doc' but source_document is 'mydoc'" in e for e in report["errors"])
+
+
+def test_non_string_query_handled_gracefully(tmp_path, mini_corpus):
+    record = base_record(query=123)
+    report = run_validate(tmp_path, mini_corpus, [record])
+    assert not report["valid"]
+    assert any("query is empty" in e for e in report["errors"])
+
+
+
 def test_section_chunk_consistency(tmp_path, mini_corpus):
     wrong_section = base_record(
         relevant_section_ids=["mydoc::other"],

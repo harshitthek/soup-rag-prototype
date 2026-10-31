@@ -175,9 +175,9 @@ def cluster_structure(
 
     clusters = Counter()
     for qr in per_query_results:
-        for cid in qr["relevant_chunk_ids"]:
-            clusters[(qr["source_document"], get_base_section(cid))] += 1
-            break
+        sec_ids = {get_base_section(cid) for cid in qr["relevant_chunk_ids"]}
+        for sid in sec_ids:
+            clusters[(qr["source_document"], sid)] += 1
     occupied = list(clusters.values())
     multi = sum(1 for c in occupied if c >= 2)
     fraction = multi / len(occupied) if occupied else 0.0
@@ -416,6 +416,41 @@ def main() -> int:
     args = parser.parse_args()
 
     results = {rid: load_result(args.results_dir / f"{rid}.json") for rid in RETRIEVER_IDS}
+    for rid, res in results.items():
+        if res.get("retriever_id") != rid:
+            raise ValueError(
+                f"result file for '{rid}' has mismatched retriever_id: '{res.get('retriever_id')}'"
+            )
+
+    first_res = results[RETRIEVER_IDS[0]]
+    ref_corpus_fp = first_res.get("corpus_fingerprint")
+    ref_query_fp = first_res.get("query_set_fingerprint")
+    ref_query_count = first_res.get("query_count")
+    ref_query_order = [q["query_id"] for q in first_res.get("per_query_results", [])]
+
+    for rid in RETRIEVER_IDS[1:]:
+        res = results[rid]
+        if res.get("corpus_fingerprint") != ref_corpus_fp:
+            raise ValueError(
+                f"corpus_fingerprint mismatch: '{rid}' ({res.get('corpus_fingerprint')}) "
+                f"!= '{RETRIEVER_IDS[0]}' ({ref_corpus_fp})"
+            )
+        if res.get("query_set_fingerprint") != ref_query_fp:
+            raise ValueError(
+                f"query_set_fingerprint mismatch: '{rid}' ({res.get('query_set_fingerprint')}) "
+                f"!= '{RETRIEVER_IDS[0]}' ({ref_query_fp})"
+            )
+        if res.get("query_count") != ref_query_count:
+            raise ValueError(
+                f"query_count mismatch: '{rid}' ({res.get('query_count')}) "
+                f"!= '{RETRIEVER_IDS[0]}' ({ref_query_count})"
+            )
+        query_order = [q["query_id"] for q in res.get("per_query_results", [])]
+        if query_order != ref_query_order:
+            raise ValueError(
+                f"query order mismatch between '{rid}' and '{RETRIEVER_IDS[0]}'"
+            )
+
     report = generate_report(results, args.output, n_bootstrap=args.bootstrap_n, seed=args.seed)
     print(f"report -> {args.output} ({len(report.splitlines())} lines)")
     return 0

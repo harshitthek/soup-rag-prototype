@@ -329,6 +329,6 @@
 
 ## Section-Cluster Bootstrap Decision
 
-- Query-occupied sections: 53 (single-query: 52, multi-query: 1; multi-query fraction 0.0189, threshold 0.3)
+- Query-occupied sections: 76 (single-query: 71, multi-query: 5; multi-query fraction 0.0658, threshold 0.3)
 - Decision: **skipped: most query-occupied sections contain a single query, so cluster resampling degenerates to query-level resampling**.
 

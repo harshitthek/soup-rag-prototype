@@ -94,8 +94,8 @@ seed 42). Full report: `results/v2/comparison.md`.
 
 The adapter does not generalise to natural-language queries: it trails frozen
 MiniLM by 3.7 pp Hit@1 and 4.3 pp MRR@10 (intervals include 0), and by
-11.1 pp Recall@5 (interval excludes 0). Frozen E5-small-v2 leads every
-retriever on every metric.
+11.1 pp Recall@5 (interval excludes 0). Frozen E5-small-v2 leads on Hit@1, Hit@3, MRR@10, and micro Recall@1/3/5,
+ties frozen MiniLM on micro Hit@5, and trails it on macro Hit@5.
 
 The subset split is the informative part. On the 39 primary queries, whose
 answers exist only in held-out documents, Soup trails frozen MiniLM
@@ -104,8 +104,7 @@ queries, whose answers also appear in training documents, Soup leads frozen
 MiniLM (Hit@1 0.533 vs 0.467; MRR@10 0.667 vs 0.639), but BM25 is strongest
 on that subset (Hit@1 0.667; MRR@10 0.728). That pattern is consistent with
 the adapter picking up training-document text rather than a transferable
-retrieval skill, and the v1 synthetic queries were near-paraphrases of
-training-document headings.
+retrieval skill.
 
 All 18 original overlap candidates were audited against chunk text
 (`docs/EVALUATION_V2_OVERLAP_AUDIT.md`): 15 were confirmed and 3 were

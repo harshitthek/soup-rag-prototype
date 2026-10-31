@@ -271,3 +271,42 @@ def test_generate_report_deterministic(results, tmp_path):
     r1 = generate_report(results, tmp_path / "a.md", n_bootstrap=50, seed=42)
     r2 = generate_report(results, tmp_path / "b.md", n_bootstrap=50, seed=42)
     assert r1 == r2
+
+
+def test_main_validations(results, tmp_path, monkeypatch):
+    import json
+    from compare_retrievers import main
+
+    res_dir = tmp_path / "results"
+    res_dir.mkdir()
+    for rid, data in results.items():
+        with open(res_dir / f"{rid}.json", "w") as f:
+            json.dump(data, f)
+
+    out = tmp_path / "comparison.md"
+    monkeypatch.setattr(
+        "sys.argv",
+        ["compare_retrievers.py", "--results-dir", str(res_dir), "--output", str(out), "--bootstrap-n", "10"],
+    )
+    assert main() == 0
+
+    # Retriever ID mismatch
+    bad_id_data = dict(results["bm25"])
+    bad_id_data["retriever_id"] = "wrong_id"
+    with open(res_dir / "bm25.json", "w") as f:
+        json.dump(bad_id_data, f)
+    with pytest.raises(ValueError, match="mismatched retriever_id"):
+        main()
+
+    # Reset bm25.json
+    with open(res_dir / "bm25.json", "w") as f:
+        json.dump(results["bm25"], f)
+
+    # Corpus fingerprint mismatch
+    bad_fp_data = dict(results["bm25"])
+    bad_fp_data["corpus_fingerprint"] = "bad_fp"
+    with open(res_dir / "bm25.json", "w") as f:
+        json.dump(bad_fp_data, f)
+    with pytest.raises(ValueError, match="corpus_fingerprint mismatch"):
+        main()
+

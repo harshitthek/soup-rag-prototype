@@ -56,6 +56,29 @@ def run(
     output_path: Path,
     top_k: int = TOP_K,
 ) -> dict[str, Any]:
+    if top_k < 10:
+        raise ValueError(f"top_k must be at least 10, got {top_k}")
+
+    expected_queries = (DATA_DIR / "manual_queries.jsonl").resolve()
+    if queries_path.resolve() != expected_queries:
+        raise ValueError(
+            f"refusing to run on query file other than {expected_queries}: {queries_path}"
+        )
+
+    expected_corpus = (DATA_DIR / "corpus.jsonl").resolve()
+    if corpus_path.resolve() != expected_corpus:
+        raise ValueError(
+            f"refusing to run on corpus file other than {expected_corpus}: {corpus_path}"
+        )
+
+    results_v2 = (RESULTS_DIR / "v2").resolve()
+    try:
+        output_path.resolve().relative_to(results_v2)
+    except ValueError:
+        raise ValueError(
+            f"output_path '{output_path}' must resolve under '{results_v2}'"
+        )
+
     if not queries_path.exists():
         raise FileNotFoundError(
             f"manual query dataset not found: {queries_path}. "

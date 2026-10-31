@@ -43,7 +43,7 @@ L2-normalized).
 **v1 controlled (synthetic).** 497 template-generated queries from held-out
 documents with single-chunk labels: Recall@1 0.5453 (frozen base) → 0.7565
 (adapter), Recall@5 0.8209 → 0.9718, MRR@10 0.6615 → 0.8477. Those queries
-are near-paraphrases of training-document headings, so v1 describes the
+were generated from held-out document headings, so v1 describes the
 controlled setting, not real-user retrieval.
 
 **v2 manual.** 54 owner-approved natural-language queries, manually crafted

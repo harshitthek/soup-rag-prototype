@@ -237,7 +237,7 @@ All 18 original overlap candidates were audited
 (`docs/EVALUATION_V2_OVERLAP_AUDIT.md`): 15 confirmed and 3 reclassified as
 primary with owner approval. This is consistent with the adapter having
 learned training-document text rather than a transferable retrieval skill. Frozen E5-small-v2 is the strongest retriever
-on every metric. Four held-out documents are insufficient for
+overall: it leads on Hit@1, Hit@3, MRR@10, and micro Recall@1/3/5, ties frozen MiniLM on micro Hit@5, and trails it on macro Hit@5. Four held-out documents are insufficient for
 population-level inference; intervals are exploratory and no p-values are
 reported. The v1 numbers above remain the canonical record of the controlled
 synthetic benchmark; in v1, labels were singleton chunks, so the binary
