@@ -1,8 +1,11 @@
 # Evaluation v2 — Manual Query Coverage Worksheet
 
-**Author: the project owner. Every query is written by hand.**
-
-Qoder tooling must not generate, draft, paraphrase, or edit query wording. This worksheet intentionally contains no sample questions.
+**Authorship note (amended 2026-10-31).** The project owner originally required
+every query to be hand-written by the owner and barred tooling from drafting.
+On 2026-10-31 the owner explicitly instructed Qoder to draft all 54 queries.
+The entries below are Qoder-drafted and owner-reviewed before freeze; every
+wording, annotation, and validator rule still applies. The amendment is also
+recorded in `docs/EVALUATION_V2_SPEC.md` §4 and the progress log.
 
 Read the source text in `data/raw_docs/<document>.md` before writing a query.
 
@@ -134,225 +137,302 @@ Read the source text in `data/raw_docs/<document>.md` before writing a query.
 ### adapters-and-governance slot 1
 
 ```
-query_id:            (leave blank — tooling assigns manual_NNN)
-query:               <your exact wording>
-query_type:          <conceptual/how_to/troubleshooting/config_behavior/relationship/command_detail>
+query_id:            manual_001
+query:               why does soup lock check exit with code 3
+query_type:          troubleshooting
 relevant_section_ids:
+  - adapters-and-governance::3-lock-a-reproducible-run-state-closure-sha-base-dataset-env
+  - adapters-and-governance::teammates-re-check-the-lock-exit-3-on-drift
+  - adapters-and-governance::exits-3-on-broken-at-pipe-into-soup-adapters-blame-for-attribution
 relevant_chunk_ids:
+  - adapters-and-governance::3-lock-a-reproducible-run-state-closure-sha-base-dataset-env
+  - adapters-and-governance::teammates-re-check-the-lock-exit-3-on-drift
+  - adapters-and-governance::exits-3-on-broken-at-pipe-into-soup-adapters-blame-for-attribution::sub_000
 evidence_chunk_ids:
-rationale:
+  - adapters-and-governance::exits-3-on-broken-at-pipe-into-soup-adapters-blame-for-attribution::sub_000
+  - adapters-and-governance::teammates-re-check-the-lock-exit-3-on-drift
+rationale:           The lock chunks define the closure as base + dataset + env and show the check command; sub_000 lists the five compared fields that trigger exit 3 and marks soup_version/created_at advisory.
 subset:              primary
-cross_corpus_overlap:
+cross_corpus_overlap: null
 ```
 
 ### adapters-and-governance slot 2
 
 ```
-query_id:            (leave blank — tooling assigns manual_NNN)
-query:               <your exact wording>
-query_type:          <conceptual/how_to/troubleshooting/config_behavior/relationship/command_detail>
+query_id:            manual_002
+query:               How do I bisect training checkpoints when an eval regresses?
+query_type:          how_to
 relevant_section_ids:
+  - adapters-and-governance::4-bisect-a-training-history-to-find-the-step-that-broke-an-eval
+  - commands::all-commands
 relevant_chunk_ids:
+  - adapters-and-governance::4-bisect-a-training-history-to-find-the-step-that-broke-an-eval
+  - commands::all-commands::sub_054
 evidence_chunk_ids:
-rationale:
-subset:              primary
-cross_corpus_overlap:
+  - adapters-and-governance::4-bisect-a-training-history-to-find-the-step-that-broke-an-eval
+rationale:           The bisect chunk shows the checkpoint list, the per-checkpoint eval command template, and the output file. Cross-corpus: the training command table documents the same bisect command and its binary-search purpose.
+subset:              overlap
+cross_corpus_overlap: {"train_chunk_ids": ["commands::all-commands::sub_054"], "note": "the training command table documents the same bisect command and its binary-search purpose"}
 ```
 
 ### adapters-and-governance slot 3
 
 ```
-query_id:            (leave blank — tooling assigns manual_NNN)
-query:               <your exact wording>
-query_type:          <conceptual/how_to/troubleshooting/config_behavior/relationship/command_detail>
+query_id:            manual_003
+query:               how do I see which training rows influenced an adapter
+query_type:          how_to
 relevant_section_ids:
+  - adapters-and-governance::leave-one-out-ablation-plan-against-a-4-hour-wall-clock-budget
+  - adapters-and-governance::list-all-snapshotted-branches
 relevant_chunk_ids:
+  - adapters-and-governance::leave-one-out-ablation-plan-against-a-4-hour-wall-clock-budget
+  - adapters-and-governance::list-all-snapshotted-branches::sub_002
 evidence_chunk_ids:
-rationale:
+  - adapters-and-governance::leave-one-out-ablation-plan-against-a-4-hour-wall-clock-budget
+rationale:           The blame chunk passes the dataset and layer; sub_002 documents the live DataInf runner, the --top-k count, and the synthetic-probe fallback.
 subset:              primary
-cross_corpus_overlap:
+cross_corpus_overlap: null
 ```
 
 ### adapters-and-governance slot 4
 
 ```
-query_id:            (leave blank — tooling assigns manual_NNN)
-query:               <your exact wording>
-query_type:          <conceptual/how_to/troubleshooting/config_behavior/relationship/command_detail>
+query_id:            manual_004
+query:               what does soup loop automate
+query_type:          conceptual
 relevant_section_ids:
+  - adapters-and-governance::data-flywheel-soup-loop
+  - commands::all-commands
 relevant_chunk_ids:
+  - adapters-and-governance::data-flywheel-soup-loop
+  - commands::all-commands::sub_020
 evidence_chunk_ids:
-rationale:
-subset:              primary
-cross_corpus_overlap:
+  - adapters-and-governance::data-flywheel-soup-loop
+rationale:           The section describes the traces to preference pairs to eval-gated DPO to canary and rollback pipeline and the components it connects. Cross-corpus: the training command table names the loop stages (harvest, train, gate, deploy) and pre-wired mode.
+subset:              overlap
+cross_corpus_overlap: {"train_chunk_ids": ["commands::all-commands::sub_020"], "note": "the training command table names the loop stages (harvest, train, gate, deploy) and pre-wired mode"}
 ```
 
 ### adapters-and-governance slot 5
 
 ```
-query_id:            (leave blank — tooling assigns manual_NNN)
-query:               <your exact wording>
-query_type:          <conceptual/how_to/troubleshooting/config_behavior/relationship/command_detail>
+query_id:            manual_005
+query:               does soup roll back a canary automatically if the eval regresses
+query_type:          how_to
 relevant_section_ids:
+  - adapters-and-governance::promote-a-canary-at-5-traffic-with-auto-rollback-on-major-verdict
+  - adapters-and-governance::replay-any-recorded-iteration
+  - commands::all-commands
 relevant_chunk_ids:
+  - adapters-and-governance::promote-a-canary-at-5-traffic-with-auto-rollback-on-major-verdict
+  - adapters-and-governance::replay-any-recorded-iteration
+  - commands::all-commands::sub_021
 evidence_chunk_ids:
-rationale:
-subset:              primary
-cross_corpus_overlap:
+  - adapters-and-governance::promote-a-canary-at-5-traffic-with-auto-rollback-on-major-verdict
+rationale:           The canary command enables autoroll on regression; the loop-state chunk explains the sticky deterministic router. Cross-corpus: the training command table states that loop canary promotes and auto-rolls-back on a major verdict.
+subset:              overlap
+cross_corpus_overlap: {"train_chunk_ids": ["commands::all-commands::sub_021"], "note": "the training command table states that loop canary promotes and auto-rolls-back on a major verdict"}
 ```
 
 ### adapters-and-governance slot 6
 
 ```
-query_id:            (leave blank — tooling assigns manual_NNN)
-query:               <your exact wording>
-query_type:          <conceptual/how_to/troubleshooting/config_behavior/relationship/command_detail>
+query_id:            manual_006
+query:               ROME vs MEMIT vs AlphaEdit differences
+query_type:          conceptual
 relevant_section_ids:
+  - adapters-and-governance::diff-what-the-model-says-before-vs-after-the-edit-live-generation
 relevant_chunk_ids:
+  - adapters-and-governance::diff-what-the-model-says-before-vs-after-the-edit-live-generation::sub_002
 evidence_chunk_ids:
-rationale:
+  - adapters-and-governance::diff-what-the-model-says-before-vs-after-the-edit-live-generation::sub_002
+rationale:           sub_002 defines each method: ROME edits one layer, MEMIT spreads the residual over a band, AlphaEdit projects the update orthogonally.
 subset:              primary
-cross_corpus_overlap:
+cross_corpus_overlap: null
 ```
 
 ### adapters-and-governance slot 7
 
 ```
-query_id:            (leave blank — tooling assigns manual_NNN)
-query:               <your exact wording>
-query_type:          <conceptual/how_to/troubleshooting/config_behavior/relationship/command_detail>
+query_id:            manual_007
+query:               compare model answers before and after a knowledge edit
+query_type:          how_to
 relevant_section_ids:
+  - adapters-and-governance::diff-what-the-model-says-before-vs-after-the-edit-live-generation
+  - commands::all-commands
 relevant_chunk_ids:
+  - adapters-and-governance::diff-what-the-model-says-before-vs-after-the-edit-live-generation::sub_000
+  - commands::all-commands::sub_042
 evidence_chunk_ids:
-rationale:
-subset:              primary
-cross_corpus_overlap:
+  - adapters-and-governance::diff-what-the-model-says-before-vs-after-the-edit-live-generation::sub_000
+rationale:           sub_000 shows the edit-diff command with before/after models and probe prompts. Cross-corpus: the training command table shows the same edit-diff command with probes and before/after models.
+subset:              overlap
+cross_corpus_overlap: {"train_chunk_ids": ["commands::all-commands::sub_042"], "note": "the training command table shows the same edit-diff command with probes and before/after models"}
 ```
 
 ### adapters-and-governance slot 8
 
 ```
-query_id:            (leave blank — tooling assigns manual_NNN)
-query:               <your exact wording>
-query_type:          <conceptual/how_to/troubleshooting/config_behavior/relationship/command_detail>
+query_id:            manual_008
+query:               build a control vector from positive and negative prompts
+query_type:          how_to
 relevant_section_ids:
+  - adapters-and-governance::train-a-steering-vector-from-contrastive-positive-negative-prompt-pairs
+  - adapters-and-governance::list-locally-stored-steering-vectors
+  - commands::all-commands
 relevant_chunk_ids:
+  - adapters-and-governance::train-a-steering-vector-from-contrastive-positive-negative-prompt-pairs
+  - adapters-and-governance::list-locally-stored-steering-vectors::sub_001
+  - commands::all-commands::sub_043
 evidence_chunk_ids:
-rationale:
-subset:              primary
-cross_corpus_overlap:
+  - adapters-and-governance::train-a-steering-vector-from-contrastive-positive-negative-prompt-pairs
+rationale:           The train command takes contrastive pairs; sub_001 covers the live fit, persisted vector files, and the per-method pair minimums. Cross-corpus: the training command table shows steer train with --method caa|iti|repe and positive/negative pairs.
+subset:              overlap
+cross_corpus_overlap: {"train_chunk_ids": ["commands::all-commands::sub_043"], "note": "the training command table shows steer train with --method caa|iti|repe and positive/negative pairs"}
 ```
 
 ### adapters-and-governance slot 9
 
 ```
-query_id:            (leave blank — tooling assigns manual_NNN)
-query:               <your exact wording>
-query_type:          <conceptual/how_to/troubleshooting/config_behavior/relationship/command_detail>
+query_id:            manual_009
+query:               grace codebook size limit
+query_type:          config_behavior
 relevant_section_ids:
+  - adapters-and-governance::or-via-soup-yaml-when-training-a-model-with-grace-aware-lookups
 relevant_chunk_ids:
+  - adapters-and-governance::or-via-soup-yaml-when-training-a-model-with-grace-aware-lookups::sub_000
 evidence_chunk_ids:
-rationale:
+  - adapters-and-governance::or-via-soup-yaml-when-training-a-model-with-grace-aware-lookups::sub_000
+rationale:           The YAML chunk sets grace_codebook_size with a 100k maximum and the residual-stream width.
 subset:              primary
-cross_corpus_overlap:
+cross_corpus_overlap: null
 ```
 
 ### adapters-and-governance slot 10
 
 ```
-query_id:            (leave blank — tooling assigns manual_NNN)
-query:               <your exact wording>
-query_type:          <conceptual/how_to/troubleshooting/config_behavior/relationship/command_detail>
+query_id:            manual_010
+query:               soup registry diff output
+query_type:          command_detail
 relevant_section_ids:
+  - adapters-and-governance::side-by-side-config-diff-eval-delta-between-two-entries
+  - commands::all-commands
 relevant_chunk_ids:
+  - adapters-and-governance::side-by-side-config-diff-eval-delta-between-two-entries
+  - commands::all-commands::sub_022
 evidence_chunk_ids:
-rationale:
-subset:              primary
-cross_corpus_overlap:
+  - adapters-and-governance::side-by-side-config-diff-eval-delta-between-two-entries
+rationale:           The registry-diff command compares two entries; the section heading states the side-by-side config diff and eval delta output. Cross-corpus: the training command table describes registry diff as side-by-side config plus eval delta.
+subset:              overlap
+cross_corpus_overlap: {"train_chunk_ids": ["commands::all-commands::sub_022"], "note": "the training command table describes registry diff as side-by-side config plus eval delta"}
 ```
 
 ### adapters-and-governance slot 11
 
 ```
-query_id:            (leave blank — tooling assigns manual_NNN)
-query:               <your exact wording>
-query_type:          <conceptual/how_to/troubleshooting/config_behavior/relationship/command_detail>
+query_id:            manual_011
+query:               dare merge seed determinism
+query_type:          command_detail
 relevant_section_ids:
+  - adapters-and-governance::dare-merge-deterministic-via-seed
 relevant_chunk_ids:
+  - adapters-and-governance::dare-merge-deterministic-via-seed
 evidence_chunk_ids:
-rationale:
+  - adapters-and-governance::dare-merge-deterministic-via-seed
+rationale:           The DARE example passes --density and --seed, and the section marks the merge deterministic through the seed.
 subset:              primary
-cross_corpus_overlap:
+cross_corpus_overlap: null
 ```
 
 ### adapters-and-governance slot 12
 
 ```
-query_id:            (leave blank — tooling assigns manual_NNN)
-query:               <your exact wording>
-query_type:          <conceptual/how_to/troubleshooting/config_behavior/relationship/command_detail>
+query_id:            manual_012
+query:               how do signed attestations get embedded in a soup can
+query_type:          relationship
 relevant_section_ids:
+  - adapters-and-governance::embed-in-toto-attestations-into-the-manifest-v3-cans-repeatable
+  - adapters-and-governance::provenance-attestations-soup-attest-emit
 relevant_chunk_ids:
+  - adapters-and-governance::embed-in-toto-attestations-into-the-manifest-v3-cans-repeatable
+  - adapters-and-governance::provenance-attestations-soup-attest-emit::sub_000
 evidence_chunk_ids:
-rationale:
+  - adapters-and-governance::embed-in-toto-attestations-into-the-manifest-v3-cans-repeatable
+  - adapters-and-governance::provenance-attestations-soup-attest-emit::sub_000
+rationale:           The can-pack example passes an attestation file with --attest; sub_000 shows the in-toto/SLSA statement that attest emit produces.
 subset:              primary
-cross_corpus_overlap:
+cross_corpus_overlap: null
 ```
 
 ### adapters-and-governance slot 13
 
 ```
-query_id:            (leave blank — tooling assigns manual_NNN)
-query:               <your exact wording>
-query_type:          <conceptual/how_to/troubleshooting/config_behavior/relationship/command_detail>
+query_id:            manual_013
+query:               can I merge adapters whose licenses conflict
+query_type:          conceptual
 relevant_section_ids:
+  - adapters-and-governance::license-conflict-matrix-at-merge
 relevant_chunk_ids:
+  - adapters-and-governance::license-conflict-matrix-at-merge::sub_000
+  - adapters-and-governance::license-conflict-matrix-at-merge::sub_001
 evidence_chunk_ids:
-rationale:
+  - adapters-and-governance::license-conflict-matrix-at-merge::sub_000
+rationale:           sub_000 defines the 33-license compatibility table and a refusal example; sub_001 covers auto-detection and the audit-logged override.
 subset:              primary
-cross_corpus_overlap:
+cross_corpus_overlap: null
 ```
 
 ### adapters-and-governance slot 14
 
 ```
-query_id:            (leave blank — tooling assigns manual_NNN)
-query:               <your exact wording>
-query_type:          <conceptual/how_to/troubleshooting/config_behavior/relationship/command_detail>
+query_id:            manual_014
+query:               what stops a hijacked huggingface repo from being pulled
+query_type:          conceptual
 relevant_section_ids:
+  - adapters-and-governance::namespace-pinning-anti-ai-jacking
 relevant_chunk_ids:
+  - adapters-and-governance::namespace-pinning-anti-ai-jacking::sub_000
+  - adapters-and-governance::namespace-pinning-anti-ai-jacking::sub_001
 evidence_chunk_ids:
-rationale:
+  - adapters-and-governance::namespace-pinning-anti-ai-jacking::sub_000
+rationale:           sub_000 describes the trust-on-first-use author pin; sub_001 covers the re-created-repo attack and download-time enforcement.
 subset:              primary
-cross_corpus_overlap:
+cross_corpus_overlap: null
 ```
 
 ### adapters-and-governance slot 15
 
 ```
-query_id:            (leave blank — tooling assigns manual_NNN)
-query:               <your exact wording>
-query_type:          <conceptual/how_to/troubleshooting/config_behavior/relationship/command_detail>
+query_id:            manual_015
+query:               what goes into a soup airgap bundle and how big can it get
+query_type:          how_to
 relevant_section_ids:
+  - adapters-and-governance::airgap-bundle-soup-airgap-bundle
 relevant_chunk_ids:
+  - adapters-and-governance::airgap-bundle-soup-airgap-bundle::sub_000
+  - adapters-and-governance::airgap-bundle-soup-airgap-bundle::sub_001
 evidence_chunk_ids:
-rationale:
+  - adapters-and-governance::airgap-bundle-soup-airgap-bundle::sub_000
+rationale:           sub_000 lists the bundle contents and manifest; sub_001 gives the 100 GiB cap, deterministic labeling, and safe extraction.
 subset:              primary
-cross_corpus_overlap:
+cross_corpus_overlap: null
 ```
 
 ### adapters-and-governance slot 16
 
 ```
-query_id:            (leave blank — tooling assigns manual_NNN)
-query:               <your exact wording>
-query_type:          <conceptual/how_to/troubleshooting/config_behavior/relationship/command_detail>
+query_id:            manual_016
+query:               Soup refuses to load a .bin adapter, what formats are allowed?
+query_type:          troubleshooting
 relevant_section_ids:
+  - adapters-and-governance::strict-safetensors-mode-soup-adapters-check-safetensors
 relevant_chunk_ids:
+  - adapters-and-governance::strict-safetensors-mode-soup-adapters-check-safetensors
 evidence_chunk_ids:
-rationale:
+  - adapters-and-governance::strict-safetensors-mode-soup-adapters-check-safetensors
+rationale:           The section lists the eight refused pickle extensions, the conversion recipe, and the strict-mode exit code.
 subset:              primary
-cross_corpus_overlap:
+cross_corpus_overlap: null
 ```
 
 
@@ -381,113 +461,151 @@ cross_corpus_overlap:
 ### compliance slot 1
 
 ```
-query_id:            (leave blank — tooling assigns manual_NNN)
-query:               <your exact wording>
-query_type:          <conceptual/how_to/troubleshooting/config_behavior/relationship/command_detail>
+query_id:            manual_017
+query:               which soup init templates exist for regulated industries
+query_type:          command_detail
 relevant_section_ids:
+  - compliance::1-start-from-a-compliance-template
+  - README::soup-documentation
 relevant_chunk_ids:
+  - compliance::1-start-from-a-compliance-template
+  - README::soup-documentation::sub_003
 evidence_chunk_ids:
-rationale:
-subset:              primary
-cross_corpus_overlap:
+  - compliance::1-start-from-a-compliance-template
+rationale:           The template chunk lists the four regime templates and explains that their header comments carry the compliance commands. Cross-corpus: the training README lists the four init templates for regulated regimes.
+subset:              overlap
+cross_corpus_overlap: {"train_chunk_ids": ["README::soup-documentation::sub_003"], "note": "the training README lists the four init templates for regulated regimes"}
 ```
 
 ### compliance slot 2
 
 ```
-query_id:            (leave blank — tooling assigns manual_NNN)
-query:               <your exact wording>
-query_type:          <conceptual/how_to/troubleshooting/config_behavior/relationship/command_detail>
+query_id:            manual_018
+query:               clean emails and phone numbers out of my training data
+query_type:          how_to
 relevant_section_ids:
+  - compliance::2-clean-the-data-before-training
+  - commands::all-commands
 relevant_chunk_ids:
+  - compliance::2-clean-the-data-before-training
+  - commands::all-commands::sub_019
 evidence_chunk_ids:
-rationale:
-subset:              primary
-cross_corpus_overlap:
+  - compliance::2-clean-the-data-before-training
+rationale:           The data chunk shows soup data pii for emails, phones, SSNs and MRNs, plus decontaminate for benchmark overlap. Cross-corpus: the training command table documents data pii flagging email, phone, SSN, and credit-card rows.
+subset:              overlap
+cross_corpus_overlap: {"train_chunk_ids": ["commands::all-commands::sub_019"], "note": "the training command table documents data pii flagging email, phone, SSN, and credit-card rows"}
 ```
 
 ### compliance slot 3
 
 ```
-query_id:            (leave blank — tooling assigns manual_NNN)
-query:               <your exact wording>
-query_type:          <conceptual/how_to/troubleshooting/config_behavior/relationship/command_detail>
+query_id:            manual_019
+query:               bom --attach-to-registry wrote the files but exited non-zero
+query_type:          troubleshooting
 relevant_section_ids:
+  - compliance::4-register-the-run-then-emit-bom-attestation
 relevant_chunk_ids:
+  - compliance::4-register-the-run-then-emit-bom-attestation::sub_000
+  - compliance::4-register-the-run-then-emit-bom-attestation::sub_001
 evidence_chunk_ids:
-rationale:
+  - compliance::4-register-the-run-then-emit-bom-attestation::sub_001
+rationale:           sub_001 states that --attach-to-registry needs --output and that lookup or attachment failure exits non-zero while the emitted files stay on disk.
 subset:              primary
-cross_corpus_overlap:
+cross_corpus_overlap: null
 ```
 
 ### compliance slot 4
 
 ```
-query_id:            (leave blank — tooling assigns manual_NNN)
-query:               <your exact wording>
-query_type:          <conceptual/how_to/troubleshooting/config_behavior/relationship/command_detail>
+query_id:            manual_020
+query:               what ends up in the generated model card
+query_type:          conceptual
 relevant_section_ids:
+  - compliance::7-generate-a-documented-model-card
+  - commands::all-commands
 relevant_chunk_ids:
+  - compliance::7-generate-a-documented-model-card
+  - commands::all-commands::sub_027
 evidence_chunk_ids:
-rationale:
-subset:              primary
-cross_corpus_overlap:
+  - compliance::7-generate-a-documented-model-card
+rationale:           The section enumerates base model, training config, eval scorecard, hashes, lineage, and attached artifacts. Cross-corpus: the training command table lists the card contents: config, evals, hashes, lineage, artifacts.
+subset:              overlap
+cross_corpus_overlap: {"train_chunk_ids": ["commands::all-commands::sub_027"], "note": "the training command table lists the card contents: config, evals, hashes, lineage, artifacts"}
 ```
 
 ### compliance slot 5
 
 ```
-query_id:            (leave blank — tooling assigns manual_NNN)
-query:               <your exact wording>
-query_type:          <conceptual/how_to/troubleshooting/config_behavior/relationship/command_detail>
+query_id:            manual_021
+query:               publish a model to huggingface with my own model card
+query_type:          how_to
 relevant_section_ids:
+  - compliance::or-when-uploading-to-the-hub-override-the-auto-generated-card
+  - commands::all-commands
 relevant_chunk_ids:
+  - compliance::or-when-uploading-to-the-hub-override-the-auto-generated-card
+  - commands::all-commands::sub_027
 evidence_chunk_ids:
-rationale:
-subset:              primary
-cross_corpus_overlap:
+  - compliance::or-when-uploading-to-the-hub-override-the-auto-generated-card
+rationale:           The chunk shows soup push --card with a registry reference as the Hub card override. Cross-corpus: the training command table shows push --card uploading the registry-driven card.
+subset:              overlap
+cross_corpus_overlap: {"train_chunk_ids": ["commands::all-commands::sub_027"], "note": "the training command table shows push --card uploading the registry-driven card"}
 ```
 
 ### compliance slot 6
 
 ```
-query_id:            (leave blank — tooling assigns manual_NNN)
-query:               <your exact wording>
-query_type:          <conceptual/how_to/troubleshooting/config_behavior/relationship/command_detail>
+query_id:            manual_022
+query:               generated ci workflow steps
+query_type:          relationship
 relevant_section_ids:
+  - compliance::8-gate-future-changes-in-ci
+  - compliance::writes-github-workflows-soup-gate-yml
 relevant_chunk_ids:
+  - compliance::8-gate-future-changes-in-ci
+  - compliance::writes-github-workflows-soup-gate-yml::sub_000
 evidence_chunk_ids:
-rationale:
+  - compliance::writes-github-workflows-soup-gate-yml::sub_000
+rationale:           The gate section generates the workflow; sub_000 lists the validate, expect, ship sequence and the exit-2 block.
 subset:              primary
-cross_corpus_overlap:
+cross_corpus_overlap: null
 ```
 
 ### compliance slot 7
 
 ```
-query_id:            (leave blank — tooling assigns manual_NNN)
-query:               <your exact wording>
-query_type:          <conceptual/how_to/troubleshooting/config_behavior/relationship/command_detail>
+query_id:            manual_023
+query:               which expectation checks can go in expectations.yaml
+query_type:          config_behavior
 relevant_section_ids:
+  - compliance::writes-github-workflows-soup-gate-yml
+  - data::expectations-suite-great-expectations-for-chat-data
 relevant_chunk_ids:
+  - compliance::writes-github-workflows-soup-gate-yml::sub_000
+  - data::expectations-suite-great-expectations-for-chat-data
 evidence_chunk_ids:
-rationale:
-subset:              primary
-cross_corpus_overlap:
+  - compliance::writes-github-workflows-soup-gate-yml::sub_000
+rationale:           sub_000 shows the minimal expectations YAML and the four supported check names. Cross-corpus: the training data guide shows the expectations YAML and its supported check names.
+subset:              overlap
+cross_corpus_overlap: {"train_chunk_ids": ["data::expectations-suite-great-expectations-for-chat-data"], "note": "the training data guide shows the expectations YAML and its supported check names"}
 ```
 
 ### compliance slot 8
 
 ```
-query_id:            (leave blank — tooling assigns manual_NNN)
-query:               <your exact wording>
-query_type:          <conceptual/how_to/troubleshooting/config_behavior/relationship/command_detail>
+query_id:            manual_024
+query:               what steps does soup's compliance workflow cover
+query_type:          conceptual
 relevant_section_ids:
+  - compliance::compliance-governance-quickstart
 relevant_chunk_ids:
+  - compliance::compliance-governance-quickstart::sub_000
+  - compliance::compliance-governance-quickstart::sub_001
 evidence_chunk_ids:
-rationale:
+  - compliance::compliance-governance-quickstart::sub_001
+rationale:           sub_000 introduces the end-to-end flow; sub_001 lists the commands for templates, provenance, integrity, audit, air gap, publish, and CI.
 subset:              primary
-cross_corpus_overlap:
+cross_corpus_overlap: null
 ```
 
 
@@ -585,239 +703,324 @@ cross_corpus_overlap:
 ### evaluation slot 1
 
 ```
-query_id:            (leave blank — tooling assigns manual_NNN)
-query:               <your exact wording>
-query_type:          <conceptual/how_to/troubleshooting/config_behavior/relationship/command_detail>
+query_id:            manual_025
+query:               Should I fine-tune with DPO or SFT for my dataset?
+query_type:          conceptual
 relevant_section_ids:
+  - evaluation::show-prior-verdicts-newest-first-with-per-choice-counts
 relevant_chunk_ids:
+  - evaluation::show-prior-verdicts-newest-first-with-per-choice-counts::sub_000
 evidence_chunk_ids:
-rationale:
+  - evaluation::show-prior-verdicts-newest-first-with-per-choice-counts::sub_000
+rationale:           The rubric chunk maps paired chosen/rejected rows to DPO and routes the other cases to GRPO, prompt engineering, RAG, or SFT.
 subset:              primary
-cross_corpus_overlap:
+cross_corpus_overlap: null
 ```
 
 ### evaluation slot 2
 
 ```
-query_id:            (leave blank — tooling assigns manual_NNN)
-query:               <your exact wording>
-query_type:          <conceptual/how_to/troubleshooting/config_behavior/relationship/command_detail>
+query_id:            manual_026
+query:               generate an eval suite from my training data
+query_type:          how_to
 relevant_section_ids:
+  - evaluation::1-draft-a-goal-conditioned-suite-from-your-training-data
 relevant_chunk_ids:
+  - evaluation::1-draft-a-goal-conditioned-suite-from-your-training-data
 evidence_chunk_ids:
-rationale:
+  - evaluation::1-draft-a-goal-conditioned-suite-from-your-training-data
+rationale:           The design command builds a goal-conditioned suite from the training JSONL and writes evals/design.json.
 subset:              primary
-cross_corpus_overlap:
+cross_corpus_overlap: null
 ```
 
 ### evaluation slot 3
 
 ```
-query_id:            (leave blank — tooling assigns manual_NNN)
-query:               <your exact wording>
-query_type:          <conceptual/how_to/troubleshooting/config_behavior/relationship/command_detail>
+query_id:            manual_027
+query:               do two eval designs with the same content hash the same
+query_type:          conceptual
 relevant_section_ids:
+  - evaluation::3-freeze-the-design-as-a-checksummed-eval-suite-artifact
+  - evaluation::4-heuristic-gap-analysis-vs-the-task-taxonomy
 relevant_chunk_ids:
+  - evaluation::3-freeze-the-design-as-a-checksummed-eval-suite-artifact
+  - evaluation::4-heuristic-gap-analysis-vs-the-task-taxonomy::sub_001
 evidence_chunk_ids:
-rationale:
+  - evaluation::4-heuristic-gap-analysis-vs-the-task-taxonomy::sub_001
+rationale:           sub_001 explains canonical sorted-key JSON, the SHA-256 over on-disk bytes, and that semantic matches hash identically.
 subset:              primary
-cross_corpus_overlap:
+cross_corpus_overlap: null
 ```
 
 ### evaluation slot 4
 
 ```
-query_id:            (leave blank — tooling assigns manual_NNN)
-query:               <your exact wording>
-query_type:          <conceptual/how_to/troubleshooting/config_behavior/relationship/command_detail>
+query_id:            manual_028
+query:               block a git push when eval accuracy regresses
+query_type:          how_to
 relevant_section_ids:
+  - evaluation::pre-push-regression-gate-soup-eval-gate-install
 relevant_chunk_ids:
+  - evaluation::pre-push-regression-gate-soup-eval-gate-install::sub_000
+  - evaluation::pre-push-regression-gate-soup-eval-gate-install::sub_001
 evidence_chunk_ids:
-rationale:
+  - evaluation::pre-push-regression-gate-soup-eval-gate-install::sub_000
+rationale:           sub_000 installs the pre-push hook; sub_001 lists the four watched metrics and the paired-bootstrap decision bound.
 subset:              primary
-cross_corpus_overlap:
+cross_corpus_overlap: null
 ```
 
 ### evaluation slot 5
 
 ```
-query_id:            (leave blank — tooling assigns manual_NNN)
-query:               <your exact wording>
-query_type:          <conceptual/how_to/troubleshooting/config_behavior/relationship/command_detail>
+query_id:            manual_029
+query:               eval_gate block settings in soup.yaml
+query_type:          config_behavior
 relevant_section_ids:
+  - evaluation::eval-gated-training
 relevant_chunk_ids:
+  - evaluation::eval-gated-training::sub_000
+  - evaluation::eval-gated-training::sub_001
 evidence_chunk_ids:
-rationale:
+  - evaluation::eval-gated-training::sub_000
+rationale:           sub_000 shows the eval_gate YAML block and its keys; sub_001 shows the CLI override and post-hoc gate run.
 subset:              primary
-cross_corpus_overlap:
+cross_corpus_overlap: null
 ```
 
 ### evaluation slot 6
 
 ```
-query_id:            (leave blank — tooling assigns manual_NNN)
-query:               <your exact wording>
-query_type:          <conceptual/how_to/troubleshooting/config_behavior/relationship/command_detail>
+query_id:            manual_030
+query:               how does soup ab decide when to stop collecting samples
+query_type:          conceptual
 relevant_section_ids:
+  - evaluation::sequential-a-b-harness-soup-ab
+  - evaluation::or-with-custom-alpha-beta
 relevant_chunk_ids:
+  - evaluation::sequential-a-b-harness-soup-ab
+  - evaluation::or-with-custom-alpha-beta::sub_000
 evidence_chunk_ids:
-rationale:
+  - evaluation::sequential-a-b-harness-soup-ab
+rationale:           The harness chunk describes the SPRT and its three decisions; sub_000 shows the input rows and the decision values.
 subset:              primary
-cross_corpus_overlap:
+cross_corpus_overlap: null
 ```
 
 ### evaluation slot 7
 
 ```
-query_id:            (leave blank — tooling assigns manual_NNN)
-query:               <your exact wording>
-query_type:          <conceptual/how_to/troubleshooting/config_behavior/relationship/command_detail>
+query_id:            manual_031
+query:               what does exit code 3 from soup drift-alarm mean
+query_type:          troubleshooting
 relevant_section_ids:
+  - evaluation::drift-alarm-soup-drift-alarm
+  - evaluation::optional-webhook-on-drift-detected
+  - commands::all-commands
 relevant_chunk_ids:
+  - evaluation::drift-alarm-soup-drift-alarm
+  - evaluation::optional-webhook-on-drift-detected
+  - commands::all-commands::sub_046
 evidence_chunk_ids:
-rationale:
-subset:              primary
-cross_corpus_overlap:
+  - evaluation::drift-alarm-soup-drift-alarm
+rationale:           The drift section sets the KL threshold and exit 3 on drift; the webhook chunk repeats the cron-friendly exit. Cross-corpus: the training command table states that drift-alarm exits 3 on drift.
+subset:              overlap
+cross_corpus_overlap: {"train_chunk_ids": ["commands::all-commands::sub_046"], "note": "the training command table states that drift-alarm exits 3 on drift"}
 ```
 
 ### evaluation slot 8
 
 ```
-query_id:            (leave blank — tooling assigns manual_NNN)
-query:               <your exact wording>
-query_type:          <conceptual/how_to/troubleshooting/config_behavior/relationship/command_detail>
+query_id:            manual_032
+query:               soup diagnose failure modes
+query_type:          conceptual
 relevant_section_ids:
+  - evaluation::diagnose-post-training-report-card
+  - evaluation::attach-the-report-to-a-model-registry-entry-as-a-first-class-artifact
 relevant_chunk_ids:
+  - evaluation::diagnose-post-training-report-card
+  - evaluation::attach-the-report-to-a-model-registry-entry-as-a-first-class-artifact::sub_001
+  - evaluation::attach-the-report-to-a-model-registry-entry-as-a-first-class-artifact::sub_002
+  - evaluation::attach-the-report-to-a-model-registry-entry-as-a-first-class-artifact::sub_003
 evidence_chunk_ids:
-rationale:
+  - evaluation::attach-the-report-to-a-model-registry-entry-as-a-first-class-artifact::sub_001
+rationale:           The intro states seven failure modes and the verdict taxonomy; the table chunks list all modes, and sub_003 gives verdict bands and exit 2.
 subset:              primary
-cross_corpus_overlap:
+cross_corpus_overlap: null
 ```
 
 ### evaluation slot 9
 
 ```
-query_id:            (leave blank — tooling assigns manual_NNN)
-query:               <your exact wording>
-query_type:          <conceptual/how_to/troubleshooting/config_behavior/relationship/command_detail>
+query_id:            manual_033
+query:               Task accuracy went up but MMLU dropped, should I ship?
+query_type:          relationship
 relevant_section_ids:
+  - evaluation::ship-verdict-soup-ship
 relevant_chunk_ids:
+  - evaluation::ship-verdict-soup-ship::sub_000
+  - evaluation::ship-verdict-soup-ship::sub_001
 evidence_chunk_ids:
-rationale:
+  - evaluation::ship-verdict-soup-ship::sub_000
+  - evaluation::ship-verdict-soup-ship::sub_001
+rationale:           sub_000 defines the task-win leg and the forgetting leg; sub_001 says any single regressed benchmark yields DON'T SHIP.
 subset:              primary
-cross_corpus_overlap:
+cross_corpus_overlap: null
 ```
 
 ### evaluation slot 10
 
 ```
-query_id:            (leave blank — tooling assigns manual_NNN)
-query:               <your exact wording>
-query_type:          <conceptual/how_to/troubleshooting/config_behavior/relationship/command_detail>
+query_id:            manual_034
+query:               noise floor flag effect on ship verdict
+query_type:          config_behavior
 relevant_section_ids:
+  - evaluation::noise-floor-v0-73-2
+  - commands::all-commands
 relevant_chunk_ids:
+  - evaluation::noise-floor-v0-73-2::sub_000
+  - evaluation::noise-floor-v0-73-2::sub_001
+  - evaluation::noise-floor-v0-73-2::sub_004
+  - commands::all-commands::sub_027
 evidence_chunk_ids:
-rationale:
-subset:              primary
-cross_corpus_overlap:
+  - evaluation::noise-floor-v0-73-2::sub_000
+rationale:           sub_000 motivates the measured GPU spread; sub_001 shows the flag and max(threshold, floor) gating; sub_004 covers cost and the --evidence rejection. Cross-corpus: the training command table documents the noise-floor repeat and max(threshold, floor) gating.
+subset:              overlap
+cross_corpus_overlap: {"train_chunk_ids": ["commands::all-commands::sub_027"], "note": "the training command table documents the noise-floor repeat and max(threshold, floor) gating"}
 ```
 
 ### evaluation slot 11
 
 ```
-query_id:            (leave blank — tooling assigns manual_NNN)
-query:               <your exact wording>
-query_type:          <conceptual/how_to/troubleshooting/config_behavior/relationship/command_detail>
+query_id:            manual_035
+query:               how do I make a ship verdict replayable in CI
+query_type:          how_to
 relevant_section_ids:
+  - evaluation::closing-the-evidence-loop-v0-71-39
+  - evaluation::producer-train-job-compute-or-stamp-scores-bound-to-the-committed-recipe
+  - commands::all-commands
 relevant_chunk_ids:
+  - evaluation::closing-the-evidence-loop-v0-71-39::sub_001
+  - evaluation::closing-the-evidence-loop-v0-71-39::sub_003
+  - evaluation::producer-train-job-compute-or-stamp-scores-bound-to-the-committed-recipe
+  - commands::all-commands::sub_026
 evidence_chunk_ids:
-rationale:
-subset:              primary
-cross_corpus_overlap:
+  - evaluation::closing-the-evidence-loop-v0-71-39::sub_001
+rationale:           sub_001 defines --emit-evidence as replayable input; sub_003 documents the config gate exit 3; the producer chunk shows the command. Cross-corpus: the training command table documents emit-evidence, the config provenance gate, and the PR push.
+subset:              overlap
+cross_corpus_overlap: {"train_chunk_ids": ["commands::all-commands::sub_026"], "note": "the training command table documents emit-evidence, the config provenance gate, and the PR push"}
 ```
 
 ### evaluation slot 12
 
 ```
-query_id:            (leave blank — tooling assigns manual_NNN)
-query:               <your exact wording>
-query_type:          <conceptual/how_to/troubleshooting/config_behavior/relationship/command_detail>
+query_id:            manual_036
+query:               score BLEU and ROUGE on custom eval outputs
+query_type:          command_detail
 relevant_section_ids:
+  - evaluation::nlg-evaluation-metrics-bleu-rouge
 relevant_chunk_ids:
+  - evaluation::nlg-evaluation-metrics-bleu-rouge
 evidence_chunk_ids:
-rationale:
+  - evaluation::nlg-evaluation-metrics-bleu-rouge
+rationale:           The section lists the BLEU/ROUGE helpers and the generic dispatch function for custom eval.
 subset:              primary
-cross_corpus_overlap:
+cross_corpus_overlap: null
 ```
 
 ### evaluation slot 13
 
 ```
-query_id:            (leave blank — tooling assigns manual_NNN)
-query:               <your exact wording>
-query_type:          <conceptual/how_to/troubleshooting/config_behavior/relationship/command_detail>
+query_id:            manual_037
+query:               My quantized model lost 8% accuracy, is that too much?
+query_type:          troubleshooting
 relevant_section_ids:
+  - evaluation::quant-lobotomy-checker
+  - evaluation::render-as-json-for-ci-integration
 relevant_chunk_ids:
+  - evaluation::quant-lobotomy-checker
+  - evaluation::render-as-json-for-ci-integration
 evidence_chunk_ids:
-rationale:
+  - evaluation::render-as-json-for-ci-integration
+rationale:           The checker section introduces the before/after task comparison; the CI chunk carries the per-task 2% and 10% thresholds.
 subset:              primary
-cross_corpus_overlap:
+cross_corpus_overlap: null
 ```
 
 ### evaluation slot 14
 
 ```
-query_id:            (leave blank — tooling assigns manual_NNN)
-query:               <your exact wording>
-query_type:          <conceptual/how_to/troubleshooting/config_behavior/relationship/command_detail>
+query_id:            manual_038
+query:               custom eval jsonl fields for exact and regex scoring
+query_type:          config_behavior
 relevant_section_ids:
+  - evaluation::custom-eval-format
 relevant_chunk_ids:
+  - evaluation::custom-eval-format
 evidence_chunk_ids:
-rationale:
+  - evaluation::custom-eval-format
+rationale:           The format chunk shows prompt, expected, category, and scoring rows for exact, regex, and contains.
 subset:              primary
-cross_corpus_overlap:
+cross_corpus_overlap: null
 ```
 
 ### evaluation slot 15
 
 ```
-query_id:            (leave blank — tooling assigns manual_NNN)
-query:               <your exact wording>
-query_type:          <conceptual/how_to/troubleshooting/config_behavior/relationship/command_detail>
+query_id:            manual_039
+query:               run a short LoRA probe on several base models before choosing one
+query_type:          how_to
 relevant_section_ids:
+  - evaluation::tunability-probe-soup-tunability
+  - evaluation::run-the-full-sweep-write-a-json-report
+  - commands::all-commands
 relevant_chunk_ids:
+  - evaluation::tunability-probe-soup-tunability
+  - evaluation::run-the-full-sweep-write-a-json-report
+  - commands::all-commands::sub_047
 evidence_chunk_ids:
-rationale:
-subset:              primary
-cross_corpus_overlap:
+  - evaluation::tunability-probe-soup-tunability
+rationale:           The probe section covers the candidate catalogue and plan/live modes; the sweep chunk gives the JSON report and Pareto frontier. Cross-corpus: the training command table shows the tunability probe and its Pareto report.
+subset:              overlap
+cross_corpus_overlap: {"train_chunk_ids": ["commands::all-commands::sub_047"], "note": "the training command table shows the tunability probe and its Pareto report"}
 ```
 
 ### evaluation slot 16
 
 ```
-query_id:            (leave blank — tooling assigns manual_NNN)
-query:               <your exact wording>
-query_type:          <conceptual/how_to/troubleshooting/config_behavior/relationship/command_detail>
+query_id:            manual_040
+query:               position_bias in judge calibration
+query_type:          conceptual
 relevant_section_ids:
+  - evaluation::run-your-judge-on-a-calibration-set-with-positions-swapped
 relevant_chunk_ids:
+  - evaluation::run-your-judge-on-a-calibration-set-with-positions-swapped::sub_000
+  - evaluation::run-your-judge-on-a-calibration-set-with-positions-swapped::sub_001
 evidence_chunk_ids:
-rationale:
+  - evaluation::run-your-judge-on-a-calibration-set-with-positions-swapped::sub_000
+rationale:           sub_000 defines position_bias, agreement, and the calibrated flag; sub_001 covers persistence and load-time validation.
 subset:              primary
-cross_corpus_overlap:
+cross_corpus_overlap: null
 ```
 
 ### evaluation slot 17
 
 ```
-query_id:            (leave blank — tooling assigns manual_NNN)
-query:               <your exact wording>
-query_type:          <conceptual/how_to/troubleshooting/config_behavior/relationship/command_detail>
+query_id:            manual_041
+query:               soup eval irt-subset size and item model options
+query_type:          command_detail
 relevant_section_ids:
+  - evaluation::pick-top-info-30-of-items-5-10x-eval-bill-cut-without-losing-power
+  - evaluation::richer-item-models-2pl-learns-per-item-discrimination-3pl-adds-a-guessing-floor
 relevant_chunk_ids:
+  - evaluation::pick-top-info-30-of-items-5-10x-eval-bill-cut-without-losing-power
+  - evaluation::richer-item-models-2pl-learns-per-item-discrimination-3pl-adds-a-guessing-floor
 evidence_chunk_ids:
-rationale:
+  - evaluation::richer-item-models-2pl-learns-per-item-discrimination-3pl-adds-a-guessing-floor
+rationale:           The first chunk shows --size; the second documents --model 1pl/2pl/3pl, Fisher-information ranking, and the size cuts.
 subset:              primary
-cross_corpus_overlap:
+cross_corpus_overlap: null
 ```
 
 
@@ -866,181 +1069,241 @@ cross_corpus_overlap:
 ### peft-and-efficiency slot 1
 
 ```
-query_id:            (leave blank — tooling assigns manual_NNN)
-query:               <your exact wording>
-query_type:          <conceptual/how_to/troubleshooting/config_behavior/relationship/command_detail>
+query_id:            manual_042
+query:               preview which decoder layers soup shrink will drop
+query_type:          command_detail
 relevant_section_ids:
+  - peft-and-efficiency::see-the-importance-table-chosen-block-without-writing-anything
+  - peft-and-efficiency::depth-pruning-distill-heal-soup-shrink
+  - commands::all-commands
 relevant_chunk_ids:
+  - peft-and-efficiency::see-the-importance-table-chosen-block-without-writing-anything
+  - peft-and-efficiency::depth-pruning-distill-heal-soup-shrink::sub_001
+  - commands::all-commands::sub_030
 evidence_chunk_ids:
-rationale:
-subset:              primary
-cross_corpus_overlap:
+  - peft-and-efficiency::see-the-importance-table-chosen-block-without-writing-anything
+rationale:           The plan-only chunk previews the table and chosen block; sub_001 explains the angular-distance ranking and protected first and last layers. Cross-corpus: the training command table shows shrink with --plan-only and the healing flags.
+subset:              overlap
+cross_corpus_overlap: {"train_chunk_ids": ["commands::all-commands::sub_030"], "note": "the training command table shows shrink with --plan-only and the healing flags"}
 ```
 
 ### peft-and-efficiency slot 2
 
 ```
-query_id:            (leave blank — tooling assigns manual_NNN)
-query:               <your exact wording>
-query_type:          <conceptual/how_to/troubleshooting/config_behavior/relationship/command_detail>
+query_id:            manual_043
+query:               how does longlora shifted sparse attention work
+query_type:          conceptual
 relevant_section_ids:
+  - peft-and-efficiency::longlora-forward-override
+  - training::architecture-knobs-mixture-of-depths-llama-pro-longlora
 relevant_chunk_ids:
+  - peft-and-efficiency::longlora-forward-override
+  - training::architecture-knobs-mixture-of-depths-llama-pro-longlora::sub_000
+  - training::architecture-knobs-mixture-of-depths-llama-pro-longlora::sub_001
 evidence_chunk_ids:
-rationale:
-subset:              primary
-cross_corpus_overlap:
+  - peft-and-efficiency::longlora-forward-override
+rationale:           The section explains the S-squared half-head shift, the architecture allowlist, and the FlashAttention v3 rejection. Cross-corpus: the training guide documents use_longlora and the shifted-sparse attention gate.
+subset:              overlap
+cross_corpus_overlap: {"train_chunk_ids": ["training::architecture-knobs-mixture-of-depths-llama-pro-longlora::sub_000", "training::architecture-knobs-mixture-of-depths-llama-pro-longlora::sub_001"], "note": "the training guide documents use_longlora and the shifted-sparse attention gate"}
 ```
 
 ### peft-and-efficiency slot 3
 
 ```
-query_id:            (leave blank — tooling assigns manual_NNN)
-query:               <your exact wording>
-query_type:          <conceptual/how_to/troubleshooting/config_behavior/relationship/command_detail>
+query_id:            manual_044
+query:               difference between multipack and packing
+query_type:          relationship
 relevant_section_ids:
+  - peft-and-efficiency::multipack-ffd-bin-packing-sampler
 relevant_chunk_ids:
+  - peft-and-efficiency::multipack-ffd-bin-packing-sampler::sub_000
+  - peft-and-efficiency::multipack-ffd-bin-packing-sampler::sub_001
 evidence_chunk_ids:
-rationale:
+  - peft-and-efficiency::multipack-ffd-bin-packing-sampler::sub_000
+rationale:           sub_000 separates FFD sample selection from attention-mask construction and notes mutual exclusion; sub_001 lists the architecture allowlist.
 subset:              primary
-cross_corpus_overlap:
+cross_corpus_overlap: null
 ```
 
 ### peft-and-efficiency slot 4
 
 ```
-query_id:            (leave blank — tooling assigns manual_NNN)
-query:               <your exact wording>
-query_type:          <conceptual/how_to/troubleshooting/config_behavior/relationship/command_detail>
+query_id:            manual_045
+query:               set up yarn for 4x context extension
+query_type:          config_behavior
 relevant_section_ids:
+  - peft-and-efficiency::soup-yaml
 relevant_chunk_ids:
+  - peft-and-efficiency::soup-yaml::sub_000
+  - peft-and-efficiency::soup-yaml::sub_001
 evidence_chunk_ids:
-rationale:
+  - peft-and-efficiency::soup-yaml::sub_000
+rationale:           sub_000 holds the YaRN YAML; sub_001 gives the 4-8x guidance and which tunables the schema accepts.
 subset:              primary
-cross_corpus_overlap:
+cross_corpus_overlap: null
 ```
 
 ### peft-and-efficiency slot 5
 
 ```
-query_id:            (leave blank — tooling assigns manual_NNN)
-query:               <your exact wording>
-query_type:          <conceptual/how_to/troubleshooting/config_behavior/relationship/command_detail>
+query_id:            manual_046
+query:               Can I add fresh layers to a Llama model and only train those?
+query_type:          how_to
 relevant_section_ids:
+  - peft-and-efficiency::llama-pro-block-expansion
+  - peft-and-efficiency::soup-yaml-llama-pro-continued-training-on-a-llama-3-1-base
+  - training::architecture-knobs-mixture-of-depths-llama-pro-longlora
 relevant_chunk_ids:
+  - peft-and-efficiency::llama-pro-block-expansion
+  - peft-and-efficiency::soup-yaml-llama-pro-continued-training-on-a-llama-3-1-base::sub_000
+  - peft-and-efficiency::soup-yaml-llama-pro-continued-training-on-a-llama-3-1-base::sub_001
+  - training::architecture-knobs-mixture-of-depths-llama-pro-longlora::sub_000
+  - training::architecture-knobs-mixture-of-depths-llama-pro-longlora::sub_001
 evidence_chunk_ids:
-rationale:
-subset:              primary
-cross_corpus_overlap:
+  - peft-and-efficiency::soup-yaml-llama-pro-continued-training-on-a-llama-3-1-base::sub_000
+rationale:           The block-expansion section explains the zero-init append; the YAML chunks set expand_layers and freeze_trainable_layers and describe trainer start. Cross-corpus: the training guide documents expand_layers and freeze_trainable_layers for block expansion.
+subset:              overlap
+cross_corpus_overlap: {"train_chunk_ids": ["training::architecture-knobs-mixture-of-depths-llama-pro-longlora::sub_000", "training::architecture-knobs-mixture-of-depths-llama-pro-longlora::sub_001"], "note": "the training guide documents expand_layers and freeze_trainable_layers for block expansion"}
 ```
 
 ### peft-and-efficiency slot 6
 
 ```
-query_id:            (leave blank — tooling assigns manual_NNN)
-query:               <your exact wording>
-query_type:          <conceptual/how_to/troubleshooting/config_behavior/relationship/command_detail>
+query_id:            manual_047
+query:               different learning rates for q_proj and v_proj
+query_type:          config_behavior
 relevant_section_ids:
+  - peft-and-efficiency::optimizer-peft-zoo
 relevant_chunk_ids:
+  - peft-and-efficiency::optimizer-peft-zoo::sub_000
 evidence_chunk_ids:
-rationale:
+  - peft-and-efficiency::optimizer-peft-zoo::sub_000
+rationale:           sub_000 shows lr_groups with per-module patterns and the first-match-wins rule.
 subset:              primary
-cross_corpus_overlap:
+cross_corpus_overlap: null
 ```
 
 ### peft-and-efficiency slot 7
 
 ```
-query_id:            (leave blank — tooling assigns manual_NNN)
-query:               <your exact wording>
-query_type:          <conceptual/how_to/troubleshooting/config_behavior/relationship/command_detail>
+query_id:            manual_048
+query:               does pissa init speed up lora convergence
+query_type:          conceptual
 relevant_section_ids:
+  - peft-and-efficiency::lora-quality-pissa-relora-per-pattern-rank-surgical-patches
 relevant_chunk_ids:
+  - peft-and-efficiency::lora-quality-pissa-relora-per-pattern-rank-surgical-patches::sub_000
+  - peft-and-efficiency::lora-quality-pissa-relora-per-pattern-rank-surgical-patches::sub_001
 evidence_chunk_ids:
-rationale:
+  - peft-and-efficiency::lora-quality-pissa-relora-per-pattern-rank-surgical-patches::sub_001
+rationale:           sub_001 says PiSSA initializes from the base SVD for faster early convergence at the cost of an extra SVD pass.
 subset:              primary
-cross_corpus_overlap:
+cross_corpus_overlap: null
 ```
 
 ### peft-and-efficiency slot 8
 
 ```
-query_id:            (leave blank — tooling assigns manual_NNN)
-query:               <your exact wording>
-query_type:          <conceptual/how_to/troubleshooting/config_behavior/relationship/command_detail>
+query_id:            manual_049
+query:               loraplus_lr_ratio effect on B matrix lr
+query_type:          config_behavior
 relevant_section_ids:
+  - peft-and-efficiency::lora-differentiated-learning-rates
 relevant_chunk_ids:
+  - peft-and-efficiency::lora-differentiated-learning-rates
 evidence_chunk_ids:
-rationale:
+  - peft-and-efficiency::lora-differentiated-learning-rates
+rationale:           The section defines lr_B as lr times the ratio and shows a 16.0 example.
 subset:              primary
-cross_corpus_overlap:
+cross_corpus_overlap: null
 ```
 
 ### peft-and-efficiency slot 9
 
 ```
-query_id:            (leave blank — tooling assigns manual_NNN)
-query:               <your exact wording>
-query_type:          <conceptual/how_to/troubleshooting/config_behavior/relationship/command_detail>
+query_id:            manual_050
+query:               can dora and vera be enabled together
+query_type:          troubleshooting
 relevant_section_ids:
+  - peft-and-efficiency::vera-olora-smaller-footprint-peft
 relevant_chunk_ids:
+  - peft-and-efficiency::vera-olora-smaller-footprint-peft
 evidence_chunk_ids:
-rationale:
+  - peft-and-efficiency::vera-olora-smaller-footprint-peft
+rationale:           The section states use_dora, use_vera, and use_olora are mutually exclusive and validated at config load.
 subset:              primary
-cross_corpus_overlap:
+cross_corpus_overlap: null
 ```
 
 ### peft-and-efficiency slot 10
 
 ```
-query_id:            (leave blank — tooling assigns manual_NNN)
-query:               <your exact wording>
-query_type:          <conceptual/how_to/troubleshooting/config_behavior/relationship/command_detail>
+query_id:            manual_051
+query:               neftune_alpha range for chat fine tuning
+query_type:          config_behavior
 relevant_section_ids:
+  - peft-and-efficiency::neftune-noisy-embeddings-fine-tuning
 relevant_chunk_ids:
+  - peft-and-efficiency::neftune-noisy-embeddings-fine-tuning
 evidence_chunk_ids:
-rationale:
+  - peft-and-efficiency::neftune-noisy-embeddings-fine-tuning
+rationale:           The section gives the 0-50 alpha range, the 5-15 typical band, and the supported tasks.
 subset:              primary
-cross_corpus_overlap:
+cross_corpus_overlap: null
 ```
 
 ### peft-and-efficiency slot 11
 
 ```
-query_id:            (leave blank — tooling assigns manual_NNN)
-query:               <your exact wording>
-query_type:          <conceptual/how_to/troubleshooting/config_behavior/relationship/command_detail>
+query_id:            manual_052
+query:               does lisa actually use less memory than lora
+query_type:          conceptual
 relevant_section_ids:
+  - peft-and-efficiency::lisa-layerwise-importance-sampling-v0-71-34
+  - peft-and-efficiency::what-lisa-actually-costs-measured-at-3b-and-8b
 relevant_chunk_ids:
+  - peft-and-efficiency::lisa-layerwise-importance-sampling-v0-71-34::sub_000
+  - peft-and-efficiency::what-lisa-actually-costs-measured-at-3b-and-8b::sub_001
+  - peft-and-efficiency::what-lisa-actually-costs-measured-at-3b-and-8b::sub_002
+  - peft-and-efficiency::what-lisa-actually-costs-measured-at-3b-and-8b::sub_003
 evidence_chunk_ids:
-rationale:
+  - peft-and-efficiency::what-lisa-actually-costs-measured-at-3b-and-8b::sub_001
+  - peft-and-efficiency::what-lisa-actually-costs-measured-at-3b-and-8b::sub_002
+rationale:           The intro flags that the memory claim does not hold; the tables show LISA at 52.14 GB vs LoRA at 34.56 GB on 8B and 19.37 vs 15.93 on 3B, and sub_003 explains the embedding and head overhead.
 subset:              primary
-cross_corpus_overlap:
+cross_corpus_overlap: null
 ```
 
 ### peft-and-efficiency slot 12
 
 ```
-query_id:            (leave blank — tooling assigns manual_NNN)
-query:               <your exact wording>
-query_type:          <conceptual/how_to/troubleshooting/config_behavior/relationship/command_detail>
+query_id:            manual_053
+query:               stop training when loss spikes repeatedly
+query_type:          config_behavior
 relevant_section_ids:
+  - peft-and-efficiency::loss-watchdog
 relevant_chunk_ids:
+  - peft-and-efficiency::loss-watchdog
 evidence_chunk_ids:
-rationale:
+  - peft-and-efficiency::loss-watchdog
+rationale:           The watchdog config enables a loss threshold plus a consecutive-step patience.
 subset:              primary
-cross_corpus_overlap:
+cross_corpus_overlap: null
 ```
 
 ### peft-and-efficiency slot 13
 
 ```
-query_id:            (leave blank — tooling assigns manual_NNN)
-query:               <your exact wording>
-query_type:          <conceptual/how_to/troubleshooting/config_behavior/relationship/command_detail>
+query_id:            manual_054
+query:               Can GaLore run with quantized weights?
+query_type:          troubleshooting
 relevant_section_ids:
+  - peft-and-efficiency::galore-memory-efficient-full-parameter-training
 relevant_chunk_ids:
+  - peft-and-efficiency::galore-memory-efficient-full-parameter-training
 evidence_chunk_ids:
-rationale:
+  - peft-and-efficiency::galore-memory-efficient-full-parameter-training
+rationale:           The GaLore section requires quantization: none and the transformers backend.
 subset:              primary
-cross_corpus_overlap:
+cross_corpus_overlap: null
 ```

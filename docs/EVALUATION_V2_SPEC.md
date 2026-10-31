@@ -27,9 +27,10 @@ document; when they conflict, this document wins. Approved 2026-10-30.
 
 Determine whether the Soup LoRA fine-tuned `all-MiniLM-L6-v2` adapter
 (`output_embedding`, r=16/α=32, query+value, triplet margin 0.5) improves
-retrieval on **manually authored queries** over the four held-out documents,
-measured at chunk and section granularity, against BM25 and frozen
-`intfloat/e5-small-v2`. A negative result is acceptable.
+retrieval on **natural-language (non-synthetic) queries** over the four
+held-out documents, measured at chunk and section granularity, against BM25
+and frozen `intfloat/e5-small-v2`. The query set is owner-approved
+(machine-drafted, see the §4 amendment). A negative result is acceptable.
 
 ## 3. Frozen inputs (v1, never modified)
 
@@ -43,10 +44,11 @@ measured at chunk and section granularity, against BM25 and frozen
 - Base model revisions: MiniLM `1110a243fdf4706b3f48f1d95db1a4f5529b4d41`
   (from `soup_run.json`); E5-small-v2 `ffb93f3bd4047442299a41ebb6fa998a38507c52`.
 
-## 4. Manual query dataset (Phase 1; human-authored)
+## 4. Manual query dataset (Phase 1; owner-approved, see amendment)
 
-- 54 queries, authored exclusively by the project owner. No LLM generation,
-  no drafting, no paraphrasing of owner wording by the tooling.
+- 54 queries. Original rule (superseded by the amendment at the end of this
+  list): authored exclusively by the project owner, no LLM generation, no
+  drafting, no paraphrasing of owner wording by the tooling.
 - Allocation: adapters-and-governance 16 · compliance 8 · evaluation 17 ·
   peft-and-efficiency 13 (tolerance ±2 per document).
 - ≥6 queries must target multi-chunk sections.
@@ -58,19 +60,26 @@ measured at chunk and section granularity, against BM25 and frozen
   terminology is allowed.
 - Excluded degenerate sections: `evaluation::1-0`, `evaluation::0-5`.
 
+> **Amendment (2026-10-31).** The owner originally required exclusive human
+> authorship and later instructed Qoder to draft all 54 queries. The dataset is
+> machine-drafted at the owner's explicit request, then owner-reviewed and
+> owner-frozen. This weakens the human-authorship property of the benchmark
+> relative to the original design; it is recorded here rather than silently
+> changed. All other rules in this section remain in force.
+
 ### Record schema (`data/manual_queries.jsonl`, one JSON object per line)
 
 ```json
 {
   "query_id": "manual_001",
-  "query": "<owner's exact wording>",
+  "query": "<frozen query wording>",
   "source_document": "evaluation",
   "query_type": "troubleshooting",
   "subset": "primary",
   "relevant_section_ids": ["evaluation::offline-decide-from-pre-computed-scores-persist-the-verdict-json"],
   "relevant_chunk_ids": ["evaluation::offline-…::sub_001"],
   "evidence_chunk_ids": ["evaluation::offline-…::sub_001"],
-  "rationale": "<owner's rationale>",
+  "rationale": "<annotation rationale>",
   "cross_corpus_overlap": null
 }
 ```
@@ -203,17 +212,21 @@ set exists — tuning prohibited).
 | 6 | Docs (REVIEW rewrite, model card), `.gitignore`, checkpoint removal gated on adapter load test | pytest green before/after deletion |
 | 7 | Clean-room rerun, full verification, PR (only on instruction) | acceptance checklist |
 
-Phase 6 checkpoint-removal gates (conditions 1, 2, 4 verified 2026-10-30:
-root adapter exists; MD5 `05e30132…` == checkpoint-2427 adapter;
-`adapter_config.json`/`soup_run.json` intact): remaining gates are (3) root
-adapter loads via the existing inference path in a fresh venv and (5) full
-pytest green. Deletion via `git rm` only after both pass.
+Phase 6 checkpoint-removal gates were all verified before deletion on
+2026-10-30 (conditions 1, 2, 4: root adapter exists, MD5 `05e30132…` ==
+checkpoint-2427 adapter, `adapter_config.json`/`soup_run.json` intact;
+condition 3: root adapter loads through the existing inference path in a
+fresh venv; condition 5: pytest green apart from the three pre-existing v1
+fixture-collection errors documented in `docs/EVALUATION_V2_PROGRESS.md`).
+Deletion used `git rm` only after those checks. Phase 7 re-verified
+conditions 3 and 5 in a second clean-room venv on 2026-10-31, and the v1
+candidate evaluation reproduces exactly.
 
 ## 11. Repository layout for v2
 
 ```
 data/raw_docs/                  vendored sources + LICENSE + attribution
-data/manual_queries.jsonl       owner-authored (frozen at gate)
+data/manual_queries.jsonl       owner-approved (frozen at gate; drafted by Qoder)
 data/manual_queries_validation_report.json
 docs/EVALUATION_V2_SPEC.md      this file
 docs/EVALUATION_V2_COVERAGE.md  query worksheet (no sample queries)

@@ -1,13 +1,2886 @@
 {
-  "valid": false,
-  "checked_at": "2026-10-30T11:18:10.983472+00:00",
-  "n_queries": 0,
-  "per_doc_counts": {},
-  "note": "queries file not found: /Users/pernavjain/Documents/soup-rag-prototype/data/manual_queries.jsonl",
-  "errors": [
-    "queries file not found: /Users/pernavjain/Documents/soup-rag-prototype/data/manual_queries.jsonl"
-  ],
+  "valid": true,
+  "checked_at": "2026-10-31T12:35:23.612380+00:00",
+  "n_queries": 54,
+  "per_doc_counts": {
+    "adapters-and-governance": 16,
+    "compliance": 8,
+    "evaluation": 17,
+    "peft-and-efficiency": 13
+  },
+  "errors": [],
   "warnings": [],
-  "flags": [],
-  "per_record": []
+  "flags": [
+    "manual_010: lexical overlap 0.25 with train chunk 'backends-and-ops::machine-readable-output'"
+  ],
+  "per_record": [
+    {
+      "query_id": "manual_001",
+      "errors": [],
+      "warnings": [],
+      "flags": [],
+      "lex_top_matches": [
+        {
+          "chunk_id": "backends-and-ops::apply-refuses-on-drift-exit-3-if-the-yaml-changed-since-plan",
+          "jaccard": 0.1429
+        },
+        {
+          "chunk_id": "performance-and-quantization::deepspeed-zero-stage-3-with-cpu-offload-parameters-cpu-not-enough-vram",
+          "jaccard": 0.1304
+        },
+        {
+          "chunk_id": "serving-and-export::start-with-vllm-backend",
+          "jaccard": 0.125
+        },
+        {
+          "chunk_id": "serving-and-export::start-with-sglang-backend",
+          "jaccard": 0.125
+        },
+        {
+          "chunk_id": "backends-and-ops::snapshot-the-current-env-into-soup-env-lock",
+          "jaccard": 0.125
+        }
+      ]
+    },
+    {
+      "query_id": "manual_002",
+      "errors": [],
+      "warnings": [],
+      "flags": [],
+      "lex_top_matches": [
+        {
+          "chunk_id": "training::create-an-audio-config",
+          "jaccard": 0.125
+        },
+        {
+          "chunk_id": "training::training-tasks-methods::sub_008",
+          "jaccard": 0.0833
+        },
+        {
+          "chunk_id": "training::training-tasks-methods::sub_002",
+          "jaccard": 0.0769
+        },
+        {
+          "chunk_id": "training::predicted-expected-ids-rows-or-raft-rows-scored-against-their-own-golden-doc-n",
+          "jaccard": 0.0741
+        },
+        {
+          "chunk_id": "training::install-vision-support",
+          "jaccard": 0.0667
+        }
+      ]
+    },
+    {
+      "query_id": "manual_003",
+      "errors": [],
+      "warnings": [],
+      "flags": [],
+      "lex_top_matches": [
+        {
+          "chunk_id": "training::create-an-audio-config",
+          "jaccard": 0.125
+        },
+        {
+          "chunk_id": "serving-and-export::activate-an-adapter",
+          "jaccard": 0.0952
+        },
+        {
+          "chunk_id": "training::training-tasks-methods::sub_008",
+          "jaccard": 0.0833
+        },
+        {
+          "chunk_id": "training::training-tasks-methods::sub_002",
+          "jaccard": 0.0769
+        },
+        {
+          "chunk_id": "training::predicted-expected-ids-rows-or-raft-rows-scored-against-their-own-golden-doc-n",
+          "jaccard": 0.0741
+        }
+      ]
+    },
+    {
+      "query_id": "manual_004",
+      "errors": [],
+      "warnings": [],
+      "flags": [],
+      "lex_top_matches": [
+        {
+          "chunk_id": "backends-and-ops::what-licenses-are-safe-for-a-b2c-consumer-product",
+          "jaccard": 0.125
+        },
+        {
+          "chunk_id": "backends-and-ops::basic-version",
+          "jaccard": 0.125
+        },
+        {
+          "chunk_id": "backends-and-ops::list-all-recipes",
+          "jaccard": 0.1111
+        },
+        {
+          "chunk_id": "data::list-available-bundles",
+          "jaccard": 0.1
+        },
+        {
+          "chunk_id": "backends-and-ops::zsh",
+          "jaccard": 0.1
+        }
+      ]
+    },
+    {
+      "query_id": "manual_005",
+      "errors": [],
+      "warnings": [],
+      "flags": [],
+      "lex_top_matches": [
+        {
+          "chunk_id": "commands::command-reference",
+          "jaccard": 0.1579
+        },
+        {
+          "chunk_id": "backends-and-ops::apply-refuses-on-drift-exit-3-if-the-yaml-changed-since-plan",
+          "jaccard": 0.1304
+        },
+        {
+          "chunk_id": "data::inspect-a-dataset",
+          "jaccard": 0.125
+        },
+        {
+          "chunk_id": "backends-and-ops::works-with-any-command",
+          "jaccard": 0.125
+        },
+        {
+          "chunk_id": "backends-and-ops::delete-a-run",
+          "jaccard": 0.125
+        }
+      ]
+    },
+    {
+      "query_id": "manual_006",
+      "errors": [],
+      "warnings": [],
+      "flags": [],
+      "lex_top_matches": [
+        {
+          "chunk_id": "data::collator-path-answer-only-per-message-train-field-raft-span-mask::sub_002",
+          "jaccard": 0.0476
+        },
+        {
+          "chunk_id": "commands::all-commands::sub_041",
+          "jaccard": 0.0448
+        },
+        {
+          "chunk_id": "backends-and-ops::vs-code-setup-vscode-launch-json",
+          "jaccard": 0.0357
+        },
+        {
+          "chunk_id": "performance-and-quantization::batch-size-vs-gradient-accumulation::sub_015",
+          "jaccard": 0.0303
+        },
+        {
+          "chunk_id": "backends-and-ops::backends-platform-ops::sub_002",
+          "jaccard": 0.0238
+        }
+      ]
+    },
+    {
+      "query_id": "manual_007",
+      "errors": [],
+      "warnings": [],
+      "flags": [],
+      "lex_top_matches": [
+        {
+          "chunk_id": "serving-and-export::batch-inference",
+          "jaccard": 0.15
+        },
+        {
+          "chunk_id": "backends-and-ops::works-with-any-command",
+          "jaccard": 0.1333
+        },
+        {
+          "chunk_id": "data::canaries-soup-data-canary-insert-check",
+          "jaccard": 0.125
+        },
+        {
+          "chunk_id": "backends-and-ops::quickstart-demo",
+          "jaccard": 0.125
+        },
+        {
+          "chunk_id": "serving-and-export::export-a-full-already-merged-model",
+          "jaccard": 0.1176
+        }
+      ]
+    },
+    {
+      "query_id": "manual_008",
+      "errors": [],
+      "warnings": [],
+      "flags": [],
+      "lex_top_matches": [
+        {
+          "chunk_id": "serving-and-export::batch-inference",
+          "jaccard": 0.15
+        },
+        {
+          "chunk_id": "backends-and-ops::resume-training",
+          "jaccard": 0.1333
+        },
+        {
+          "chunk_id": "backends-and-ops::resume-from-a-specific-checkpoint",
+          "jaccard": 0.1053
+        },
+        {
+          "chunk_id": "backends-and-ops::save-results",
+          "jaccard": 0.1
+        },
+        {
+          "chunk_id": "backends-and-ops::compare-with-a-prompts-file",
+          "jaccard": 0.0952
+        }
+      ]
+    },
+    {
+      "query_id": "manual_009",
+      "errors": [],
+      "warnings": [],
+      "flags": [],
+      "lex_top_matches": [
+        {
+          "chunk_id": "backends-and-ops::search-by-task-or-keyword::sub_000",
+          "jaccard": 0.0526
+        },
+        {
+          "chunk_id": "performance-and-quantization::preview-the-plan-which-shards-total-size-without-writing",
+          "jaccard": 0.05
+        },
+        {
+          "chunk_id": "models::vision-models-with-modality-vision",
+          "jaccard": 0.05
+        },
+        {
+          "chunk_id": "models::supported-models-optional-extras",
+          "jaccard": 0.0455
+        },
+        {
+          "chunk_id": "backends-and-ops::soup-tui",
+          "jaccard": 0.0345
+        }
+      ]
+    },
+    {
+      "query_id": "manual_010",
+      "errors": [],
+      "warnings": [],
+      "flags": [
+        "manual_010: lexical overlap 0.25 with train chunk 'backends-and-ops::machine-readable-output'"
+      ],
+      "lex_top_matches": [
+        {
+          "chunk_id": "backends-and-ops::machine-readable-output",
+          "jaccard": 0.25
+        },
+        {
+          "chunk_id": "backends-and-ops::save-results",
+          "jaccard": 0.2143
+        },
+        {
+          "chunk_id": "serving-and-export::start-with-vllm-backend",
+          "jaccard": 0.1818
+        },
+        {
+          "chunk_id": "serving-and-export::start-with-sglang-backend",
+          "jaccard": 0.1818
+        },
+        {
+          "chunk_id": "serving-and-export::start-server",
+          "jaccard": 0.1818
+        }
+      ]
+    },
+    {
+      "query_id": "manual_011",
+      "errors": [],
+      "warnings": [],
+      "flags": [],
+      "lex_top_matches": [
+        {
+          "chunk_id": "data::merge-multiple-datasets",
+          "jaccard": 0.0714
+        },
+        {
+          "chunk_id": "serving-and-export::merge-lora-adapter",
+          "jaccard": 0.0667
+        },
+        {
+          "chunk_id": "serving-and-export::auto-detect-base-model-from-adapter-config-json",
+          "jaccard": 0.0667
+        },
+        {
+          "chunk_id": "data::use-seed-examples-to-guide-style",
+          "jaccard": 0.0625
+        },
+        {
+          "chunk_id": "serving-and-export::specify-base-model-and-dtype",
+          "jaccard": 0.0588
+        }
+      ]
+    },
+    {
+      "query_id": "manual_012",
+      "errors": [],
+      "warnings": [],
+      "flags": [],
+      "lex_top_matches": [
+        {
+          "chunk_id": "data::inspect-a-dataset",
+          "jaccard": 0.1333
+        },
+        {
+          "chunk_id": "backends-and-ops::delete-a-run",
+          "jaccard": 0.1333
+        },
+        {
+          "chunk_id": "training::create-a-vision-config",
+          "jaccard": 0.125
+        },
+        {
+          "chunk_id": "training::create-a-reasoning-config",
+          "jaccard": 0.125
+        },
+        {
+          "chunk_id": "backends-and-ops::full-system-info-in-json",
+          "jaccard": 0.125
+        }
+      ]
+    },
+    {
+      "query_id": "manual_013",
+      "errors": [],
+      "warnings": [],
+      "flags": [],
+      "lex_top_matches": [
+        {
+          "chunk_id": "commands::all-commands::sub_037",
+          "jaccard": 0.0769
+        },
+        {
+          "chunk_id": "backends-and-ops::defense-restricted-use-community-licenses-forbidden",
+          "jaccard": 0.0667
+        },
+        {
+          "chunk_id": "backends-and-ops::per-license-check-llama-community-license-800m-mau-block-exit-3",
+          "jaccard": 0.0612
+        },
+        {
+          "chunk_id": "data::merge-multiple-datasets",
+          "jaccard": 0.0588
+        },
+        {
+          "chunk_id": "serving-and-export::merge-lora-adapter",
+          "jaccard": 0.0556
+        }
+      ]
+    },
+    {
+      "query_id": "manual_014",
+      "errors": [],
+      "warnings": [],
+      "flags": [],
+      "lex_top_matches": [
+        {
+          "chunk_id": "backends-and-ops::resume-training",
+          "jaccard": 0.1333
+        },
+        {
+          "chunk_id": "backends-and-ops::resume-from-a-specific-checkpoint",
+          "jaccard": 0.1053
+        },
+        {
+          "chunk_id": "backends-and-ops::what-licenses-are-safe-for-a-b2c-consumer-product",
+          "jaccard": 0.1
+        },
+        {
+          "chunk_id": "backends-and-ops::group-into-a-collection",
+          "jaccard": 0.1
+        },
+        {
+          "chunk_id": "backends-and-ops::upload-a-local-jsonl-file-as-an-hf-dataset-repo",
+          "jaccard": 0.0769
+        }
+      ]
+    },
+    {
+      "query_id": "manual_015",
+      "errors": [],
+      "warnings": [],
+      "flags": [],
+      "lex_top_matches": [
+        {
+          "chunk_id": "backends-and-ops::what-licenses-are-safe-for-a-b2c-consumer-product",
+          "jaccard": 0.1304
+        },
+        {
+          "chunk_id": "backends-and-ops::group-into-a-collection",
+          "jaccard": 0.1304
+        },
+        {
+          "chunk_id": "data::inspect-a-dataset",
+          "jaccard": 0.1111
+        },
+        {
+          "chunk_id": "backends-and-ops::soup-plugin-callbacks",
+          "jaccard": 0.1111
+        },
+        {
+          "chunk_id": "backends-and-ops::delete-a-run",
+          "jaccard": 0.1111
+        }
+      ]
+    },
+    {
+      "query_id": "manual_016",
+      "errors": [],
+      "warnings": [],
+      "flags": [],
+      "lex_top_matches": [
+        {
+          "chunk_id": "backends-and-ops::what-licenses-are-safe-for-a-b2c-consumer-product",
+          "jaccard": 0.2
+        },
+        {
+          "chunk_id": "data::convert-between-formats",
+          "jaccard": 0.1579
+        },
+        {
+          "chunk_id": "backends-and-ops::chat-with-a-lora-adapter-auto-detects-base-model",
+          "jaccard": 0.1579
+        },
+        {
+          "chunk_id": "performance-and-quantization::single-stage-bnb-4bit-merged-checkpoint-no-dequant-merge-requant",
+          "jaccard": 0.125
+        },
+        {
+          "chunk_id": "data::inspect-a-dataset",
+          "jaccard": 0.125
+        }
+      ]
+    },
+    {
+      "query_id": "manual_017",
+      "errors": [],
+      "warnings": [],
+      "flags": [],
+      "lex_top_matches": [
+        {
+          "chunk_id": "training::create-an-audio-config",
+          "jaccard": 0.1429
+        },
+        {
+          "chunk_id": "training::create-a-vision-config",
+          "jaccard": 0.1429
+        },
+        {
+          "chunk_id": "training::create-a-reasoning-config",
+          "jaccard": 0.1429
+        },
+        {
+          "chunk_id": "backends-and-ops::full-system-info-useful-for-bug-reports",
+          "jaccard": 0.125
+        },
+        {
+          "chunk_id": "backends-and-ops::show-detailed-info-loss-curve-for-a-run",
+          "jaccard": 0.1111
+        }
+      ]
+    },
+    {
+      "query_id": "manual_018",
+      "errors": [],
+      "warnings": [],
+      "flags": [],
+      "lex_top_matches": [
+        {
+          "chunk_id": "data::synthetic-data-generation",
+          "jaccard": 0.125
+        },
+        {
+          "chunk_id": "data::single-shot-composite-scorecard",
+          "jaccard": 0.1176
+        },
+        {
+          "chunk_id": "performance-and-quantization::performance-long-context",
+          "jaccard": 0.1053
+        },
+        {
+          "chunk_id": "data::1-insert-k-unique-secrets-keep-the-manifest-out-of-your-repo",
+          "jaccard": 0.1034
+        },
+        {
+          "chunk_id": "performance-and-quantization::soup-yaml",
+          "jaccard": 0.1
+        }
+      ]
+    },
+    {
+      "query_id": "manual_019",
+      "errors": [],
+      "warnings": [],
+      "flags": [],
+      "lex_top_matches": [
+        {
+          "chunk_id": "backends-and-ops::print-the-locked-env-summary",
+          "jaccard": 0.0667
+        },
+        {
+          "chunk_id": "backends-and-ops::snapshot-the-current-env-into-soup-env-lock",
+          "jaccard": 0.0625
+        },
+        {
+          "chunk_id": "backends-and-ops::just-create-files-without-training",
+          "jaccard": 0.0625
+        },
+        {
+          "chunk_id": "backends-and-ops::hyperparameter-sweep",
+          "jaccard": 0.0625
+        },
+        {
+          "chunk_id": "data::copy-one-into-the-current-directory",
+          "jaccard": 0.0606
+        }
+      ]
+    },
+    {
+      "query_id": "manual_020",
+      "errors": [],
+      "warnings": [],
+      "flags": [],
+      "lex_top_matches": [
+        {
+          "chunk_id": "models::the-extras-table::sub_006",
+          "jaccard": 0.1176
+        },
+        {
+          "chunk_id": "serving-and-export::export-deploy-in-one-command",
+          "jaccard": 0.1111
+        },
+        {
+          "chunk_id": "backends-and-ops::shell-completions-soup-completions",
+          "jaccard": 0.1111
+        },
+        {
+          "chunk_id": "backends-and-ops::preserves-the-final-model-and-the-checkpoint-with-the-lowest-loss",
+          "jaccard": 0.1
+        },
+        {
+          "chunk_id": "training::ppo-full-rlhf-pipeline",
+          "jaccard": 0.0952
+        }
+      ]
+    },
+    {
+      "query_id": "manual_021",
+      "errors": [],
+      "warnings": [],
+      "flags": [],
+      "lex_top_matches": [
+        {
+          "chunk_id": "backends-and-ops::chat-with-a-lora-adapter-auto-detects-base-model",
+          "jaccard": 0.1765
+        },
+        {
+          "chunk_id": "serving-and-export::merge-lora-adapter",
+          "jaccard": 0.1667
+        },
+        {
+          "chunk_id": "backends-and-ops::push-to-huggingface",
+          "jaccard": 0.1667
+        },
+        {
+          "chunk_id": "backends-and-ops::chat-with-your-model",
+          "jaccard": 0.1538
+        },
+        {
+          "chunk_id": "serving-and-export::structured-output-json-schema-regex",
+          "jaccard": 0.15
+        }
+      ]
+    },
+    {
+      "query_id": "manual_022",
+      "errors": [],
+      "warnings": [],
+      "flags": [],
+      "lex_top_matches": [
+        {
+          "chunk_id": "serving-and-export::benchmark-local-speed-and-vram-usage-on-3-automatically-generated-prompts",
+          "jaccard": 0.0556
+        },
+        {
+          "chunk_id": "backends-and-ops::shell-completions-soup-completions",
+          "jaccard": 0.04
+        },
+        {
+          "chunk_id": "data::data-engineering-pro",
+          "jaccard": 0.0357
+        },
+        {
+          "chunk_id": "backends-and-ops::preview-the-generated-config-without-running",
+          "jaccard": 0.0312
+        },
+        {
+          "chunk_id": "training::prm-guided-grpo-process-supervised-rl::sub_000",
+          "jaccard": 0.0299
+        }
+      ]
+    },
+    {
+      "query_id": "manual_023",
+      "errors": [],
+      "warnings": [],
+      "flags": [],
+      "lex_top_matches": [
+        {
+          "chunk_id": "backends-and-ops::auto-detect-latest-checkpoint-in-output-directory",
+          "jaccard": 0.1053
+        },
+        {
+          "chunk_id": "backends-and-ops::standalone-sweep-config",
+          "jaccard": 0.0714
+        },
+        {
+          "chunk_id": "backends-and-ops::full-system-info-in-json",
+          "jaccard": 0.0667
+        },
+        {
+          "chunk_id": "performance-and-quantization::pipeline-parallelism-config-wiring-only-in-v0-27-0",
+          "jaccard": 0.0625
+        },
+        {
+          "chunk_id": "data::import-from-llama-factory",
+          "jaccard": 0.0625
+        }
+      ]
+    },
+    {
+      "query_id": "manual_024",
+      "errors": [],
+      "warnings": [],
+      "flags": [],
+      "lex_top_matches": [
+        {
+          "chunk_id": "backends-and-ops::what-licenses-are-safe-for-a-b2c-consumer-product",
+          "jaccard": 0.0526
+        },
+        {
+          "chunk_id": "training::stage-1-train-the-retriever-uses-soup-s-v0-16-embedding-trainer",
+          "jaccard": 0.0455
+        },
+        {
+          "chunk_id": "data::data-engineering-pro",
+          "jaccard": 0.0323
+        },
+        {
+          "chunk_id": "training::closed-loop-reward-hacking-auto-mitigation-v0-71-26::sub_002",
+          "jaccard": 0.0299
+        },
+        {
+          "chunk_id": "training::train::sub_001",
+          "jaccard": 0.027
+        }
+      ]
+    },
+    {
+      "query_id": "manual_025",
+      "errors": [],
+      "warnings": [],
+      "flags": [],
+      "lex_top_matches": [
+        {
+          "chunk_id": "training::sft-with-ebft-structured",
+          "jaccard": 0.1176
+        },
+        {
+          "chunk_id": "training::dpo-with-gdpo-length-normalized",
+          "jaccard": 0.1111
+        },
+        {
+          "chunk_id": "performance-and-quantization::activation-offloading-small-vram-large-batch::sub_001",
+          "jaccard": 0.1111
+        },
+        {
+          "chunk_id": "data::data-augmentation",
+          "jaccard": 0.1111
+        },
+        {
+          "chunk_id": "backends-and-ops::install-mlx-support::sub_000",
+          "jaccard": 0.0962
+        }
+      ]
+    },
+    {
+      "query_id": "manual_026",
+      "errors": [],
+      "warnings": [],
+      "flags": [],
+      "lex_top_matches": [
+        {
+          "chunk_id": "data::synthetic-data-generation",
+          "jaccard": 0.2308
+        },
+        {
+          "chunk_id": "data::qa-from-context-document",
+          "jaccard": 0.2
+        },
+        {
+          "chunk_id": "training::create-an-audio-config",
+          "jaccard": 0.1429
+        },
+        {
+          "chunk_id": "data::import-from-axolotl",
+          "jaccard": 0.1429
+        },
+        {
+          "chunk_id": "backends-and-ops::resume-training",
+          "jaccard": 0.1429
+        }
+      ]
+    },
+    {
+      "query_id": "manual_027",
+      "errors": [],
+      "warnings": [],
+      "flags": [],
+      "lex_top_matches": [
+        {
+          "chunk_id": "backends-and-ops::works-with-any-command",
+          "jaccard": 0.0968
+        },
+        {
+          "chunk_id": "backends-and-ops::preserves-the-final-model-and-the-checkpoint-with-the-lowest-loss",
+          "jaccard": 0.0952
+        },
+        {
+          "chunk_id": "training::ppo-full-rlhf-pipeline",
+          "jaccard": 0.0909
+        },
+        {
+          "chunk_id": "performance-and-quantization::moe-expert-quantization-router-only-training-live-in-v0-71-20::sub_000",
+          "jaccard": 0.0741
+        },
+        {
+          "chunk_id": "data::semantic-dedup-soup-data-dedup-semantic::sub_000",
+          "jaccard": 0.0727
+        }
+      ]
+    },
+    {
+      "query_id": "manual_028",
+      "errors": [],
+      "warnings": [],
+      "flags": [],
+      "lex_top_matches": [
+        {
+          "chunk_id": "backends-and-ops::group-into-a-collection",
+          "jaccard": 0.1053
+        },
+        {
+          "chunk_id": "backends-and-ops::push-to-huggingface",
+          "jaccard": 0.0833
+        },
+        {
+          "chunk_id": "backends-and-ops::upload-a-local-jsonl-file-as-an-hf-dataset-repo",
+          "jaccard": 0.08
+        },
+        {
+          "chunk_id": "backends-and-ops::install-unsloth-support::sub_001",
+          "jaccard": 0.0741
+        },
+        {
+          "chunk_id": "data::inspect-a-dataset",
+          "jaccard": 0.0714
+        }
+      ]
+    },
+    {
+      "query_id": "manual_029",
+      "errors": [],
+      "warnings": [],
+      "flags": [],
+      "lex_top_matches": [
+        {
+          "chunk_id": "backends-and-ops::auto-detect-latest-checkpoint-in-output-directory",
+          "jaccard": 0.1875
+        },
+        {
+          "chunk_id": "backends-and-ops::standalone-sweep-config",
+          "jaccard": 0.1818
+        },
+        {
+          "chunk_id": "backends-and-ops::full-system-info-in-json",
+          "jaccard": 0.1667
+        },
+        {
+          "chunk_id": "data::import-from-llama-factory",
+          "jaccard": 0.1538
+        },
+        {
+          "chunk_id": "backends-and-ops::use-a-recipe-writes-soup-yaml",
+          "jaccard": 0.1429
+        }
+      ]
+    },
+    {
+      "query_id": "manual_030",
+      "errors": [],
+      "warnings": [],
+      "flags": [],
+      "lex_top_matches": [
+        {
+          "chunk_id": "data::convert-between-formats",
+          "jaccard": 0.1053
+        },
+        {
+          "chunk_id": "commands::command-reference",
+          "jaccard": 0.1053
+        },
+        {
+          "chunk_id": "backends-and-ops::upload-model-to-hf-hub",
+          "jaccard": 0.1
+        },
+        {
+          "chunk_id": "data::use-seed-examples-to-guide-style",
+          "jaccard": 0.0952
+        },
+        {
+          "chunk_id": "backends-and-ops::stream-metrics-to-mlflow-set-mlflow-tracking-uri-to-your-server-url",
+          "jaccard": 0.087
+        }
+      ]
+    },
+    {
+      "query_id": "manual_031",
+      "errors": [],
+      "warnings": [],
+      "flags": [],
+      "lex_top_matches": [
+        {
+          "chunk_id": "backends-and-ops::apply-refuses-on-drift-exit-3-if-the-yaml-changed-since-plan",
+          "jaccard": 0.1429
+        },
+        {
+          "chunk_id": "data::import-from-axolotl",
+          "jaccard": 0.1333
+        },
+        {
+          "chunk_id": "data::import-from-unsloth-notebook",
+          "jaccard": 0.125
+        },
+        {
+          "chunk_id": "data::import-from-llama-factory",
+          "jaccard": 0.125
+        },
+        {
+          "chunk_id": "data::qa-from-context-document",
+          "jaccard": 0.1176
+        }
+      ]
+    },
+    {
+      "query_id": "manual_032",
+      "errors": [],
+      "warnings": [],
+      "flags": [],
+      "lex_top_matches": [
+        {
+          "chunk_id": "backends-and-ops::basic-version",
+          "jaccard": 0.1429
+        },
+        {
+          "chunk_id": "performance-and-quantization::correctness-first-v0-36-0",
+          "jaccard": 0.1333
+        },
+        {
+          "chunk_id": "backends-and-ops::list-all-recipes",
+          "jaccard": 0.125
+        },
+        {
+          "chunk_id": "data::list-available-bundles",
+          "jaccard": 0.1111
+        },
+        {
+          "chunk_id": "backends-and-ops::zsh",
+          "jaccard": 0.1111
+        }
+      ]
+    },
+    {
+      "query_id": "manual_033",
+      "errors": [],
+      "warnings": [],
+      "flags": [],
+      "lex_top_matches": [
+        {
+          "chunk_id": "training::dpo-with-gdpo-length-normalized",
+          "jaccard": 0.0526
+        },
+        {
+          "chunk_id": "training::soup-yaml-1",
+          "jaccard": 0.0462
+        },
+        {
+          "chunk_id": "training::tts-fine-tuning-task-tts-beta-live-in-v0-71-20::sub_006",
+          "jaccard": 0.0435
+        },
+        {
+          "chunk_id": "training::continual-learning-rehearsal-replay::sub_003",
+          "jaccard": 0.0429
+        },
+        {
+          "chunk_id": "training::full-fine-tuning-lora-r-0::sub_002",
+          "jaccard": 0.0426
+        }
+      ]
+    },
+    {
+      "query_id": "manual_034",
+      "errors": [],
+      "warnings": [],
+      "flags": [],
+      "lex_top_matches": [
+        {
+          "chunk_id": "performance-and-quantization::gpus-flag-topology-aware-launch",
+          "jaccard": 0.0833
+        },
+        {
+          "chunk_id": "training::inform-cluster-separation-index-wang-et-al-2024-arxiv-2402-09345",
+          "jaccard": 0.0741
+        },
+        {
+          "chunk_id": "commands::all-commands::sub_026",
+          "jaccard": 0.0612
+        },
+        {
+          "chunk_id": "backends-and-ops::log-level-quiet-normal-verbose-debug",
+          "jaccard": 0.0588
+        },
+        {
+          "chunk_id": "training::ra-dit-retrieval-augmented-dual-instruction-tuning",
+          "jaccard": 0.0556
+        }
+      ]
+    },
+    {
+      "query_id": "manual_035",
+      "errors": [],
+      "warnings": [],
+      "flags": [],
+      "lex_top_matches": [
+        {
+          "chunk_id": "commands::all-commands::sub_026",
+          "jaccard": 0.0784
+        },
+        {
+          "chunk_id": "backends-and-ops::quickstart-demo",
+          "jaccard": 0.0769
+        },
+        {
+          "chunk_id": "backends-and-ops::experiment-tracking",
+          "jaccard": 0.0769
+        },
+        {
+          "chunk_id": "backends-and-ops::wrap-your-fine-tuned-model-in-a-gradio-chat-space-in-one-command",
+          "jaccard": 0.0714
+        },
+        {
+          "chunk_id": "data::inspect-a-dataset",
+          "jaccard": 0.0625
+        }
+      ]
+    },
+    {
+      "query_id": "manual_036",
+      "errors": [],
+      "warnings": [],
+      "flags": [],
+      "lex_top_matches": [
+        {
+          "chunk_id": "serving-and-export::batch-inference",
+          "jaccard": 0.1
+        },
+        {
+          "chunk_id": "serving-and-export::benchmark-local-speed-and-vram-usage-on-3-automatically-generated-prompts",
+          "jaccard": 0.0952
+        },
+        {
+          "chunk_id": "data::synthetic-data-forge",
+          "jaccard": 0.0714
+        },
+        {
+          "chunk_id": "training::asr-fine-tuning-task-asr-whisper-v0-71-32::sub_002",
+          "jaccard": 0.0645
+        },
+        {
+          "chunk_id": "performance-and-quantization::quant-menu-9-quantization-formats",
+          "jaccard": 0.0645
+        }
+      ]
+    },
+    {
+      "query_id": "manual_037",
+      "errors": [],
+      "warnings": [],
+      "flags": [],
+      "lex_top_matches": [
+        {
+          "chunk_id": "serving-and-export::control-gpu-memory-usage",
+          "jaccard": 0.0909
+        },
+        {
+          "chunk_id": "serving-and-export::train-measure-your-own-draft-soup-draft",
+          "jaccard": 0.0882
+        },
+        {
+          "chunk_id": "models::quoting-the-extra::sub_001",
+          "jaccard": 0.0682
+        },
+        {
+          "chunk_id": "backends-and-ops::chat-with-your-model",
+          "jaccard": 0.0667
+        },
+        {
+          "chunk_id": "backends-and-ops::works-with-any-command",
+          "jaccard": 0.0606
+        }
+      ]
+    },
+    {
+      "query_id": "manual_038",
+      "errors": [],
+      "warnings": [],
+      "flags": [],
+      "lex_top_matches": [
+        {
+          "chunk_id": "serving-and-export::custom-generation-settings",
+          "jaccard": 0.1143
+        },
+        {
+          "chunk_id": "serving-and-export::export-to-gguf",
+          "jaccard": 0.08
+        },
+        {
+          "chunk_id": "data::rephrase-each-example-n-times-for-more-diversity",
+          "jaccard": 0.08
+        },
+        {
+          "chunk_id": "data::filter-by-quality-perplexity-coherence-scoring",
+          "jaccard": 0.08
+        },
+        {
+          "chunk_id": "data::canaries-soup-data-canary-insert-check",
+          "jaccard": 0.08
+        }
+      ]
+    },
+    {
+      "query_id": "manual_039",
+      "errors": [],
+      "warnings": [],
+      "flags": [],
+      "lex_top_matches": [
+        {
+          "chunk_id": "backends-and-ops::chat-with-a-lora-adapter-auto-detects-base-model",
+          "jaccard": 0.15
+        },
+        {
+          "chunk_id": "serving-and-export::merge-lora-adapter",
+          "jaccard": 0.1429
+        },
+        {
+          "chunk_id": "serving-and-export::batch-inference",
+          "jaccard": 0.1304
+        },
+        {
+          "chunk_id": "performance-and-quantization::train-lora-on-top-of-a-pre-quantized-gptq-checkpoint",
+          "jaccard": 0.129
+        },
+        {
+          "chunk_id": "backends-and-ops::delete-a-run",
+          "jaccard": 0.1176
+        }
+      ]
+    },
+    {
+      "query_id": "manual_040",
+      "errors": [],
+      "warnings": [],
+      "flags": [],
+      "lex_top_matches": [
+        {
+          "chunk_id": "backends-and-ops::full-system-info-in-json",
+          "jaccard": 0.0909
+        },
+        {
+          "chunk_id": "models::the-extras-table::sub_006",
+          "jaccard": 0.0714
+        },
+        {
+          "chunk_id": "serving-and-export::export-deploy-in-one-command",
+          "jaccard": 0.0667
+        },
+        {
+          "chunk_id": "backends-and-ops::auto-detect-latest-checkpoint-in-output-directory",
+          "jaccard": 0.0625
+        },
+        {
+          "chunk_id": "serving-and-export::install-vllm-support-in-its-own-environment-not-the-training-one",
+          "jaccard": 0.0556
+        }
+      ]
+    },
+    {
+      "query_id": "manual_041",
+      "errors": [],
+      "warnings": [],
+      "flags": [],
+      "lex_top_matches": [
+        {
+          "chunk_id": "models::supported-models-optional-extras",
+          "jaccard": 0.1739
+        },
+        {
+          "chunk_id": "serving-and-export::specify-base-model-and-dtype",
+          "jaccard": 0.1579
+        },
+        {
+          "chunk_id": "backends-and-ops::preserves-the-final-model-and-the-checkpoint-with-the-lowest-loss",
+          "jaccard": 0.1579
+        },
+        {
+          "chunk_id": "serving-and-export::start-with-vllm-backend",
+          "jaccard": 0.1333
+        },
+        {
+          "chunk_id": "serving-and-export::start-with-sglang-backend",
+          "jaccard": 0.1333
+        }
+      ]
+    },
+    {
+      "query_id": "manual_042",
+      "errors": [],
+      "warnings": [],
+      "flags": [],
+      "lex_top_matches": [
+        {
+          "chunk_id": "performance-and-quantization::preview-the-plan-which-shards-total-size-without-writing",
+          "jaccard": 0.1364
+        },
+        {
+          "chunk_id": "backends-and-ops::preview-a-recipe",
+          "jaccard": 0.1333
+        },
+        {
+          "chunk_id": "training::preview-the-induced-spec-without-writing-anything",
+          "jaccard": 0.1
+        },
+        {
+          "chunk_id": "backends-and-ops::preview-without-running",
+          "jaccard": 0.0909
+        },
+        {
+          "chunk_id": "backends-and-ops::basic-version",
+          "jaccard": 0.0909
+        }
+      ]
+    },
+    {
+      "query_id": "manual_043",
+      "errors": [],
+      "warnings": [],
+      "flags": [],
+      "lex_top_matches": [
+        {
+          "chunk_id": "performance-and-quantization::gradient-checkpointing-tiers",
+          "jaccard": 0.0328
+        },
+        {
+          "chunk_id": "performance-and-quantization::fp8-attention-nvfp4-native-unsloth-bnb-4bit::sub_000",
+          "jaccard": 0.0312
+        },
+        {
+          "chunk_id": "performance-and-quantization::performance-quantization::sub_004",
+          "jaccard": 0.0278
+        },
+        {
+          "chunk_id": "training::train::sub_001",
+          "jaccard": 0.027
+        },
+        {
+          "chunk_id": "performance-and-quantization::fp8-attention-nvfp4-native-unsloth-bnb-4bit::sub_003",
+          "jaccard": 0.027
+        }
+      ]
+    },
+    {
+      "query_id": "manual_044",
+      "errors": [],
+      "warnings": [],
+      "flags": [],
+      "lex_top_matches": [
+        {
+          "chunk_id": "performance-and-quantization::performance-long-context",
+          "jaccard": 0.0667
+        },
+        {
+          "chunk_id": "data::convert-between-formats",
+          "jaccard": 0.0667
+        },
+        {
+          "chunk_id": "performance-and-quantization::soup-yaml",
+          "jaccard": 0.0625
+        },
+        {
+          "chunk_id": "serving-and-export::specify-base-model-and-dtype",
+          "jaccard": 0.0556
+        },
+        {
+          "chunk_id": "serving-and-export::batch-inference",
+          "jaccard": 0.0556
+        }
+      ]
+    },
+    {
+      "query_id": "manual_045",
+      "errors": [],
+      "warnings": [],
+      "flags": [],
+      "lex_top_matches": [
+        {
+          "chunk_id": "data::demo-datasets-soup-data-demo",
+          "jaccard": 0.0833
+        },
+        {
+          "chunk_id": "backends-and-ops::unsloth-backend-2-5x-faster-training",
+          "jaccard": 0.0769
+        },
+        {
+          "chunk_id": "backends-and-ops::shell-completions-soup-completions",
+          "jaccard": 0.0741
+        },
+        {
+          "chunk_id": "backends-and-ops::hyperparameter-sweep",
+          "jaccard": 0.0667
+        },
+        {
+          "chunk_id": "performance-and-quantization::fsdp-qlora-set-quant-storage::sub_000",
+          "jaccard": 0.0625
+        }
+      ]
+    },
+    {
+      "query_id": "manual_046",
+      "errors": [],
+      "warnings": [],
+      "flags": [],
+      "lex_top_matches": [
+        {
+          "chunk_id": "models::the-extras-table::sub_000",
+          "jaccard": 0.1579
+        },
+        {
+          "chunk_id": "serving-and-export::remove-a-model",
+          "jaccard": 0.129
+        },
+        {
+          "chunk_id": "serving-and-export::structured-output-json-schema-regex",
+          "jaccard": 0.125
+        },
+        {
+          "chunk_id": "serving-and-export::deploy-to-ollama",
+          "jaccard": 0.125
+        },
+        {
+          "chunk_id": "serving-and-export::batch-inference",
+          "jaccard": 0.125
+        }
+      ]
+    },
+    {
+      "query_id": "manual_047",
+      "errors": [],
+      "warnings": [],
+      "flags": [],
+      "lex_top_matches": [
+        {
+          "chunk_id": "serving-and-export::export-to-gguf",
+          "jaccard": 0.087
+        },
+        {
+          "chunk_id": "data::canaries-soup-data-canary-insert-check",
+          "jaccard": 0.087
+        },
+        {
+          "chunk_id": "backends-and-ops::autopilot-zero-config",
+          "jaccard": 0.0811
+        },
+        {
+          "chunk_id": "backends-and-ops::unsloth-backend-2-5x-faster-training",
+          "jaccard": 0.0769
+        },
+        {
+          "chunk_id": "backends-and-ops::grid-search-over-learning-rate-and-lora-rank",
+          "jaccard": 0.0741
+        }
+      ]
+    },
+    {
+      "query_id": "manual_048",
+      "errors": [],
+      "warnings": [],
+      "flags": [],
+      "lex_top_matches": [
+        {
+          "chunk_id": "training::create-an-audio-config",
+          "jaccard": 0.0714
+        },
+        {
+          "chunk_id": "training::create-a-vision-config",
+          "jaccard": 0.0714
+        },
+        {
+          "chunk_id": "training::create-a-reasoning-config",
+          "jaccard": 0.0714
+        },
+        {
+          "chunk_id": "backends-and-ops::chat-with-a-lora-adapter-auto-detects-base-model",
+          "jaccard": 0.0588
+        },
+        {
+          "chunk_id": "serving-and-export::merge-lora-adapter",
+          "jaccard": 0.0556
+        }
+      ]
+    },
+    {
+      "query_id": "manual_049",
+      "errors": [],
+      "warnings": [],
+      "flags": [],
+      "lex_top_matches": [
+        {
+          "chunk_id": "training::soup-yaml",
+          "jaccard": 0.0588
+        },
+        {
+          "chunk_id": "training::audio-speech-fine-tuning",
+          "jaccard": 0.0556
+        },
+        {
+          "chunk_id": "performance-and-quantization::multi-gpu-deepspeed-fsdp",
+          "jaccard": 0.0556
+        },
+        {
+          "chunk_id": "backends-and-ops::save-results",
+          "jaccard": 0.0556
+        },
+        {
+          "chunk_id": "serving-and-export::batch-inference",
+          "jaccard": 0.0526
+        }
+      ]
+    },
+    {
+      "query_id": "manual_050",
+      "errors": [],
+      "warnings": [],
+      "flags": [],
+      "lex_top_matches": [
+        {
+          "chunk_id": "backends-and-ops::view-logs",
+          "jaccard": 0.15
+        },
+        {
+          "chunk_id": "data::2-train-on-canaried-jsonl-as-usual-then::sub_002",
+          "jaccard": 0.06
+        },
+        {
+          "chunk_id": "training::full-fine-tuning-lora-r-0::sub_004",
+          "jaccard": 0.0588
+        },
+        {
+          "chunk_id": "performance-and-quantization::performance-long-context",
+          "jaccard": 0.0588
+        },
+        {
+          "chunk_id": "data::collator-path-answer-only-per-message-train-field-raft-span-mask::sub_003",
+          "jaccard": 0.0571
+        }
+      ]
+    },
+    {
+      "query_id": "manual_051",
+      "errors": [],
+      "warnings": [],
+      "flags": [],
+      "lex_top_matches": [
+        {
+          "chunk_id": "backends-and-ops::chat-with-your-model",
+          "jaccard": 0.0909
+        },
+        {
+          "chunk_id": "backends-and-ops::hyperparameter-sweep",
+          "jaccard": 0.0714
+        },
+        {
+          "chunk_id": "data::expectations-suite-great-expectations-for-chat-data",
+          "jaccard": 0.0667
+        },
+        {
+          "chunk_id": "backends-and-ops::full-system-info-useful-for-bug-reports",
+          "jaccard": 0.0667
+        },
+        {
+          "chunk_id": "backends-and-ops::tensorboard-integration",
+          "jaccard": 0.0625
+        }
+      ]
+    },
+    {
+      "query_id": "manual_052",
+      "errors": [],
+      "warnings": [],
+      "flags": [],
+      "lex_top_matches": [
+        {
+          "chunk_id": "training::full-fine-tuning-lora-r-0::sub_006",
+          "jaccard": 0.0741
+        },
+        {
+          "chunk_id": "backends-and-ops::unsloth-backend-2-5x-faster-training",
+          "jaccard": 0.0741
+        },
+        {
+          "chunk_id": "training::full-fine-tuning-lora-r-0::sub_007",
+          "jaccard": 0.0702
+        },
+        {
+          "chunk_id": "backends-and-ops::use-a-recipe-writes-soup-yaml",
+          "jaccard": 0.0588
+        },
+        {
+          "chunk_id": "performance-and-quantization::batch-size-vs-gradient-accumulation::sub_015",
+          "jaccard": 0.0571
+        }
+      ]
+    },
+    {
+      "query_id": "manual_053",
+      "errors": [],
+      "warnings": [],
+      "flags": [],
+      "lex_top_matches": [
+        {
+          "chunk_id": "training::training-tasks-methods::sub_008",
+          "jaccard": 0.125
+        },
+        {
+          "chunk_id": "training::training-tasks-methods::sub_002",
+          "jaccard": 0.1111
+        },
+        {
+          "chunk_id": "training::install-vision-support",
+          "jaccard": 0.0909
+        },
+        {
+          "chunk_id": "training::install-audio-support",
+          "jaccard": 0.0909
+        },
+        {
+          "chunk_id": "backends-and-ops::list-all-training-runs",
+          "jaccard": 0.0909
+        }
+      ]
+    },
+    {
+      "query_id": "manual_054",
+      "errors": [],
+      "warnings": [],
+      "flags": [],
+      "lex_top_matches": [
+        {
+          "chunk_id": "performance-and-quantization::deepspeed-zero-quantized-weights-gradients-hierarchical-partitioning",
+          "jaccard": 0.125
+        },
+        {
+          "chunk_id": "backends-and-ops::chat-with-your-model",
+          "jaccard": 0.0909
+        },
+        {
+          "chunk_id": "data::demo-datasets-soup-data-demo",
+          "jaccard": 0.087
+        },
+        {
+          "chunk_id": "backends-and-ops::delete-a-run",
+          "jaccard": 0.0833
+        },
+        {
+          "chunk_id": "backends-and-ops::backends-platform-ops::sub_001",
+          "jaccard": 0.0789
+        }
+      ]
+    }
+  ],
+  "semantic_stage": null,
+  "semantic_top_matches": [
+    {
+      "query_id": "manual_001",
+      "top_train_chunks": [
+        {
+          "chunk_id": "commands::fine-tune-from-your-coding-agent-mcp::sub_003",
+          "cosine": 0.5669
+        },
+        {
+          "chunk_id": "commands::all-commands::sub_054",
+          "cosine": 0.565
+        },
+        {
+          "chunk_id": "backends-and-ops::snapshot-the-current-env-into-soup-env-lock",
+          "cosine": 0.5366
+        },
+        {
+          "chunk_id": "backends-and-ops::hermetic-env-lockfile-soup-env",
+          "cosine": 0.5142
+        },
+        {
+          "chunk_id": "backends-and-ops::compare-current-env-to-the-lock-exit-3-on-abi-sensitive-drift",
+          "cosine": 0.5049
+        }
+      ]
+    },
+    {
+      "query_id": "manual_002",
+      "top_train_chunks": [
+        {
+          "chunk_id": "training::continual-learning-rehearsal-replay::sub_001",
+          "cosine": 0.5105
+        },
+        {
+          "chunk_id": "backends-and-ops::resume-training",
+          "cosine": 0.4597
+        },
+        {
+          "chunk_id": "commands::all-commands::sub_062",
+          "cosine": 0.4536
+        },
+        {
+          "chunk_id": "training::mid-epoch-checkpoint-for-ppo-grpo-torchtune-punts-this-soup-ships-it",
+          "cosine": 0.4422
+        },
+        {
+          "chunk_id": "training::training-tasks-methods::sub_003",
+          "cosine": 0.4344
+        }
+      ]
+    },
+    {
+      "query_id": "manual_003",
+      "top_train_chunks": [
+        {
+          "chunk_id": "data::rephrase-each-example-n-times-for-more-diversity",
+          "cosine": 0.3586
+        },
+        {
+          "chunk_id": "training::curriculum-aware-training-beta::sub_002",
+          "cosine": 0.3572
+        },
+        {
+          "chunk_id": "commands::all-commands::sub_043",
+          "cosine": 0.3476
+        },
+        {
+          "chunk_id": "models::asr-models-task-asr-whisper-v0-71-32",
+          "cosine": 0.3405
+        },
+        {
+          "chunk_id": "commands::all-commands::sub_019",
+          "cosine": 0.3396
+        }
+      ]
+    },
+    {
+      "query_id": "manual_004",
+      "top_train_chunks": [
+        {
+          "chunk_id": "backends-and-ops::src-soup-cli-plugins-my-plugin-py-auto-discovered-at-soup-startup::sub_000",
+          "cosine": 0.548
+        },
+        {
+          "chunk_id": "commands::fine-tune-from-your-coding-agent-mcp::sub_000",
+          "cosine": 0.5451
+        },
+        {
+          "chunk_id": "backends-and-ops::list-all-training-runs",
+          "cosine": 0.5439
+        },
+        {
+          "chunk_id": "backends-and-ops::soup-why",
+          "cosine": 0.5405
+        },
+        {
+          "chunk_id": "README::soup-documentation::sub_004",
+          "cosine": 0.5364
+        }
+      ]
+    },
+    {
+      "query_id": "manual_005",
+      "top_train_chunks": [
+        {
+          "chunk_id": "backends-and-ops::snapshot-the-current-env-into-soup-env-lock",
+          "cosine": 0.4723
+        },
+        {
+          "chunk_id": "serving-and-export::auto-pair-soup-picks-the-draft-for-you-based-on-the-target-family",
+          "cosine": 0.4717
+        },
+        {
+          "chunk_id": "backends-and-ops::install-unsloth-support::sub_001",
+          "cosine": 0.4682
+        },
+        {
+          "chunk_id": "backends-and-ops::src-soup-cli-plugins-my-plugin-py-auto-discovered-at-soup-startup::sub_001",
+          "cosine": 0.4637
+        },
+        {
+          "chunk_id": "backends-and-ops::preserves-the-final-model-and-the-checkpoint-with-the-lowest-loss",
+          "cosine": 0.4618
+        }
+      ]
+    },
+    {
+      "query_id": "manual_006",
+      "top_train_chunks": [
+        {
+          "chunk_id": "performance-and-quantization::nf4-streaming-quantization-4bit::sub_003",
+          "cosine": 0.2321
+        },
+        {
+          "chunk_id": "training::grpo-objective-variants::sub_002",
+          "cosine": 0.2319
+        },
+        {
+          "chunk_id": "performance-and-quantization::preference-losses-over-streaming-v0-72-4::sub_001",
+          "cosine": 0.2294
+        },
+        {
+          "chunk_id": "performance-and-quantization::nf4-streaming-quantization-4bit::sub_008",
+          "cosine": 0.2228
+        },
+        {
+          "chunk_id": "performance-and-quantization::nf4-streaming-quantization-4bit::sub_000",
+          "cosine": 0.2173
+        }
+      ]
+    },
+    {
+      "query_id": "manual_007",
+      "top_train_chunks": [
+        {
+          "chunk_id": "backends-and-ops::model-comparison",
+          "cosine": 0.4461
+        },
+        {
+          "chunk_id": "backends-and-ops::compare-with-inline-prompts",
+          "cosine": 0.4313
+        },
+        {
+          "chunk_id": "backends-and-ops::compare-with-a-prompts-file",
+          "cosine": 0.3826
+        },
+        {
+          "chunk_id": "commands::all-commands::sub_042",
+          "cosine": 0.3579
+        },
+        {
+          "chunk_id": "backends-and-ops::save-results",
+          "cosine": 0.3575
+        }
+      ]
+    },
+    {
+      "query_id": "manual_008",
+      "top_train_chunks": [
+        {
+          "chunk_id": "training::tts-fine-tuning-task-tts-beta-live-in-v0-71-20::sub_003",
+          "cosine": 0.2937
+        },
+        {
+          "chunk_id": "training::closed-loop-reward-hacking-auto-mitigation-v0-71-26::sub_001",
+          "cosine": 0.2754
+        },
+        {
+          "chunk_id": "training::probe-a-synthesized-verifier-or-any-reward-py-exit-0-robust-2-gameable-1-error",
+          "cosine": 0.2592
+        },
+        {
+          "chunk_id": "training::closed-loop-reward-hacking-auto-mitigation-v0-71-26::sub_005",
+          "cosine": 0.2442
+        },
+        {
+          "chunk_id": "training::closed-loop-reward-hacking-auto-mitigation-v0-71-26::sub_000",
+          "cosine": 0.2415
+        }
+      ]
+    },
+    {
+      "query_id": "manual_009",
+      "top_train_chunks": [
+        {
+          "chunk_id": "backends-and-ops::true-fits-peak-7-76-gb-10-margin-24-00-gb-available",
+          "cosine": 0.2778
+        },
+        {
+          "chunk_id": "performance-and-quantization::sizing-a-streaming-run-v0-72-3::sub_001",
+          "cosine": 0.2658
+        },
+        {
+          "chunk_id": "training::rollout-auto-min-max-length-32",
+          "cosine": 0.2574
+        },
+        {
+          "chunk_id": "models::quick-size-guide",
+          "cosine": 0.2439
+        },
+        {
+          "chunk_id": "performance-and-quantization::oom-probe-auto-batch-size",
+          "cosine": 0.2298
+        }
+      ]
+    },
+    {
+      "query_id": "manual_010",
+      "top_train_chunks": [
+        {
+          "chunk_id": "commands::all-commands::sub_022",
+          "cosine": 0.5593
+        },
+        {
+          "chunk_id": "data::auto-dedup-minhash-requires-pip-install-soup-cli-data",
+          "cosine": 0.5434
+        },
+        {
+          "chunk_id": "data::soup-serve-logs-user-edit-signal-edited-response-wins-over-original",
+          "cosine": 0.5081
+        },
+        {
+          "chunk_id": "backends-and-ops::save-results",
+          "cosine": 0.4979
+        },
+        {
+          "chunk_id": "commands::all-commands::sub_023",
+          "cosine": 0.4979
+        }
+      ]
+    },
+    {
+      "query_id": "manual_011",
+      "top_train_chunks": [
+        {
+          "chunk_id": "training::seeds-reproducibility-training-seed::sub_001",
+          "cosine": 0.4426
+        },
+        {
+          "chunk_id": "training::seeds-reproducibility-training-seed::sub_003",
+          "cosine": 0.4388
+        },
+        {
+          "chunk_id": "training::seeds-reproducibility-training-seed::sub_000",
+          "cosine": 0.4156
+        },
+        {
+          "chunk_id": "training::seeds-reproducibility-training-seed::sub_002",
+          "cosine": 0.4128
+        },
+        {
+          "chunk_id": "training::seeds-reproducibility-training-seed::sub_004",
+          "cosine": 0.3972
+        }
+      ]
+    },
+    {
+      "query_id": "manual_012",
+      "top_train_chunks": [
+        {
+          "chunk_id": "data::pipeline-chunk-docs-judge-active-prune-jsonl-provenance-manifest::sub_002",
+          "cosine": 0.4698
+        },
+        {
+          "chunk_id": "backends-and-ops::validate-without-actually-running-anything",
+          "cosine": 0.4531
+        },
+        {
+          "chunk_id": "backends-and-ops::or-a-streamlit-app::sub_001",
+          "cosine": 0.4515
+        },
+        {
+          "chunk_id": "README::soup-documentation::sub_004",
+          "cosine": 0.4436
+        },
+        {
+          "chunk_id": "data::active-learning-sampler-soup-data-active-sample::sub_001",
+          "cosine": 0.4316
+        }
+      ]
+    },
+    {
+      "query_id": "manual_013",
+      "top_train_chunks": [
+        {
+          "chunk_id": "backends-and-ops::per-license-check-llama-community-license-800m-mau-block-exit-3",
+          "cosine": 0.3947
+        },
+        {
+          "chunk_id": "serving-and-export::merge-lora-adapter",
+          "cosine": 0.3494
+        },
+        {
+          "chunk_id": "serving-and-export::auto-detect-base-model-from-adapter-config-json",
+          "cosine": 0.3313
+        },
+        {
+          "chunk_id": "backends-and-ops::what-licenses-are-safe-for-a-b2c-consumer-product",
+          "cosine": 0.3303
+        },
+        {
+          "chunk_id": "backends-and-ops::license-advisor-soup-license-advisor",
+          "cosine": 0.3058
+        }
+      ]
+    },
+    {
+      "query_id": "manual_014",
+      "top_train_chunks": [
+        {
+          "chunk_id": "backends-and-ops::push-to-huggingface",
+          "cosine": 0.4139
+        },
+        {
+          "chunk_id": "backends-and-ops::huggingface-hub-deep-integration",
+          "cosine": 0.3712
+        },
+        {
+          "chunk_id": "training::closed-loop-reward-hacking-auto-mitigation-v0-71-26::sub_002",
+          "cosine": 0.34
+        },
+        {
+          "chunk_id": "training::closed-loop-reward-hacking-auto-mitigation-v0-71-26::sub_005",
+          "cosine": 0.3028
+        },
+        {
+          "chunk_id": "training::closed-loop-reward-hacking-auto-mitigation-v0-71-26::sub_000",
+          "cosine": 0.3001
+        }
+      ]
+    },
+    {
+      "query_id": "manual_015",
+      "top_train_chunks": [
+        {
+          "chunk_id": "data::list-available-bundles",
+          "cosine": 0.4871
+        },
+        {
+          "chunk_id": "README::soup-documentation::sub_004",
+          "cosine": 0.4719
+        },
+        {
+          "chunk_id": "backends-and-ops::modal-token-id-modal-token-secret",
+          "cosine": 0.4621
+        },
+        {
+          "chunk_id": "backends-and-ops::plan-only-default-write-the-stub-print-the-modal-run-command",
+          "cosine": 0.4006
+        },
+        {
+          "chunk_id": "backends-and-ops::basic-version",
+          "cosine": 0.3922
+        }
+      ]
+    },
+    {
+      "query_id": "manual_016",
+      "top_train_chunks": [
+        {
+          "chunk_id": "commands::all-commands::sub_037",
+          "cosine": 0.5919
+        },
+        {
+          "chunk_id": "serving-and-export::install-server-dependencies",
+          "cosine": 0.5216
+        },
+        {
+          "chunk_id": "serving-and-export::building-llama-cpp-required-for-quantized-gguf::sub_003",
+          "cosine": 0.5209
+        },
+        {
+          "chunk_id": "commands::all-commands::sub_036",
+          "cosine": 0.5143
+        },
+        {
+          "chunk_id": "commands::fine-tune-from-your-coding-agent-mcp::sub_000",
+          "cosine": 0.5133
+        }
+      ]
+    },
+    {
+      "query_id": "manual_017",
+      "top_train_chunks": [
+        {
+          "chunk_id": "README::soup-documentation::sub_003",
+          "cosine": 0.5814
+        },
+        {
+          "chunk_id": "commands::all-commands::sub_023",
+          "cosine": 0.5227
+        },
+        {
+          "chunk_id": "training::create-a-reasoning-config",
+          "cosine": 0.5134
+        },
+        {
+          "chunk_id": "training::create-an-audio-config",
+          "cosine": 0.51
+        },
+        {
+          "chunk_id": "README::soup-documentation::sub_004",
+          "cosine": 0.5013
+        }
+      ]
+    },
+    {
+      "query_id": "manual_018",
+      "top_train_chunks": [
+        {
+          "chunk_id": "training::continued-pre-training",
+          "cosine": 0.4067
+        },
+        {
+          "chunk_id": "training::unlearn-yaml",
+          "cosine": 0.3934
+        },
+        {
+          "chunk_id": "data::auto-validate-after-generation-remove-malformed-entries",
+          "cosine": 0.3739
+        },
+        {
+          "chunk_id": "training::unlearning-task-unlearn-npo-simnpo-rmu",
+          "cosine": 0.3518
+        },
+        {
+          "chunk_id": "training::run-the-unlearn-loop-validated-on-smollm2-135m-npo-simnpo-drive-forget-loss-down",
+          "cosine": 0.3474
+        }
+      ]
+    },
+    {
+      "query_id": "manual_019",
+      "top_train_chunks": [
+        {
+          "chunk_id": "backends-and-ops::crash-bundles-crash-files",
+          "cosine": 0.3411
+        },
+        {
+          "chunk_id": "backends-and-ops::writes-vscode-launch-json-with-soup-train-pytest-entries",
+          "cosine": 0.3056
+        },
+        {
+          "chunk_id": "backends-and-ops::observability-dev-ux",
+          "cosine": 0.2901
+        },
+        {
+          "chunk_id": "backends-and-ops::plugin-system::sub_001",
+          "cosine": 0.2876
+        },
+        {
+          "chunk_id": "backends-and-ops::telemetry-opt-in",
+          "cosine": 0.2837
+        }
+      ]
+    },
+    {
+      "query_id": "manual_020",
+      "top_train_chunks": [
+        {
+          "chunk_id": "training::process-reward-model-prm::sub_001",
+          "cosine": 0.4391
+        },
+        {
+          "chunk_id": "training::seeds-reproducibility-training-seed::sub_003",
+          "cosine": 0.411
+        },
+        {
+          "chunk_id": "models::supported-models-optional-extras",
+          "cosine": 0.4054
+        },
+        {
+          "chunk_id": "models::recommended-models::sub_003",
+          "cosine": 0.387
+        },
+        {
+          "chunk_id": "models::the-extras-table::sub_006",
+          "cosine": 0.3836
+        }
+      ]
+    },
+    {
+      "query_id": "manual_021",
+      "top_train_chunks": [
+        {
+          "chunk_id": "models::supported-models",
+          "cosine": 0.5057
+        },
+        {
+          "chunk_id": "backends-and-ops::upload-model-to-hf-hub",
+          "cosine": 0.4366
+        },
+        {
+          "chunk_id": "backends-and-ops::backends-platform-ops::sub_001",
+          "cosine": 0.4274
+        },
+        {
+          "chunk_id": "backends-and-ops::alternative-model-hubs::sub_000",
+          "cosine": 0.3926
+        },
+        {
+          "chunk_id": "backends-and-ops::push-to-huggingface",
+          "cosine": 0.3889
+        }
+      ]
+    },
+    {
+      "query_id": "manual_022",
+      "top_train_chunks": [
+        {
+          "chunk_id": "backends-and-ops::auto-push-each-save-steps-checkpoint-to-hf-as-a-checkpoint-n-branch",
+          "cosine": 0.3391
+        },
+        {
+          "chunk_id": "commands::fine-tune-from-your-coding-agent-mcp::sub_002",
+          "cosine": 0.3192
+        },
+        {
+          "chunk_id": "backends-and-ops::backends-platform-ops::sub_003",
+          "cosine": 0.3186
+        },
+        {
+          "chunk_id": "training::training-tasks-methods::sub_003",
+          "cosine": 0.3179
+        },
+        {
+          "chunk_id": "commands::all-commands::sub_027",
+          "cosine": 0.3111
+        }
+      ]
+    },
+    {
+      "query_id": "manual_023",
+      "top_train_chunks": [
+        {
+          "chunk_id": "data::expectations-suite-great-expectations-for-chat-data",
+          "cosine": 0.504
+        },
+        {
+          "chunk_id": "backends-and-ops::early-stopping-skip-remaining-runs-if-loss-exceeds-1-5x-best",
+          "cosine": 0.3764
+        },
+        {
+          "chunk_id": "commands::all-commands::sub_009",
+          "cosine": 0.37
+        },
+        {
+          "chunk_id": "backends-and-ops::random-search-with-max-runs",
+          "cosine": 0.3686
+        },
+        {
+          "chunk_id": "backends-and-ops::sweep-yaml",
+          "cosine": 0.357
+        }
+      ]
+    },
+    {
+      "query_id": "manual_024",
+      "top_train_chunks": [
+        {
+          "chunk_id": "README::soup-documentation::sub_003",
+          "cosine": 0.6196
+        },
+        {
+          "chunk_id": "README::soup-documentation::sub_004",
+          "cosine": 0.6156
+        },
+        {
+          "chunk_id": "backends-and-ops::backends-platform-ops::sub_005",
+          "cosine": 0.5931
+        },
+        {
+          "chunk_id": "commands::all-commands::sub_048",
+          "cosine": 0.5927
+        },
+        {
+          "chunk_id": "backends-and-ops::validate-without-actually-running-anything",
+          "cosine": 0.5701
+        }
+      ]
+    },
+    {
+      "query_id": "manual_025",
+      "top_train_chunks": [
+        {
+          "chunk_id": "performance-and-quantization::preference-losses-over-streaming-v0-72-4::sub_001",
+          "cosine": 0.4777
+        },
+        {
+          "chunk_id": "performance-and-quantization::preference-losses-over-streaming-v0-72-4::sub_002",
+          "cosine": 0.4756
+        },
+        {
+          "chunk_id": "training::dpo-training",
+          "cosine": 0.45
+        },
+        {
+          "chunk_id": "training::sft-with-ebft-structured",
+          "cosine": 0.4277
+        },
+        {
+          "chunk_id": "training::orpo-training-no-reference-model",
+          "cosine": 0.4239
+        }
+      ]
+    },
+    {
+      "query_id": "manual_026",
+      "top_train_chunks": [
+        {
+          "chunk_id": "commands::all-commands::sub_009",
+          "cosine": 0.492
+        },
+        {
+          "chunk_id": "training::predicted-expected-ids-rows-or-raft-rows-scored-against-their-own-golden-doc-n",
+          "cosine": 0.4857
+        },
+        {
+          "chunk_id": "data::synthetic-data-generation",
+          "cosine": 0.4652
+        },
+        {
+          "chunk_id": "commands::all-commands::sub_043",
+          "cosine": 0.4612
+        },
+        {
+          "chunk_id": "data::data-engineering-pro",
+          "cosine": 0.4595
+        }
+      ]
+    },
+    {
+      "query_id": "manual_027",
+      "top_train_chunks": [
+        {
+          "chunk_id": "backends-and-ops::model-comparison",
+          "cosine": 0.3307
+        },
+        {
+          "chunk_id": "backends-and-ops::compare-two-runs-side-by-side",
+          "cosine": 0.3268
+        },
+        {
+          "chunk_id": "backends-and-ops::compare-with-inline-prompts",
+          "cosine": 0.3258
+        },
+        {
+          "chunk_id": "data::data-mixing-optimizer-beta::sub_000",
+          "cosine": 0.3055
+        },
+        {
+          "chunk_id": "commands::all-commands::sub_009",
+          "cosine": 0.2993
+        }
+      ]
+    },
+    {
+      "query_id": "manual_028",
+      "top_train_chunks": [
+        {
+          "chunk_id": "serving-and-export::3-score-model-predictions-against-the-spec-catalog",
+          "cosine": 0.3018
+        },
+        {
+          "chunk_id": "training::continual-learning-rehearsal-replay::sub_001",
+          "cosine": 0.2886
+        },
+        {
+          "chunk_id": "backends-and-ops::push-to-huggingface",
+          "cosine": 0.2756
+        },
+        {
+          "chunk_id": "serving-and-export::speculative-decoding",
+          "cosine": 0.2752
+        },
+        {
+          "chunk_id": "data::quality-pipeline",
+          "cosine": 0.2745
+        }
+      ]
+    },
+    {
+      "query_id": "manual_029",
+      "top_train_chunks": [
+        {
+          "chunk_id": "backends-and-ops::validate-without-actually-running-anything",
+          "cosine": 0.5904
+        },
+        {
+          "chunk_id": "backends-and-ops::global-flag-goes-before-the-command",
+          "cosine": 0.5659
+        },
+        {
+          "chunk_id": "commands::all-commands::sub_009",
+          "cosine": 0.5561
+        },
+        {
+          "chunk_id": "training::rollout-auto-min-max-length-32",
+          "cosine": 0.5513
+        },
+        {
+          "chunk_id": "backends-and-ops::preview-without-running",
+          "cosine": 0.5374
+        }
+      ]
+    },
+    {
+      "query_id": "manual_030",
+      "top_train_chunks": [
+        {
+          "chunk_id": "data::active-learning-sampler-soup-data-active-sample::sub_001",
+          "cosine": 0.5813
+        },
+        {
+          "chunk_id": "README::soup-documentation::sub_003",
+          "cosine": 0.5085
+        },
+        {
+          "chunk_id": "data::data-mixing-optimizer-beta::sub_001",
+          "cosine": 0.4913
+        },
+        {
+          "chunk_id": "backends-and-ops::src-soup-cli-plugins-my-plugin-py-auto-discovered-at-soup-startup::sub_001",
+          "cosine": 0.4838
+        },
+        {
+          "chunk_id": "data::six-supported-sources-adapters-for-the-major-saas-vendors-raw-otel::sub_001",
+          "cosine": 0.4816
+        }
+      ]
+    },
+    {
+      "query_id": "manual_031",
+      "top_train_chunks": [
+        {
+          "chunk_id": "commands::all-commands::sub_054",
+          "cosine": 0.4745
+        },
+        {
+          "chunk_id": "README::soup-documentation::sub_003",
+          "cosine": 0.4697
+        },
+        {
+          "chunk_id": "commands::all-commands::sub_051",
+          "cosine": 0.4673
+        },
+        {
+          "chunk_id": "backends-and-ops::error-handling",
+          "cosine": 0.465
+        },
+        {
+          "chunk_id": "backends-and-ops::install-unsloth-support::sub_001",
+          "cosine": 0.4629
+        }
+      ]
+    },
+    {
+      "query_id": "manual_032",
+      "top_train_chunks": [
+        {
+          "chunk_id": "performance-and-quantization::correctness-first-v0-36-0",
+          "cosine": 0.6467
+        },
+        {
+          "chunk_id": "backends-and-ops::error-handling",
+          "cosine": 0.6269
+        },
+        {
+          "chunk_id": "data::active-learning-sampler-soup-data-active-sample::sub_001",
+          "cosine": 0.5881
+        },
+        {
+          "chunk_id": "README::soup-documentation::sub_004",
+          "cosine": 0.5698
+        },
+        {
+          "chunk_id": "backends-and-ops::src-soup-cli-plugins-my-plugin-py-auto-discovered-at-soup-startup::sub_001",
+          "cosine": 0.5694
+        }
+      ]
+    },
+    {
+      "query_id": "manual_033",
+      "top_train_chunks": [
+        {
+          "chunk_id": "training::score-the-run-on-tofu-muse-wmdp-ok-minor-major-verdict::sub_001",
+          "cosine": 0.3595
+        },
+        {
+          "chunk_id": "serving-and-export::distil-a-draft-from-your-own-target-then-serve-it-automatically::sub_002",
+          "cosine": 0.3498
+        },
+        {
+          "chunk_id": "performance-and-quantization::batch-size-vs-gradient-accumulation::sub_008",
+          "cosine": 0.3222
+        },
+        {
+          "chunk_id": "performance-and-quantization::fp8-attention-nvfp4-native-unsloth-bnb-4bit::sub_001",
+          "cosine": 0.2923
+        },
+        {
+          "chunk_id": "commands::all-commands::sub_025",
+          "cosine": 0.2917
+        }
+      ]
+    },
+    {
+      "query_id": "manual_034",
+      "top_train_chunks": [
+        {
+          "chunk_id": "commands::all-commands::sub_026",
+          "cosine": 0.2983
+        },
+        {
+          "chunk_id": "commands::all-commands::sub_025",
+          "cosine": 0.255
+        },
+        {
+          "chunk_id": "data::trace-to-preference-llm-judge-filter::sub_001",
+          "cosine": 0.2451
+        },
+        {
+          "chunk_id": "performance-and-quantization::correctness-first-v0-36-0",
+          "cosine": 0.2406
+        },
+        {
+          "chunk_id": "data::2-train-on-canaried-jsonl-as-usual-then::sub_001",
+          "cosine": 0.2326
+        }
+      ]
+    },
+    {
+      "query_id": "manual_035",
+      "top_train_chunks": [
+        {
+          "chunk_id": "commands::all-commands::sub_026",
+          "cosine": 0.5777
+        },
+        {
+          "chunk_id": "commands::all-commands::sub_025",
+          "cosine": 0.4294
+        },
+        {
+          "chunk_id": "commands::all-commands::sub_041",
+          "cosine": 0.3632
+        },
+        {
+          "chunk_id": "commands::all-commands::sub_027",
+          "cosine": 0.3552
+        },
+        {
+          "chunk_id": "training::online-dpo-task-online-dpo-judge-in-the-loop-v0-71-31::sub_002",
+          "cosine": 0.3274
+        }
+      ]
+    },
+    {
+      "query_id": "manual_036",
+      "top_train_chunks": [
+        {
+          "chunk_id": "commands::all-commands::sub_024",
+          "cosine": 0.375
+        },
+        {
+          "chunk_id": "backends-and-ops::works-with-any-command",
+          "cosine": 0.3367
+        },
+        {
+          "chunk_id": "commands::all-commands::sub_025",
+          "cosine": 0.3278
+        },
+        {
+          "chunk_id": "commands::all-commands::sub_009",
+          "cosine": 0.3262
+        },
+        {
+          "chunk_id": "training::infer-calibrate-emit-exit-0-kept-2-refused-1-error",
+          "cosine": 0.3211
+        }
+      ]
+    },
+    {
+      "query_id": "manual_037",
+      "top_train_chunks": [
+        {
+          "chunk_id": "performance-and-quantization::fp8-attention-nvfp4-native-unsloth-bnb-4bit::sub_001",
+          "cosine": 0.4389
+        },
+        {
+          "chunk_id": "performance-and-quantization::quantization-aware-training-qat",
+          "cosine": 0.4362
+        },
+        {
+          "chunk_id": "performance-and-quantization::fp8-training-hopper",
+          "cosine": 0.4288
+        },
+        {
+          "chunk_id": "performance-and-quantization::fp8-scaling-recipes-v0-28-1::sub_000",
+          "cosine": 0.403
+        },
+        {
+          "chunk_id": "performance-and-quantization::lf-axolotl-quant-parity-v0-53-0::sub_001",
+          "cosine": 0.4004
+        }
+      ]
+    },
+    {
+      "query_id": "manual_038",
+      "top_train_chunks": [
+        {
+          "chunk_id": "training::predicted-expected-ids-rows-or-raft-rows-scored-against-their-own-golden-doc-n",
+          "cosine": 0.5301
+        },
+        {
+          "chunk_id": "data::single-shot-composite-scorecard",
+          "cosine": 0.5177
+        },
+        {
+          "chunk_id": "data::standalone-subcommands-jsonl-in-enriched-jsonl-out::sub_000",
+          "cosine": 0.5014
+        },
+        {
+          "chunk_id": "commands::all-commands::sub_009",
+          "cosine": 0.4755
+        },
+        {
+          "chunk_id": "serving-and-export::structured-output-json-schema-regex",
+          "cosine": 0.4611
+        }
+      ]
+    },
+    {
+      "query_id": "manual_039",
+      "top_train_chunks": [
+        {
+          "chunk_id": "serving-and-export::merge-lora-adapter",
+          "cosine": 0.5407
+        },
+        {
+          "chunk_id": "training::mole-per-token-adapter-routing-task-moe-lora-routing::sub_000",
+          "cosine": 0.4551
+        },
+        {
+          "chunk_id": "training::full-fine-tuning-lora-r-0::sub_003",
+          "cosine": 0.4492
+        },
+        {
+          "chunk_id": "training::mole-per-token-adapter-routing-task-moe-lora-routing::sub_001",
+          "cosine": 0.4283
+        },
+        {
+          "chunk_id": "serving-and-export::dynamic-lora-hot-swap",
+          "cosine": 0.4162
+        }
+      ]
+    },
+    {
+      "query_id": "manual_040",
+      "top_train_chunks": [
+        {
+          "chunk_id": "training::online-dpo-task-online-dpo-judge-in-the-loop-v0-71-31::sub_002",
+          "cosine": 0.4642
+        },
+        {
+          "chunk_id": "data::trace-to-preference-llm-judge-filter::sub_001",
+          "cosine": 0.4221
+        },
+        {
+          "chunk_id": "commands::all-commands::sub_025",
+          "cosine": 0.3316
+        },
+        {
+          "chunk_id": "data::trace-to-preference-llm-judge-filter::sub_000",
+          "cosine": 0.3229
+        },
+        {
+          "chunk_id": "training::online-dpo-task-online-dpo-judge-in-the-loop-v0-71-31::sub_001",
+          "cosine": 0.306
+        }
+      ]
+    },
+    {
+      "query_id": "manual_041",
+      "top_train_chunks": [
+        {
+          "chunk_id": "data::data-mixing-optimizer-beta::sub_001",
+          "cosine": 0.5255
+        },
+        {
+          "chunk_id": "README::soup-documentation::sub_004",
+          "cosine": 0.5101
+        },
+        {
+          "chunk_id": "serving-and-export::auto-pair-soup-picks-the-draft-for-you-based-on-the-target-family",
+          "cosine": 0.5022
+        },
+        {
+          "chunk_id": "data::data-mixing-optimizer-beta::sub_000",
+          "cosine": 0.4928
+        },
+        {
+          "chunk_id": "models::supported-models",
+          "cosine": 0.4848
+        }
+      ]
+    },
+    {
+      "query_id": "manual_042",
+      "top_train_chunks": [
+        {
+          "chunk_id": "commands::all-commands::sub_029",
+          "cosine": 0.5114
+        },
+        {
+          "chunk_id": "backends-and-ops::preview-without-running",
+          "cosine": 0.493
+        },
+        {
+          "chunk_id": "training::rollout-auto-min-max-length-32",
+          "cosine": 0.4511
+        },
+        {
+          "chunk_id": "backends-and-ops::early-stopping-skip-remaining-runs-if-loss-exceeds-1-5x-best",
+          "cosine": 0.426
+        },
+        {
+          "chunk_id": "performance-and-quantization::assistant-only-loss-masking",
+          "cosine": 0.4103
+        }
+      ]
+    },
+    {
+      "query_id": "manual_043",
+      "top_train_chunks": [
+        {
+          "chunk_id": "training::architecture-knobs-mixture-of-depths-llama-pro-longlora::sub_000",
+          "cosine": 0.4815
+        },
+        {
+          "chunk_id": "commands::all-commands::sub_063",
+          "cosine": 0.3248
+        },
+        {
+          "chunk_id": "training::full-fine-tuning-lora-r-0::sub_003",
+          "cosine": 0.3245
+        },
+        {
+          "chunk_id": "training::continual-learning-rehearsal-replay::sub_003",
+          "cosine": 0.3181
+        },
+        {
+          "chunk_id": "training::architecture-knobs-mixture-of-depths-llama-pro-longlora::sub_001",
+          "cosine": 0.3111
+        }
+      ]
+    },
+    {
+      "query_id": "manual_044",
+      "top_train_chunks": [
+        {
+          "chunk_id": "performance-and-quantization::cross-document-attention-masking",
+          "cosine": 0.3962
+        },
+        {
+          "chunk_id": "training::seeds-reproducibility-training-seed::sub_002",
+          "cosine": 0.3186
+        },
+        {
+          "chunk_id": "serving-and-export::hf-space-sdk-auto-pick",
+          "cosine": 0.2816
+        },
+        {
+          "chunk_id": "training::continual-learning-rehearsal-replay::sub_002",
+          "cosine": 0.2694
+        },
+        {
+          "chunk_id": "training::seeds-reproducibility-training-seed::sub_000",
+          "cosine": 0.2584
+        }
+      ]
+    },
+    {
+      "query_id": "manual_045",
+      "top_train_chunks": [
+        {
+          "chunk_id": "backends-and-ops::wrap-your-fine-tuned-model-in-a-gradio-chat-space-in-one-command",
+          "cosine": 0.3417
+        },
+        {
+          "chunk_id": "backends-and-ops::zero-config-pick-everything-automatically",
+          "cosine": 0.34
+        },
+        {
+          "chunk_id": "backends-and-ops::modal-token-id-modal-token-secret",
+          "cosine": 0.3261
+        },
+        {
+          "chunk_id": "serving-and-export::hf-space-sdk-auto-pick",
+          "cosine": 0.3239
+        },
+        {
+          "chunk_id": "data::list-available-bundles",
+          "cosine": 0.3085
+        }
+      ]
+    },
+    {
+      "query_id": "manual_046",
+      "top_train_chunks": [
+        {
+          "chunk_id": "serving-and-export::2-plan-the-training-run-prints-the-soup-train-invocation",
+          "cosine": 0.5089
+        },
+        {
+          "chunk_id": "training::drop-plan-only-to-run-the-loop-plan-only-just-renders-the-per-round-plan",
+          "cosine": 0.5041
+        },
+        {
+          "chunk_id": "data::preview-without-writing",
+          "cosine": 0.4953
+        },
+        {
+          "chunk_id": "data::import-from-llama-factory",
+          "cosine": 0.4926
+        },
+        {
+          "chunk_id": "training::create-an-rlhf-config::sub_000",
+          "cosine": 0.4895
+        }
+      ]
+    },
+    {
+      "query_id": "manual_047",
+      "top_train_chunks": [
+        {
+          "chunk_id": "performance-and-quantization::install-qat-support::sub_001",
+          "cosine": 0.3814
+        },
+        {
+          "chunk_id": "performance-and-quantization::quantization-aware-training-qat",
+          "cosine": 0.3804
+        },
+        {
+          "chunk_id": "performance-and-quantization::fp8-scaling-recipes-v0-28-1::sub_000",
+          "cosine": 0.374
+        },
+        {
+          "chunk_id": "training::training-tasks-methods::sub_006",
+          "cosine": 0.3728
+        },
+        {
+          "chunk_id": "performance-and-quantization::batch-size-vs-gradient-accumulation::sub_007",
+          "cosine": 0.3673
+        }
+      ]
+    },
+    {
+      "query_id": "manual_048",
+      "top_train_chunks": [
+        {
+          "chunk_id": "performance-and-quantization::fsdp-qlora-set-quant-storage::sub_001",
+          "cosine": 0.4723
+        },
+        {
+          "chunk_id": "training::full-fine-tuning-lora-r-0::sub_003",
+          "cosine": 0.4415
+        },
+        {
+          "chunk_id": "performance-and-quantization::layer-streaming-is-a-config-key-not-a-cli-flag-just-train-normally::sub_000",
+          "cosine": 0.4395
+        },
+        {
+          "chunk_id": "performance-and-quantization::batch-size-vs-gradient-accumulation::sub_009",
+          "cosine": 0.4286
+        },
+        {
+          "chunk_id": "performance-and-quantization::batch-size-vs-gradient-accumulation::sub_003",
+          "cosine": 0.4274
+        }
+      ]
+    },
+    {
+      "query_id": "manual_049",
+      "top_train_chunks": [
+        {
+          "chunk_id": "training::full-fine-tuning-lora-r-0::sub_003",
+          "cosine": 0.3962
+        },
+        {
+          "chunk_id": "performance-and-quantization::batch-size-vs-gradient-accumulation::sub_009",
+          "cosine": 0.343
+        },
+        {
+          "chunk_id": "serving-and-export::bitnet-1-58-tq1-0-gguf-export-live-in-v0-71-20::sub_001",
+          "cosine": 0.3185
+        },
+        {
+          "chunk_id": "performance-and-quantization::layer-streaming-is-a-config-key-not-a-cli-flag-just-train-normally::sub_000",
+          "cosine": 0.3121
+        },
+        {
+          "chunk_id": "backends-and-ops::grid-search-over-learning-rate-and-lora-rank",
+          "cosine": 0.2972
+        }
+      ]
+    },
+    {
+      "query_id": "manual_050",
+      "top_train_chunks": [
+        {
+          "chunk_id": "training::tts-fine-tuning-task-tts-beta-live-in-v0-71-20::sub_002",
+          "cosine": 0.281
+        },
+        {
+          "chunk_id": "models::recommended-models::sub_003",
+          "cosine": 0.2783
+        },
+        {
+          "chunk_id": "training::full-fine-tuning-lora-r-0::sub_003",
+          "cosine": 0.2691
+        },
+        {
+          "chunk_id": "training::tts-fine-tuning-task-tts-beta-live-in-v0-71-20::sub_003",
+          "cosine": 0.2676
+        },
+        {
+          "chunk_id": "training::tts-fine-tuning-task-tts-beta-live-in-v0-71-20::sub_006",
+          "cosine": 0.2612
+        }
+      ]
+    },
+    {
+      "query_id": "manual_051",
+      "top_train_chunks": [
+        {
+          "chunk_id": "training::tts-fine-tuning-task-tts-beta-live-in-v0-71-20::sub_001",
+          "cosine": 0.4164
+        },
+        {
+          "chunk_id": "training::asr-fine-tuning-task-asr-whisper-v0-71-32::sub_000",
+          "cosine": 0.4077
+        },
+        {
+          "chunk_id": "performance-and-quantization::nf4-streaming-quantization-4bit::sub_011",
+          "cosine": 0.3886
+        },
+        {
+          "chunk_id": "training::tts-fine-tuning-task-tts-beta-live-in-v0-71-20::sub_002",
+          "cosine": 0.3838
+        },
+        {
+          "chunk_id": "performance-and-quantization::fp8-attention-nvfp4-native-unsloth-bnb-4bit::sub_002",
+          "cosine": 0.3834
+        }
+      ]
+    },
+    {
+      "query_id": "manual_052",
+      "top_train_chunks": [
+        {
+          "chunk_id": "training::full-fine-tuning-lora-r-0::sub_007",
+          "cosine": 0.5741
+        },
+        {
+          "chunk_id": "training::continual-learning-rehearsal-replay::sub_003",
+          "cosine": 0.4791
+        },
+        {
+          "chunk_id": "training::full-fine-tuning-lora-r-0::sub_006",
+          "cosine": 0.4592
+        },
+        {
+          "chunk_id": "training::full-fine-tuning-lora-r-0::sub_003",
+          "cosine": 0.4343
+        },
+        {
+          "chunk_id": "performance-and-quantization::batch-size-vs-gradient-accumulation::sub_009",
+          "cosine": 0.4295
+        }
+      ]
+    },
+    {
+      "query_id": "manual_053",
+      "top_train_chunks": [
+        {
+          "chunk_id": "training::closed-loop-reward-hacking-auto-mitigation-v0-71-26::sub_000",
+          "cosine": 0.4532
+        },
+        {
+          "chunk_id": "training::closed-loop-reward-hacking-auto-mitigation-v0-71-26::sub_001",
+          "cosine": 0.4369
+        },
+        {
+          "chunk_id": "training::closed-loop-reward-hacking-auto-mitigation-v0-71-26::sub_006",
+          "cosine": 0.426
+        },
+        {
+          "chunk_id": "training::continual-learning-rehearsal-replay::sub_003",
+          "cosine": 0.4134
+        },
+        {
+          "chunk_id": "training::curriculum-aware-training-beta::sub_000",
+          "cosine": 0.4013
+        }
+      ]
+    },
+    {
+      "query_id": "manual_054",
+      "top_train_chunks": [
+        {
+          "chunk_id": "performance-and-quantization::deepspeed-zero-quantized-weights-gradients-hierarchical-partitioning",
+          "cosine": 0.5079
+        },
+        {
+          "chunk_id": "performance-and-quantization::lf-axolotl-quant-parity-v0-53-0::sub_001",
+          "cosine": 0.4422
+        },
+        {
+          "chunk_id": "performance-and-quantization::sizing-a-streaming-run-v0-72-3::sub_000",
+          "cosine": 0.4331
+        },
+        {
+          "chunk_id": "performance-and-quantization::quant-menu-9-quantization-formats",
+          "cosine": 0.4122
+        },
+        {
+          "chunk_id": "performance-and-quantization::quantization-aware-training-qat",
+          "cosine": 0.4024
+        }
+      ]
+    }
+  ],
+  "note": "Overlap flags use provisional review thresholds (lexical Jaccard >= 0.25, semantic cosine >= 0.65); they are review material, not calibrated thresholds, and never relabel queries. When the semantic stage runs, top-5 train-chunk matches per query are reported with scores regardless of the threshold."
 }

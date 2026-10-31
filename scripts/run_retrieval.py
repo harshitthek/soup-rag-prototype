@@ -4,7 +4,7 @@ Usage:
     python scripts/run_retrieval.py --retriever bm25 \
         --output results/v2/bm25.json
 
-Gate: requires a frozen ``data/manual_queries.jsonl`` (owner-authored). This
+Gate: requires a frozen ``data/manual_queries.jsonl`` (owner-approved). This
 script refuses to run on any other query file and never touches v1 artifacts.
 """
 

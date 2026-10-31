@@ -278,7 +278,7 @@ def generate_report(
         "# Evaluation v2 — Four-Way Retrieval Comparison (Manual Queries)",
         "",
         f"**Retrievers:** {', '.join(RETRIEVER_IDS)}  ",
-        f"**Queries:** {len(query_ids)} manual queries (owner-authored)  ",
+        f"**Queries:** {len(query_ids)} manual queries (owner-approved; drafted by Qoder)  ",
         f"**Corpus fingerprint:** {results['mini_lm_frozen'].get('corpus_fingerprint', '?')}  ",
         f"**Query-set fingerprint:** {results['mini_lm_frozen'].get('query_set_fingerprint', '?')[:16]}…  ",
         f"**Bootstrap:** {n_bootstrap} resamples, seed={seed}, paired document-stratified percentile intervals, shared indices across retrievers.",
