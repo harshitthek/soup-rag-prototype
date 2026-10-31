@@ -83,3 +83,33 @@ See [`REPRODUCE.md`](REPRODUCE.md) for full reproduction options, environment se
 - Python 3.10+
 - PyTorch 2.0+, Transformers 4.40+, PEFT 0.14+ (tested on PEFT 0.21.2)
 - [Soup CLI](https://github.com/MakazhanAlpamys/Soup) (for `soup train`)
+
+---
+
+## Evaluation v2 (manual benchmark)
+
+A second evaluation layer tests whether the fine-tuned adapter generalizes
+beyond the synthetic queries (whose template/heading shortcut is disclosed
+above). It uses **54 owner-approved queries** (drafted by Qoder, reviewed
+and frozen by the owner) with multi-chunk and multi-section relevance labels
+(`data/manual_queries.jsonl`; worksheet: `docs/EVALUATION_V2_COVERAGE.md`):
+
+| Retriever | Hit@1 | Hit@5 | MRR@10 | Sec Hit@1 | Sec MRR@10 |
+|---|:---:|:---:|:---:|:---:|:---:|
+| E5-small-v2 (frozen) | 0.685 | 0.870 | 0.783 | 0.722 | 0.817 |
+| MiniLM frozen | 0.593 | 0.870 | 0.702 | 0.648 | 0.735 |
+| MiniLM + Soup adapter | 0.556 | 0.815 | 0.669 | 0.593 | 0.701 |
+| BM25 | 0.481 | 0.722 | 0.598 | 0.481 | 0.616 |
+
+The adapter does not beat frozen MiniLM on natural-language queries. On the
+36 primary queries (answers only in held-out documents) it trails
+(Hit@1 0.528 vs 0.639); on the 18 overlap queries (answers also present in
+training documents) it leads (Hit@1 0.611 vs 0.500). The v1 gain is therefore
+consistent with training-document exposure, not a transferable skill. Frozen
+E5-small-v2 is the strongest retriever overall. Chunk- and section-level
+metrics, doc-stratified paired bootstrap, and leave-one-doc-out sensitivity
+are in `results/v2/comparison.md`; no p-values are reported, and four
+held-out documents do not support population-level inference.
+
+Methodology: `docs/EVALUATION_V2_SPEC.md`; progress:
+`docs/EVALUATION_V2_PROGRESS.md`.

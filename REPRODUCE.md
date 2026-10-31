@@ -118,3 +118,55 @@ python scripts/compare_results.py \
 
 - **Apple Silicon Warning**: During training or matrix multiplication on macOS, you may see benign PyTorch/NumPy runtime warnings regarding BLAS floating-point exception status registers. These do not affect numerical correctness and are safely filtered in testing scripts.
 - **Paths**: All configuration paths are relative to the repository root. Ensure commands are executed from the repository root directory.
+
+---
+
+## 4. Evaluation v2 (manual benchmark)
+
+The v2 layer evaluates the existing adapter and baselines on 54 owner-approved
+manual queries (drafted by Qoder). It never retrains the adapter and never modifies v1 data.
+
+Environment (once):
+
+```bash
+uv venv .venv
+uv pip install --python .venv/bin/python -r requirements.txt
+```
+
+Dataset workflow (already complete; documented for revalidation):
+
+```bash
+# 1. Queries were drafted by Qoder and reviewed/frozen by the owner
+#    (worksheet: docs/EVALUATION_V2_COVERAGE.md)
+# 2. Verbatim transcription into data/manual_queries.jsonl; 54 records
+# 3. Validate (errors block; overlap flags are provisional review material)
+.venv/bin/python scripts/validate_manual_queries.py
+.venv/bin/python scripts/validate_manual_queries.py --semantic   # optional embedding-based flags
+# 4. Frozen: query-set fingerprint
+#    116bd4c36a6b7747e86bb36b1836b4d1f9c4a552c2c8c752f14c066f38086f3d
+```
+
+Expected validator output: `checked 54 queries`, `errors: 0`, `warnings: 0`,
+`overlap flags: 1` (`manual_010`, a provisional lexical flag against the
+two-line training chunk `backends-and-ops::machine-readable-output`; the real
+registry-diff duplicate is already labeled `overlap`).
+
+Four-way retrieval run:
+
+```bash
+.venv/bin/python scripts/run_retrieval.py --retriever mini_lm_frozen --output results/v2/mini_lm_frozen.json
+.venv/bin/python scripts/run_retrieval.py --retriever mini_lm_soup   --output results/v2/mini_lm_soup.json
+.venv/bin/python scripts/run_retrieval.py --retriever bm25           --output results/v2/bm25.json
+.venv/bin/python scripts/run_retrieval.py --retriever e5_small       --output results/v2/e5_small.json
+.venv/bin/python scripts/compare_retrievers.py                       # -> results/v2/comparison.md
+```
+
+Expected micro metrics (Hit@1 / Hit@5 / MRR@10): E5-small-v2
+0.6852 / 0.8704 / 0.7834; MiniLM frozen 0.5926 / 0.8704 / 0.7021;
+MiniLM + Soup 0.5556 / 0.8148 / 0.6686; BM25 0.4815 / 0.7222 / 0.5984.
+All four result files must share corpus fingerprint `76ab5e88…` and
+query-set fingerprint `116bd4c3…`; the report must state the no-p-value,
+four-document caveat. Clean-room verification is reproducible bit-exactly
+(see `docs/EVALUATION_V2_PROGRESS.md`, Phase 7).
+
+Methodology and gates: `docs/EVALUATION_V2_SPEC.md`.
