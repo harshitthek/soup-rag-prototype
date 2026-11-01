@@ -49,6 +49,7 @@ def make_result(
     return {
         "retriever_id": retriever_id,
         "corpus_fingerprint": "fp",
+        "corpus_digest": "cdigest",
         "query_set_fingerprint": "qfp",
         "query_count": len(query_rows),
         "_per_query_scores": scores,
@@ -309,4 +310,30 @@ def test_main_validations(results, tmp_path, monkeypatch):
         json.dump(bad_fp_data, f)
     with pytest.raises(ValueError, match="corpus_fingerprint mismatch"):
         main()
+
+    # Reset bm25.json
+    with open(res_dir / "bm25.json", "w") as f:
+        json.dump(results["bm25"], f)
+
+    # Corpus digest mismatch
+    bad_dg_data = dict(results["bm25"])
+    bad_dg_data["corpus_digest"] = "bad_dg"
+    with open(res_dir / "bm25.json", "w") as f:
+        json.dump(bad_dg_data, f)
+    with pytest.raises(ValueError, match="corpus_digest mismatch"):
+        main()
+
+    # Reset bm25.json
+    with open(res_dir / "bm25.json", "w") as f:
+        json.dump(results["bm25"], f)
+
+    # Missing required field
+    for field in ("corpus_fingerprint", "corpus_digest", "query_set_fingerprint", "query_count"):
+        missing_data = dict(results["bm25"])
+        del missing_data[field]
+        with open(res_dir / "bm25.json", "w") as f:
+            json.dump(missing_data, f)
+        with pytest.raises(ValueError, match=f"missing required field '{field}'"):
+            main()
+
 

@@ -28,3 +28,30 @@ def test_run_guards(tmp_path):
     # output not under results/v2
     with pytest.raises(ValueError, match="must resolve under"):
         run("bm25", valid_queries, valid_corpus, RESULTS_DIR / "baseline.json")
+
+
+def test_query_fingerprint_guard(monkeypatch):
+    valid_queries = DATA_DIR / "manual_queries.jsonl"
+    valid_corpus = DATA_DIR / "corpus.jsonl"
+    valid_output = RESULTS_DIR / "v2" / "dummy.json"
+
+    monkeypatch.setattr("run_retrieval.query_set_fingerprint", lambda p: "tampered_hash")
+    with pytest.raises(ValueError, match="query file fingerprint mismatch"):
+        run("bm25", valid_queries, valid_corpus, valid_output)
+
+
+def test_corpus_digest_stored(tmp_path):
+    import hashlib
+    valid_queries = DATA_DIR / "manual_queries.jsonl"
+    valid_corpus = DATA_DIR / "corpus.jsonl"
+    test_output = RESULTS_DIR / "v2" / "test_dummy_output.json"
+
+    try:
+        res = run("bm25", valid_queries, valid_corpus, test_output)
+        assert "corpus_digest" in res
+        expected_digest = hashlib.sha256(valid_corpus.read_bytes()).hexdigest()
+        assert res["corpus_digest"] == expected_digest
+    finally:
+        if test_output.exists():
+            test_output.unlink()
+

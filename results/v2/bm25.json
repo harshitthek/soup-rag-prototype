@@ -9,6 +9,7 @@
     "tuning": "none (fixed defaults; tuning prohibited)"
   },
   "corpus_fingerprint": "76ab5e88af6e82bb1892296c7d3a854b722466466b6ae2fb7dc8c4831be75b2c",
+  "corpus_digest": "d787703e048a641884274e57f5802e328e43c637a0971217601e6a37128393e3",
   "query_set": "manual",
   "query_set_fingerprint": "971e157083c31e5e55131a35597dc492d20996a02c7a491543e02d7cbef362b3",
   "corpus_size": 1068,

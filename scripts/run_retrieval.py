@@ -45,8 +45,17 @@ def corpus_fingerprint() -> str:
     return stats["corpus_fingerprint"]
 
 
+def corpus_digest(corpus_path: Path) -> str:
+    return hashlib.sha256(corpus_path.read_bytes()).hexdigest()
+
+
 def query_set_fingerprint(queries_path: Path) -> str:
     return hashlib.sha256(queries_path.read_bytes()).hexdigest()
+
+
+FROZEN_QUERY_SET_FINGERPRINT = (
+    "971e157083c31e5e55131a35597dc492d20996a02c7a491543e02d7cbef362b3"
+)
 
 
 def run(
@@ -63,6 +72,11 @@ def run(
     if queries_path.resolve() != expected_queries:
         raise ValueError(
             f"refusing to run on query file other than {expected_queries}: {queries_path}"
+        )
+    calculated_query_fp = query_set_fingerprint(queries_path)
+    if calculated_query_fp != FROZEN_QUERY_SET_FINGERPRINT:
+        raise ValueError(
+            f"query file fingerprint mismatch: {calculated_query_fp} != approved {FROZEN_QUERY_SET_FINGERPRINT}"
         )
 
     expected_corpus = (DATA_DIR / "corpus.jsonl").resolve()
@@ -126,6 +140,7 @@ def run(
         "retriever_id": retriever_id,
         "retriever_config": retriever.config(),
         "corpus_fingerprint": corpus_fingerprint(),
+        "corpus_digest": corpus_digest(corpus_path),
         "query_set": "manual",
         "query_set_fingerprint": query_set_fingerprint(queries_path),
         "corpus_size": len(chunk_ids),
