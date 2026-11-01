@@ -15,7 +15,8 @@ outstanding dependencies. Canonical methodology: `docs/EVALUATION_V2_SPEC.md`.
 | 5 — analysis/report | done 2026-10-31 | `results/v2/comparison.md` (332 lines); primary/overlap reversal; E5 strongest |
 | 6 — docs + hygiene | done 2026-10-31 | checkpoint gates, model card, REVIEW/README/REPORT/REPRODUCE updated with v2 results |
 | 7 — verification | done 2026-10-31 | clean-room rerun bit-exact; full suite 85 pass + 3 pre-existing v1 collection errors; v1 numbers exact; PR #3 opened on owner instruction |
-| PR #3 review fixes (P1) | done 2026-10-31 (local) | authorship docs corrected, 18-query overlap audit (15/2/1), shared precomputed bootstrap plan; not pushed |
+| PR #3 review fixes (P1) | done 2026-10-31 | authorship docs corrected, 18-query overlap audit (15/2/1), shared precomputed bootstrap plan; committed and pushed |
+| Overlap reclassification & CodeRabbit fixes | done 2026-11-01 | 39/15 split finalized; CodeRabbit findings addressed, verified, and pushed |
 
 ## Phase 0 — done
 
@@ -152,10 +153,15 @@ Artifacts: `results/v2/{mini_lm_frozen,mini_lm_soup,bm25,e5_small}.json`.
   deltas, leave-one-doc-out micro/macro sensitivity, failure-category tables
   with the `no_relevant_result_top10` aggregate, chunk/section regression
   counts (sibling-first never counts as a section regression), primary vs
-  overlap subset tables, and a data-driven section-cluster bootstrap
-  decision (implemented only if >= 30% of query-occupied sections hold >= 2
-  queries; decision recorded in the report). Caveat text hardcoded: no
-  p-values, four-document limitation.
+  overlap subset tables, and a data-driven section-cluster bootstrap decision
+  heuristic. The implementation inspects the distribution of queries across
+  query-occupied sections and evaluates the configured threshold (>= 30% of
+  occupied sections holding >= 2 queries) for deciding whether cluster
+  resampling would be informative; the decision is recorded in the report.
+  No cluster bootstrap resampling or cluster bootstrap confidence intervals
+  are currently computed; the existing paired document-stratified bootstrap
+  remains the method used for all reported confidence intervals. Caveat text
+  hardcoded: no p-values, four-document limitation.
 - 10 fixture tests: micro/macro semantics, stratification preserving doc
   counts, resampler determinism, CI behavior on constant deltas,
   leave-one-doc-out, cluster decision both ways, sibling-not-section-
@@ -188,8 +194,12 @@ Artifacts: `results/v2/{mini_lm_frozen,mini_lm_soup,bm25,e5_small}.json`.
 - Failure categories: E5 37 exact-top-1 and 1 no-relevant-top-10; BM25 10
   no-relevant; frozen 5, Soup 6. Soup has more
   relevant-chunk-below-top-1 (17 vs 15) than frozen.
-- Section-cluster bootstrap skipped: 1 of 53 query-occupied sections holds
-  ≥2 queries (1.9% < 30%), so resampling would degenerate to query-level.
+- Section-cluster bootstrap skipped: 3 of 73 query-occupied sections hold
+  ≥2 queries (4.11% < 30%), so cluster resampling would degenerate to
+  query-level resampling. The script records this decision heuristic in the
+  report; no cluster bootstrap resampling or cluster bootstrap confidence
+  intervals are computed, and all reported confidence intervals use paired
+  document-stratified resampling.
 - Caveat honored: four documents are insufficient for population inference;
   intervals describe this fixed sample; no p-values (exactly one mention, the
   disclaimer). Report header states owner-approved; manually crafted by the
@@ -353,11 +363,12 @@ uv pip install --python /tmp/v2_phase7_venv/bin/python -r requirements.txt
   `05e301327de2278a040319d69394229f`; `git diff HEAD` over all v1 scripts,
   data, results, config, and `output_embedding/` is empty; checkpoints remain
   absent; no v1 file is modified in the working tree (only v2 files are).
-- **PR:** opened later on owner instruction as PR #3
-  (`feat/evaluation-v2` → `main`, 9 commits, 75 files). The P1 review fixes
-  below are local working-tree changes and are not pushed.
+- **PR:** opened on owner instruction as PR #3
+  (`feat/evaluation-v2` → `main`). The P1 review fixes below, subsequent
+  reclassification, and review fixes have been committed and pushed to the PR
+  branch.
 
-## P1 review fixes for PR #3 (2026-10-31, local; not pushed)
+## P1 review fixes for PR #3 (2026-10-31; committed and pushed)
 
 - **Authorship documentation corrected.** All public descriptions now state
   that the 54 natural-language queries were manually crafted by the project
@@ -435,12 +446,10 @@ uv pip install --python /tmp/v2_phase7_venv/bin/python -r requirements.txt
   strongest on overlap.
 - **Verification.** See the final report for the full evidence: validator,
   test suite, fingerprint equality, report determinism, overlap-label
-  integrity, and v1 artifact preservation. Work remains local and unpushed.
+  integrity, and v1 artifact preservation. Changes have been committed and
+  pushed to `feat/evaluation-v2` in PR #3.
 
 ## Outstanding dependencies
 
-1. **Publishing authorization.** The P1 fixes and the owner-approved
-   reclassification are local working-tree changes; commit, push, and any PR
-   description update require explicit owner authorization.
-2. `backends-and-ops.md` provenance gap (see above) — cosmetic; owner input
+1. `backends-and-ops.md` provenance gap (see above) — cosmetic; owner input
    optional.

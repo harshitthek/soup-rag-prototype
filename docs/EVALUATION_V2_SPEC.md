@@ -192,9 +192,12 @@ set exists — tuning prohibited).
   (descriptive; a 4-cluster doc bootstrap is degenerate).
 - Leave-one-doc-out: drop each document's queries; recompute micro and macro
   metrics and all three deltas.
-- Section-cluster bootstrap: conditional. Inspect the frozen manual set's
-  query-per-section distribution; implement only if ≥30% of query-occupied
-  sections contain ≥2 queries; otherwise document why it is skipped.
+- Section-cluster bootstrap decision: evaluate whether query-per-section
+  distribution makes cluster resampling informative (threshold: ≥30% of
+  query-occupied sections contain ≥2 queries). If below threshold, document
+  why it is skipped. If threshold is met, note that cluster bootstrap
+  resampling is not implemented. Reported confidence intervals remain paired
+  document-stratified bootstrap.
 - Standing statement (hardcoded in the report template): four held-out
   documents are insufficient for population-level inference; all intervals
   are exploratory; no p-values, no significance claims.

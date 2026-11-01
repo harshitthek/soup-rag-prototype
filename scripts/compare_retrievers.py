@@ -10,9 +10,11 @@ Consumes the four retriever result JSONs produced by
   to every metric, every retriever, and all three pairwise comparisons
   Soup−frozen, Soup−BM25, Soup−E5;
 - leave-one-document-out sensitivity for the same comparisons;
-- a section-cluster bootstrap only if the frozen dataset's cluster structure
-  makes it informative (>= 30% of query-occupied sections contain >= 2
-  queries); otherwise documented as skipped;
+- section-cluster structure evaluation to decide whether cluster resampling
+  would be informative (>= 30% of query-occupied sections contain >= 2
+  queries), recording the decision in the report (reported confidence
+  intervals use paired document-stratified resampling; no cluster bootstrap
+  resampling or cluster bootstrap confidence intervals are computed);
 - mutually exclusive failure-category tables;
 - primary and overlap subsets reported separately.
 
@@ -169,8 +171,12 @@ def leave_one_doc_out(
 def cluster_structure(
     per_query_results: Sequence[dict[str, Any]],
 ) -> dict[str, Any]:
-    """Count queries per (document, section) cluster and decide whether a
-    cluster bootstrap would differ meaningfully from query-level resampling."""
+    """Count queries per (document, section) cluster and evaluate whether a
+    cluster bootstrap would differ meaningfully from query-level resampling.
+
+    The decision heuristic is recorded in the report; no cluster bootstrap
+    confidence intervals are computed.
+    """
     from retrieval import chunk_doc_name, get_base_section
 
     clusters = Counter()
