@@ -385,20 +385,20 @@ def prepare_corpus() -> dict[str, Any]:
 def main() -> None:
     print("Preparing corpus...")
     stats = prepare_corpus()
-    print(f"\nCorpus prepared:")
+    print("\nCorpus prepared:")
     print(f"  Total files: {stats['total_files']}")
     print(f"  Train files: {stats['train_files']}, Test files: {stats['test_files']}")
     print(f"  Total chunks: {stats['total_chunks']}")
     print(f"  Train chunks: {stats['train_chunks']}, Test chunks: {stats['test_chunks']}")
     print(f"  Corpus fingerprint: {stats['corpus_fingerprint']}")
-    print(f"\nSection lengths BEFORE sub-splitting:")
+    print("\nSection lengths BEFORE sub-splitting:")
     before = stats["section_lengths_before_split"]
     print(f"  Count: {before['count']}")
     print(f"  Min: {before['min']}, Median: {before['median']}, Max: {before['max']}")
     print(f"  P75: {before['p75']}, P90: {before['p90']}")
     print(f"  Exceeding 256 tokens: {before['exceeding_256']}/{before['count']}")
     print(f"  Exceeding 512 tokens: {before['exceeding_512']}/{before['count']}")
-    print(f"\nChunk lengths AFTER sub-splitting:")
+    print("\nChunk lengths AFTER sub-splitting:")
     after = stats["chunk_lengths_after_split"]
     print(f"  Count: {after['count']}")
     print(f"  Min: {after['min']}, Median: {after['median']}, Max: {after['max']}")

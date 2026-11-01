@@ -50,9 +50,8 @@ def corpus_digest(corpus_path: Path) -> str:
 
 
 def query_set_fingerprint(queries_path: Path | bytes) -> str:
-    if isinstance(queries_path, bytes):
-        return hashlib.sha256(queries_path).hexdigest()
-    return hashlib.sha256(queries_path.read_bytes()).hexdigest()
+    raw = queries_path if isinstance(queries_path, bytes) else queries_path.read_bytes()
+    return hashlib.sha256(raw.replace(b"\r\n", b"\n")).hexdigest()
 
 
 FROZEN_QUERY_SET_FINGERPRINT = (

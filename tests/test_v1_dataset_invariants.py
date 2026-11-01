@@ -52,7 +52,6 @@ def test_query_dataset_counts(artifacts):
 
 def test_triplet_count_and_content(artifacts):
     triplets = artifacts["triplets"]
-    corpus = {c["chunk_id"]: c for c in artifacts["corpus"]}
     assert len(triplets) == 3234
     for t in triplets:
         assert t["anchor"].strip() and t["positive"].strip() and t["negative"].strip()

@@ -143,7 +143,7 @@ class TestDenseEncoding:
 
     def test_minilm_frozen_encodes_384d_unit_norm(self):
         torch = pytest.importorskip("torch")
-        transformers = pytest.importorskip("transformers")
+        pytest.importorskip("transformers")
         r = DenseRetriever(
             "mini_lm_frozen",
             MINILM_MODEL_ID,

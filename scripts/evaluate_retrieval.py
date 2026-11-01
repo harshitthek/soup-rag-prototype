@@ -20,7 +20,7 @@ import numpy as np
 # Filter benign NumPy 2.x BLAS warning on Apple Silicon Accelerate
 warnings.filterwarnings("ignore", category=RuntimeWarning, message=".*encountered in matmul.*")
 
-from encoder import SharedEncoder
+from encoder import SharedEncoder  # noqa: E402
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 DATA_DIR = REPO_ROOT / "data"

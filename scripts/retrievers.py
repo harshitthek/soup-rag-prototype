@@ -15,7 +15,7 @@ inside the classes so that metric-only workflows stay stdlib.
 
 from __future__ import annotations
 
-from typing import Any, Callable, Sequence
+from typing import Any, Sequence
 
 MINILM_MODEL_ID = "sentence-transformers/all-MiniLM-L6-v2"
 MINILM_REVISION = "1110a243fdf4706b3f48f1d95db1a4f5529b4d41"  # pinned in soup_run.json
@@ -128,7 +128,6 @@ class DenseRetriever:
         }
 
     def _load(self) -> None:
-        import torch
         from transformers import AutoModel, AutoTokenizer
 
         self.tokenizer = AutoTokenizer.from_pretrained(

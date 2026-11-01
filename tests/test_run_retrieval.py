@@ -7,7 +7,7 @@ import pytest
 REPO_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO_ROOT / "scripts"))
 
-from run_retrieval import run, query_set_fingerprint, DATA_DIR, RESULTS_DIR
+from run_retrieval import run, query_set_fingerprint, DATA_DIR, RESULTS_DIR  # noqa: E402
 
 
 def test_run_guards(tmp_path):

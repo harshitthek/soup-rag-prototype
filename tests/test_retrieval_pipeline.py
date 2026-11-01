@@ -22,9 +22,9 @@ import yaml
 REPO_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO_ROOT / "scripts"))
 
-from encoder import SharedEncoder
-from mine_hard_negatives import format_chunk_text, get_base_section, mine_hard_negatives
-from compare_results import paired_bootstrap_ci, generate_report
+from encoder import SharedEncoder  # noqa: E402
+from mine_hard_negatives import format_chunk_text, get_base_section, mine_hard_negatives  # noqa: E402
+from compare_results import paired_bootstrap_ci, generate_report  # noqa: E402
 
 
 class TestPipelineConfig:
