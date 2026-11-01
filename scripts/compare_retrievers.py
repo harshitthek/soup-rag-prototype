@@ -43,6 +43,10 @@ BOOTSTRAP_N = 10_000
 BOOTSTRAP_SEED = 42
 CLUSTER_MIN_FRACTION = 0.30
 
+FROZEN_QUERY_SET_FINGERPRINT = (
+    "971e157083c31e5e55131a35597dc492d20996a02c7a491543e02d7cbef362b3"
+)
+
 CAVEAT = (
     "Four held-out documents are insufficient for population-level inference; "
     "all intervals describe uncertainty within this fixed query sample. "
@@ -421,6 +425,7 @@ REQUIRED_RESULT_FIELDS = (
     "corpus_digest",
     "query_set_fingerprint",
     "query_count",
+    "top_k",
 )
 
 
@@ -447,12 +452,19 @@ def validate_results(results: dict[str, dict[str, Any]]) -> None:
                     f"result file for '{rid}' metric '{metric}' has {len(scores)} scores, "
                     f"expected {n_pqr} (matching per_query_results)"
                 )
+        if res["query_set_fingerprint"] != FROZEN_QUERY_SET_FINGERPRINT:
+            raise ValueError(
+                f"result file for '{rid}' query_set_fingerprint mismatch: "
+                f"'{res['query_set_fingerprint']}' != approved '{FROZEN_QUERY_SET_FINGERPRINT}'"
+            )
 
     first_res = results[RETRIEVER_IDS[0]]
     ref_corpus_fp = first_res["corpus_fingerprint"]
     ref_corpus_dg = first_res["corpus_digest"]
     ref_query_fp = first_res["query_set_fingerprint"]
     ref_query_count = first_res["query_count"]
+    ref_top_k = first_res["top_k"]
+    ref_metrics = set(first_res.get("_per_query_scores", {}).keys())
     ref_query_order = [q["query_id"] for q in first_res.get("per_query_results", [])]
 
     for rid in RETRIEVER_IDS[1:]:
@@ -476,6 +488,16 @@ def validate_results(results: dict[str, dict[str, Any]]) -> None:
             raise ValueError(
                 f"query_count mismatch: '{rid}' ({res['query_count']}) "
                 f"!= '{RETRIEVER_IDS[0]}' ({ref_query_count})"
+            )
+        if res["top_k"] != ref_top_k:
+            raise ValueError(
+                f"top_k mismatch: '{rid}' ({res['top_k']}) "
+                f"!= '{RETRIEVER_IDS[0]}' ({ref_top_k})"
+            )
+        res_metrics = set(res.get("_per_query_scores", {}).keys())
+        if res_metrics != ref_metrics:
+            raise ValueError(
+                f"metric keys mismatch between '{rid}' and '{RETRIEVER_IDS[0]}'"
             )
         query_order = [q["query_id"] for q in res.get("per_query_results", [])]
         if query_order != ref_query_order:

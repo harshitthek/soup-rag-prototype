@@ -13,6 +13,7 @@ sys.path.insert(0, str(REPO_ROOT / "scripts"))
 
 from compare_retrievers import (  # noqa: E402
     CAVEAT,
+    FROZEN_QUERY_SET_FINGERPRINT,
     StratifiedResampler,
     cluster_structure,
     failure_category_counts,
@@ -50,8 +51,9 @@ def make_result(
         "retriever_id": retriever_id,
         "corpus_fingerprint": "fp",
         "corpus_digest": "cdigest",
-        "query_set_fingerprint": "qfp",
+        "query_set_fingerprint": FROZEN_QUERY_SET_FINGERPRINT,
         "query_count": len(query_rows),
+        "top_k": 10,
         "_per_query_scores": scores,
         "per_query_results": per_query_results,
     }
@@ -351,7 +353,7 @@ def test_main_validations(results, tmp_path, monkeypatch):
         json.dump(results["bm25"], f)
 
     # Missing required field
-    for field in ("corpus_fingerprint", "corpus_digest", "query_set_fingerprint", "query_count"):
+    for field in ("corpus_fingerprint", "corpus_digest", "query_set_fingerprint", "query_count", "top_k"):
         missing_data = dict(results["bm25"])
         del missing_data[field]
         with open(res_dir / "bm25.json", "w") as f:
@@ -366,6 +368,42 @@ def test_main_validations(results, tmp_path, monkeypatch):
             json.dump(null_data, f)
         with pytest.raises(ValueError, match=f"missing required field '{field}'"):
             main()
+
+    # Reset bm25.json
+    with open(res_dir / "bm25.json", "w") as f:
+        json.dump(results["bm25"], f)
+
+    # top_k mismatch
+    bad_top_k = dict(results["bm25"])
+    bad_top_k["top_k"] = 20
+    with open(res_dir / "bm25.json", "w") as f:
+        json.dump(bad_top_k, f)
+    with pytest.raises(ValueError, match="top_k mismatch"):
+        main()
+
+    # Reset bm25.json
+    with open(res_dir / "bm25.json", "w") as f:
+        json.dump(results["bm25"], f)
+
+    # Unapproved query set fingerprint
+    bad_qfp = dict(results["bm25"])
+    bad_qfp["query_set_fingerprint"] = "unapproved_hash"
+    with open(res_dir / "bm25.json", "w") as f:
+        json.dump(bad_qfp, f)
+    with pytest.raises(ValueError, match="query_set_fingerprint mismatch"):
+        main()
+
+    # Reset bm25.json
+    with open(res_dir / "bm25.json", "w") as f:
+        json.dump(results["bm25"], f)
+
+    # Metric keys mismatch
+    bad_metrics = dict(results["bm25"])
+    bad_metrics["_per_query_scores"] = {"other_metric": [1.0] * 4}
+    with open(res_dir / "bm25.json", "w") as f:
+        json.dump(bad_metrics, f)
+    with pytest.raises(ValueError, match="metric keys mismatch"):
+        main()
 
     # Reset bm25.json
     with open(res_dir / "bm25.json", "w") as f:

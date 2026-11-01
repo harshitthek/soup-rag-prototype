@@ -49,7 +49,9 @@ def corpus_digest(corpus_path: Path) -> str:
     return hashlib.sha256(corpus_path.read_bytes()).hexdigest()
 
 
-def query_set_fingerprint(queries_path: Path) -> str:
+def query_set_fingerprint(queries_path: Path | bytes) -> str:
+    if isinstance(queries_path, bytes):
+        return hashlib.sha256(queries_path).hexdigest()
     return hashlib.sha256(queries_path.read_bytes()).hexdigest()
 
 
@@ -81,7 +83,8 @@ def run(
             "(see docs/EVALUATION_V2_COVERAGE.md)."
         )
 
-    calculated_query_fp = query_set_fingerprint(queries_path)
+    queries_bytes = queries_path.read_bytes()
+    calculated_query_fp = query_set_fingerprint(queries_bytes)
     if calculated_query_fp != FROZEN_QUERY_SET_FINGERPRINT:
         raise ValueError(
             f"query file fingerprint mismatch: {calculated_query_fp} != approved {FROZEN_QUERY_SET_FINGERPRINT}"
@@ -108,7 +111,11 @@ def run(
         for line in corpus_bytes.decode("utf-8").splitlines()
         if line.strip()
     ]
-    queries = load_jsonl(queries_path)
+    queries = [
+        json.loads(line)
+        for line in queries_bytes.decode("utf-8").splitlines()
+        if line.strip()
+    ]
     chunk_ids = [c["chunk_id"] for c in chunks]
 
     retriever = build_retriever(retriever_id, repo_root=REPO_ROOT)
