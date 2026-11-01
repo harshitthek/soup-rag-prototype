@@ -83,3 +83,40 @@ See [`REPRODUCE.md`](REPRODUCE.md) for full reproduction options, environment se
 - Python 3.10+
 - PyTorch 2.0+, Transformers 4.40+, PEFT 0.14+ (tested on PEFT 0.21.2)
 - [Soup CLI](https://github.com/MakazhanAlpamys/Soup) (for `soup train`)
+
+---
+
+## Evaluation v2 (manual benchmark)
+
+A second evaluation layer tests whether the fine-tuned adapter generalizes
+beyond the synthetic queries (whose template/heading shortcut is disclosed
+above). It uses **54 owner-approved queries, manually crafted by the project
+owner with AI assistance**, with multi-chunk and multi-section relevance
+labels (`data/manual_queries.jsonl`; worksheet:
+`docs/EVALUATION_V2_COVERAGE.md`). The owner reviewed and approved the final
+wording and relevance labels; no independent third-party annotation was
+performed:
+
+| Retriever | Hit@1 | Hit@5 | MRR@10 | Sec Hit@1 | Sec MRR@10 |
+|---|:---:|:---:|:---:|:---:|:---:|
+| E5-small-v2 (frozen) | 0.685 | 0.870 | 0.783 | 0.722 | 0.817 |
+| MiniLM frozen | 0.574 | 0.870 | 0.693 | 0.630 | 0.726 |
+| MiniLM + Soup adapter | 0.537 | 0.796 | 0.650 | 0.574 | 0.682 |
+| BM25 | 0.481 | 0.722 | 0.595 | 0.481 | 0.613 |
+
+The adapter does not beat frozen MiniLM on natural-language queries. On the
+39 primary queries (answers only in held-out documents) it trails
+(Hit@1 0.538 vs 0.615); on the 15 remaining overlap queries (answers also
+present in training documents) it leads frozen MiniLM (Hit@1 0.533 vs 0.467),
+while BM25 is strongest on that subset (0.667). The v1 gain is therefore
+consistent with training-document exposure, not a transferable skill. All 18
+original overlap candidates were audited
+(`docs/EVALUATION_V2_OVERLAP_AUDIT.md`): 15 were confirmed and 3 reclassified
+as primary with owner approval. Frozen E5-small-v2 is the strongest retriever
+overall. Chunk- and section-level
+metrics, doc-stratified paired bootstrap, and leave-one-doc-out sensitivity
+are in `results/v2/comparison.md`; no p-values are reported, and four
+held-out documents do not support population-level inference.
+
+Methodology: `docs/EVALUATION_V2_SPEC.md`; progress:
+`docs/EVALUATION_V2_PROGRESS.md`.

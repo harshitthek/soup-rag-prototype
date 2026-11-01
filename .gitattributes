@@ -1,0 +1,2 @@
+data/raw_docs/*.md -text
+data/raw_docs/LICENSE-soup-upstream.txt -text

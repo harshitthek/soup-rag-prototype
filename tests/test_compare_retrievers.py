@@ -1,0 +1,451 @@
+"""Tests for scripts/compare_retrievers.py (numpy required)."""
+
+from __future__ import annotations
+
+import sys
+from pathlib import Path
+
+import numpy as np
+import pytest
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(REPO_ROOT / "scripts"))
+
+from compare_retrievers import (  # noqa: E402
+    CAVEAT,
+    FROZEN_QUERY_SET_FINGERPRINT,
+    StratifiedResampler,
+    cluster_structure,
+    failure_category_counts,
+    generate_report,
+    leave_one_doc_out,
+    macro_metric,
+    micro_metric,
+    paired_bootstrap_ci,
+    regression_counts,
+)
+
+METRICS = ["hit@1", "mrr@10", "sec_hit@1"]
+
+
+def ranked_entry(rank, chunk_id, score=0.9):
+    return {"rank": rank, "chunk_id": chunk_id, "score": score}
+
+
+def make_result(
+    retriever_id: str,
+    query_rows: list[dict],
+) -> dict:
+    """query_rows: list of dicts with query_id, source_document,
+    relevant_chunk_ids, relevant_section_ids, ranked, failure_category,
+    subset, and per-metric score values in 'scores'."""
+    scores = {m: [row["scores"][m] for row in query_rows] for m in METRICS}
+    per_query_results = [
+        {k: row[k] for k in (
+            "query_id", "source_document", "relevant_chunk_ids",
+            "relevant_section_ids", "ranked", "failure_category", "subset",
+        )}
+        for row in query_rows
+    ]
+    return {
+        "retriever_id": retriever_id,
+        "corpus_fingerprint": "fp",
+        "corpus_digest": "cdigest",
+        "query_set_fingerprint": FROZEN_QUERY_SET_FINGERPRINT,
+        "query_count": len(query_rows),
+        "top_k": 10,
+        "_per_query_scores": scores,
+        "per_query_results": per_query_results,
+    }
+
+
+def base_rows():
+    # 2 docs x 2 queries; query 1 and 2 share a section (cluster of 2)
+    return [
+        dict(
+            query_id="manual_001", source_document="doc_a",
+            relevant_chunk_ids=["doc_a::s1::sub_000"],
+            relevant_section_ids=["doc_a::s1"],
+            ranked=[ranked_entry(1, "doc_a::s1::sub_000")],
+            failure_category="exact_relevant_chunk_top1",
+            subset="primary",
+            scores={"hit@1": 1.0, "mrr@10": 1.0, "sec_hit@1": 1.0},
+        ),
+        dict(
+            query_id="manual_002", source_document="doc_a",
+            relevant_chunk_ids=["doc_a::s1::sub_001"],
+            relevant_section_ids=["doc_a::s1"],
+            ranked=[ranked_entry(1, "doc_a::other")],
+            failure_category="wrong_section_same_document",
+            subset="primary",
+            scores={"hit@1": 0.0, "mrr@10": 0.0, "sec_hit@1": 0.0},
+        ),
+        dict(
+            query_id="manual_003", source_document="doc_b",
+            relevant_chunk_ids=["doc_b::x"],
+            relevant_section_ids=["doc_b::x"],
+            ranked=[ranked_entry(1, "doc_b::x")],
+            failure_category="exact_relevant_chunk_top1",
+            subset="primary",
+            scores={"hit@1": 1.0, "mrr@10": 1.0, "sec_hit@1": 1.0},
+        ),
+        dict(
+            query_id="manual_004", source_document="doc_b",
+            relevant_chunk_ids=["doc_b::y"],
+            relevant_section_ids=["doc_b::y"],
+            ranked=[ranked_entry(1, "doc_b::x")],
+            failure_category="wrong_document",
+            subset="overlap",
+            scores={"hit@1": 0.0, "mrr@10": 0.0, "sec_hit@1": 0.0},
+        ),
+    ]
+
+
+@pytest.fixture
+def results():
+    frozen = make_result("mini_lm_frozen", base_rows())
+    # soup better on the two misses, identical elsewhere
+    soup_rows = base_rows()
+    soup_rows[1]["scores"] = {"hit@1": 1.0, "mrr@10": 0.5, "sec_hit@1": 1.0}
+    soup_rows[1]["ranked"] = [ranked_entry(1, "doc_a::s1::sub_001")]
+    soup_rows[1]["failure_category"] = "exact_relevant_chunk_top1"
+    soup_rows[3]["scores"] = {"hit@1": 1.0, "mrr@10": 1.0, "sec_hit@1": 1.0}
+    soup_rows[3]["ranked"] = [ranked_entry(1, "doc_b::y")]
+    soup_rows[3]["failure_category"] = "exact_relevant_chunk_top1"
+    soup = make_result("mini_lm_soup", soup_rows)
+    bm25 = make_result("bm25", base_rows())
+    e5 = make_result("e5_small", base_rows())
+    return {"mini_lm_frozen": frozen, "mini_lm_soup": soup, "bm25": bm25, "e5_small": e5}
+
+
+def test_micro_and_macro_metric(results):
+    r = results["mini_lm_frozen"]
+    assert micro_metric(r, "hit@1") == pytest.approx(0.5)
+    # macro: doc_a mean = 0.5, doc_b mean = 0.5 -> 0.5
+    assert macro_metric(r, "hit@1") == pytest.approx(0.5)
+    assert micro_metric(r, "mrr@10") == pytest.approx(0.5)
+    assert macro_metric(r, "mrr@10") == pytest.approx(0.5)
+
+
+def test_stratified_resampler_preserves_doc_counts():
+    docs = ["a", "a", "a", "b", "b"]
+    plan = StratifiedResampler(docs, n_bootstrap=5, seed=42)
+    assert len(plan.indices) == 5
+    for idx in plan.indices:
+        sampled_docs = [docs[i] for i in idx]
+        assert sampled_docs.count("a") == 3
+        assert sampled_docs.count("b") == 2
+
+
+def test_bootstrap_plan_deterministic_given_seed():
+    docs = ["a", "a", "b"]
+    p1 = StratifiedResampler(docs, n_bootstrap=10, seed=42)
+    p2 = StratifiedResampler(docs, n_bootstrap=10, seed=42)
+    p3 = StratifiedResampler(docs, n_bootstrap=10, seed=43)
+    assert p1.indices == p2.indices
+    assert p1.indices != p3.indices
+
+
+def test_paired_bootstrap_ci_uses_precomputed_positions_for_both_retrievers():
+    """The CI must be reproducible from plan.indices with the same positions
+    applied to both retrievers; no additional draws are made."""
+    docs = ["a", "a", "b"]
+    plan = StratifiedResampler(docs, n_bootstrap=50, seed=42)
+    a = np.asarray([1.0, 0.0, 0.5])
+    b = np.asarray([0.0, 1.0, 0.5])
+    ci = paired_bootstrap_ci(a, b, plan)
+
+    deltas = sorted(
+        float(a[np.asarray(idx)].mean() - b[np.asarray(idx)].mean())
+        for idx in plan.indices
+    )
+    assert ci["delta"] == pytest.approx(0.0)
+    assert ci["ci_lower"] == pytest.approx(round(deltas[int(0.025 * len(deltas))], 4))
+    assert ci["ci_upper"] == pytest.approx(round(deltas[int(0.975 * len(deltas))], 4))
+    # repeated evaluation is stable: the plan is not consumed
+    assert paired_bootstrap_ci(a, b, plan) == ci
+
+
+def test_generate_report_uses_one_plan_for_all_metrics_and_comparisons(
+    monkeypatch, results, tmp_path
+):
+    import compare_retrievers as cr
+
+    plans = []
+    calls = []
+    real_cls = cr.StratifiedResampler
+    real_ci = cr.paired_bootstrap_ci
+
+    class RecordingPlan(real_cls):
+        def __init__(self, *args, **kwargs):
+            super().__init__(*args, **kwargs)
+            plans.append(self)
+
+    def recording_ci(a, b, plan, alpha=0.05):
+        calls.append(id(plan))
+        return real_ci(a, b, plan, alpha)
+
+    monkeypatch.setattr(cr, "StratifiedResampler", RecordingPlan)
+    monkeypatch.setattr(cr, "paired_bootstrap_ci", recording_ci)
+    generate_report(results, tmp_path / "shared.md", n_bootstrap=20, seed=42)
+
+    n_metrics = len(results["mini_lm_frozen"]["_per_query_scores"])
+    assert len(plans) == 1
+    assert len(calls) == n_metrics * len(cr.COMPARISONS)
+    assert set(calls) == {id(plans[0])}
+
+
+def test_paired_bootstrap_ci_positive_and_zero_deltas():
+    docs = ["a", "b"]
+    rs_pos = StratifiedResampler(docs, n_bootstrap=200, seed=42)
+    ci = paired_bootstrap_ci([1.0, 1.0], [0.0, 0.0], rs_pos)
+    assert ci["delta"] == 1.0
+    assert ci["ci_lower"] == 1.0 and ci["ci_upper"] == 1.0
+    rs_zero = StratifiedResampler(docs, n_bootstrap=200, seed=42)
+    ci0 = paired_bootstrap_ci([0.5, 0.5], [0.5, 0.5], rs_zero)
+    assert ci0["delta"] == 0.0 and ci0["ci_lower"] == 0.0 and ci0["ci_upper"] == 0.0
+
+
+def test_leave_one_doc_out(results):
+    query_ids = ["manual_001", "manual_002", "manual_003", "manual_004"]
+    docs_per_query = ["doc_a", "doc_a", "doc_b", "doc_b"]
+    loo = leave_one_doc_out(results, "hit@1", query_ids, docs_per_query)
+    assert [r["dropped_document"] for r in loo["docs"]] == ["doc_a", "doc_b"]
+    drop_a = loo["docs"][0]
+    assert drop_a["n_kept_queries"] == 2
+    assert drop_a["mini_lm_frozen_micro"] == pytest.approx(0.5)  # queries 3,4
+    assert "delta_mini_lm_soup_vs_mini_lm_frozen" in drop_a
+
+
+def test_cluster_structure_decision():
+    rows = base_rows()
+    info = cluster_structure([{k: r[k] for k in (
+        "source_document", "relevant_chunk_ids")} for r in rows])
+    # 3 occupied sections: doc_a::s1 (2 queries), doc_b::x (1), doc_b::y (1)
+    assert info["occupied_sections"] == 3
+    assert info["sections_with_multiple_queries"] == 1
+    assert info["multi_query_fraction"] == 0.3333  # rounded to 4dp by the module
+    assert info["cluster_bootstrap_informative"] is True
+    assert "not implemented" in info["decision"]
+
+    singles = [
+        {"source_document": f"d{i % 2}", "relevant_chunk_ids": [f"d{i % 2}::s{i}"]}
+        for i in range(5)
+    ]
+    info2 = cluster_structure(singles)
+    assert info2["cluster_bootstrap_informative"] is False
+    assert "skipped" in info2["decision"]
+
+
+def test_regression_counts_sibling_is_not_section_regression():
+    a = make_result("mini_lm_frozen", base_rows()[:1])
+    b_rows = base_rows()[:1]
+    b_rows[0]["ranked"] = [ranked_entry(1, "doc_a::s1::sub_001")]  # sibling first
+    b_rows[0]["failure_category"] = "relevant_section_unlabeled_chunk_top1"
+    b = make_result("mini_lm_soup", b_rows)
+    counts = regression_counts(a, b, ["manual_001"])
+    assert counts["chunk_regressions"] == 1
+    assert counts["section_regressions"] == 0
+
+
+def test_regression_counts_ranks_beyond_10_ignored():
+    a = make_result("mini_lm_frozen", base_rows()[:1])
+    other_entries = [ranked_entry(i, f"other_doc::sec_{i}::c") for i in range(1, 11)]
+
+    # b only has hit at rank 11 (outside top 10)
+    b_rows = base_rows()[:1]
+    b_rows[0]["ranked"] = other_entries + [ranked_entry(11, "doc_a::s1::sub_000")]
+    b = make_result("mini_lm_soup", b_rows)
+    # b has no hit in top 10, while a has hit at rank 1 -> regression for both chunk and section
+    counts = regression_counts(a, b, ["manual_001"])
+    assert counts["chunk_regressions"] == 1
+    assert counts["section_regressions"] == 1
+
+    # When both have hit outside top 10 (rank 11 vs 12), neither has hit in top 10 -> no regression
+    a_rows = base_rows()[:1]
+    a_rows[0]["ranked"] = other_entries + [ranked_entry(12, "doc_a::s1::sub_000")]
+    a_beyond = make_result("mini_lm_frozen", a_rows)
+    counts_both = regression_counts(a_beyond, b, ["manual_001"])
+    assert counts_both["chunk_regressions"] == 0
+    assert counts_both["section_regressions"] == 0
+
+
+def test_failure_category_aggregate(results):
+    counts = failure_category_counts(results["mini_lm_frozen"])
+    assert counts["exact_relevant_chunk_top1"] == 2
+    assert counts["wrong_section_same_document"] == 1
+    assert counts["wrong_document"] == 1
+    assert counts["no_relevant_result_top10"] == 2
+
+
+def test_generate_report_no_p_values_and_caveats(results, tmp_path):
+    out = tmp_path / "comparison.md"
+    report = generate_report(results, out, n_bootstrap=50, seed=42)
+    assert out.exists()
+    # the only occurrence of "p-value" is the disclaimer sentence itself
+    assert report.count("p-value") == 1
+    assert "p_value" not in report
+    assert "significance claim" not in report.lower().replace("no significance claims", "")
+    assert CAVEAT in report
+    assert "Section-Cluster Bootstrap Decision" in report
+    assert "Overlap Subset" in report and "Primary Subset" in report
+    assert "docs/EVALUATION_V2_OVERLAP_AUDIT.md" in report
+    assert "Leave-One-Document-Out Sensitivity" in report
+
+
+def test_generate_report_deterministic(results, tmp_path):
+    r1 = generate_report(results, tmp_path / "a.md", n_bootstrap=50, seed=42)
+    r2 = generate_report(results, tmp_path / "b.md", n_bootstrap=50, seed=42)
+    assert r1 == r2
+
+
+def test_main_validations(results, tmp_path, monkeypatch):
+    import json
+    from compare_retrievers import main
+
+    res_dir = tmp_path / "results"
+    res_dir.mkdir()
+    for rid, data in results.items():
+        with open(res_dir / f"{rid}.json", "w") as f:
+            json.dump(data, f)
+
+    out = tmp_path / "comparison.md"
+    monkeypatch.setattr(
+        "sys.argv",
+        ["compare_retrievers.py", "--results-dir", str(res_dir), "--output", str(out), "--bootstrap-n", "10"],
+    )
+    assert main() == 0
+
+    # Retriever ID mismatch
+    bad_id_data = dict(results["bm25"])
+    bad_id_data["retriever_id"] = "wrong_id"
+    with open(res_dir / "bm25.json", "w") as f:
+        json.dump(bad_id_data, f)
+    with pytest.raises(ValueError, match="mismatched retriever_id"):
+        main()
+
+    # Reset bm25.json
+    with open(res_dir / "bm25.json", "w") as f:
+        json.dump(results["bm25"], f)
+
+    # Corpus fingerprint mismatch
+    bad_fp_data = dict(results["bm25"])
+    bad_fp_data["corpus_fingerprint"] = "bad_fp"
+    with open(res_dir / "bm25.json", "w") as f:
+        json.dump(bad_fp_data, f)
+    with pytest.raises(ValueError, match="corpus_fingerprint mismatch"):
+        main()
+
+    # Reset bm25.json
+    with open(res_dir / "bm25.json", "w") as f:
+        json.dump(results["bm25"], f)
+
+    # Corpus digest mismatch
+    bad_dg_data = dict(results["bm25"])
+    bad_dg_data["corpus_digest"] = "bad_dg"
+    with open(res_dir / "bm25.json", "w") as f:
+        json.dump(bad_dg_data, f)
+    with pytest.raises(ValueError, match="corpus_digest mismatch"):
+        main()
+
+    # Reset bm25.json
+    with open(res_dir / "bm25.json", "w") as f:
+        json.dump(results["bm25"], f)
+
+    # Missing required field
+    for field in ("corpus_fingerprint", "corpus_digest", "query_set_fingerprint", "query_count", "top_k"):
+        missing_data = dict(results["bm25"])
+        del missing_data[field]
+        with open(res_dir / "bm25.json", "w") as f:
+            json.dump(missing_data, f)
+        with pytest.raises(ValueError, match=f"missing required field '{field}'"):
+            main()
+
+        # Present but null required field
+        null_data = dict(results["bm25"])
+        null_data[field] = None
+        with open(res_dir / "bm25.json", "w") as f:
+            json.dump(null_data, f)
+        with pytest.raises(ValueError, match=f"missing required field '{field}'"):
+            main()
+
+    # Reset bm25.json
+    with open(res_dir / "bm25.json", "w") as f:
+        json.dump(results["bm25"], f)
+
+    # top_k mismatch
+    bad_top_k = dict(results["bm25"])
+    bad_top_k["top_k"] = 20
+    with open(res_dir / "bm25.json", "w") as f:
+        json.dump(bad_top_k, f)
+    with pytest.raises(ValueError, match="top_k mismatch"):
+        main()
+
+    # Reset bm25.json
+    with open(res_dir / "bm25.json", "w") as f:
+        json.dump(results["bm25"], f)
+
+    # Unapproved query set fingerprint
+    bad_qfp = dict(results["bm25"])
+    bad_qfp["query_set_fingerprint"] = "unapproved_hash"
+    with open(res_dir / "bm25.json", "w") as f:
+        json.dump(bad_qfp, f)
+    with pytest.raises(ValueError, match="query_set_fingerprint mismatch"):
+        main()
+
+    # Reset bm25.json
+    with open(res_dir / "bm25.json", "w") as f:
+        json.dump(results["bm25"], f)
+
+    # Metric keys mismatch
+    bad_metrics = dict(results["bm25"])
+    bad_metrics["_per_query_scores"] = {"other_metric": [1.0] * 4}
+    with open(res_dir / "bm25.json", "w") as f:
+        json.dump(bad_metrics, f)
+    with pytest.raises(ValueError, match="metric keys mismatch"):
+        main()
+
+    # Reset bm25.json
+    with open(res_dir / "bm25.json", "w") as f:
+        json.dump(results["bm25"], f)
+
+    # Missing score elements (< len(per_query_results))
+    bad_scores_missing = dict(results["bm25"])
+    bad_scores_missing["_per_query_scores"] = {
+        "hit@1": [1.0],  # only 1 score when there are 4 per_query_results
+    }
+    with open(res_dir / "bm25.json", "w") as f:
+        json.dump(bad_scores_missing, f)
+    with pytest.raises(ValueError, match="expected 4"):
+        main()
+
+    # Extra score elements (> len(per_query_results))
+    bad_scores_extra = dict(results["bm25"])
+    bad_scores_extra["_per_query_scores"] = {
+        "hit@1": [1.0, 0.0, 1.0, 0.0, 1.0],  # 5 scores when there are 4
+    }
+    with open(res_dir / "bm25.json", "w") as f:
+        json.dump(bad_scores_extra, f)
+    with pytest.raises(ValueError, match="expected 4"):
+        main()
+
+    # Reset bm25.json
+    with open(res_dir / "bm25.json", "w") as f:
+        json.dump(results["bm25"], f)
+
+    # Reject --bootstrap-n < 1
+    monkeypatch.setattr(
+        "sys.argv",
+        ["compare_retrievers.py", "--results-dir", str(res_dir), "--output", str(out), "--bootstrap-n", "0"],
+    )
+    with pytest.raises(SystemExit):
+        main()
+
+    monkeypatch.setattr(
+        "sys.argv",
+        ["compare_retrievers.py", "--results-dir", str(res_dir), "--output", str(out), "--bootstrap-n", "-5"],
+    )
+    with pytest.raises(SystemExit):
+        main()
+
+
