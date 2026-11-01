@@ -281,9 +281,9 @@
 
 | Comparison | Chunk regressions | Section regressions |
 |---|:---:|:---:|
-| mini_lm_soup vs mini_lm_frozen | 13 | 12 |
-| mini_lm_soup vs bm25 | 20 | 19 |
-| mini_lm_soup vs e5_small | 8 | 8 |
+| mini_lm_soup vs mini_lm_frozen | 16 | 13 |
+| mini_lm_soup vs bm25 | 14 | 14 |
+| mini_lm_soup vs e5_small | 19 | 18 |
 
 > A sibling-first result (`relevant_section_unlabeled_chunk_top1`) is a chunk-level miss but a section-level hit and never counts as a section regression.
 

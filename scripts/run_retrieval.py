@@ -73,6 +73,14 @@ def run(
         raise ValueError(
             f"refusing to run on query file other than {expected_queries}: {queries_path}"
         )
+
+    if not queries_path.exists():
+        raise FileNotFoundError(
+            f"manual query dataset not found: {queries_path}. "
+            "Phase 4 gate: the owner must author and freeze all 54 queries first "
+            "(see docs/EVALUATION_V2_COVERAGE.md)."
+        )
+
     calculated_query_fp = query_set_fingerprint(queries_path)
     if calculated_query_fp != FROZEN_QUERY_SET_FINGERPRINT:
         raise ValueError(
@@ -93,14 +101,13 @@ def run(
             f"output_path '{output_path}' must resolve under '{results_v2}'"
         )
 
-    if not queries_path.exists():
-        raise FileNotFoundError(
-            f"manual query dataset not found: {queries_path}. "
-            "Phase 4 gate: the owner must author and freeze all 54 queries first "
-            "(see docs/EVALUATION_V2_COVERAGE.md)."
-        )
-
-    chunks = load_jsonl(corpus_path)
+    corpus_bytes = corpus_path.read_bytes()
+    calculated_corpus_digest = hashlib.sha256(corpus_bytes).hexdigest()
+    chunks = [
+        json.loads(line)
+        for line in corpus_bytes.decode("utf-8").splitlines()
+        if line.strip()
+    ]
     queries = load_jsonl(queries_path)
     chunk_ids = [c["chunk_id"] for c in chunks]
 
@@ -140,9 +147,9 @@ def run(
         "retriever_id": retriever_id,
         "retriever_config": retriever.config(),
         "corpus_fingerprint": corpus_fingerprint(),
-        "corpus_digest": corpus_digest(corpus_path),
+        "corpus_digest": calculated_corpus_digest,
         "query_set": "manual",
-        "query_set_fingerprint": query_set_fingerprint(queries_path),
+        "query_set_fingerprint": calculated_query_fp,
         "corpus_size": len(chunk_ids),
         "query_count": len(queries),
         "top_k": top_k,

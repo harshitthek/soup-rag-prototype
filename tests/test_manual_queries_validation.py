@@ -275,6 +275,26 @@ def test_count_bounds(tmp_path, mini_corpus):
     assert report["valid"], report["errors"]
 
 
+def test_boundary_exactly_40_records_with_global_checks(tmp_path, mini_corpus, monkeypatch):
+    records = [
+        base_record(query_id=f"manual_{i:03d}", query=f"question number {i}?")
+        for i in range(40)
+    ]
+    # Exactly 40 records satisfies MIN_QUERIES <= len <= MAX_QUERIES boundary
+    report_40 = run_validate(tmp_path, mini_corpus, records, check_globals=True)
+    assert not any("outside" in e for e in report_40["errors"])
+    assert not any("query count" in e for e in report_40["errors"])
+
+    # 39 records (one below boundary) fails count check
+    report_39 = run_validate(tmp_path, mini_corpus, records[:39], check_globals=True)
+    assert any("query count 39 outside" in e for e in report_39["errors"])
+
+    # When allocation matches document distribution, all global checks pass
+    monkeypatch.setattr("validate_manual_queries.ALLOCATION", {"mydoc": 40})
+    valid_report = run_validate(tmp_path, mini_corpus, records, check_globals=True)
+    assert valid_report["valid"], valid_report["errors"]
+
+
 def test_overlap_flag_is_review_material(tmp_path, mini_corpus):
     record = base_record(query="How do I merge adapters with ties?")
     report = run_validate(tmp_path, mini_corpus, [record])

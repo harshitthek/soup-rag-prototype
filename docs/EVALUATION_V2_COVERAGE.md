@@ -167,15 +167,13 @@ query:               How do I bisect training checkpoints when an eval regresses
 query_type:          how_to
 relevant_section_ids:
   - adapters-and-governance::4-bisect-a-training-history-to-find-the-step-that-broke-an-eval
-  - commands::all-commands
 relevant_chunk_ids:
   - adapters-and-governance::4-bisect-a-training-history-to-find-the-step-that-broke-an-eval
-  - commands::all-commands::sub_054
 evidence_chunk_ids:
   - adapters-and-governance::4-bisect-a-training-history-to-find-the-step-that-broke-an-eval
-rationale:           The bisect chunk shows the checkpoint list, the per-checkpoint eval command template, and the output file. Cross-corpus: the training command table documents the same bisect command and its binary-search purpose.
-subset:              overlap
-cross_corpus_overlap: {"train_chunk_ids": ["commands::all-commands::sub_054"], "note": "the training command table documents the same bisect command and its binary-search purpose"}
+rationale:           The bisect chunk shows the checkpoint list, the per-checkpoint eval command template, and the output file.
+subset:              primary
+cross_corpus_overlap: null
 ```
 
 ### adapters-and-governance slot 3
@@ -582,15 +580,13 @@ query:               which expectation checks can go in expectations.yaml
 query_type:          config_behavior
 relevant_section_ids:
   - compliance::writes-github-workflows-soup-gate-yml
-  - data::expectations-suite-great-expectations-for-chat-data
 relevant_chunk_ids:
   - compliance::writes-github-workflows-soup-gate-yml::sub_000
-  - data::expectations-suite-great-expectations-for-chat-data
 evidence_chunk_ids:
   - compliance::writes-github-workflows-soup-gate-yml::sub_000
-rationale:           sub_000 shows the minimal expectations YAML and the four supported check names. Cross-corpus: the training data guide shows the expectations YAML and its supported check names.
-subset:              overlap
-cross_corpus_overlap: {"train_chunk_ids": ["data::expectations-suite-great-expectations-for-chat-data"], "note": "the training data guide shows the expectations YAML and its supported check names"}
+rationale:           sub_000 shows the minimal expectations YAML and the four supported check names.
+subset:              primary
+cross_corpus_overlap: null
 ```
 
 ### compliance slot 8
@@ -1098,16 +1094,13 @@ query:               how does longlora shifted sparse attention work
 query_type:          conceptual
 relevant_section_ids:
   - peft-and-efficiency::longlora-forward-override
-  - training::architecture-knobs-mixture-of-depths-llama-pro-longlora
 relevant_chunk_ids:
   - peft-and-efficiency::longlora-forward-override
-  - training::architecture-knobs-mixture-of-depths-llama-pro-longlora::sub_000
-  - training::architecture-knobs-mixture-of-depths-llama-pro-longlora::sub_001
 evidence_chunk_ids:
   - peft-and-efficiency::longlora-forward-override
-rationale:           The section explains the S-squared half-head shift, the architecture allowlist, and the FlashAttention v3 rejection. Cross-corpus: the training guide documents use_longlora and the shifted-sparse attention gate.
-subset:              overlap
-cross_corpus_overlap: {"train_chunk_ids": ["training::architecture-knobs-mixture-of-depths-llama-pro-longlora::sub_000", "training::architecture-knobs-mixture-of-depths-llama-pro-longlora::sub_001"], "note": "the training guide documents use_longlora and the shifted-sparse attention gate"}
+rationale:           The section explains the S-squared half-head shift, the architecture allowlist, and the FlashAttention v3 rejection.
+subset:              primary
+cross_corpus_overlap: null
 ```
 
 ### peft-and-efficiency slot 3

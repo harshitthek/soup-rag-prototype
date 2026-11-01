@@ -190,7 +190,8 @@ def cluster_structure(
         "threshold": CLUSTER_MIN_FRACTION,
         "cluster_bootstrap_informative": informative,
         "decision": (
-            "implemented (cluster structure adds information beyond query-level resampling)"
+            "not implemented: cluster structure exceeds threshold but cluster resampling is "
+            "unsupported; report uses query-level resampling"
             if informative
             else "skipped: most query-occupied sections contain a single query, so "
                  "cluster resampling degenerates to query-level resampling"
@@ -200,8 +201,9 @@ def cluster_structure(
 
 def first_relevant_rank(ranked: Sequence[dict], relevant_ids: set[str]) -> int | None:
     for entry in ranked:
-        if entry["chunk_id"] in relevant_ids:
-            return entry["rank"]
+        rank = entry.get("rank")
+        if rank is not None and 1 <= rank <= 10 and entry.get("chunk_id") in relevant_ids:
+            return rank
     return None
 
 
@@ -211,8 +213,9 @@ def first_relevant_section_rank(
     from retrieval import section_ranking
 
     for entry in section_ranking(ranked):
-        if entry["section_id"] in relevant_sections:
-            return entry["rank"]
+        rank = entry.get("rank")
+        if rank is not None and 1 <= rank <= 10 and entry.get("section_id") in relevant_sections:
+            return rank
     return None
 
 
@@ -352,7 +355,7 @@ def generate_report(
     lines += ["| Comparison | Chunk regressions | Section regressions |",
               "|---|:---:|:---:|"]
     for a, b in COMPARISONS:
-        counts = regression_counts(results[a], results[b], query_ids)
+        counts = regression_counts(results[b], results[a], query_ids)
         lines.append(
             f"| {a} vs {b} | {counts['chunk_regressions']} | {counts['section_regressions']} |"
         )
@@ -429,6 +432,15 @@ def validate_results(results: dict[str, dict[str, Any]]) -> None:
                 raise ValueError(
                     f"result file for '{rid}' is missing required field '{field}'"
                 )
+        pqr = res.get("per_query_results", [])
+        n_pqr = len(pqr)
+        per_query_scores = res.get("_per_query_scores", {})
+        for metric, scores in per_query_scores.items():
+            if len(scores) != n_pqr:
+                raise ValueError(
+                    f"result file for '{rid}' metric '{metric}' has {len(scores)} scores, "
+                    f"expected {n_pqr} (matching per_query_results)"
+                )
 
     first_res = results[RETRIEVER_IDS[0]]
     ref_corpus_fp = first_res["corpus_fingerprint"]
@@ -466,11 +478,23 @@ def validate_results(results: dict[str, dict[str, Any]]) -> None:
             )
 
 
+def positive_int(val: str) -> int:
+    try:
+        ival = int(val)
+    except ValueError:
+        raise argparse.ArgumentTypeError(f"invalid int value: '{val}'")
+    if ival < 1:
+        raise argparse.ArgumentTypeError(
+            f"--bootstrap-n must be at least 1, got {ival}"
+        )
+    return ival
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Compare the four v2 retrievers")
     parser.add_argument("--results-dir", type=Path, default=RESULTS_V2)
     parser.add_argument("--output", type=Path, default=RESULTS_V2 / "comparison.md")
-    parser.add_argument("--bootstrap-n", type=int, default=BOOTSTRAP_N)
+    parser.add_argument("--bootstrap-n", type=positive_int, default=BOOTSTRAP_N)
     parser.add_argument("--seed", type=int, default=BOOTSTRAP_SEED)
     args = parser.parse_args()
 

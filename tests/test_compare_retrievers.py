@@ -224,6 +224,7 @@ def test_cluster_structure_decision():
     assert info["sections_with_multiple_queries"] == 1
     assert info["multi_query_fraction"] == 0.3333  # rounded to 4dp by the module
     assert info["cluster_bootstrap_informative"] is True
+    assert "not implemented" in info["decision"]
 
     singles = [
         {"source_document": f"d{i % 2}", "relevant_chunk_ids": [f"d{i % 2}::s{i}"]}
@@ -243,6 +244,28 @@ def test_regression_counts_sibling_is_not_section_regression():
     counts = regression_counts(a, b, ["manual_001"])
     assert counts["chunk_regressions"] == 1
     assert counts["section_regressions"] == 0
+
+
+def test_regression_counts_ranks_beyond_10_ignored():
+    a = make_result("mini_lm_frozen", base_rows()[:1])
+    other_entries = [ranked_entry(i, f"other_doc::sec_{i}::c") for i in range(1, 11)]
+
+    # b only has hit at rank 11 (outside top 10)
+    b_rows = base_rows()[:1]
+    b_rows[0]["ranked"] = other_entries + [ranked_entry(11, "doc_a::s1::sub_000")]
+    b = make_result("mini_lm_soup", b_rows)
+    # b has no hit in top 10, while a has hit at rank 1 -> regression for both chunk and section
+    counts = regression_counts(a, b, ["manual_001"])
+    assert counts["chunk_regressions"] == 1
+    assert counts["section_regressions"] == 1
+
+    # When both have hit outside top 10 (rank 11 vs 12), neither has hit in top 10 -> no regression
+    a_rows = base_rows()[:1]
+    a_rows[0]["ranked"] = other_entries + [ranked_entry(12, "doc_a::s1::sub_000")]
+    a_beyond = make_result("mini_lm_frozen", a_rows)
+    counts_both = regression_counts(a_beyond, b, ["manual_001"])
+    assert counts_both["chunk_regressions"] == 0
+    assert counts_both["section_regressions"] == 0
 
 
 def test_failure_category_aggregate(results):
@@ -335,5 +358,56 @@ def test_main_validations(results, tmp_path, monkeypatch):
             json.dump(missing_data, f)
         with pytest.raises(ValueError, match=f"missing required field '{field}'"):
             main()
+
+        # Present but null required field
+        null_data = dict(results["bm25"])
+        null_data[field] = None
+        with open(res_dir / "bm25.json", "w") as f:
+            json.dump(null_data, f)
+        with pytest.raises(ValueError, match=f"missing required field '{field}'"):
+            main()
+
+    # Reset bm25.json
+    with open(res_dir / "bm25.json", "w") as f:
+        json.dump(results["bm25"], f)
+
+    # Missing score elements (< len(per_query_results))
+    bad_scores_missing = dict(results["bm25"])
+    bad_scores_missing["_per_query_scores"] = {
+        "hit@1": [1.0],  # only 1 score when there are 4 per_query_results
+    }
+    with open(res_dir / "bm25.json", "w") as f:
+        json.dump(bad_scores_missing, f)
+    with pytest.raises(ValueError, match="expected 4"):
+        main()
+
+    # Extra score elements (> len(per_query_results))
+    bad_scores_extra = dict(results["bm25"])
+    bad_scores_extra["_per_query_scores"] = {
+        "hit@1": [1.0, 0.0, 1.0, 0.0, 1.0],  # 5 scores when there are 4
+    }
+    with open(res_dir / "bm25.json", "w") as f:
+        json.dump(bad_scores_extra, f)
+    with pytest.raises(ValueError, match="expected 4"):
+        main()
+
+    # Reset bm25.json
+    with open(res_dir / "bm25.json", "w") as f:
+        json.dump(results["bm25"], f)
+
+    # Reject --bootstrap-n < 1
+    monkeypatch.setattr(
+        "sys.argv",
+        ["compare_retrievers.py", "--results-dir", str(res_dir), "--output", str(out), "--bootstrap-n", "0"],
+    )
+    with pytest.raises(SystemExit):
+        main()
+
+    monkeypatch.setattr(
+        "sys.argv",
+        ["compare_retrievers.py", "--results-dir", str(res_dir), "--output", str(out), "--bootstrap-n", "-5"],
+    )
+    with pytest.raises(SystemExit):
+        main()
 
 
