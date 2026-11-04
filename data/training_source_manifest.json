@@ -1,0 +1,257 @@
+{
+  "upstream_commit": "595173f73eb45399aeb4997bab44642827b31799",
+  "model_id": "sentence-transformers/all-MiniLM-L6-v2",
+  "max_chunk_tokens": 220,
+  "overlap_tokens": 28,
+  "total_documents": 31,
+  "existing_training_docs": [
+    "README.md",
+    "backends-and-ops.md",
+    "commands.md",
+    "data.md",
+    "models.md",
+    "performance-and-quantization.md",
+    "serving-and-export.md",
+    "training.md"
+  ],
+  "candidate_docs": [
+    {
+      "file": "benchmarks/gate-2049-resident-vram.md",
+      "doc_name": "gate-2049-resident-vram",
+      "content_sha256": "69a59cb8cfe554bfe7938515e02cfe9b50b60eab5f6d593450a0fba59ce7eb75",
+      "size_bytes": 14843,
+      "chunks": 36,
+      "tokens": 6577,
+      "split": "train",
+      "source_type": "upstream_candidate"
+    },
+    {
+      "file": "benchmarks/gate-2050-selective-checkpoint.md",
+      "doc_name": "gate-2050-selective-checkpoint",
+      "content_sha256": "1410ea006ce37d0e0da6c9eb818ab397d4240204bd9d9dda33d7945a54fde98e",
+      "size_bytes": 13656,
+      "chunks": 32,
+      "tokens": 5588,
+      "split": "train",
+      "source_type": "upstream_candidate"
+    },
+    {
+      "file": "benchmarks/gate-655-pinned-store-accounting.md",
+      "doc_name": "gate-655-pinned-store-accounting",
+      "content_sha256": "c6816e171166841564139eda6bee40c070810a90d4a000a96a84daa442c7a669",
+      "size_bytes": 9447,
+      "chunks": 22,
+      "tokens": 3637,
+      "split": "train",
+      "source_type": "upstream_candidate"
+    },
+    {
+      "file": "benchmarks/gate-836-bench-train-contract.md",
+      "doc_name": "gate-836-bench-train-contract",
+      "content_sha256": "cccf17ebd79887343b170ef8a613bf0d67554723354a95e37ed8d2ed3f435e4d",
+      "size_bytes": 26149,
+      "chunks": 70,
+      "tokens": 10440,
+      "split": "train",
+      "source_type": "upstream_candidate"
+    },
+    {
+      "file": "benchmarks/gate-971-async-nvme-source.md",
+      "doc_name": "gate-971-async-nvme-source",
+      "content_sha256": "fb459ba3caf1f907b7c03b1ae83677242cb0d0a85942fffa24d6db9d37d8f710",
+      "size_bytes": 40209,
+      "chunks": 95,
+      "tokens": 14775,
+      "split": "train",
+      "source_type": "upstream_candidate"
+    },
+    {
+      "file": "benchmarks/gate-974-disk-tier-direct-io.md",
+      "doc_name": "gate-974-disk-tier-direct-io",
+      "content_sha256": "ddb344fc122845da18fb999769402f6382f8ddd17da1150e1806a3b5f6f6db54",
+      "size_bytes": 44349,
+      "chunks": 120,
+      "tokens": 18601,
+      "split": "train",
+      "source_type": "upstream_candidate"
+    },
+    {
+      "file": "benchmarks/gate-expert-streaming.md",
+      "doc_name": "gate-expert-streaming",
+      "content_sha256": "5fe7bdb2e3c56fb560fb95661e2db45644c801fdba680933bc8969bad1acf96c",
+      "size_bytes": 4692,
+      "chunks": 12,
+      "tokens": 1575,
+      "split": "train",
+      "source_type": "upstream_candidate"
+    },
+    {
+      "file": "benchmarks/gate-v0.72.0-layer-streaming.md",
+      "doc_name": "gate-v0.72.0-layer-streaming",
+      "content_sha256": "b744d837713a249155e09609bd91aeae88099cd469e8dffbffad4a1933f36be8",
+      "size_bytes": 14213,
+      "chunks": 37,
+      "tokens": 5626,
+      "split": "train",
+      "source_type": "upstream_candidate"
+    },
+    {
+      "file": "benchmarks/gate-v0.72.2-nf4.md",
+      "doc_name": "gate-v0.72.2-nf4",
+      "content_sha256": "486a2841a08cca063438ad2833e8d4475979aa333859254ab1140ff2ef46b03c",
+      "size_bytes": 25818,
+      "chunks": 65,
+      "tokens": 10866,
+      "split": "train",
+      "source_type": "upstream_candidate"
+    },
+    {
+      "file": "benchmarks/gate-v0.72.3-breadth.md",
+      "doc_name": "gate-v0.72.3-breadth",
+      "content_sha256": "3fc8e5a184a4485b1dbbae8955bdc870e29a9f3676c08fb2a74686273414ed5b",
+      "size_bytes": 25352,
+      "chunks": 62,
+      "tokens": 9742,
+      "split": "train",
+      "source_type": "upstream_candidate"
+    },
+    {
+      "file": "benchmarks/gate-v0.72.4-preference-losses.md",
+      "doc_name": "gate-v0.72.4-preference-losses",
+      "content_sha256": "bbaf508f75296a42a4cbbea88ebbd1a9d525aab1f9e175f93e0dcf875a06df90",
+      "size_bytes": 20173,
+      "chunks": 45,
+      "tokens": 7422,
+      "split": "train",
+      "source_type": "upstream_candidate"
+    },
+    {
+      "file": "benchmarks/probe-v0.73.0-what-bounds-streaming.md",
+      "doc_name": "probe-v0.73.0-what-bounds-streaming",
+      "content_sha256": "9a7457ec5495dda387c037fe83d0a37c4cce02864662d4c3fdea3421467fd256",
+      "size_bytes": 26781,
+      "chunks": 62,
+      "tokens": 9692,
+      "split": "train",
+      "source_type": "upstream_candidate"
+    },
+    {
+      "file": "benchmarks/run-m1-8gb-mlx-sft.md",
+      "doc_name": "run-m1-8gb-mlx-sft",
+      "content_sha256": "092f90ad14d4628dd05595cb65ccaa4489236b016829f569cbc186b12a7ba7f5",
+      "size_bytes": 15339,
+      "chunks": 36,
+      "tokens": 5332,
+      "split": "train",
+      "source_type": "upstream_candidate"
+    },
+    {
+      "file": "benchmarks/run-t4-colab-free-tier.md",
+      "doc_name": "run-t4-colab-free-tier",
+      "content_sha256": "f4da25dd648241fb8ddebb3f7a401988d69df8eb02d199f6e001140df1d1712f",
+      "size_bytes": 18128,
+      "chunks": 40,
+      "tokens": 6167,
+      "split": "train",
+      "source_type": "upstream_candidate"
+    },
+    {
+      "file": "benchmarks/unsloth-4bit-weight-dtypes.md",
+      "doc_name": "unsloth-4bit-weight-dtypes",
+      "content_sha256": "4ee9c994a174c2e090c736f2544ee8f38b56f6607273433c4a7d05e93fac958d",
+      "size_bytes": 4404,
+      "chunks": 12,
+      "tokens": 1749,
+      "split": "train",
+      "source_type": "upstream_candidate"
+    },
+    {
+      "file": "changelog.d/0.77.1/2185.fixed.md",
+      "doc_name": "2185.fixed",
+      "content_sha256": "e07af79da093fcdeda20a57df122404e9b8d78c62657cfbbd397dcecf7ef54d8",
+      "size_bytes": 1248,
+      "chunks": 2,
+      "tokens": 366,
+      "split": "train",
+      "source_type": "upstream_candidate"
+    },
+    {
+      "file": "changelog.d/0.77.1/2285.added.md",
+      "doc_name": "2285.added",
+      "content_sha256": "85bb6c8d14c12cedd34a2e3002e073ea2b5229c056b4c5548e138dfe877db9a6",
+      "size_bytes": 1231,
+      "chunks": 2,
+      "tokens": 381,
+      "split": "train",
+      "source_type": "upstream_candidate"
+    },
+    {
+      "file": "changelog.d/0.77.1/2315.added.md",
+      "doc_name": "2315.added",
+      "content_sha256": "96814b913b1564268b4f7f5f203ce58b6b46a742ff4170f54f1897fd7d9af87c",
+      "size_bytes": 325,
+      "chunks": 1,
+      "tokens": 90,
+      "split": "train",
+      "source_type": "upstream_candidate"
+    },
+    {
+      "file": "changelog.d/0.77.1/2329.changed.md",
+      "doc_name": "2329.changed",
+      "content_sha256": "b18aec34a9cba4b0ec0c6c89f2000d7eed84ba29b19e56f45a08da034879ccfb",
+      "size_bytes": 1513,
+      "chunks": 2,
+      "tokens": 413,
+      "split": "train",
+      "source_type": "upstream_candidate"
+    },
+    {
+      "file": "changelog.d/0.77.1/2333.added.md",
+      "doc_name": "2333.added",
+      "content_sha256": "b76a10bcbee6430ebfe51a304d0758b7761bac62480bf083d8147848f2acbab2",
+      "size_bytes": 261,
+      "chunks": 1,
+      "tokens": 74,
+      "split": "train",
+      "source_type": "upstream_candidate"
+    },
+    {
+      "file": "changelog.d/0.77.1/2372.fixed.md",
+      "doc_name": "2372.fixed",
+      "content_sha256": "cde9a25ca89c3e88a5d823d2954146c3e8a53ea9d47d6caccc207a44b94f901a",
+      "size_bytes": 1124,
+      "chunks": 3,
+      "tokens": 379,
+      "split": "train",
+      "source_type": "upstream_candidate"
+    },
+    {
+      "file": "changelog.d/0.77.1/2386.added.md",
+      "doc_name": "2386.added",
+      "content_sha256": "d8c4010319f729fed1a14a587cb41ba749492fcbeddff8fb9b3af7220e4bd2a3",
+      "size_bytes": 1250,
+      "chunks": 2,
+      "tokens": 392,
+      "split": "train",
+      "source_type": "upstream_candidate"
+    },
+    {
+      "file": "changelog.d/README.md",
+      "doc_name": "README",
+      "content_sha256": "892f76a32fb8000381ed4b4087f0b838fbb818b955634556409a06e037ab43ec",
+      "size_bytes": 1271,
+      "chunks": 2,
+      "tokens": 333,
+      "split": "train",
+      "source_type": "upstream_candidate"
+    }
+  ],
+  "total_chunks": 1522,
+  "total_tokens": 210781,
+  "held_out_docs_excluded": [
+    "adapters-and-governance.md",
+    "compliance.md",
+    "evaluation.md",
+    "peft-and-efficiency.md"
+  ]
+}

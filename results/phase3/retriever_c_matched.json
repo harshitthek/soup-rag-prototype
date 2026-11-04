@@ -1,0 +1,5237 @@
+{
+  "retriever_id": "c_matched",
+  "retriever_name": "C-matched",
+  "retriever_config": {
+    "model": "sentence-transformers/all-MiniLM-L6-v2",
+    "revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+    "adapter_dir": "/Users/pernavjain/Documents/soup-rag-prototype/output/adapter_exp_c_matched",
+    "max_length": 256,
+    "pooling": "mean",
+    "query_prefix": "",
+    "passage_prefix": "",
+    "device": "cpu"
+  },
+  "corpus_fingerprint": "1068_chunks_frozen",
+  "corpus_digest": "d787703e048a641884274e57f5802e328e43c637a0971217601e6a37128393e3",
+  "query_set": "manual",
+  "query_set_fingerprint": "971e157083c31e5e55131a35597dc492d20996a02c7a491543e02d7cbef362b3",
+  "corpus_size": 1068,
+  "query_count": 54,
+  "top_k": 10,
+  "encode_time_s": 7.591,
+  "metrics": {
+    "hit@1": 0.6111111111111112,
+    "recall@1": 0.37962962962962965,
+    "hit@3": 0.7407407407407407,
+    "recall@3": 0.5089506172839506,
+    "hit@5": 0.7777777777777778,
+    "recall@5": 0.5512345679012346,
+    "mrr@10": 0.6844135802469137,
+    "sec_hit@1": 0.6296296296296297,
+    "sec_recall@1": 0.48456790123456794,
+    "sec_hit@3": 0.7777777777777778,
+    "sec_recall@3": 0.6358024691358025,
+    "sec_hit@5": 0.8148148148148148,
+    "sec_recall@5": 0.6851851851851852,
+    "sec_mrr@10": 0.701410934744268
+  },
+  "slice_metrics": {
+    "full": {
+      "count": 54,
+      "micro": {
+        "hit@1": 0.6111111111111112,
+        "recall@1": 0.37962962962962965,
+        "hit@3": 0.7407407407407407,
+        "recall@3": 0.5089506172839506,
+        "hit@5": 0.7777777777777778,
+        "recall@5": 0.5512345679012346,
+        "mrr@10": 0.6844135802469137,
+        "sec_hit@1": 0.6296296296296297,
+        "sec_recall@1": 0.48456790123456794,
+        "sec_hit@3": 0.7777777777777778,
+        "sec_recall@3": 0.6358024691358025,
+        "sec_hit@5": 0.8148148148148148,
+        "sec_recall@5": 0.6851851851851852,
+        "sec_mrr@10": 0.701410934744268
+      },
+      "macro": {
+        "hit@1": 0.5932550904977375,
+        "recall@1": 0.36490148944193057,
+        "hit@3": 0.7281532805429864,
+        "recall@3": 0.4960855015082956,
+        "hit@5": 0.7620899321266968,
+        "recall@5": 0.5328313536953242,
+        "mrr@10": 0.671144419306184,
+        "sec_hit@1": 0.6124858597285068,
+        "sec_recall@1": 0.4728624622926093,
+        "sec_hit@3": 0.7620899321266968,
+        "sec_recall@3": 0.6253770739064856,
+        "sec_hit@5": 0.8089649321266968,
+        "sec_recall@5": 0.675598604826546,
+        "sec_mrr@10": 0.6881837831286362
+      }
+    },
+    "core_primary": {
+      "count": 39,
+      "micro": {
+        "hit@1": 0.6153846153846154,
+        "recall@1": 0.4358974358974359,
+        "hit@3": 0.7435897435897436,
+        "recall@3": 0.5897435897435898,
+        "hit@5": 0.7692307692307693,
+        "recall@5": 0.6346153846153846,
+        "mrr@10": 0.6805555555555556,
+        "sec_hit@1": 0.6153846153846154,
+        "sec_recall@1": 0.5641025641025641,
+        "sec_hit@3": 0.7692307692307693,
+        "sec_recall@3": 0.717948717948718,
+        "sec_hit@5": 0.7948717948717948,
+        "sec_recall@5": 0.7564102564102564,
+        "sec_mrr@10": 0.6846153846153846
+      },
+      "macro": {
+        "hit@1": 0.597027972027972,
+        "recall@1": 0.40777972027972026,
+        "hit@3": 0.7469405594405596,
+        "recall@3": 0.5786713286713286,
+        "hit@5": 0.7696678321678323,
+        "recall@5": 0.6140734265734266,
+        "mrr@10": 0.673513986013986,
+        "sec_hit@1": 0.597027972027972,
+        "sec_recall@1": 0.55506993006993,
+        "sec_hit@3": 0.7696678321678323,
+        "sec_recall@3": 0.7277097902097902,
+        "sec_hit@5": 0.792395104895105,
+        "sec_recall@5": 0.7600524475524475,
+        "sec_mrr@10": 0.6771124708624708
+      }
+    },
+    "core_overlap": {
+      "count": 15,
+      "micro": {
+        "hit@1": 0.6,
+        "recall@1": 0.23333333333333334,
+        "hit@3": 0.7333333333333333,
+        "recall@3": 0.29888888888888887,
+        "hit@5": 0.8,
+        "recall@5": 0.33444444444444443,
+        "mrr@10": 0.6944444444444444,
+        "sec_hit@1": 0.6666666666666666,
+        "sec_recall@1": 0.2777777777777778,
+        "sec_hit@3": 0.8,
+        "sec_recall@3": 0.4222222222222222,
+        "sec_hit@5": 0.8666666666666667,
+        "sec_recall@5": 0.5,
+        "sec_mrr@10": 0.745079365079365
+      },
+      "macro": {
+        "hit@1": 0.5125,
+        "recall@1": 0.19791666666666663,
+        "hit@3": 0.7625,
+        "recall@3": 0.3052083333333333,
+        "hit@5": 0.825,
+        "recall@5": 0.35104166666666664,
+        "mrr@10": 0.6635416666666667,
+        "sec_hit@1": 0.6375,
+        "sec_recall@1": 0.26041666666666663,
+        "sec_hit@3": 0.825,
+        "sec_recall@3": 0.4520833333333333,
+        "sec_hit@5": 0.8875,
+        "sec_recall@5": 0.5416666666666666,
+        "sec_mrr@10": 0.7404761904761905
+      }
+    },
+    "candidate_clean": {
+      "count": 52,
+      "micro": {
+        "hit@1": 0.6153846153846154,
+        "recall@1": 0.38461538461538464,
+        "hit@3": 0.75,
+        "recall@3": 0.5189102564102565,
+        "hit@5": 0.7884615384615384,
+        "recall@5": 0.5628205128205128,
+        "mrr@10": 0.6915064102564104,
+        "sec_hit@1": 0.6346153846153846,
+        "sec_recall@1": 0.483974358974359,
+        "sec_hit@3": 0.7884615384615384,
+        "sec_recall@3": 0.6410256410256411,
+        "sec_hit@5": 0.8269230769230769,
+        "sec_recall@5": 0.6923076923076923,
+        "sec_mrr@10": 0.7091575091575091
+      },
+      "macro": {
+        "hit@1": 0.59375,
+        "recall@1": 0.3684895833333333,
+        "hit@3": 0.734375,
+        "recall@3": 0.5048611111111111,
+        "hit@5": 0.7708333333333334,
+        "recall@5": 0.5441840277777777,
+        "mrr@10": 0.6749131944444445,
+        "sec_hit@1": 0.6145833333333334,
+        "sec_recall@1": 0.4704861111111111,
+        "sec_hit@3": 0.7708333333333334,
+        "sec_recall@3": 0.6293402777777777,
+        "sec_hit@5": 0.8177083333333334,
+        "sec_recall@5": 0.6805555555555556,
+        "sec_mrr@10": 0.6930307539682539
+      }
+    },
+    "candidate_overlap": {
+      "count": 2,
+      "micro": {
+        "hit@1": 0.5,
+        "recall@1": 0.25,
+        "hit@3": 0.5,
+        "recall@3": 0.25,
+        "hit@5": 0.5,
+        "recall@5": 0.25,
+        "mrr@10": 0.5,
+        "sec_hit@1": 0.5,
+        "sec_recall@1": 0.5,
+        "sec_hit@3": 0.5,
+        "sec_recall@3": 0.5,
+        "sec_hit@5": 0.5,
+        "sec_recall@5": 0.5,
+        "sec_mrr@10": 0.5
+      },
+      "macro": {
+        "hit@1": 0.5,
+        "recall@1": 0.25,
+        "hit@3": 0.5,
+        "recall@3": 0.25,
+        "hit@5": 0.5,
+        "recall@5": 0.25,
+        "mrr@10": 0.5,
+        "sec_hit@1": 0.5,
+        "sec_recall@1": 0.5,
+        "sec_hit@3": 0.5,
+        "sec_recall@3": 0.5,
+        "sec_hit@5": 0.5,
+        "sec_recall@5": 0.5,
+        "sec_mrr@10": 0.5
+      }
+    },
+    "pure_held_out": {
+      "count": 37,
+      "micro": {
+        "hit@1": 0.6216216216216216,
+        "recall@1": 0.44594594594594594,
+        "hit@3": 0.7567567567567568,
+        "recall@3": 0.6081081081081081,
+        "hit@5": 0.7837837837837838,
+        "recall@5": 0.6554054054054054,
+        "mrr@10": 0.6903153153153153,
+        "sec_hit@1": 0.6216216216216216,
+        "sec_recall@1": 0.5675675675675675,
+        "sec_hit@3": 0.7837837837837838,
+        "sec_recall@3": 0.7297297297297297,
+        "sec_hit@5": 0.8108108108108109,
+        "sec_recall@5": 0.7702702702702703,
+        "sec_mrr@10": 0.6945945945945946
+      },
+      "macro": {
+        "hit@1": 0.6007575757575757,
+        "recall@1": 0.415625,
+        "hit@3": 0.7545454545454546,
+        "recall@3": 0.5923295454545454,
+        "hit@5": 0.7795454545454545,
+        "recall@5": 0.6308712121212121,
+        "mrr@10": 0.6793876262626263,
+        "sec_hit@1": 0.6007575757575757,
+        "sec_recall@1": 0.5560606060606061,
+        "sec_hit@3": 0.7795454545454545,
+        "sec_recall@3": 0.7348484848484849,
+        "sec_hit@5": 0.8022727272727272,
+        "sec_recall@5": 0.7679924242424243,
+        "sec_mrr@10": 0.6832702020202019
+      }
+    }
+  },
+  "failure_counts": {
+    "wrong_document": 8,
+    "relevant_chunk_below_top1": 11,
+    "relevant_section_below_top1": 1,
+    "exact_relevant_chunk_top1": 33,
+    "relevant_section_unlabeled_chunk_top1": 1,
+    "no_relevant_result_top10": 8
+  },
+  "per_query_results": [
+    {
+      "query_id": "manual_001",
+      "query": "why does soup lock check exit with code 3",
+      "subset": "primary",
+      "source_document": "adapters-and-governance",
+      "candidate_subset": "clean",
+      "relevant_chunk_ids": [
+        "adapters-and-governance::3-lock-a-reproducible-run-state-closure-sha-base-dataset-env",
+        "adapters-and-governance::teammates-re-check-the-lock-exit-3-on-drift",
+        "adapters-and-governance::exits-3-on-broken-at-pipe-into-soup-adapters-blame-for-attribution::sub_000"
+      ],
+      "relevant_section_ids": [
+        "adapters-and-governance::3-lock-a-reproducible-run-state-closure-sha-base-dataset-env",
+        "adapters-and-governance::teammates-re-check-the-lock-exit-3-on-drift",
+        "adapters-and-governance::exits-3-on-broken-at-pipe-into-soup-adapters-blame-for-attribution"
+      ],
+      "ranked": [
+        {
+          "rank": 1,
+          "chunk_id": "evaluation::gate-pr-ci-refuse-evidence-that-doesn-t-match-the-committed-config-comment-the-verdict::sub_001",
+          "score": 0.3966314196586609,
+          "section_id": "evaluation::gate-pr-ci-refuse-evidence-that-doesn-t-match-the-committed-config-comment-the-verdict"
+        },
+        {
+          "rank": 2,
+          "chunk_id": "performance-and-quantization::batch-size-vs-gradient-accumulation::sub_011",
+          "score": 0.3700256943702698,
+          "section_id": "performance-and-quantization::batch-size-vs-gradient-accumulation"
+        },
+        {
+          "rank": 3,
+          "chunk_id": "performance-and-quantization::nf4-streaming-quantization-4bit::sub_000",
+          "score": 0.34264594316482544,
+          "section_id": "performance-and-quantization::nf4-streaming-quantization-4bit"
+        },
+        {
+          "rank": 4,
+          "chunk_id": "training::continual-learning-rehearsal-replay::sub_001",
+          "score": 0.3305346965789795,
+          "section_id": "training::continual-learning-rehearsal-replay"
+        },
+        {
+          "rank": 5,
+          "chunk_id": "evaluation::ship-verdict-soup-ship::sub_000",
+          "score": 0.33007264137268066,
+          "section_id": "evaluation::ship-verdict-soup-ship"
+        },
+        {
+          "rank": 6,
+          "chunk_id": "training::closed-loop-reward-hacking-auto-mitigation-v0-71-26::sub_002",
+          "score": 0.33001789450645447,
+          "section_id": "training::closed-loop-reward-hacking-auto-mitigation-v0-71-26"
+        },
+        {
+          "rank": 7,
+          "chunk_id": "adapters-and-governance::license-conflict-matrix-at-merge::sub_002",
+          "score": 0.32945308089256287,
+          "section_id": "adapters-and-governance::license-conflict-matrix-at-merge"
+        },
+        {
+          "rank": 8,
+          "chunk_id": "performance-and-quantization::nf4-streaming-quantization-4bit::sub_012",
+          "score": 0.3200697898864746,
+          "section_id": "performance-and-quantization::nf4-streaming-quantization-4bit"
+        },
+        {
+          "rank": 9,
+          "chunk_id": "evaluation::ship-verdict-soup-ship::sub_001",
+          "score": 0.3191462457180023,
+          "section_id": "evaluation::ship-verdict-soup-ship"
+        },
+        {
+          "rank": 10,
+          "chunk_id": "adapters-and-governance::strict-safetensors-mode-soup-adapters-check-safetensors",
+          "score": 0.31126636266708374,
+          "section_id": "adapters-and-governance::strict-safetensors-mode-soup-adapters-check-safetensors"
+        }
+      ],
+      "failure_category": "wrong_document"
+    },
+    {
+      "query_id": "manual_002",
+      "query": "How do I bisect training checkpoints when an eval regresses?",
+      "subset": "primary",
+      "source_document": "adapters-and-governance",
+      "candidate_subset": "clean",
+      "relevant_chunk_ids": [
+        "adapters-and-governance::4-bisect-a-training-history-to-find-the-step-that-broke-an-eval"
+      ],
+      "relevant_section_ids": [
+        "adapters-and-governance::4-bisect-a-training-history-to-find-the-step-that-broke-an-eval"
+      ],
+      "ranked": [
+        {
+          "rank": 1,
+          "chunk_id": "training::continual-learning-rehearsal-replay::sub_002",
+          "score": 0.43226170539855957,
+          "section_id": "training::continual-learning-rehearsal-replay"
+        },
+        {
+          "rank": 2,
+          "chunk_id": "training::soup-yaml-dapo-with-replay-buffer-and-tis-truncation-masking::sub_001",
+          "score": 0.42555567622184753,
+          "section_id": "training::soup-yaml-dapo-with-replay-buffer-and-tis-truncation-masking"
+        },
+        {
+          "rank": 3,
+          "chunk_id": "adapters-and-governance::4-bisect-a-training-history-to-find-the-step-that-broke-an-eval",
+          "score": 0.42424583435058594,
+          "section_id": "adapters-and-governance::4-bisect-a-training-history-to-find-the-step-that-broke-an-eval"
+        },
+        {
+          "rank": 4,
+          "chunk_id": "commands::all-commands::sub_062",
+          "score": 0.42295852303504944,
+          "section_id": "commands::all-commands"
+        },
+        {
+          "rank": 5,
+          "chunk_id": "training::continual-learning-rehearsal-replay::sub_001",
+          "score": 0.4147806167602539,
+          "section_id": "training::continual-learning-rehearsal-replay"
+        },
+        {
+          "rank": 6,
+          "chunk_id": "peft-and-efficiency::vram-pressure-advisory",
+          "score": 0.40922844409942627,
+          "section_id": "peft-and-efficiency::vram-pressure-advisory"
+        },
+        {
+          "rank": 7,
+          "chunk_id": "training::soup-yaml-dapo-with-replay-buffer-and-tis-truncation-masking::sub_002",
+          "score": 0.3998367190361023,
+          "section_id": "training::soup-yaml-dapo-with-replay-buffer-and-tis-truncation-masking"
+        },
+        {
+          "rank": 8,
+          "chunk_id": "training::training-tasks-methods::sub_003",
+          "score": 0.38812798261642456,
+          "section_id": "training::training-tasks-methods"
+        },
+        {
+          "rank": 9,
+          "chunk_id": "backends-and-ops::preserves-the-final-model-and-the-checkpoint-with-the-lowest-loss",
+          "score": 0.3867209851741791,
+          "section_id": "backends-and-ops::preserves-the-final-model-and-the-checkpoint-with-the-lowest-loss"
+        },
+        {
+          "rank": 10,
+          "chunk_id": "training::mid-epoch-checkpoint-for-ppo-grpo-torchtune-punts-this-soup-ships-it",
+          "score": 0.3832661211490631,
+          "section_id": "training::mid-epoch-checkpoint-for-ppo-grpo-torchtune-punts-this-soup-ships-it"
+        }
+      ],
+      "failure_category": "relevant_chunk_below_top1"
+    },
+    {
+      "query_id": "manual_003",
+      "query": "how do I see which training rows influenced an adapter",
+      "subset": "primary",
+      "source_document": "adapters-and-governance",
+      "candidate_subset": "clean",
+      "relevant_chunk_ids": [
+        "adapters-and-governance::leave-one-out-ablation-plan-against-a-4-hour-wall-clock-budget",
+        "adapters-and-governance::list-all-snapshotted-branches::sub_002"
+      ],
+      "relevant_section_ids": [
+        "adapters-and-governance::leave-one-out-ablation-plan-against-a-4-hour-wall-clock-budget",
+        "adapters-and-governance::list-all-snapshotted-branches"
+      ],
+      "ranked": [
+        {
+          "rank": 1,
+          "chunk_id": "evaluation::2-live-influence-function-blame-which-50-training-rows-pulled-toward-this-output",
+          "score": 0.4678678512573242,
+          "section_id": "evaluation::2-live-influence-function-blame-which-50-training-rows-pulled-toward-this-output"
+        },
+        {
+          "rank": 2,
+          "chunk_id": "adapters-and-governance::list-all-snapshotted-branches::sub_002",
+          "score": 0.32986775040626526,
+          "section_id": "adapters-and-governance::list-all-snapshotted-branches"
+        },
+        {
+          "rank": 3,
+          "chunk_id": "training::curriculum-aware-training-beta::sub_002",
+          "score": 0.3207569122314453,
+          "section_id": "training::curriculum-aware-training-beta"
+        },
+        {
+          "rank": 4,
+          "chunk_id": "adapters-and-governance::per-layer-w-frobenius-diff-effective-rank-drift-top-k-changed-projections",
+          "score": 0.3154875636100769,
+          "section_id": "adapters-and-governance::per-layer-w-frobenius-diff-effective-rank-drift-top-k-changed-projections"
+        },
+        {
+          "rank": 5,
+          "chunk_id": "adapters-and-governance::or-via-soup-yaml-when-training-a-model-with-grace-aware-lookups::sub_000",
+          "score": 0.28753161430358887,
+          "section_id": "adapters-and-governance::or-via-soup-yaml-when-training-a-model-with-grace-aware-lookups"
+        },
+        {
+          "rank": 6,
+          "chunk_id": "evaluation::6-sae-auto-download-capture-pipeline-v0-71-8::sub_002",
+          "score": 0.27932247519493103,
+          "section_id": "evaluation::6-sae-auto-download-capture-pipeline-v0-71-8"
+        },
+        {
+          "rank": 7,
+          "chunk_id": "adapters-and-governance::unpack-a-recorded-iteration-s-soup-can-for-what-if-analysis-v0-71-4",
+          "score": 0.26590967178344727,
+          "section_id": "adapters-and-governance::unpack-a-recorded-iteration-s-soup-can-for-what-if-analysis-v0-71-4"
+        },
+        {
+          "rank": 8,
+          "chunk_id": "performance-and-quantization::nf4-streaming-quantization-4bit::sub_004",
+          "score": 0.2625681161880493,
+          "section_id": "performance-and-quantization::nf4-streaming-quantization-4bit"
+        },
+        {
+          "rank": 9,
+          "chunk_id": "performance-and-quantization::batch-size-vs-gradient-accumulation::sub_009",
+          "score": 0.2624719738960266,
+          "section_id": "performance-and-quantization::batch-size-vs-gradient-accumulation"
+        },
+        {
+          "rank": 10,
+          "chunk_id": "adapters-and-governance::show-full-details-config-eval-baseline-artifacts-ancestors",
+          "score": 0.2603176236152649,
+          "section_id": "adapters-and-governance::show-full-details-config-eval-baseline-artifacts-ancestors"
+        }
+      ],
+      "failure_category": "relevant_chunk_below_top1"
+    },
+    {
+      "query_id": "manual_004",
+      "query": "what does soup loop automate",
+      "subset": "overlap",
+      "source_document": "adapters-and-governance",
+      "candidate_subset": "clean",
+      "relevant_chunk_ids": [
+        "adapters-and-governance::data-flywheel-soup-loop",
+        "commands::all-commands::sub_020"
+      ],
+      "relevant_section_ids": [
+        "adapters-and-governance::data-flywheel-soup-loop",
+        "commands::all-commands"
+      ],
+      "ranked": [
+        {
+          "rank": 1,
+          "chunk_id": "training::closed-loop-reward-hacking-auto-mitigation-v0-71-26::sub_004",
+          "score": 0.38299065828323364,
+          "section_id": "training::closed-loop-reward-hacking-auto-mitigation-v0-71-26"
+        },
+        {
+          "rank": 2,
+          "chunk_id": "peft-and-efficiency::training-stability-auto-tuning",
+          "score": 0.360914021730423,
+          "section_id": "peft-and-efficiency::training-stability-auto-tuning"
+        },
+        {
+          "rank": 3,
+          "chunk_id": "training::closed-loop-reward-hacking-auto-mitigation-v0-71-26::sub_002",
+          "score": 0.3527176082134247,
+          "section_id": "training::closed-loop-reward-hacking-auto-mitigation-v0-71-26"
+        },
+        {
+          "rank": 4,
+          "chunk_id": "training::closed-loop-reward-hacking-auto-mitigation-v0-71-26::sub_003",
+          "score": 0.34686440229415894,
+          "section_id": "training::closed-loop-reward-hacking-auto-mitigation-v0-71-26"
+        },
+        {
+          "rank": 5,
+          "chunk_id": "evaluation::noise-floor-v0-73-2::sub_001",
+          "score": 0.3150334656238556,
+          "section_id": "evaluation::noise-floor-v0-73-2"
+        },
+        {
+          "rank": 6,
+          "chunk_id": "evaluation::noise-floor-v0-73-2::sub_000",
+          "score": 0.3006276488304138,
+          "section_id": "evaluation::noise-floor-v0-73-2"
+        },
+        {
+          "rank": 7,
+          "chunk_id": "peft-and-efficiency::loss-watchdog",
+          "score": 0.29752591252326965,
+          "section_id": "peft-and-efficiency::loss-watchdog"
+        },
+        {
+          "rank": 8,
+          "chunk_id": "evaluation::pre-flight-decision-soup-advise",
+          "score": 0.2948554754257202,
+          "section_id": "evaluation::pre-flight-decision-soup-advise"
+        },
+        {
+          "rank": 9,
+          "chunk_id": "peft-and-efficiency::auto-warmup-schedule",
+          "score": 0.29437828063964844,
+          "section_id": "peft-and-efficiency::auto-warmup-schedule"
+        },
+        {
+          "rank": 10,
+          "chunk_id": "commands::all-commands::sub_024",
+          "score": 0.291824072599411,
+          "section_id": "commands::all-commands"
+        }
+      ],
+      "failure_category": "relevant_section_below_top1"
+    },
+    {
+      "query_id": "manual_005",
+      "query": "does soup roll back a canary automatically if the eval regresses",
+      "subset": "overlap",
+      "source_document": "adapters-and-governance",
+      "candidate_subset": "clean",
+      "relevant_chunk_ids": [
+        "adapters-and-governance::promote-a-canary-at-5-traffic-with-auto-rollback-on-major-verdict",
+        "adapters-and-governance::replay-any-recorded-iteration",
+        "commands::all-commands::sub_021"
+      ],
+      "relevant_section_ids": [
+        "adapters-and-governance::promote-a-canary-at-5-traffic-with-auto-rollback-on-major-verdict",
+        "adapters-and-governance::replay-any-recorded-iteration",
+        "commands::all-commands"
+      ],
+      "ranked": [
+        {
+          "rank": 1,
+          "chunk_id": "adapters-and-governance::promote-a-canary-at-5-traffic-with-auto-rollback-on-major-verdict",
+          "score": 0.3980836868286133,
+          "section_id": "adapters-and-governance::promote-a-canary-at-5-traffic-with-auto-rollback-on-major-verdict"
+        },
+        {
+          "rank": 2,
+          "chunk_id": "evaluation::closing-the-evidence-loop-v0-71-39::sub_001",
+          "score": 0.33274218440055847,
+          "section_id": "evaluation::closing-the-evidence-loop-v0-71-39"
+        },
+        {
+          "rank": 3,
+          "chunk_id": "evaluation::noise-floor-v0-73-2::sub_002",
+          "score": 0.33106809854507446,
+          "section_id": "evaluation::noise-floor-v0-73-2"
+        },
+        {
+          "rank": 4,
+          "chunk_id": "evaluation::offline-decide-from-pre-computed-scores-persist-the-verdict-json::sub_004",
+          "score": 0.32162848114967346,
+          "section_id": "evaluation::offline-decide-from-pre-computed-scores-persist-the-verdict-json"
+        },
+        {
+          "rank": 5,
+          "chunk_id": "backends-and-ops::replay-an-old-run-s-summary-loss-curve-from-history::sub_001",
+          "score": 0.3132438063621521,
+          "section_id": "backends-and-ops::replay-an-old-run-s-summary-loss-curve-from-history"
+        },
+        {
+          "rank": 6,
+          "chunk_id": "peft-and-efficiency::longlora-forward-override",
+          "score": 0.3023437559604645,
+          "section_id": "peft-and-efficiency::longlora-forward-override"
+        },
+        {
+          "rank": 7,
+          "chunk_id": "adapters-and-governance::or-via-soup-yaml-when-training-a-model-with-grace-aware-lookups::sub_001",
+          "score": 0.2994917631149292,
+          "section_id": "adapters-and-governance::or-via-soup-yaml-when-training-a-model-with-grace-aware-lookups"
+        },
+        {
+          "rank": 8,
+          "chunk_id": "training::closed-loop-reward-hacking-auto-mitigation-v0-71-26::sub_002",
+          "score": 0.29619306325912476,
+          "section_id": "training::closed-loop-reward-hacking-auto-mitigation-v0-71-26"
+        },
+        {
+          "rank": 9,
+          "chunk_id": "adapters-and-governance::data-flywheel-soup-loop",
+          "score": 0.29243987798690796,
+          "section_id": "adapters-and-governance::data-flywheel-soup-loop"
+        },
+        {
+          "rank": 10,
+          "chunk_id": "evaluation::or-with-custom-alpha-beta::sub_000",
+          "score": 0.29183369874954224,
+          "section_id": "evaluation::or-with-custom-alpha-beta"
+        }
+      ],
+      "failure_category": "exact_relevant_chunk_top1"
+    },
+    {
+      "query_id": "manual_006",
+      "query": "ROME vs MEMIT vs AlphaEdit differences",
+      "subset": "primary",
+      "source_document": "adapters-and-governance",
+      "candidate_subset": "clean",
+      "relevant_chunk_ids": [
+        "adapters-and-governance::diff-what-the-model-says-before-vs-after-the-edit-live-generation::sub_002"
+      ],
+      "relevant_section_ids": [
+        "adapters-and-governance::diff-what-the-model-says-before-vs-after-the-edit-live-generation"
+      ],
+      "ranked": [
+        {
+          "rank": 1,
+          "chunk_id": "adapters-and-governance::diff-what-the-model-says-before-vs-after-the-edit-live-generation::sub_002",
+          "score": 0.3687591254711151,
+          "section_id": "adapters-and-governance::diff-what-the-model-says-before-vs-after-the-edit-live-generation"
+        },
+        {
+          "rank": 2,
+          "chunk_id": "performance-and-quantization::preference-losses-over-streaming-v0-72-4::sub_001",
+          "score": 0.35586825013160706,
+          "section_id": "performance-and-quantization::preference-losses-over-streaming-v0-72-4"
+        },
+        {
+          "rank": 3,
+          "chunk_id": "adapters-and-governance::knowledge-editing-soup-edit-set-rome-memit-alphaedit",
+          "score": 0.31435754895210266,
+          "section_id": "adapters-and-governance::knowledge-editing-soup-edit-set-rome-memit-alphaedit"
+        },
+        {
+          "rank": 4,
+          "chunk_id": "adapters-and-governance::diff-what-the-model-says-before-vs-after-the-edit-live-generation::sub_003",
+          "score": 0.3085781931877136,
+          "section_id": "adapters-and-governance::diff-what-the-model-says-before-vs-after-the-edit-live-generation"
+        },
+        {
+          "rank": 5,
+          "chunk_id": "performance-and-quantization::batch-size-vs-gradient-accumulation::sub_000",
+          "score": 0.30177634954452515,
+          "section_id": "performance-and-quantization::batch-size-vs-gradient-accumulation"
+        },
+        {
+          "rank": 6,
+          "chunk_id": "performance-and-quantization::nf4-streaming-quantization-4bit::sub_000",
+          "score": 0.2882280647754669,
+          "section_id": "performance-and-quantization::nf4-streaming-quantization-4bit"
+        },
+        {
+          "rank": 7,
+          "chunk_id": "evaluation::compare-eval-results-between-two-training-runs",
+          "score": 0.2857871651649475,
+          "section_id": "evaluation::compare-eval-results-between-two-training-runs"
+        },
+        {
+          "rank": 8,
+          "chunk_id": "peft-and-efficiency::what-lisa-actually-costs-measured-at-3b-and-8b::sub_002",
+          "score": 0.2822118103504181,
+          "section_id": "peft-and-efficiency::what-lisa-actually-costs-measured-at-3b-and-8b"
+        },
+        {
+          "rank": 9,
+          "chunk_id": "performance-and-quantization::nf4-streaming-quantization-4bit::sub_004",
+          "score": 0.28163015842437744,
+          "section_id": "performance-and-quantization::nf4-streaming-quantization-4bit"
+        },
+        {
+          "rank": 10,
+          "chunk_id": "performance-and-quantization::nf4-streaming-quantization-4bit::sub_003",
+          "score": 0.28058820962905884,
+          "section_id": "performance-and-quantization::nf4-streaming-quantization-4bit"
+        }
+      ],
+      "failure_category": "exact_relevant_chunk_top1"
+    },
+    {
+      "query_id": "manual_007",
+      "query": "compare model answers before and after a knowledge edit",
+      "subset": "overlap",
+      "source_document": "adapters-and-governance",
+      "candidate_subset": "clean",
+      "relevant_chunk_ids": [
+        "adapters-and-governance::diff-what-the-model-says-before-vs-after-the-edit-live-generation::sub_000",
+        "commands::all-commands::sub_042"
+      ],
+      "relevant_section_ids": [
+        "adapters-and-governance::diff-what-the-model-says-before-vs-after-the-edit-live-generation",
+        "commands::all-commands"
+      ],
+      "ranked": [
+        {
+          "rank": 1,
+          "chunk_id": "adapters-and-governance::diff-what-the-model-says-before-vs-after-the-edit-live-generation::sub_000",
+          "score": 0.45549482107162476,
+          "section_id": "adapters-and-governance::diff-what-the-model-says-before-vs-after-the-edit-live-generation"
+        },
+        {
+          "rank": 2,
+          "chunk_id": "evaluation::compare-a-pre-quant-model-with-its-post-quant-version",
+          "score": 0.41287946701049805,
+          "section_id": "evaluation::compare-a-pre-quant-model-with-its-post-quant-version"
+        },
+        {
+          "rank": 3,
+          "chunk_id": "evaluation::show-prior-verdicts-newest-first-with-per-choice-counts::sub_001",
+          "score": 0.3794153928756714,
+          "section_id": "evaluation::show-prior-verdicts-newest-first-with-per-choice-counts"
+        },
+        {
+          "rank": 4,
+          "chunk_id": "evaluation::quant-lobotomy-checker",
+          "score": 0.37020325660705566,
+          "section_id": "evaluation::quant-lobotomy-checker"
+        },
+        {
+          "rank": 5,
+          "chunk_id": "backends-and-ops::model-comparison",
+          "score": 0.34551507234573364,
+          "section_id": "backends-and-ops::model-comparison"
+        },
+        {
+          "rank": 6,
+          "chunk_id": "commands::all-commands::sub_042",
+          "score": 0.33966362476348877,
+          "section_id": "commands::all-commands"
+        },
+        {
+          "rank": 7,
+          "chunk_id": "backends-and-ops::compare-with-inline-prompts",
+          "score": 0.33807653188705444,
+          "section_id": "backends-and-ops::compare-with-inline-prompts"
+        },
+        {
+          "rank": 8,
+          "chunk_id": "adapters-and-governance::diff-what-the-model-says-before-vs-after-the-edit-live-generation::sub_001",
+          "score": 0.31488582491874695,
+          "section_id": "adapters-and-governance::diff-what-the-model-says-before-vs-after-the-edit-live-generation"
+        },
+        {
+          "rank": 9,
+          "chunk_id": "adapters-and-governance::or-via-soup-yaml-when-training-a-model-with-grace-aware-lookups::sub_001",
+          "score": 0.31276196241378784,
+          "section_id": "adapters-and-governance::or-via-soup-yaml-when-training-a-model-with-grace-aware-lookups"
+        },
+        {
+          "rank": 10,
+          "chunk_id": "adapters-and-governance::grace-codebook-lifelong-knowledge-edits",
+          "score": 0.3054279386997223,
+          "section_id": "adapters-and-governance::grace-codebook-lifelong-knowledge-edits"
+        }
+      ],
+      "failure_category": "exact_relevant_chunk_top1"
+    },
+    {
+      "query_id": "manual_008",
+      "query": "build a control vector from positive and negative prompts",
+      "subset": "overlap",
+      "source_document": "adapters-and-governance",
+      "candidate_subset": "clean",
+      "relevant_chunk_ids": [
+        "adapters-and-governance::train-a-steering-vector-from-contrastive-positive-negative-prompt-pairs",
+        "adapters-and-governance::list-locally-stored-steering-vectors::sub_001",
+        "commands::all-commands::sub_043"
+      ],
+      "relevant_section_ids": [
+        "adapters-and-governance::train-a-steering-vector-from-contrastive-positive-negative-prompt-pairs",
+        "adapters-and-governance::list-locally-stored-steering-vectors",
+        "commands::all-commands"
+      ],
+      "ranked": [
+        {
+          "rank": 1,
+          "chunk_id": "adapters-and-governance::train-a-steering-vector-from-contrastive-positive-negative-prompt-pairs",
+          "score": 0.43100783228874207,
+          "section_id": "adapters-and-governance::train-a-steering-vector-from-contrastive-positive-negative-prompt-pairs"
+        },
+        {
+          "rank": 2,
+          "chunk_id": "adapters-and-governance::activation-steering-soup-steer",
+          "score": 0.329012930393219,
+          "section_id": "adapters-and-governance::activation-steering-soup-steer"
+        },
+        {
+          "rank": 3,
+          "chunk_id": "training::grpo-objective-variants::sub_001",
+          "score": 0.28748762607574463,
+          "section_id": "training::grpo-objective-variants"
+        },
+        {
+          "rank": 4,
+          "chunk_id": "data::chain-of-thought-reasoning-grpo",
+          "score": 0.2645978629589081,
+          "section_id": "data::chain-of-thought-reasoning-grpo"
+        },
+        {
+          "rank": 5,
+          "chunk_id": "commands::all-commands::sub_038",
+          "score": 0.2609436511993408,
+          "section_id": "commands::all-commands"
+        },
+        {
+          "rank": 6,
+          "chunk_id": "training::process-reward-model-prm::sub_000",
+          "score": 0.2391548454761505,
+          "section_id": "training::process-reward-model-prm"
+        },
+        {
+          "rank": 7,
+          "chunk_id": "backends-and-ops::skip-confirmation",
+          "score": 0.23360677063465118,
+          "section_id": "backends-and-ops::skip-confirmation"
+        },
+        {
+          "rank": 8,
+          "chunk_id": "data::auto-filter-by-quality-coherence-scoring",
+          "score": 0.2323630154132843,
+          "section_id": "data::auto-filter-by-quality-coherence-scoring"
+        },
+        {
+          "rank": 9,
+          "chunk_id": "training::tts-fine-tuning-task-tts-beta-live-in-v0-71-20::sub_003",
+          "score": 0.230481818318367,
+          "section_id": "training::tts-fine-tuning-task-tts-beta-live-in-v0-71-20"
+        },
+        {
+          "rank": 10,
+          "chunk_id": "data::multi-turn-conversations",
+          "score": 0.22936858236789703,
+          "section_id": "data::multi-turn-conversations"
+        }
+      ],
+      "failure_category": "exact_relevant_chunk_top1"
+    },
+    {
+      "query_id": "manual_009",
+      "query": "grace codebook size limit",
+      "subset": "primary",
+      "source_document": "adapters-and-governance",
+      "candidate_subset": "clean",
+      "relevant_chunk_ids": [
+        "adapters-and-governance::or-via-soup-yaml-when-training-a-model-with-grace-aware-lookups::sub_000"
+      ],
+      "relevant_section_ids": [
+        "adapters-and-governance::or-via-soup-yaml-when-training-a-model-with-grace-aware-lookups"
+      ],
+      "ranked": [
+        {
+          "rank": 1,
+          "chunk_id": "adapters-and-governance::or-via-soup-yaml-when-training-a-model-with-grace-aware-lookups::sub_000",
+          "score": 0.47417938709259033,
+          "section_id": "adapters-and-governance::or-via-soup-yaml-when-training-a-model-with-grace-aware-lookups"
+        },
+        {
+          "rank": 2,
+          "chunk_id": "adapters-and-governance::grace-codebook-lifelong-knowledge-edits",
+          "score": 0.3836880326271057,
+          "section_id": "adapters-and-governance::grace-codebook-lifelong-knowledge-edits"
+        },
+        {
+          "rank": 3,
+          "chunk_id": "models::quick-size-guide",
+          "score": 0.34244656562805176,
+          "section_id": "models::quick-size-guide"
+        },
+        {
+          "rank": 4,
+          "chunk_id": "performance-and-quantization::sizing-a-streaming-run-v0-72-3::sub_001",
+          "score": 0.32114261388778687,
+          "section_id": "performance-and-quantization::sizing-a-streaming-run-v0-72-3"
+        },
+        {
+          "rank": 5,
+          "chunk_id": "adapters-and-governance::or-via-soup-yaml-when-training-a-model-with-grace-aware-lookups::sub_001",
+          "score": 0.3042173385620117,
+          "section_id": "adapters-and-governance::or-via-soup-yaml-when-training-a-model-with-grace-aware-lookups"
+        },
+        {
+          "rank": 6,
+          "chunk_id": "performance-and-quantization::nf4-streaming-quantization-4bit::sub_013",
+          "score": 0.274028480052948,
+          "section_id": "performance-and-quantization::nf4-streaming-quantization-4bit"
+        },
+        {
+          "rank": 7,
+          "chunk_id": "training::rollout-auto-min-max-length-32",
+          "score": 0.2737569808959961,
+          "section_id": "training::rollout-auto-min-max-length-32"
+        },
+        {
+          "rank": 8,
+          "chunk_id": "backends-and-ops::true-fits-peak-7-76-gb-10-margin-24-00-gb-available",
+          "score": 0.26012641191482544,
+          "section_id": "backends-and-ops::true-fits-peak-7-76-gb-10-margin-24-00-gb-available"
+        },
+        {
+          "rank": 9,
+          "chunk_id": "training::classifier-reranker-cross-encoder-training-beta-v0-52-0::sub_001",
+          "score": 0.2583732008934021,
+          "section_id": "training::classifier-reranker-cross-encoder-training-beta-v0-52-0"
+        },
+        {
+          "rank": 10,
+          "chunk_id": "performance-and-quantization::batch-size-vs-gradient-accumulation::sub_014",
+          "score": 0.25342923402786255,
+          "section_id": "performance-and-quantization::batch-size-vs-gradient-accumulation"
+        }
+      ],
+      "failure_category": "exact_relevant_chunk_top1"
+    },
+    {
+      "query_id": "manual_010",
+      "query": "soup registry diff output",
+      "subset": "overlap",
+      "source_document": "adapters-and-governance",
+      "candidate_subset": "clean",
+      "relevant_chunk_ids": [
+        "adapters-and-governance::side-by-side-config-diff-eval-delta-between-two-entries",
+        "commands::all-commands::sub_022"
+      ],
+      "relevant_section_ids": [
+        "adapters-and-governance::side-by-side-config-diff-eval-delta-between-two-entries",
+        "commands::all-commands"
+      ],
+      "ranked": [
+        {
+          "rank": 1,
+          "chunk_id": "adapters-and-governance::side-by-side-config-diff-eval-delta-between-two-entries",
+          "score": 0.4316670596599579,
+          "section_id": "adapters-and-governance::side-by-side-config-diff-eval-delta-between-two-entries"
+        },
+        {
+          "rank": 2,
+          "chunk_id": "adapters-and-governance::or-derive-a-fresh-snapshot-s-config-base-straight-from-a-registry-entry-v0-71-4",
+          "score": 0.37636905908584595,
+          "section_id": "adapters-and-governance::or-derive-a-fresh-snapshot-s-config-base-straight-from-a-registry-entry-v0-71-4"
+        },
+        {
+          "rank": 3,
+          "chunk_id": "commands::all-commands::sub_049",
+          "score": 0.3596228361129761,
+          "section_id": "commands::all-commands"
+        },
+        {
+          "rank": 4,
+          "chunk_id": "commands::all-commands::sub_041",
+          "score": 0.3561314344406128,
+          "section_id": "commands::all-commands"
+        },
+        {
+          "rank": 5,
+          "chunk_id": "performance-and-quantization::preference-losses-over-streaming-v0-72-4::sub_001",
+          "score": 0.34571006894111633,
+          "section_id": "performance-and-quantization::preference-losses-over-streaming-v0-72-4"
+        },
+        {
+          "rank": 6,
+          "chunk_id": "evaluation::compare-eval-results-between-two-training-runs",
+          "score": 0.3450004458427429,
+          "section_id": "evaluation::compare-eval-results-between-two-training-runs"
+        },
+        {
+          "rank": 7,
+          "chunk_id": "commands::all-commands::sub_013",
+          "score": 0.3433838188648224,
+          "section_id": "commands::all-commands"
+        },
+        {
+          "rank": 8,
+          "chunk_id": "commands::all-commands::sub_027",
+          "score": 0.3389975428581238,
+          "section_id": "commands::all-commands"
+        },
+        {
+          "rank": 9,
+          "chunk_id": "commands::all-commands::sub_030",
+          "score": 0.3337460458278656,
+          "section_id": "commands::all-commands"
+        },
+        {
+          "rank": 10,
+          "chunk_id": "adapters-and-governance::unpack-a-recorded-iteration-s-soup-can-for-what-if-analysis-v0-71-4",
+          "score": 0.3336104452610016,
+          "section_id": "adapters-and-governance::unpack-a-recorded-iteration-s-soup-can-for-what-if-analysis-v0-71-4"
+        }
+      ],
+      "failure_category": "exact_relevant_chunk_top1"
+    },
+    {
+      "query_id": "manual_011",
+      "query": "dare merge seed determinism",
+      "subset": "primary",
+      "source_document": "adapters-and-governance",
+      "candidate_subset": "clean",
+      "relevant_chunk_ids": [
+        "adapters-and-governance::dare-merge-deterministic-via-seed"
+      ],
+      "relevant_section_ids": [
+        "adapters-and-governance::dare-merge-deterministic-via-seed"
+      ],
+      "ranked": [
+        {
+          "rank": 1,
+          "chunk_id": "adapters-and-governance::dare-merge-deterministic-via-seed",
+          "score": 0.6847165822982788,
+          "section_id": "adapters-and-governance::dare-merge-deterministic-via-seed"
+        },
+        {
+          "rank": 2,
+          "chunk_id": "training::seeds-reproducibility-training-seed::sub_003",
+          "score": 0.4127463400363922,
+          "section_id": "training::seeds-reproducibility-training-seed"
+        },
+        {
+          "rank": 3,
+          "chunk_id": "training::seeds-reproducibility-training-seed::sub_000",
+          "score": 0.38516587018966675,
+          "section_id": "training::seeds-reproducibility-training-seed"
+        },
+        {
+          "rank": 4,
+          "chunk_id": "data::merge-multiple-datasets",
+          "score": 0.38335561752319336,
+          "section_id": "data::merge-multiple-datasets"
+        },
+        {
+          "rank": 5,
+          "chunk_id": "training::seeds-reproducibility-training-seed::sub_006",
+          "score": 0.3636305630207062,
+          "section_id": "training::seeds-reproducibility-training-seed"
+        },
+        {
+          "rank": 6,
+          "chunk_id": "adapters-and-governance::weighted-merge-with-linear-ties-dare-svd-strategies",
+          "score": 0.3484055995941162,
+          "section_id": "adapters-and-governance::weighted-merge-with-linear-ties-dare-svd-strategies"
+        },
+        {
+          "rank": 7,
+          "chunk_id": "training::seeds-reproducibility-training-seed::sub_001",
+          "score": 0.3460870385169983,
+          "section_id": "training::seeds-reproducibility-training-seed"
+        },
+        {
+          "rank": 8,
+          "chunk_id": "training::continual-learning-rehearsal-replay::sub_002",
+          "score": 0.3357049226760864,
+          "section_id": "training::continual-learning-rehearsal-replay"
+        },
+        {
+          "rank": 9,
+          "chunk_id": "training::continual-learning-rehearsal-replay::sub_000",
+          "score": 0.3258105516433716,
+          "section_id": "training::continual-learning-rehearsal-replay"
+        },
+        {
+          "rank": 10,
+          "chunk_id": "adapters-and-governance::adapter-lifecycle-soup-adapters-merge-pr-bisect-soup-lock",
+          "score": 0.32104256749153137,
+          "section_id": "adapters-and-governance::adapter-lifecycle-soup-adapters-merge-pr-bisect-soup-lock"
+        }
+      ],
+      "failure_category": "exact_relevant_chunk_top1"
+    },
+    {
+      "query_id": "manual_012",
+      "query": "how do signed attestations get embedded in a soup can",
+      "subset": "primary",
+      "source_document": "adapters-and-governance",
+      "candidate_subset": "clean",
+      "relevant_chunk_ids": [
+        "adapters-and-governance::embed-in-toto-attestations-into-the-manifest-v3-cans-repeatable",
+        "adapters-and-governance::provenance-attestations-soup-attest-emit::sub_000"
+      ],
+      "relevant_section_ids": [
+        "adapters-and-governance::embed-in-toto-attestations-into-the-manifest-v3-cans-repeatable",
+        "adapters-and-governance::provenance-attestations-soup-attest-emit"
+      ],
+      "ranked": [
+        {
+          "rank": 1,
+          "chunk_id": "adapters-and-governance::embed-in-toto-attestations-into-the-manifest-v3-cans-repeatable",
+          "score": 0.5147919058799744,
+          "section_id": "adapters-and-governance::embed-in-toto-attestations-into-the-manifest-v3-cans-repeatable"
+        },
+        {
+          "rank": 2,
+          "chunk_id": "adapters-and-governance::provenance-attestations-soup-attest-emit::sub_002",
+          "score": 0.46672970056533813,
+          "section_id": "adapters-and-governance::provenance-attestations-soup-attest-emit"
+        },
+        {
+          "rank": 3,
+          "chunk_id": "adapters-and-governance::genuine-authentication-require-the-signer-s-key-match-a-trusted-one",
+          "score": 0.4074056148529053,
+          "section_id": "adapters-and-governance::genuine-authentication-require-the-signer-s-key-match-a-trusted-one"
+        },
+        {
+          "rank": 4,
+          "chunk_id": "data::2-train-on-canaried-jsonl-as-usual-then::sub_002",
+          "score": 0.3994314670562744,
+          "section_id": "data::2-train-on-canaried-jsonl-as-usual-then"
+        },
+        {
+          "rank": 5,
+          "chunk_id": "adapters-and-governance::self-consistency-verify-embedded-public-key",
+          "score": 0.39359089732170105,
+          "section_id": "adapters-and-governance::self-consistency-verify-embedded-public-key"
+        },
+        {
+          "rank": 6,
+          "chunk_id": "adapters-and-governance::provenance-attestations-soup-attest-emit::sub_001",
+          "score": 0.37485039234161377,
+          "section_id": "adapters-and-governance::provenance-attestations-soup-attest-emit"
+        },
+        {
+          "rank": 7,
+          "chunk_id": "performance-and-quantization::nf4-streaming-quantization-4bit::sub_009",
+          "score": 0.36707693338394165,
+          "section_id": "performance-and-quantization::nf4-streaming-quantization-4bit"
+        },
+        {
+          "rank": 8,
+          "chunk_id": "adapters-and-governance::adapter-sign-verify-soup-adapters-sign-verify",
+          "score": 0.35478639602661133,
+          "section_id": "adapters-and-governance::adapter-sign-verify-soup-adapters-sign-verify"
+        },
+        {
+          "rank": 9,
+          "chunk_id": "adapters-and-governance::replay-any-recorded-iteration",
+          "score": 0.3464966416358948,
+          "section_id": "adapters-and-governance::replay-any-recorded-iteration"
+        },
+        {
+          "rank": 10,
+          "chunk_id": "adapters-and-governance::provenance-attestations-soup-attest-emit::sub_000",
+          "score": 0.31762373447418213,
+          "section_id": "adapters-and-governance::provenance-attestations-soup-attest-emit"
+        }
+      ],
+      "failure_category": "exact_relevant_chunk_top1"
+    },
+    {
+      "query_id": "manual_013",
+      "query": "can I merge adapters whose licenses conflict",
+      "subset": "primary",
+      "source_document": "adapters-and-governance",
+      "candidate_subset": "clean",
+      "relevant_chunk_ids": [
+        "adapters-and-governance::license-conflict-matrix-at-merge::sub_000",
+        "adapters-and-governance::license-conflict-matrix-at-merge::sub_001"
+      ],
+      "relevant_section_ids": [
+        "adapters-and-governance::license-conflict-matrix-at-merge"
+      ],
+      "ranked": [
+        {
+          "rank": 1,
+          "chunk_id": "adapters-and-governance::license-conflict-matrix-at-merge::sub_000",
+          "score": 0.5324479341506958,
+          "section_id": "adapters-and-governance::license-conflict-matrix-at-merge"
+        },
+        {
+          "rank": 2,
+          "chunk_id": "adapters-and-governance::adapters-registry-governance::sub_004",
+          "score": 0.42530784010887146,
+          "section_id": "adapters-and-governance::adapters-registry-governance"
+        },
+        {
+          "rank": 3,
+          "chunk_id": "adapters-and-governance::side-by-side-config-diff-eval-delta-between-two-entries",
+          "score": 0.42057734727859497,
+          "section_id": "adapters-and-governance::side-by-side-config-diff-eval-delta-between-two-entries"
+        },
+        {
+          "rank": 4,
+          "chunk_id": "adapters-and-governance::dare-merge-deterministic-via-seed",
+          "score": 0.41878190636634827,
+          "section_id": "adapters-and-governance::dare-merge-deterministic-via-seed"
+        },
+        {
+          "rank": 5,
+          "chunk_id": "adapters-and-governance::license-conflict-matrix-at-merge::sub_002",
+          "score": 0.41794851422309875,
+          "section_id": "adapters-and-governance::license-conflict-matrix-at-merge"
+        },
+        {
+          "rank": 6,
+          "chunk_id": "adapters-and-governance::adapters-registry-governance::sub_003",
+          "score": 0.4102783203125,
+          "section_id": "adapters-and-governance::adapters-registry-governance"
+        },
+        {
+          "rank": 7,
+          "chunk_id": "adapters-and-governance::adapter-lifecycle-soup-adapters-merge-pr-bisect-soup-lock",
+          "score": 0.40071946382522583,
+          "section_id": "adapters-and-governance::adapter-lifecycle-soup-adapters-merge-pr-bisect-soup-lock"
+        },
+        {
+          "rank": 8,
+          "chunk_id": "adapters-and-governance::weighted-merge-with-linear-ties-dare-svd-strategies",
+          "score": 0.3922848403453827,
+          "section_id": "adapters-and-governance::weighted-merge-with-linear-ties-dare-svd-strategies"
+        },
+        {
+          "rank": 9,
+          "chunk_id": "adapters-and-governance::license-conflict-matrix-at-merge::sub_001",
+          "score": 0.3901868760585785,
+          "section_id": "adapters-and-governance::license-conflict-matrix-at-merge"
+        },
+        {
+          "rank": 10,
+          "chunk_id": "data::merge-multiple-datasets",
+          "score": 0.38588809967041016,
+          "section_id": "data::merge-multiple-datasets"
+        }
+      ],
+      "failure_category": "exact_relevant_chunk_top1"
+    },
+    {
+      "query_id": "manual_014",
+      "query": "what stops a hijacked huggingface repo from being pulled",
+      "subset": "primary",
+      "source_document": "adapters-and-governance",
+      "candidate_subset": "clean",
+      "relevant_chunk_ids": [
+        "adapters-and-governance::namespace-pinning-anti-ai-jacking::sub_000",
+        "adapters-and-governance::namespace-pinning-anti-ai-jacking::sub_001"
+      ],
+      "relevant_section_ids": [
+        "adapters-and-governance::namespace-pinning-anti-ai-jacking"
+      ],
+      "ranked": [
+        {
+          "rank": 1,
+          "chunk_id": "adapters-and-governance::namespace-pinning-anti-ai-jacking::sub_001",
+          "score": 0.47109609842300415,
+          "section_id": "adapters-and-governance::namespace-pinning-anti-ai-jacking"
+        },
+        {
+          "rank": 2,
+          "chunk_id": "adapters-and-governance::namespace-pinning-anti-ai-jacking::sub_000",
+          "score": 0.44169607758522034,
+          "section_id": "adapters-and-governance::namespace-pinning-anti-ai-jacking"
+        },
+        {
+          "rank": 3,
+          "chunk_id": "training::closed-loop-reward-hacking-auto-mitigation-v0-71-26::sub_002",
+          "score": 0.31991052627563477,
+          "section_id": "training::closed-loop-reward-hacking-auto-mitigation-v0-71-26"
+        },
+        {
+          "rank": 4,
+          "chunk_id": "training::closed-loop-reward-hacking-auto-mitigation-v0-71-26::sub_005",
+          "score": 0.3120115399360657,
+          "section_id": "training::closed-loop-reward-hacking-auto-mitigation-v0-71-26"
+        },
+        {
+          "rank": 5,
+          "chunk_id": "training::closed-loop-reward-hacking-auto-mitigation-v0-71-26::sub_000",
+          "score": 0.3032838702201843,
+          "section_id": "training::closed-loop-reward-hacking-auto-mitigation-v0-71-26"
+        },
+        {
+          "rank": 6,
+          "chunk_id": "training::closed-loop-reward-hacking-auto-mitigation-v0-71-26::sub_004",
+          "score": 0.2821877598762512,
+          "section_id": "training::closed-loop-reward-hacking-auto-mitigation-v0-71-26"
+        },
+        {
+          "rank": 7,
+          "chunk_id": "adapters-and-governance::or-via-soup-yaml-when-training-a-model-with-grace-aware-lookups::sub_001",
+          "score": 0.2744868993759155,
+          "section_id": "adapters-and-governance::or-via-soup-yaml-when-training-a-model-with-grace-aware-lookups"
+        },
+        {
+          "rank": 8,
+          "chunk_id": "training::closed-loop-reward-hacking-auto-mitigation-v0-71-26::sub_001",
+          "score": 0.2712675631046295,
+          "section_id": "training::closed-loop-reward-hacking-auto-mitigation-v0-71-26"
+        },
+        {
+          "rank": 9,
+          "chunk_id": "adapters-and-governance::provenance-attestations-soup-attest-emit::sub_002",
+          "score": 0.2692095637321472,
+          "section_id": "adapters-and-governance::provenance-attestations-soup-attest-emit"
+        },
+        {
+          "rank": 10,
+          "chunk_id": "data::active-learning-sampler-soup-data-active-sample::sub_001",
+          "score": 0.261717826128006,
+          "section_id": "data::active-learning-sampler-soup-data-active-sample"
+        }
+      ],
+      "failure_category": "exact_relevant_chunk_top1"
+    },
+    {
+      "query_id": "manual_015",
+      "query": "what goes into a soup airgap bundle and how big can it get",
+      "subset": "primary",
+      "source_document": "adapters-and-governance",
+      "candidate_subset": "clean",
+      "relevant_chunk_ids": [
+        "adapters-and-governance::airgap-bundle-soup-airgap-bundle::sub_000",
+        "adapters-and-governance::airgap-bundle-soup-airgap-bundle::sub_001"
+      ],
+      "relevant_section_ids": [
+        "adapters-and-governance::airgap-bundle-soup-airgap-bundle"
+      ],
+      "ranked": [
+        {
+          "rank": 1,
+          "chunk_id": "performance-and-quantization::nf4-streaming-quantization-4bit::sub_000",
+          "score": 0.3514612317085266,
+          "section_id": "performance-and-quantization::nf4-streaming-quantization-4bit"
+        },
+        {
+          "rank": 2,
+          "chunk_id": "peft-and-efficiency::what-lisa-actually-costs-measured-at-3b-and-8b::sub_002",
+          "score": 0.3406531512737274,
+          "section_id": "peft-and-efficiency::what-lisa-actually-costs-measured-at-3b-and-8b"
+        },
+        {
+          "rank": 3,
+          "chunk_id": "peft-and-efficiency::what-lisa-actually-costs-measured-at-3b-and-8b::sub_001",
+          "score": 0.3287591338157654,
+          "section_id": "peft-and-efficiency::what-lisa-actually-costs-measured-at-3b-and-8b"
+        },
+        {
+          "rank": 4,
+          "chunk_id": "performance-and-quantization::sizing-a-streaming-run-v0-72-3::sub_001",
+          "score": 0.3216032385826111,
+          "section_id": "performance-and-quantization::sizing-a-streaming-run-v0-72-3"
+        },
+        {
+          "rank": 5,
+          "chunk_id": "peft-and-efficiency::multipack-ffd-bin-packing-sampler::sub_005",
+          "score": 0.3201462924480438,
+          "section_id": "peft-and-efficiency::multipack-ffd-bin-packing-sampler"
+        },
+        {
+          "rank": 6,
+          "chunk_id": "adapters-and-governance::airgap-bundle-soup-airgap-bundle::sub_001",
+          "score": 0.307600200176239,
+          "section_id": "adapters-and-governance::airgap-bundle-soup-airgap-bundle"
+        },
+        {
+          "rank": 7,
+          "chunk_id": "data::list-available-bundles",
+          "score": 0.3052400052547455,
+          "section_id": "data::list-available-bundles"
+        },
+        {
+          "rank": 8,
+          "chunk_id": "performance-and-quantization::batch-size-vs-gradient-accumulation::sub_007",
+          "score": 0.3046344518661499,
+          "section_id": "performance-and-quantization::batch-size-vs-gradient-accumulation"
+        },
+        {
+          "rank": 9,
+          "chunk_id": "models::quick-size-guide",
+          "score": 0.3045153021812439,
+          "section_id": "models::quick-size-guide"
+        },
+        {
+          "rank": 10,
+          "chunk_id": "performance-and-quantization::nf4-streaming-quantization-4bit::sub_013",
+          "score": 0.3030131459236145,
+          "section_id": "performance-and-quantization::nf4-streaming-quantization-4bit"
+        }
+      ],
+      "failure_category": "relevant_chunk_below_top1"
+    },
+    {
+      "query_id": "manual_016",
+      "query": "Soup refuses to load a .bin adapter, what formats are allowed?",
+      "subset": "primary",
+      "source_document": "adapters-and-governance",
+      "candidate_subset": "clean",
+      "relevant_chunk_ids": [
+        "adapters-and-governance::strict-safetensors-mode-soup-adapters-check-safetensors"
+      ],
+      "relevant_section_ids": [
+        "adapters-and-governance::strict-safetensors-mode-soup-adapters-check-safetensors"
+      ],
+      "ranked": [
+        {
+          "rank": 1,
+          "chunk_id": "adapters-and-governance::strict-safetensors-mode-soup-adapters-check-safetensors",
+          "score": 0.34152013063430786,
+          "section_id": "adapters-and-governance::strict-safetensors-mode-soup-adapters-check-safetensors"
+        },
+        {
+          "rank": 2,
+          "chunk_id": "peft-and-efficiency::multipack-ffd-bin-packing-sampler::sub_001",
+          "score": 0.2924482226371765,
+          "section_id": "peft-and-efficiency::multipack-ffd-bin-packing-sampler"
+        },
+        {
+          "rank": 3,
+          "chunk_id": "performance-and-quantization::lf-axolotl-quant-parity-v0-53-0::sub_000",
+          "score": 0.2759582996368408,
+          "section_id": "performance-and-quantization::lf-axolotl-quant-parity-v0-53-0"
+        },
+        {
+          "rank": 4,
+          "chunk_id": "adapters-and-governance::unpack-a-recorded-iteration-s-soup-can-for-what-if-analysis-v0-71-4",
+          "score": 0.2752683162689209,
+          "section_id": "adapters-and-governance::unpack-a-recorded-iteration-s-soup-can-for-what-if-analysis-v0-71-4"
+        },
+        {
+          "rank": 5,
+          "chunk_id": "models::supported-models-optional-extras",
+          "score": 0.2746232748031616,
+          "section_id": "models::supported-models-optional-extras"
+        },
+        {
+          "rank": 6,
+          "chunk_id": "performance-and-quantization::bitnet-1-58-bit-fine-tuning-beta-live-in-v0-71-20::sub_001",
+          "score": 0.26534658670425415,
+          "section_id": "performance-and-quantization::bitnet-1-58-bit-fine-tuning-beta-live-in-v0-71-20"
+        },
+        {
+          "rank": 7,
+          "chunk_id": "adapters-and-governance::bill-of-materials-soup-bom-emit",
+          "score": 0.263022243976593,
+          "section_id": "adapters-and-governance::bill-of-materials-soup-bom-emit"
+        },
+        {
+          "rank": 8,
+          "chunk_id": "models::optional-extras",
+          "score": 0.25896111130714417,
+          "section_id": "models::optional-extras"
+        },
+        {
+          "rank": 9,
+          "chunk_id": "adapters-and-governance::2-attach-it-to-the-bom::sub_000",
+          "score": 0.25545254349708557,
+          "section_id": "adapters-and-governance::2-attach-it-to-the-bom"
+        },
+        {
+          "rank": 10,
+          "chunk_id": "performance-and-quantization::batch-size-vs-gradient-accumulation::sub_008",
+          "score": 0.25012555718421936,
+          "section_id": "performance-and-quantization::batch-size-vs-gradient-accumulation"
+        }
+      ],
+      "failure_category": "exact_relevant_chunk_top1"
+    },
+    {
+      "query_id": "manual_017",
+      "query": "which soup init templates exist for regulated industries",
+      "subset": "overlap",
+      "source_document": "compliance",
+      "candidate_subset": "clean",
+      "relevant_chunk_ids": [
+        "compliance::1-start-from-a-compliance-template",
+        "README::soup-documentation::sub_003"
+      ],
+      "relevant_section_ids": [
+        "compliance::1-start-from-a-compliance-template",
+        "README::soup-documentation"
+      ],
+      "ranked": [
+        {
+          "rank": 1,
+          "chunk_id": "training::create-a-vision-config",
+          "score": 0.36152803897857666,
+          "section_id": "training::create-a-vision-config"
+        },
+        {
+          "rank": 2,
+          "chunk_id": "training::create-an-audio-config",
+          "score": 0.35946211218833923,
+          "section_id": "training::create-an-audio-config"
+        },
+        {
+          "rank": 3,
+          "chunk_id": "peft-and-efficiency::multipack-ffd-bin-packing-sampler::sub_001",
+          "score": 0.35863196849823,
+          "section_id": "peft-and-efficiency::multipack-ffd-bin-packing-sampler"
+        },
+        {
+          "rank": 4,
+          "chunk_id": "training::universal-logit-distillation-boizard-et-al-2024-arxiv-2402-12030",
+          "score": 0.3575438857078552,
+          "section_id": "training::universal-logit-distillation-boizard-et-al-2024-arxiv-2402-12030"
+        },
+        {
+          "rank": 5,
+          "chunk_id": "peft-and-efficiency::multipack-ffd-bin-packing-sampler::sub_005",
+          "score": 0.3518666923046112,
+          "section_id": "peft-and-efficiency::multipack-ffd-bin-packing-sampler"
+        },
+        {
+          "rank": 6,
+          "chunk_id": "compliance::1-start-from-a-compliance-template",
+          "score": 0.35017940402030945,
+          "section_id": "compliance::1-start-from-a-compliance-template"
+        },
+        {
+          "rank": 7,
+          "chunk_id": "training::create-a-reasoning-config",
+          "score": 0.34875428676605225,
+          "section_id": "training::create-a-reasoning-config"
+        },
+        {
+          "rank": 8,
+          "chunk_id": "adapters-and-governance::adapters-registry-governance::sub_000",
+          "score": 0.34760361909866333,
+          "section_id": "adapters-and-governance::adapters-registry-governance"
+        },
+        {
+          "rank": 9,
+          "chunk_id": "peft-and-efficiency::peft-long-context-training-efficiency::sub_002",
+          "score": 0.338140070438385,
+          "section_id": "peft-and-efficiency::peft-long-context-training-efficiency"
+        },
+        {
+          "rank": 10,
+          "chunk_id": "adapters-and-governance::weighted-merge-with-linear-ties-dare-svd-strategies",
+          "score": 0.3072892725467682,
+          "section_id": "adapters-and-governance::weighted-merge-with-linear-ties-dare-svd-strategies"
+        }
+      ],
+      "failure_category": "relevant_chunk_below_top1"
+    },
+    {
+      "query_id": "manual_018",
+      "query": "clean emails and phone numbers out of my training data",
+      "subset": "overlap",
+      "source_document": "compliance",
+      "candidate_subset": "clean",
+      "relevant_chunk_ids": [
+        "compliance::2-clean-the-data-before-training",
+        "commands::all-commands::sub_019"
+      ],
+      "relevant_section_ids": [
+        "compliance::2-clean-the-data-before-training",
+        "commands::all-commands"
+      ],
+      "ranked": [
+        {
+          "rank": 1,
+          "chunk_id": "compliance::2-clean-the-data-before-training",
+          "score": 0.46178460121154785,
+          "section_id": "compliance::2-clean-the-data-before-training"
+        },
+        {
+          "rank": 2,
+          "chunk_id": "data::auto-validate-after-generation-remove-malformed-entries",
+          "score": 0.3451792001724243,
+          "section_id": "data::auto-validate-after-generation-remove-malformed-entries"
+        },
+        {
+          "rank": 3,
+          "chunk_id": "training::training-tasks-methods::sub_002",
+          "score": 0.3081587553024292,
+          "section_id": "training::training-tasks-methods"
+        },
+        {
+          "rank": 4,
+          "chunk_id": "training::unlearn-yaml",
+          "score": 0.276147723197937,
+          "section_id": "training::unlearn-yaml"
+        },
+        {
+          "rank": 5,
+          "chunk_id": "training::run-the-unlearn-loop-validated-on-smollm2-135m-npo-simnpo-drive-forget-loss-down",
+          "score": 0.27506881952285767,
+          "section_id": "training::run-the-unlearn-loop-validated-on-smollm2-135m-npo-simnpo-drive-forget-loss-down"
+        },
+        {
+          "rank": 6,
+          "chunk_id": "training::training-tasks-methods::sub_003",
+          "score": 0.26965051889419556,
+          "section_id": "training::training-tasks-methods"
+        },
+        {
+          "rank": 7,
+          "chunk_id": "training::inform-cluster-separation-index-wang-et-al-2024-arxiv-2402-09345",
+          "score": 0.26944997906684875,
+          "section_id": "training::inform-cluster-separation-index-wang-et-al-2024-arxiv-2402-09345"
+        },
+        {
+          "rank": 8,
+          "chunk_id": "data::magpie-synthetic-data-chat-template-prefix-harvest-live-v0-71-6",
+          "score": 0.26927757263183594,
+          "section_id": "data::magpie-synthetic-data-chat-template-prefix-harvest-live-v0-71-6"
+        },
+        {
+          "rank": 9,
+          "chunk_id": "commands::all-commands::sub_004",
+          "score": 0.26830461621284485,
+          "section_id": "commands::all-commands"
+        },
+        {
+          "rank": 10,
+          "chunk_id": "data::synthetic-data-generation",
+          "score": 0.2641603350639343,
+          "section_id": "data::synthetic-data-generation"
+        }
+      ],
+      "failure_category": "exact_relevant_chunk_top1"
+    },
+    {
+      "query_id": "manual_019",
+      "query": "bom --attach-to-registry wrote the files but exited non-zero",
+      "subset": "primary",
+      "source_document": "compliance",
+      "candidate_subset": "clean",
+      "relevant_chunk_ids": [
+        "compliance::4-register-the-run-then-emit-bom-attestation::sub_000",
+        "compliance::4-register-the-run-then-emit-bom-attestation::sub_001"
+      ],
+      "relevant_section_ids": [
+        "compliance::4-register-the-run-then-emit-bom-attestation"
+      ],
+      "ranked": [
+        {
+          "rank": 1,
+          "chunk_id": "compliance::4-register-the-run-then-emit-bom-attestation::sub_001",
+          "score": 0.5147262215614319,
+          "section_id": "compliance::4-register-the-run-then-emit-bom-attestation"
+        },
+        {
+          "rank": 2,
+          "chunk_id": "evaluation::attach-the-report-to-a-model-registry-entry-as-a-first-class-artifact::sub_000",
+          "score": 0.2865699827671051,
+          "section_id": "evaluation::attach-the-report-to-a-model-registry-entry-as-a-first-class-artifact"
+        },
+        {
+          "rank": 3,
+          "chunk_id": "backends-and-ops::just-create-files-without-training",
+          "score": 0.28150472044944763,
+          "section_id": "backends-and-ops::just-create-files-without-training"
+        },
+        {
+          "rank": 4,
+          "chunk_id": "performance-and-quantization::batch-size-vs-gradient-accumulation::sub_008",
+          "score": 0.25268903374671936,
+          "section_id": "performance-and-quantization::batch-size-vs-gradient-accumulation"
+        },
+        {
+          "rank": 5,
+          "chunk_id": "adapters-and-governance::background-subprocess-writes-pid-no-shell",
+          "score": 0.24919509887695312,
+          "section_id": "adapters-and-governance::background-subprocess-writes-pid-no-shell"
+        },
+        {
+          "rank": 6,
+          "chunk_id": "adapters-and-governance::2-attach-it-to-the-bom::sub_000",
+          "score": 0.24609969556331635,
+          "section_id": "adapters-and-governance::2-attach-it-to-the-bom"
+        },
+        {
+          "rank": 7,
+          "chunk_id": "adapters-and-governance::attaching-energy-co-energy",
+          "score": 0.24605923891067505,
+          "section_id": "adapters-and-governance::attaching-energy-co-energy"
+        },
+        {
+          "rank": 8,
+          "chunk_id": "compliance::4-register-the-run-then-emit-bom-attestation::sub_000",
+          "score": 0.2424970269203186,
+          "section_id": "compliance::4-register-the-run-then-emit-bom-attestation"
+        },
+        {
+          "rank": 9,
+          "chunk_id": "training::full-fine-tuning-lora-r-0::sub_001",
+          "score": 0.24143578112125397,
+          "section_id": "training::full-fine-tuning-lora-r-0"
+        },
+        {
+          "rank": 10,
+          "chunk_id": "adapters-and-governance::bill-of-materials-soup-bom-emit",
+          "score": 0.24062573909759521,
+          "section_id": "adapters-and-governance::bill-of-materials-soup-bom-emit"
+        }
+      ],
+      "failure_category": "exact_relevant_chunk_top1"
+    },
+    {
+      "query_id": "manual_020",
+      "query": "what ends up in the generated model card",
+      "subset": "overlap",
+      "source_document": "compliance",
+      "candidate_subset": "clean",
+      "relevant_chunk_ids": [
+        "compliance::7-generate-a-documented-model-card",
+        "commands::all-commands::sub_027"
+      ],
+      "relevant_section_ids": [
+        "compliance::7-generate-a-documented-model-card",
+        "commands::all-commands"
+      ],
+      "ranked": [
+        {
+          "rank": 1,
+          "chunk_id": "models::recommended-models::sub_002",
+          "score": 0.40503600239753723,
+          "section_id": "models::recommended-models"
+        },
+        {
+          "rank": 2,
+          "chunk_id": "models::recommended-models::sub_003",
+          "score": 0.3956538736820221,
+          "section_id": "models::recommended-models"
+        },
+        {
+          "rank": 3,
+          "chunk_id": "models::recommended-models::sub_001",
+          "score": 0.3631812334060669,
+          "section_id": "models::recommended-models"
+        },
+        {
+          "rank": 4,
+          "chunk_id": "training::seeds-reproducibility-training-seed::sub_003",
+          "score": 0.36138683557510376,
+          "section_id": "training::seeds-reproducibility-training-seed"
+        },
+        {
+          "rank": 5,
+          "chunk_id": "models::recommended-models::sub_004",
+          "score": 0.3606015741825104,
+          "section_id": "models::recommended-models"
+        },
+        {
+          "rank": 6,
+          "chunk_id": "models::quick-size-guide",
+          "score": 0.3469608426094055,
+          "section_id": "models::quick-size-guide"
+        },
+        {
+          "rank": 7,
+          "chunk_id": "peft-and-efficiency::llama-pro-block-expansion",
+          "score": 0.3432871103286743,
+          "section_id": "peft-and-efficiency::llama-pro-block-expansion"
+        },
+        {
+          "rank": 8,
+          "chunk_id": "performance-and-quantization::nf4-streaming-quantization-4bit::sub_011",
+          "score": 0.3425339460372925,
+          "section_id": "performance-and-quantization::nf4-streaming-quantization-4bit"
+        },
+        {
+          "rank": 9,
+          "chunk_id": "models::recommended-models::sub_000",
+          "score": 0.3424243628978729,
+          "section_id": "models::recommended-models"
+        },
+        {
+          "rank": 10,
+          "chunk_id": "adapters-and-governance::diff-what-the-model-says-before-vs-after-the-edit-live-generation::sub_002",
+          "score": 0.3361635208129883,
+          "section_id": "adapters-and-governance::diff-what-the-model-says-before-vs-after-the-edit-live-generation"
+        }
+      ],
+      "failure_category": "wrong_document"
+    },
+    {
+      "query_id": "manual_021",
+      "query": "publish a model to huggingface with my own model card",
+      "subset": "overlap",
+      "source_document": "compliance",
+      "candidate_subset": "clean",
+      "relevant_chunk_ids": [
+        "compliance::or-when-uploading-to-the-hub-override-the-auto-generated-card",
+        "commands::all-commands::sub_027"
+      ],
+      "relevant_section_ids": [
+        "compliance::or-when-uploading-to-the-hub-override-the-auto-generated-card",
+        "commands::all-commands"
+      ],
+      "ranked": [
+        {
+          "rank": 1,
+          "chunk_id": "compliance::or-when-uploading-to-the-hub-override-the-auto-generated-card",
+          "score": 0.3692794144153595,
+          "section_id": "compliance::or-when-uploading-to-the-hub-override-the-auto-generated-card"
+        },
+        {
+          "rank": 2,
+          "chunk_id": "compliance::7-generate-a-documented-model-card",
+          "score": 0.35553625226020813,
+          "section_id": "compliance::7-generate-a-documented-model-card"
+        },
+        {
+          "rank": 3,
+          "chunk_id": "models::supported-models",
+          "score": 0.3487972021102905,
+          "section_id": "models::supported-models"
+        },
+        {
+          "rank": 4,
+          "chunk_id": "evaluation::twitter-shareable-svg-badge-embeddable-in-a-model-card",
+          "score": 0.28476253151893616,
+          "section_id": "evaluation::twitter-shareable-svg-badge-embeddable-in-a-model-card"
+        },
+        {
+          "rank": 5,
+          "chunk_id": "backends-and-ops::push-to-huggingface",
+          "score": 0.2583807706832886,
+          "section_id": "backends-and-ops::push-to-huggingface"
+        },
+        {
+          "rank": 6,
+          "chunk_id": "compliance::6-air-gap-transfer-optional",
+          "score": 0.2581130266189575,
+          "section_id": "compliance::6-air-gap-transfer-optional"
+        },
+        {
+          "rank": 7,
+          "chunk_id": "adapters-and-governance::publish-a-can-to-hf-hub-as-a-dataset::sub_000",
+          "score": 0.2566761374473572,
+          "section_id": "adapters-and-governance::publish-a-can-to-hf-hub-as-a-dataset"
+        },
+        {
+          "rank": 8,
+          "chunk_id": "compliance::4-register-the-run-then-emit-bom-attestation::sub_001",
+          "score": 0.25523054599761963,
+          "section_id": "compliance::4-register-the-run-then-emit-bom-attestation"
+        },
+        {
+          "rank": 9,
+          "chunk_id": "models::supported-models-optional-extras",
+          "score": 0.25436872243881226,
+          "section_id": "models::supported-models-optional-extras"
+        },
+        {
+          "rank": 10,
+          "chunk_id": "serving-and-export::multi-gpu-with-tensor-parallelism",
+          "score": 0.2471340149641037,
+          "section_id": "serving-and-export::multi-gpu-with-tensor-parallelism"
+        }
+      ],
+      "failure_category": "exact_relevant_chunk_top1"
+    },
+    {
+      "query_id": "manual_022",
+      "query": "generated ci workflow steps",
+      "subset": "primary",
+      "source_document": "compliance",
+      "candidate_subset": "clean",
+      "relevant_chunk_ids": [
+        "compliance::8-gate-future-changes-in-ci",
+        "compliance::writes-github-workflows-soup-gate-yml::sub_000"
+      ],
+      "relevant_section_ids": [
+        "compliance::8-gate-future-changes-in-ci",
+        "compliance::writes-github-workflows-soup-gate-yml"
+      ],
+      "ranked": [
+        {
+          "rank": 1,
+          "chunk_id": "evaluation::gate-pr-ci-refuse-evidence-that-doesn-t-match-the-committed-config-comment-the-verdict::sub_000",
+          "score": 0.36019858717918396,
+          "section_id": "evaluation::gate-pr-ci-refuse-evidence-that-doesn-t-match-the-committed-config-comment-the-verdict"
+        },
+        {
+          "rank": 2,
+          "chunk_id": "training::training-tasks-methods::sub_003",
+          "score": 0.31117329001426697,
+          "section_id": "training::training-tasks-methods"
+        },
+        {
+          "rank": 3,
+          "chunk_id": "peft-and-efficiency::lisa-layerwise-importance-sampling-v0-71-34::sub_001",
+          "score": 0.3075495958328247,
+          "section_id": "peft-and-efficiency::lisa-layerwise-importance-sampling-v0-71-34"
+        },
+        {
+          "rank": 4,
+          "chunk_id": "commands::all-commands::sub_062",
+          "score": 0.299661248922348,
+          "section_id": "commands::all-commands"
+        },
+        {
+          "rank": 5,
+          "chunk_id": "training::training-tasks-methods::sub_007",
+          "score": 0.2982146143913269,
+          "section_id": "training::training-tasks-methods"
+        },
+        {
+          "rank": 6,
+          "chunk_id": "training::curriculum-aware-training-beta::sub_000",
+          "score": 0.29192614555358887,
+          "section_id": "training::curriculum-aware-training-beta"
+        },
+        {
+          "rank": 7,
+          "chunk_id": "training::prm-guided-grpo-process-supervised-rl::sub_000",
+          "score": 0.2882593274116516,
+          "section_id": "training::prm-guided-grpo-process-supervised-rl"
+        },
+        {
+          "rank": 8,
+          "chunk_id": "compliance::3-train-with-a-reproducibility-receipt-annex-xi-energy-for-the-eu",
+          "score": 0.2863917648792267,
+          "section_id": "compliance::3-train-with-a-reproducibility-receipt-annex-xi-energy-for-the-eu"
+        },
+        {
+          "rank": 9,
+          "chunk_id": "models::recommended-models::sub_003",
+          "score": 0.2862858176231384,
+          "section_id": "models::recommended-models"
+        },
+        {
+          "rank": 10,
+          "chunk_id": "models::recommended-models::sub_001",
+          "score": 0.28504326939582825,
+          "section_id": "models::recommended-models"
+        }
+      ],
+      "failure_category": "wrong_document"
+    },
+    {
+      "query_id": "manual_023",
+      "query": "which expectation checks can go in expectations.yaml",
+      "subset": "primary",
+      "source_document": "compliance",
+      "candidate_subset": "clean",
+      "relevant_chunk_ids": [
+        "compliance::writes-github-workflows-soup-gate-yml::sub_000"
+      ],
+      "relevant_section_ids": [
+        "compliance::writes-github-workflows-soup-gate-yml"
+      ],
+      "ranked": [
+        {
+          "rank": 1,
+          "chunk_id": "data::expectations-suite-great-expectations-for-chat-data",
+          "score": 0.46087703108787537,
+          "section_id": "data::expectations-suite-great-expectations-for-chat-data"
+        },
+        {
+          "rank": 2,
+          "chunk_id": "compliance::writes-github-workflows-soup-gate-yml::sub_000",
+          "score": 0.4574059247970581,
+          "section_id": "compliance::writes-github-workflows-soup-gate-yml"
+        },
+        {
+          "rank": 3,
+          "chunk_id": "evaluation::tests-yaml",
+          "score": 0.4367141127586365,
+          "section_id": "evaluation::tests-yaml"
+        },
+        {
+          "rank": 4,
+          "chunk_id": "compliance::8-gate-future-changes-in-ci",
+          "score": 0.41863080859184265,
+          "section_id": "compliance::8-gate-future-changes-in-ci"
+        },
+        {
+          "rank": 5,
+          "chunk_id": "adapters-and-governance::or-via-soup-yaml-when-training-a-model-with-grace-aware-lookups::sub_001",
+          "score": 0.3614538311958313,
+          "section_id": "adapters-and-governance::or-via-soup-yaml-when-training-a-model-with-grace-aware-lookups"
+        },
+        {
+          "rank": 6,
+          "chunk_id": "backends-and-ops::early-stopping-skip-remaining-runs-if-loss-exceeds-1-5x-best",
+          "score": 0.35589200258255005,
+          "section_id": "backends-and-ops::early-stopping-skip-remaining-runs-if-loss-exceeds-1-5x-best"
+        },
+        {
+          "rank": 7,
+          "chunk_id": "backends-and-ops::random-search-with-max-runs",
+          "score": 0.35525017976760864,
+          "section_id": "backends-and-ops::random-search-with-max-runs"
+        },
+        {
+          "rank": 8,
+          "chunk_id": "training::train-2",
+          "score": 0.35117149353027344,
+          "section_id": "training::train-2"
+        },
+        {
+          "rank": 9,
+          "chunk_id": "backends-and-ops::apply-refuses-on-drift-exit-3-if-the-yaml-changed-since-plan",
+          "score": 0.34796586632728577,
+          "section_id": "backends-and-ops::apply-refuses-on-drift-exit-3-if-the-yaml-changed-since-plan"
+        },
+        {
+          "rank": 10,
+          "chunk_id": "backends-and-ops::sweep-yaml",
+          "score": 0.3439895212650299,
+          "section_id": "backends-and-ops::sweep-yaml"
+        }
+      ],
+      "failure_category": "relevant_chunk_below_top1"
+    },
+    {
+      "query_id": "manual_024",
+      "query": "what steps does soup's compliance workflow cover",
+      "subset": "primary",
+      "source_document": "compliance",
+      "candidate_subset": "clean",
+      "relevant_chunk_ids": [
+        "compliance::compliance-governance-quickstart::sub_000",
+        "compliance::compliance-governance-quickstart::sub_001"
+      ],
+      "relevant_section_ids": [
+        "compliance::compliance-governance-quickstart"
+      ],
+      "ranked": [
+        {
+          "rank": 1,
+          "chunk_id": "compliance::compliance-governance-quickstart::sub_000",
+          "score": 0.4041271209716797,
+          "section_id": "compliance::compliance-governance-quickstart"
+        },
+        {
+          "rank": 2,
+          "chunk_id": "compliance::1-start-from-a-compliance-template",
+          "score": 0.36614543199539185,
+          "section_id": "compliance::1-start-from-a-compliance-template"
+        },
+        {
+          "rank": 3,
+          "chunk_id": "performance-and-quantization::batch-size-vs-gradient-accumulation::sub_000",
+          "score": 0.29749244451522827,
+          "section_id": "performance-and-quantization::batch-size-vs-gradient-accumulation"
+        },
+        {
+          "rank": 4,
+          "chunk_id": "performance-and-quantization::nf4-streaming-quantization-4bit::sub_002",
+          "score": 0.2912250757217407,
+          "section_id": "performance-and-quantization::nf4-streaming-quantization-4bit"
+        },
+        {
+          "rank": 5,
+          "chunk_id": "performance-and-quantization::nf4-streaming-quantization-4bit::sub_013",
+          "score": 0.283585786819458,
+          "section_id": "performance-and-quantization::nf4-streaming-quantization-4bit"
+        },
+        {
+          "rank": 6,
+          "chunk_id": "performance-and-quantization::nf4-streaming-quantization-4bit::sub_011",
+          "score": 0.28218281269073486,
+          "section_id": "performance-and-quantization::nf4-streaming-quantization-4bit"
+        },
+        {
+          "rank": 7,
+          "chunk_id": "README::soup-documentation::sub_002",
+          "score": 0.27894315123558044,
+          "section_id": "README::soup-documentation"
+        },
+        {
+          "rank": 8,
+          "chunk_id": "performance-and-quantization::performance-quantization::sub_001",
+          "score": 0.27728110551834106,
+          "section_id": "performance-and-quantization::performance-quantization"
+        },
+        {
+          "rank": 9,
+          "chunk_id": "README::soup-documentation::sub_001",
+          "score": 0.2696998417377472,
+          "section_id": "README::soup-documentation"
+        },
+        {
+          "rank": 10,
+          "chunk_id": "performance-and-quantization::batch-size-vs-gradient-accumulation::sub_001",
+          "score": 0.26748961210250854,
+          "section_id": "performance-and-quantization::batch-size-vs-gradient-accumulation"
+        }
+      ],
+      "failure_category": "exact_relevant_chunk_top1"
+    },
+    {
+      "query_id": "manual_025",
+      "query": "Should I fine-tune with DPO or SFT for my dataset?",
+      "subset": "primary",
+      "source_document": "evaluation",
+      "candidate_subset": "partial_overlap",
+      "relevant_chunk_ids": [
+        "evaluation::show-prior-verdicts-newest-first-with-per-choice-counts::sub_000"
+      ],
+      "relevant_section_ids": [
+        "evaluation::show-prior-verdicts-newest-first-with-per-choice-counts"
+      ],
+      "ranked": [
+        {
+          "rank": 1,
+          "chunk_id": "performance-and-quantization::preference-losses-over-streaming-v0-72-4::sub_000",
+          "score": 0.41157296299934387,
+          "section_id": "performance-and-quantization::preference-losses-over-streaming-v0-72-4"
+        },
+        {
+          "rank": 2,
+          "chunk_id": "performance-and-quantization::preference-losses-over-streaming-v0-72-4::sub_002",
+          "score": 0.4098530411720276,
+          "section_id": "performance-and-quantization::preference-losses-over-streaming-v0-72-4"
+        },
+        {
+          "rank": 3,
+          "chunk_id": "training::ebft-gdpo-beta-v0-52-0",
+          "score": 0.4042889177799225,
+          "section_id": "training::ebft-gdpo-beta-v0-52-0"
+        },
+        {
+          "rank": 4,
+          "chunk_id": "performance-and-quantization::preference-losses-over-streaming-v0-72-4::sub_001",
+          "score": 0.3979848623275757,
+          "section_id": "performance-and-quantization::preference-losses-over-streaming-v0-72-4"
+        },
+        {
+          "rank": 5,
+          "chunk_id": "training::sft-with-ebft-structured",
+          "score": 0.3522833287715912,
+          "section_id": "training::sft-with-ebft-structured"
+        },
+        {
+          "rank": 6,
+          "chunk_id": "training::orpo-training-no-reference-model",
+          "score": 0.34626099467277527,
+          "section_id": "training::orpo-training-no-reference-model"
+        },
+        {
+          "rank": 7,
+          "chunk_id": "performance-and-quantization::batch-size-vs-gradient-accumulation::sub_005",
+          "score": 0.33342140913009644,
+          "section_id": "performance-and-quantization::batch-size-vs-gradient-accumulation"
+        },
+        {
+          "rank": 8,
+          "chunk_id": "peft-and-efficiency::neftune-noisy-embeddings-fine-tuning",
+          "score": 0.3085702657699585,
+          "section_id": "peft-and-efficiency::neftune-noisy-embeddings-fine-tuning"
+        },
+        {
+          "rank": 9,
+          "chunk_id": "training::dpo-training",
+          "score": 0.3039624094963074,
+          "section_id": "training::dpo-training"
+        },
+        {
+          "rank": 10,
+          "chunk_id": "performance-and-quantization::live-cuda-batch-size-probe::sub_001",
+          "score": 0.29833972454071045,
+          "section_id": "performance-and-quantization::live-cuda-batch-size-probe"
+        }
+      ],
+      "failure_category": "wrong_document"
+    },
+    {
+      "query_id": "manual_026",
+      "query": "generate an eval suite from my training data",
+      "subset": "primary",
+      "source_document": "evaluation",
+      "candidate_subset": "clean",
+      "relevant_chunk_ids": [
+        "evaluation::1-draft-a-goal-conditioned-suite-from-your-training-data"
+      ],
+      "relevant_section_ids": [
+        "evaluation::1-draft-a-goal-conditioned-suite-from-your-training-data"
+      ],
+      "ranked": [
+        {
+          "rank": 1,
+          "chunk_id": "evaluation::1-draft-a-goal-conditioned-suite-from-your-training-data",
+          "score": 0.5194309949874878,
+          "section_id": "evaluation::1-draft-a-goal-conditioned-suite-from-your-training-data"
+        },
+        {
+          "rank": 2,
+          "chunk_id": "data::synthetic-data-generation",
+          "score": 0.46285462379455566,
+          "section_id": "data::synthetic-data-generation"
+        },
+        {
+          "rank": 3,
+          "chunk_id": "evaluation::auto-eval-after-training-configure-in-soup-yaml",
+          "score": 0.4394511580467224,
+          "section_id": "evaluation::auto-eval-after-training-configure-in-soup-yaml"
+        },
+        {
+          "rank": 4,
+          "chunk_id": "evaluation::leg-2-via-lm-eval-benchmarks-base-scores-supplied-by-baseline",
+          "score": 0.43329381942749023,
+          "section_id": "evaluation::leg-2-via-lm-eval-benchmarks-base-scores-supplied-by-baseline"
+        },
+        {
+          "rank": 5,
+          "chunk_id": "data::evol-instruct-wizardlm-depth-breadth-v0-71-31-grow-instruction-diversity::sub_000",
+          "score": 0.42675143480300903,
+          "section_id": "data::evol-instruct-wizardlm-depth-breadth-v0-71-31-grow-instruction-diversity"
+        },
+        {
+          "rank": 6,
+          "chunk_id": "training::predicted-expected-ids-rows-or-raft-rows-scored-against-their-own-golden-doc-n",
+          "score": 0.3952271342277527,
+          "section_id": "training::predicted-expected-ids-rows-or-raft-rows-scored-against-their-own-golden-doc-n"
+        },
+        {
+          "rank": 7,
+          "chunk_id": "evaluation::compare-eval-results-between-two-training-runs",
+          "score": 0.3908713459968567,
+          "section_id": "evaluation::compare-eval-results-between-two-training-runs"
+        },
+        {
+          "rank": 8,
+          "chunk_id": "evaluation::evaluation-diagnostics-probes::sub_001",
+          "score": 0.3901563286781311,
+          "section_id": "evaluation::evaluation-diagnostics-probes"
+        },
+        {
+          "rank": 9,
+          "chunk_id": "adapters-and-governance::eval-and-the-best-blend-is-written-to-output",
+          "score": 0.38713133335113525,
+          "section_id": "adapters-and-governance::eval-and-the-best-blend-is-written-to-output"
+        },
+        {
+          "rank": 10,
+          "chunk_id": "evaluation::install-eval-dependencies",
+          "score": 0.387130469083786,
+          "section_id": "evaluation::install-eval-dependencies"
+        }
+      ],
+      "failure_category": "exact_relevant_chunk_top1"
+    },
+    {
+      "query_id": "manual_027",
+      "query": "do two eval designs with the same content hash the same",
+      "subset": "primary",
+      "source_document": "evaluation",
+      "candidate_subset": "clean",
+      "relevant_chunk_ids": [
+        "evaluation::3-freeze-the-design-as-a-checksummed-eval-suite-artifact",
+        "evaluation::4-heuristic-gap-analysis-vs-the-task-taxonomy::sub_001"
+      ],
+      "relevant_section_ids": [
+        "evaluation::3-freeze-the-design-as-a-checksummed-eval-suite-artifact",
+        "evaluation::4-heuristic-gap-analysis-vs-the-task-taxonomy"
+      ],
+      "ranked": [
+        {
+          "rank": 1,
+          "chunk_id": "evaluation::compare-eval-results-between-two-training-runs",
+          "score": 0.42051056027412415,
+          "section_id": "evaluation::compare-eval-results-between-two-training-runs"
+        },
+        {
+          "rank": 2,
+          "chunk_id": "adapters-and-governance::side-by-side-config-diff-eval-delta-between-two-entries",
+          "score": 0.38561517000198364,
+          "section_id": "adapters-and-governance::side-by-side-config-diff-eval-delta-between-two-entries"
+        },
+        {
+          "rank": 3,
+          "chunk_id": "evaluation::4-heuristic-gap-analysis-vs-the-task-taxonomy::sub_001",
+          "score": 0.3685573637485504,
+          "section_id": "evaluation::4-heuristic-gap-analysis-vs-the-task-taxonomy"
+        },
+        {
+          "rank": 4,
+          "chunk_id": "backends-and-ops::compare-two-runs-side-by-side",
+          "score": 0.3519934415817261,
+          "section_id": "backends-and-ops::compare-two-runs-side-by-side"
+        },
+        {
+          "rank": 5,
+          "chunk_id": "backends-and-ops::compare-two-differing-experiments-side-by-side",
+          "score": 0.3494645357131958,
+          "section_id": "backends-and-ops::compare-two-differing-experiments-side-by-side"
+        },
+        {
+          "rank": 6,
+          "chunk_id": "evaluation::3b-honesty-misuse-probes-v0-71-8-same-shape-5-20-verdict-bands",
+          "score": 0.34600648283958435,
+          "section_id": "evaluation::3b-honesty-misuse-probes-v0-71-8-same-shape-5-20-verdict-bands"
+        },
+        {
+          "rank": 7,
+          "chunk_id": "evaluation::base-vs-tuned-per-prompt-swap-debiased-base-0-5-coin-flip-won-winrate-0-5",
+          "score": 0.33081626892089844,
+          "section_id": "evaluation::base-vs-tuned-per-prompt-swap-debiased-base-0-5-coin-flip-won-winrate-0-5"
+        },
+        {
+          "rank": 8,
+          "chunk_id": "adapters-and-governance::bill-of-materials-soup-bom-emit",
+          "score": 0.3183523118495941,
+          "section_id": "adapters-and-governance::bill-of-materials-soup-bom-emit"
+        },
+        {
+          "rank": 9,
+          "chunk_id": "performance-and-quantization::preference-losses-over-streaming-v0-72-4::sub_001",
+          "score": 0.31517815589904785,
+          "section_id": "performance-and-quantization::preference-losses-over-streaming-v0-72-4"
+        },
+        {
+          "rank": 10,
+          "chunk_id": "data::merge-multiple-datasets",
+          "score": 0.31029874086380005,
+          "section_id": "data::merge-multiple-datasets"
+        }
+      ],
+      "failure_category": "relevant_chunk_below_top1"
+    },
+    {
+      "query_id": "manual_028",
+      "query": "block a git push when eval accuracy regresses",
+      "subset": "primary",
+      "source_document": "evaluation",
+      "candidate_subset": "clean",
+      "relevant_chunk_ids": [
+        "evaluation::pre-push-regression-gate-soup-eval-gate-install::sub_000",
+        "evaluation::pre-push-regression-gate-soup-eval-gate-install::sub_001"
+      ],
+      "relevant_section_ids": [
+        "evaluation::pre-push-regression-gate-soup-eval-gate-install"
+      ],
+      "ranked": [
+        {
+          "rank": 1,
+          "chunk_id": "evaluation::pre-push-regression-gate-soup-eval-gate-install::sub_000",
+          "score": 0.560556173324585,
+          "section_id": "evaluation::pre-push-regression-gate-soup-eval-gate-install"
+        },
+        {
+          "rank": 2,
+          "chunk_id": "evaluation::pre-push-regression-gate-soup-eval-gate-install::sub_002",
+          "score": 0.38111141324043274,
+          "section_id": "evaluation::pre-push-regression-gate-soup-eval-gate-install"
+        },
+        {
+          "rank": 3,
+          "chunk_id": "compliance::8-gate-future-changes-in-ci",
+          "score": 0.3685600459575653,
+          "section_id": "compliance::8-gate-future-changes-in-ci"
+        },
+        {
+          "rank": 4,
+          "chunk_id": "evaluation::pre-push-regression-gate-soup-eval-gate-install::sub_001",
+          "score": 0.3524291217327118,
+          "section_id": "evaluation::pre-push-regression-gate-soup-eval-gate-install"
+        },
+        {
+          "rank": 5,
+          "chunk_id": "evaluation::closing-the-evidence-loop-v0-71-39::sub_003",
+          "score": 0.3506188988685608,
+          "section_id": "evaluation::closing-the-evidence-loop-v0-71-39"
+        },
+        {
+          "rank": 6,
+          "chunk_id": "evaluation::gate-pr-ci-refuse-evidence-that-doesn-t-match-the-committed-config-comment-the-verdict::sub_002",
+          "score": 0.3494688868522644,
+          "section_id": "evaluation::gate-pr-ci-refuse-evidence-that-doesn-t-match-the-committed-config-comment-the-verdict"
+        },
+        {
+          "rank": 7,
+          "chunk_id": "training::seeds-reproducibility-training-seed::sub_004",
+          "score": 0.3389286398887634,
+          "section_id": "training::seeds-reproducibility-training-seed"
+        },
+        {
+          "rank": 8,
+          "chunk_id": "data::evol-instruct-wizardlm-depth-breadth-v0-71-31-grow-instruction-diversity::sub_001",
+          "score": 0.3352833390235901,
+          "section_id": "data::evol-instruct-wizardlm-depth-breadth-v0-71-31-grow-instruction-diversity"
+        },
+        {
+          "rank": 9,
+          "chunk_id": "evaluation::eval-gated-training::sub_000",
+          "score": 0.3341964781284332,
+          "section_id": "evaluation::eval-gated-training"
+        },
+        {
+          "rank": 10,
+          "chunk_id": "adapters-and-governance::airgap-bundle-soup-airgap-bundle::sub_001",
+          "score": 0.33139732480049133,
+          "section_id": "adapters-and-governance::airgap-bundle-soup-airgap-bundle"
+        }
+      ],
+      "failure_category": "exact_relevant_chunk_top1"
+    },
+    {
+      "query_id": "manual_029",
+      "query": "eval_gate block settings in soup.yaml",
+      "subset": "primary",
+      "source_document": "evaluation",
+      "candidate_subset": "clean",
+      "relevant_chunk_ids": [
+        "evaluation::eval-gated-training::sub_000",
+        "evaluation::eval-gated-training::sub_001"
+      ],
+      "relevant_section_ids": [
+        "evaluation::eval-gated-training"
+      ],
+      "ranked": [
+        {
+          "rank": 1,
+          "chunk_id": "evaluation::eval-gated-training::sub_000",
+          "score": 0.5506424903869629,
+          "section_id": "evaluation::eval-gated-training"
+        },
+        {
+          "rank": 2,
+          "chunk_id": "evaluation::eval-gated-training::sub_001",
+          "score": 0.48262420296669006,
+          "section_id": "evaluation::eval-gated-training"
+        },
+        {
+          "rank": 3,
+          "chunk_id": "evaluation::auto-eval-after-training-configure-in-soup-yaml",
+          "score": 0.46348392963409424,
+          "section_id": "evaluation::auto-eval-after-training-configure-in-soup-yaml"
+        },
+        {
+          "rank": 4,
+          "chunk_id": "evaluation::auto-eval-config-soup-yaml",
+          "score": 0.4162386357784271,
+          "section_id": "evaluation::auto-eval-config-soup-yaml"
+        },
+        {
+          "rank": 5,
+          "chunk_id": "training::rollout-auto-min-max-length-32",
+          "score": 0.41349443793296814,
+          "section_id": "training::rollout-auto-min-max-length-32"
+        },
+        {
+          "rank": 6,
+          "chunk_id": "evaluation::tests-yaml",
+          "score": 0.4104728698730469,
+          "section_id": "evaluation::tests-yaml"
+        },
+        {
+          "rank": 7,
+          "chunk_id": "data::data-pipeline-pro::sub_001",
+          "score": 0.4021608233451843,
+          "section_id": "data::data-pipeline-pro"
+        },
+        {
+          "rank": 8,
+          "chunk_id": "commands::all-commands::sub_020",
+          "score": 0.39938414096832275,
+          "section_id": "commands::all-commands"
+        },
+        {
+          "rank": 9,
+          "chunk_id": "performance-and-quantization::fsdp2-torch-compile",
+          "score": 0.396835595369339,
+          "section_id": "performance-and-quantization::fsdp2-torch-compile"
+        },
+        {
+          "rank": 10,
+          "chunk_id": "performance-and-quantization::gradient-checkpointing-tiers",
+          "score": 0.38802582025527954,
+          "section_id": "performance-and-quantization::gradient-checkpointing-tiers"
+        }
+      ],
+      "failure_category": "exact_relevant_chunk_top1"
+    },
+    {
+      "query_id": "manual_030",
+      "query": "how does soup ab decide when to stop collecting samples",
+      "subset": "primary",
+      "source_document": "evaluation",
+      "candidate_subset": "clean",
+      "relevant_chunk_ids": [
+        "evaluation::sequential-a-b-harness-soup-ab",
+        "evaluation::or-with-custom-alpha-beta::sub_000"
+      ],
+      "relevant_section_ids": [
+        "evaluation::sequential-a-b-harness-soup-ab",
+        "evaluation::or-with-custom-alpha-beta"
+      ],
+      "ranked": [
+        {
+          "rank": 1,
+          "chunk_id": "data::2-train-on-canaried-jsonl-as-usual-then::sub_001",
+          "score": 0.3512401580810547,
+          "section_id": "data::2-train-on-canaried-jsonl-as-usual-then"
+        },
+        {
+          "rank": 2,
+          "chunk_id": "peft-and-efficiency::lisa-layerwise-importance-sampling-v0-71-34::sub_000",
+          "score": 0.3486108183860779,
+          "section_id": "peft-and-efficiency::lisa-layerwise-importance-sampling-v0-71-34"
+        },
+        {
+          "rank": 3,
+          "chunk_id": "data::active-learning-sampler-soup-data-active-sample::sub_001",
+          "score": 0.34138888120651245,
+          "section_id": "data::active-learning-sampler-soup-data-active-sample"
+        },
+        {
+          "rank": 4,
+          "chunk_id": "evaluation::noise-floor-v0-73-2::sub_003",
+          "score": 0.3230375051498413,
+          "section_id": "evaluation::noise-floor-v0-73-2"
+        },
+        {
+          "rank": 5,
+          "chunk_id": "evaluation::noise-floor-v0-73-2::sub_004",
+          "score": 0.3128231167793274,
+          "section_id": "evaluation::noise-floor-v0-73-2"
+        },
+        {
+          "rank": 6,
+          "chunk_id": "peft-and-efficiency::what-lisa-actually-costs-measured-at-3b-and-8b::sub_004",
+          "score": 0.31088024377822876,
+          "section_id": "peft-and-efficiency::what-lisa-actually-costs-measured-at-3b-and-8b"
+        },
+        {
+          "rank": 7,
+          "chunk_id": "data::best-of-n-rejection-sampling-v0-71-31-sample-n-locally-a-judge-picks-the-winner",
+          "score": 0.3084676265716553,
+          "section_id": "data::best-of-n-rejection-sampling-v0-71-31-sample-n-locally-a-judge-picks-the-winner"
+        },
+        {
+          "rank": 8,
+          "chunk_id": "performance-and-quantization::nf4-streaming-quantization-4bit::sub_006",
+          "score": 0.3081149458885193,
+          "section_id": "performance-and-quantization::nf4-streaming-quantization-4bit"
+        },
+        {
+          "rank": 9,
+          "chunk_id": "peft-and-efficiency::what-lisa-actually-costs-measured-at-3b-and-8b::sub_002",
+          "score": 0.305752158164978,
+          "section_id": "peft-and-efficiency::what-lisa-actually-costs-measured-at-3b-and-8b"
+        },
+        {
+          "rank": 10,
+          "chunk_id": "performance-and-quantization::batch-size-vs-gradient-accumulation::sub_001",
+          "score": 0.3040654957294464,
+          "section_id": "performance-and-quantization::batch-size-vs-gradient-accumulation"
+        }
+      ],
+      "failure_category": "wrong_document"
+    },
+    {
+      "query_id": "manual_031",
+      "query": "what does exit code 3 from soup drift-alarm mean",
+      "subset": "overlap",
+      "source_document": "evaluation",
+      "candidate_subset": "clean",
+      "relevant_chunk_ids": [
+        "evaluation::drift-alarm-soup-drift-alarm",
+        "evaluation::optional-webhook-on-drift-detected",
+        "commands::all-commands::sub_046"
+      ],
+      "relevant_section_ids": [
+        "evaluation::drift-alarm-soup-drift-alarm",
+        "evaluation::optional-webhook-on-drift-detected",
+        "commands::all-commands"
+      ],
+      "ranked": [
+        {
+          "rank": 1,
+          "chunk_id": "performance-and-quantization::nf4-streaming-quantization-4bit::sub_004",
+          "score": 0.32920771837234497,
+          "section_id": "performance-and-quantization::nf4-streaming-quantization-4bit"
+        },
+        {
+          "rank": 2,
+          "chunk_id": "evaluation::noise-floor-v0-73-2::sub_005",
+          "score": 0.31231147050857544,
+          "section_id": "evaluation::noise-floor-v0-73-2"
+        },
+        {
+          "rank": 3,
+          "chunk_id": "performance-and-quantization::nf4-streaming-quantization-4bit::sub_011",
+          "score": 0.3066848814487457,
+          "section_id": "performance-and-quantization::nf4-streaming-quantization-4bit"
+        },
+        {
+          "rank": 4,
+          "chunk_id": "evaluation::optional-webhook-on-drift-detected",
+          "score": 0.2915625274181366,
+          "section_id": "evaluation::optional-webhook-on-drift-detected"
+        },
+        {
+          "rank": 5,
+          "chunk_id": "adapters-and-governance::teammates-re-check-the-lock-exit-3-on-drift",
+          "score": 0.28589117527008057,
+          "section_id": "adapters-and-governance::teammates-re-check-the-lock-exit-3-on-drift"
+        },
+        {
+          "rank": 6,
+          "chunk_id": "training::continual-learning-rehearsal-replay::sub_001",
+          "score": 0.27720391750335693,
+          "section_id": "training::continual-learning-rehearsal-replay"
+        },
+        {
+          "rank": 7,
+          "chunk_id": "performance-and-quantization::batch-size-vs-gradient-accumulation::sub_011",
+          "score": 0.27633506059646606,
+          "section_id": "performance-and-quantization::batch-size-vs-gradient-accumulation"
+        },
+        {
+          "rank": 8,
+          "chunk_id": "evaluation::ship-verdict-soup-ship::sub_001",
+          "score": 0.27608293294906616,
+          "section_id": "evaluation::ship-verdict-soup-ship"
+        },
+        {
+          "rank": 9,
+          "chunk_id": "models::recommended-models::sub_001",
+          "score": 0.271492063999176,
+          "section_id": "models::recommended-models"
+        },
+        {
+          "rank": 10,
+          "chunk_id": "evaluation::3-sleeper-agent-defection-probe-per-token-defection-rate-via-calibrated-linear-probe",
+          "score": 0.27113473415374756,
+          "section_id": "evaluation::3-sleeper-agent-defection-probe-per-token-defection-rate-via-calibrated-linear-probe"
+        }
+      ],
+      "failure_category": "relevant_chunk_below_top1"
+    },
+    {
+      "query_id": "manual_032",
+      "query": "soup diagnose failure modes",
+      "subset": "primary",
+      "source_document": "evaluation",
+      "candidate_subset": "clean",
+      "relevant_chunk_ids": [
+        "evaluation::diagnose-post-training-report-card",
+        "evaluation::attach-the-report-to-a-model-registry-entry-as-a-first-class-artifact::sub_001",
+        "evaluation::attach-the-report-to-a-model-registry-entry-as-a-first-class-artifact::sub_002",
+        "evaluation::attach-the-report-to-a-model-registry-entry-as-a-first-class-artifact::sub_003"
+      ],
+      "relevant_section_ids": [
+        "evaluation::diagnose-post-training-report-card",
+        "evaluation::attach-the-report-to-a-model-registry-entry-as-a-first-class-artifact"
+      ],
+      "ranked": [
+        {
+          "rank": 1,
+          "chunk_id": "evaluation::diagnose-post-training-report-card",
+          "score": 0.5363106727600098,
+          "section_id": "evaluation::diagnose-post-training-report-card"
+        },
+        {
+          "rank": 2,
+          "chunk_id": "performance-and-quantization::correctness-first-v0-36-0",
+          "score": 0.48917919397354126,
+          "section_id": "performance-and-quantization::correctness-first-v0-36-0"
+        },
+        {
+          "rank": 3,
+          "chunk_id": "evaluation::post-train-x-rays-soup-probe-soup-adapters-blame-live",
+          "score": 0.38793623447418213,
+          "section_id": "evaluation::post-train-x-rays-soup-probe-soup-adapters-blame-live"
+        },
+        {
+          "rank": 4,
+          "chunk_id": "evaluation::attach-the-report-to-a-model-registry-entry-as-a-first-class-artifact::sub_003",
+          "score": 0.37686482071876526,
+          "section_id": "evaluation::attach-the-report-to-a-model-registry-entry-as-a-first-class-artifact"
+        },
+        {
+          "rank": 5,
+          "chunk_id": "evaluation::evaluation-diagnostics-probes::sub_004",
+          "score": 0.34963682293891907,
+          "section_id": "evaluation::evaluation-diagnostics-probes"
+        },
+        {
+          "rank": 6,
+          "chunk_id": "evaluation::ship-verdict-soup-ship::sub_001",
+          "score": 0.3265635371208191,
+          "section_id": "evaluation::ship-verdict-soup-ship"
+        },
+        {
+          "rank": 7,
+          "chunk_id": "evaluation::6-sae-auto-download-capture-pipeline-v0-71-8::sub_001",
+          "score": 0.3254762887954712,
+          "section_id": "evaluation::6-sae-auto-download-capture-pipeline-v0-71-8"
+        },
+        {
+          "rank": 8,
+          "chunk_id": "performance-and-quantization::batch-size-vs-gradient-accumulation::sub_011",
+          "score": 0.3150710463523865,
+          "section_id": "performance-and-quantization::batch-size-vs-gradient-accumulation"
+        },
+        {
+          "rank": 9,
+          "chunk_id": "evaluation::neutral-report-no-model-load-runs-as-a-sanity-check",
+          "score": 0.3139784038066864,
+          "section_id": "evaluation::neutral-report-no-model-load-runs-as-a-sanity-check"
+        },
+        {
+          "rank": 10,
+          "chunk_id": "adapters-and-governance::adapter-backdoor-scanner-soup-adapters-scan",
+          "score": 0.3124963641166687,
+          "section_id": "adapters-and-governance::adapter-backdoor-scanner-soup-adapters-scan"
+        }
+      ],
+      "failure_category": "exact_relevant_chunk_top1"
+    },
+    {
+      "query_id": "manual_033",
+      "query": "Task accuracy went up but MMLU dropped, should I ship?",
+      "subset": "primary",
+      "source_document": "evaluation",
+      "candidate_subset": "clean",
+      "relevant_chunk_ids": [
+        "evaluation::ship-verdict-soup-ship::sub_000",
+        "evaluation::ship-verdict-soup-ship::sub_001"
+      ],
+      "relevant_section_ids": [
+        "evaluation::ship-verdict-soup-ship"
+      ],
+      "ranked": [
+        {
+          "rank": 1,
+          "chunk_id": "peft-and-efficiency::what-lisa-actually-costs-measured-at-3b-and-8b::sub_004",
+          "score": 0.3363288938999176,
+          "section_id": "peft-and-efficiency::what-lisa-actually-costs-measured-at-3b-and-8b"
+        },
+        {
+          "rank": 2,
+          "chunk_id": "serving-and-export::distil-a-draft-from-your-own-target-then-serve-it-automatically::sub_002",
+          "score": 0.3258725702762604,
+          "section_id": "serving-and-export::distil-a-draft-from-your-own-target-then-serve-it-automatically"
+        },
+        {
+          "rank": 3,
+          "chunk_id": "performance-and-quantization::batch-size-vs-gradient-accumulation::sub_000",
+          "score": 0.3237002491950989,
+          "section_id": "performance-and-quantization::batch-size-vs-gradient-accumulation"
+        },
+        {
+          "rank": 4,
+          "chunk_id": "peft-and-efficiency::what-lisa-actually-costs-measured-at-3b-and-8b::sub_001",
+          "score": 0.3173210024833679,
+          "section_id": "peft-and-efficiency::what-lisa-actually-costs-measured-at-3b-and-8b"
+        },
+        {
+          "rank": 5,
+          "chunk_id": "peft-and-efficiency::what-lisa-actually-costs-measured-at-3b-and-8b::sub_003",
+          "score": 0.3152866065502167,
+          "section_id": "peft-and-efficiency::what-lisa-actually-costs-measured-at-3b-and-8b"
+        },
+        {
+          "rank": 6,
+          "chunk_id": "peft-and-efficiency::what-lisa-actually-costs-measured-at-3b-and-8b::sub_002",
+          "score": 0.31299906969070435,
+          "section_id": "peft-and-efficiency::what-lisa-actually-costs-measured-at-3b-and-8b"
+        },
+        {
+          "rank": 7,
+          "chunk_id": "peft-and-efficiency::what-lisa-actually-costs-measured-at-3b-and-8b::sub_000",
+          "score": 0.31026792526245117,
+          "section_id": "peft-and-efficiency::what-lisa-actually-costs-measured-at-3b-and-8b"
+        },
+        {
+          "rank": 8,
+          "chunk_id": "performance-and-quantization::batch-size-vs-gradient-accumulation::sub_015",
+          "score": 0.30875834822654724,
+          "section_id": "performance-and-quantization::batch-size-vs-gradient-accumulation"
+        },
+        {
+          "rank": 9,
+          "chunk_id": "performance-and-quantization::sizing-a-streaming-run-v0-72-3::sub_002",
+          "score": 0.30688366293907166,
+          "section_id": "performance-and-quantization::sizing-a-streaming-run-v0-72-3"
+        },
+        {
+          "rank": 10,
+          "chunk_id": "performance-and-quantization::batch-size-vs-gradient-accumulation::sub_008",
+          "score": 0.3038194477558136,
+          "section_id": "performance-and-quantization::batch-size-vs-gradient-accumulation"
+        }
+      ],
+      "failure_category": "wrong_document"
+    },
+    {
+      "query_id": "manual_034",
+      "query": "noise floor flag effect on ship verdict",
+      "subset": "overlap",
+      "source_document": "evaluation",
+      "candidate_subset": "clean",
+      "relevant_chunk_ids": [
+        "evaluation::noise-floor-v0-73-2::sub_000",
+        "evaluation::noise-floor-v0-73-2::sub_001",
+        "evaluation::noise-floor-v0-73-2::sub_004",
+        "commands::all-commands::sub_027"
+      ],
+      "relevant_section_ids": [
+        "evaluation::noise-floor-v0-73-2",
+        "commands::all-commands"
+      ],
+      "ranked": [
+        {
+          "rank": 1,
+          "chunk_id": "evaluation::noise-floor-v0-73-2::sub_004",
+          "score": 0.4626031219959259,
+          "section_id": "evaluation::noise-floor-v0-73-2"
+        },
+        {
+          "rank": 2,
+          "chunk_id": "evaluation::noise-floor-v0-73-2::sub_005",
+          "score": 0.44134581089019775,
+          "section_id": "evaluation::noise-floor-v0-73-2"
+        },
+        {
+          "rank": 3,
+          "chunk_id": "evaluation::noise-floor-v0-73-2::sub_002",
+          "score": 0.34966135025024414,
+          "section_id": "evaluation::noise-floor-v0-73-2"
+        },
+        {
+          "rank": 4,
+          "chunk_id": "evaluation::closing-the-evidence-loop-v0-71-39::sub_002",
+          "score": 0.33819204568862915,
+          "section_id": "evaluation::closing-the-evidence-loop-v0-71-39"
+        },
+        {
+          "rank": 5,
+          "chunk_id": "evaluation::3b-honesty-misuse-probes-v0-71-8-same-shape-5-20-verdict-bands",
+          "score": 0.32955363392829895,
+          "section_id": "evaluation::3b-honesty-misuse-probes-v0-71-8-same-shape-5-20-verdict-bands"
+        },
+        {
+          "rank": 6,
+          "chunk_id": "evaluation::noise-floor-v0-73-2::sub_003",
+          "score": 0.3272871971130371,
+          "section_id": "evaluation::noise-floor-v0-73-2"
+        },
+        {
+          "rank": 7,
+          "chunk_id": "evaluation::noise-floor-v0-73-2::sub_000",
+          "score": 0.3265056610107422,
+          "section_id": "evaluation::noise-floor-v0-73-2"
+        },
+        {
+          "rank": 8,
+          "chunk_id": "data::2-train-on-canaried-jsonl-as-usual-then::sub_001",
+          "score": 0.31668269634246826,
+          "section_id": "data::2-train-on-canaried-jsonl-as-usual-then"
+        },
+        {
+          "rank": 9,
+          "chunk_id": "evaluation::gate-pr-ci-refuse-evidence-that-doesn-t-match-the-committed-config-comment-the-verdict::sub_001",
+          "score": 0.3140062689781189,
+          "section_id": "evaluation::gate-pr-ci-refuse-evidence-that-doesn-t-match-the-committed-config-comment-the-verdict"
+        },
+        {
+          "rank": 10,
+          "chunk_id": "evaluation::gate-pr-ci-refuse-evidence-that-doesn-t-match-the-committed-config-comment-the-verdict::sub_002",
+          "score": 0.313484251499176,
+          "section_id": "evaluation::gate-pr-ci-refuse-evidence-that-doesn-t-match-the-committed-config-comment-the-verdict"
+        }
+      ],
+      "failure_category": "exact_relevant_chunk_top1"
+    },
+    {
+      "query_id": "manual_035",
+      "query": "how do I make a ship verdict replayable in CI",
+      "subset": "overlap",
+      "source_document": "evaluation",
+      "candidate_subset": "clean",
+      "relevant_chunk_ids": [
+        "evaluation::closing-the-evidence-loop-v0-71-39::sub_001",
+        "evaluation::closing-the-evidence-loop-v0-71-39::sub_003",
+        "evaluation::producer-train-job-compute-or-stamp-scores-bound-to-the-committed-recipe",
+        "commands::all-commands::sub_026"
+      ],
+      "relevant_section_ids": [
+        "evaluation::closing-the-evidence-loop-v0-71-39",
+        "evaluation::producer-train-job-compute-or-stamp-scores-bound-to-the-committed-recipe",
+        "commands::all-commands"
+      ],
+      "ranked": [
+        {
+          "rank": 1,
+          "chunk_id": "commands::all-commands::sub_026",
+          "score": 0.4601883888244629,
+          "section_id": "commands::all-commands"
+        },
+        {
+          "rank": 2,
+          "chunk_id": "evaluation::closing-the-evidence-loop-v0-71-39::sub_001",
+          "score": 0.45969757437705994,
+          "section_id": "evaluation::closing-the-evidence-loop-v0-71-39"
+        },
+        {
+          "rank": 3,
+          "chunk_id": "evaluation::ship-verdict-soup-ship::sub_001",
+          "score": 0.41371244192123413,
+          "section_id": "evaluation::ship-verdict-soup-ship"
+        },
+        {
+          "rank": 4,
+          "chunk_id": "evaluation::offline-decide-from-pre-computed-scores-persist-the-verdict-json::sub_006",
+          "score": 0.35055509209632874,
+          "section_id": "evaluation::offline-decide-from-pre-computed-scores-persist-the-verdict-json"
+        },
+        {
+          "rank": 5,
+          "chunk_id": "training::continual-learning-rehearsal-replay::sub_001",
+          "score": 0.34719428420066833,
+          "section_id": "training::continual-learning-rehearsal-replay"
+        },
+        {
+          "rank": 6,
+          "chunk_id": "evaluation::gate-pr-ci-refuse-evidence-that-doesn-t-match-the-committed-config-comment-the-verdict::sub_002",
+          "score": 0.33680906891822815,
+          "section_id": "evaluation::gate-pr-ci-refuse-evidence-that-doesn-t-match-the-committed-config-comment-the-verdict"
+        },
+        {
+          "rank": 7,
+          "chunk_id": "evaluation::gate-pr-ci-refuse-evidence-that-doesn-t-match-the-committed-config-comment-the-verdict::sub_001",
+          "score": 0.3348541855812073,
+          "section_id": "evaluation::gate-pr-ci-refuse-evidence-that-doesn-t-match-the-committed-config-comment-the-verdict"
+        },
+        {
+          "rank": 8,
+          "chunk_id": "evaluation::noise-floor-v0-73-2::sub_004",
+          "score": 0.33468955755233765,
+          "section_id": "evaluation::noise-floor-v0-73-2"
+        },
+        {
+          "rank": 9,
+          "chunk_id": "training::online-dpo-task-online-dpo-judge-in-the-loop-v0-71-31::sub_002",
+          "score": 0.328940212726593,
+          "section_id": "training::online-dpo-task-online-dpo-judge-in-the-loop-v0-71-31"
+        },
+        {
+          "rank": 10,
+          "chunk_id": "evaluation::offline-decide-from-pre-computed-scores-persist-the-verdict-json::sub_000",
+          "score": 0.3204942047595978,
+          "section_id": "evaluation::offline-decide-from-pre-computed-scores-persist-the-verdict-json"
+        }
+      ],
+      "failure_category": "exact_relevant_chunk_top1"
+    },
+    {
+      "query_id": "manual_036",
+      "query": "score BLEU and ROUGE on custom eval outputs",
+      "subset": "primary",
+      "source_document": "evaluation",
+      "candidate_subset": "clean",
+      "relevant_chunk_ids": [
+        "evaluation::nlg-evaluation-metrics-bleu-rouge"
+      ],
+      "relevant_section_ids": [
+        "evaluation::nlg-evaluation-metrics-bleu-rouge"
+      ],
+      "ranked": [
+        {
+          "rank": 1,
+          "chunk_id": "evaluation::nlg-evaluation-metrics-bleu-rouge",
+          "score": 0.5165007710456848,
+          "section_id": "evaluation::nlg-evaluation-metrics-bleu-rouge"
+        },
+        {
+          "rank": 2,
+          "chunk_id": "evaluation::1-0",
+          "score": 0.4268631637096405,
+          "section_id": "evaluation::1-0"
+        },
+        {
+          "rank": 3,
+          "chunk_id": "evaluation::0-5",
+          "score": 0.3965253531932831,
+          "section_id": "evaluation::0-5"
+        },
+        {
+          "rank": 4,
+          "chunk_id": "evaluation::compare-eval-results-between-two-training-runs",
+          "score": 0.3746785521507263,
+          "section_id": "evaluation::compare-eval-results-between-two-training-runs"
+        },
+        {
+          "rank": 5,
+          "chunk_id": "evaluation::leg-2-via-lm-eval-benchmarks-base-scores-supplied-by-baseline",
+          "score": 0.3677865266799927,
+          "section_id": "evaluation::leg-2-via-lm-eval-benchmarks-base-scores-supplied-by-baseline"
+        },
+        {
+          "rank": 6,
+          "chunk_id": "evaluation::offline-decide-from-pre-computed-scores-persist-the-verdict-json::sub_004",
+          "score": 0.36708593368530273,
+          "section_id": "evaluation::offline-decide-from-pre-computed-scores-persist-the-verdict-json"
+        },
+        {
+          "rank": 7,
+          "chunk_id": "evaluation::20833-33-none-when-wall-clock-0-no-fabrication",
+          "score": 0.36701035499572754,
+          "section_id": "evaluation::20833-33-none-when-wall-clock-0-no-fabrication"
+        },
+        {
+          "rank": 8,
+          "chunk_id": "evaluation::eval-depth-soup-eval-behavior-capability-checklist-irt-subset",
+          "score": 0.3657262325286865,
+          "section_id": "evaluation::eval-depth-soup-eval-behavior-capability-checklist-irt-subset"
+        },
+        {
+          "rank": 9,
+          "chunk_id": "evaluation::6-sae-auto-download-capture-pipeline-v0-71-8::sub_001",
+          "score": 0.3560594320297241,
+          "section_id": "evaluation::6-sae-auto-download-capture-pipeline-v0-71-8"
+        },
+        {
+          "rank": 10,
+          "chunk_id": "evaluation::custom-eval-tasks-from-jsonl",
+          "score": 0.35130852460861206,
+          "section_id": "evaluation::custom-eval-tasks-from-jsonl"
+        }
+      ],
+      "failure_category": "exact_relevant_chunk_top1"
+    },
+    {
+      "query_id": "manual_037",
+      "query": "My quantized model lost 8% accuracy, is that too much?",
+      "subset": "primary",
+      "source_document": "evaluation",
+      "candidate_subset": "clean",
+      "relevant_chunk_ids": [
+        "evaluation::quant-lobotomy-checker",
+        "evaluation::render-as-json-for-ci-integration"
+      ],
+      "relevant_section_ids": [
+        "evaluation::quant-lobotomy-checker",
+        "evaluation::render-as-json-for-ci-integration"
+      ],
+      "ranked": [
+        {
+          "rank": 1,
+          "chunk_id": "performance-and-quantization::nf4-streaming-quantization-4bit::sub_011",
+          "score": 0.3740246891975403,
+          "section_id": "performance-and-quantization::nf4-streaming-quantization-4bit"
+        },
+        {
+          "rank": 2,
+          "chunk_id": "performance-and-quantization::fsdp-qlora-set-quant-storage::sub_002",
+          "score": 0.37134692072868347,
+          "section_id": "performance-and-quantization::fsdp-qlora-set-quant-storage"
+        },
+        {
+          "rank": 3,
+          "chunk_id": "performance-and-quantization::nf4-streaming-quantization-4bit::sub_003",
+          "score": 0.3708049952983856,
+          "section_id": "performance-and-quantization::nf4-streaming-quantization-4bit"
+        },
+        {
+          "rank": 4,
+          "chunk_id": "performance-and-quantization::fp8-training-hopper",
+          "score": 0.37003281712532043,
+          "section_id": "performance-and-quantization::fp8-training-hopper"
+        },
+        {
+          "rank": 5,
+          "chunk_id": "performance-and-quantization::fp8-attention-nvfp4-native-unsloth-bnb-4bit::sub_001",
+          "score": 0.36932626366615295,
+          "section_id": "performance-and-quantization::fp8-attention-nvfp4-native-unsloth-bnb-4bit"
+        },
+        {
+          "rank": 6,
+          "chunk_id": "performance-and-quantization::moe-expert-quantization-router-only-training-live-in-v0-71-20::sub_001",
+          "score": 0.36845862865448,
+          "section_id": "performance-and-quantization::moe-expert-quantization-router-only-training-live-in-v0-71-20"
+        },
+        {
+          "rank": 7,
+          "chunk_id": "performance-and-quantization::fsdp-qlora-set-quant-storage::sub_000",
+          "score": 0.3672078549861908,
+          "section_id": "performance-and-quantization::fsdp-qlora-set-quant-storage"
+        },
+        {
+          "rank": 8,
+          "chunk_id": "performance-and-quantization::nf4-streaming-quantization-4bit::sub_002",
+          "score": 0.36619138717651367,
+          "section_id": "performance-and-quantization::nf4-streaming-quantization-4bit"
+        },
+        {
+          "rank": 9,
+          "chunk_id": "models::quick-size-guide",
+          "score": 0.36256152391433716,
+          "section_id": "models::quick-size-guide"
+        },
+        {
+          "rank": 10,
+          "chunk_id": "performance-and-quantization::performance-quantization::sub_005",
+          "score": 0.3616299331188202,
+          "section_id": "performance-and-quantization::performance-quantization"
+        }
+      ],
+      "failure_category": "wrong_document"
+    },
+    {
+      "query_id": "manual_038",
+      "query": "custom eval jsonl fields for exact and regex scoring",
+      "subset": "primary",
+      "source_document": "evaluation",
+      "candidate_subset": "clean",
+      "relevant_chunk_ids": [
+        "evaluation::custom-eval-format"
+      ],
+      "relevant_section_ids": [
+        "evaluation::custom-eval-format"
+      ],
+      "ranked": [
+        {
+          "rank": 1,
+          "chunk_id": "evaluation::custom-eval-format",
+          "score": 0.6523610353469849,
+          "section_id": "evaluation::custom-eval-format"
+        },
+        {
+          "rank": 2,
+          "chunk_id": "evaluation::custom-eval-tasks-from-jsonl",
+          "score": 0.6194517016410828,
+          "section_id": "evaluation::custom-eval-tasks-from-jsonl"
+        },
+        {
+          "rank": 3,
+          "chunk_id": "evaluation::leg-2-via-lm-eval-benchmarks-base-scores-supplied-by-baseline",
+          "score": 0.49700790643692017,
+          "section_id": "evaluation::leg-2-via-lm-eval-benchmarks-base-scores-supplied-by-baseline"
+        },
+        {
+          "rank": 4,
+          "chunk_id": "evaluation::compute-scores-from-a-pre-built-evidence-json",
+          "score": 0.49316662549972534,
+          "section_id": "evaluation::compute-scores-from-a-pre-built-evidence-json"
+        },
+        {
+          "rank": 5,
+          "chunk_id": "evaluation::render-as-json-for-ci-integration",
+          "score": 0.443623811006546,
+          "section_id": "evaluation::render-as-json-for-ci-integration"
+        },
+        {
+          "rank": 6,
+          "chunk_id": "data::single-shot-composite-scorecard",
+          "score": 0.44150564074516296,
+          "section_id": "data::single-shot-composite-scorecard"
+        },
+        {
+          "rank": 7,
+          "chunk_id": "evaluation::both-sides-may-be-registry-refs",
+          "score": 0.4227818250656128,
+          "section_id": "evaluation::both-sides-may-be-registry-refs"
+        },
+        {
+          "rank": 8,
+          "chunk_id": "evaluation::1-draft-a-goal-conditioned-suite-from-your-training-data",
+          "score": 0.4213014841079712,
+          "section_id": "evaluation::1-draft-a-goal-conditioned-suite-from-your-training-data"
+        },
+        {
+          "rank": 9,
+          "chunk_id": "evaluation::human-a-b-evaluation-with-elo-ratings",
+          "score": 0.4108589291572571,
+          "section_id": "evaluation::human-a-b-evaluation-with-elo-ratings"
+        },
+        {
+          "rank": 10,
+          "chunk_id": "evaluation::auto-eval-config-soup-yaml",
+          "score": 0.40010857582092285,
+          "section_id": "evaluation::auto-eval-config-soup-yaml"
+        }
+      ],
+      "failure_category": "exact_relevant_chunk_top1"
+    },
+    {
+      "query_id": "manual_039",
+      "query": "run a short LoRA probe on several base models before choosing one",
+      "subset": "overlap",
+      "source_document": "evaluation",
+      "candidate_subset": "clean",
+      "relevant_chunk_ids": [
+        "evaluation::tunability-probe-soup-tunability",
+        "evaluation::run-the-full-sweep-write-a-json-report",
+        "commands::all-commands::sub_047"
+      ],
+      "relevant_section_ids": [
+        "evaluation::tunability-probe-soup-tunability",
+        "evaluation::run-the-full-sweep-write-a-json-report",
+        "commands::all-commands"
+      ],
+      "ranked": [
+        {
+          "rank": 1,
+          "chunk_id": "evaluation::tunability-probe-soup-tunability",
+          "score": 0.6017243266105652,
+          "section_id": "evaluation::tunability-probe-soup-tunability"
+        },
+        {
+          "rank": 2,
+          "chunk_id": "peft-and-efficiency::optimizer-peft-zoo::sub_000",
+          "score": 0.3985447883605957,
+          "section_id": "peft-and-efficiency::optimizer-peft-zoo"
+        },
+        {
+          "rank": 3,
+          "chunk_id": "evaluation::live-v0-71-7-load-the-model-and-run-all-six-probes-for-real",
+          "score": 0.3919370770454407,
+          "section_id": "evaluation::live-v0-71-7-load-the-model-and-run-all-six-probes-for-real"
+        },
+        {
+          "rank": 4,
+          "chunk_id": "training::mole-per-token-adapter-routing-task-moe-lora-routing::sub_000",
+          "score": 0.38021254539489746,
+          "section_id": "training::mole-per-token-adapter-routing-task-moe-lora-routing"
+        },
+        {
+          "rank": 5,
+          "chunk_id": "evaluation::5-probe-pack-list-assemble-calibrated-probes-per-base-sleeper-truth-harm-per-base",
+          "score": 0.37193652987480164,
+          "section_id": "evaluation::5-probe-pack-list-assemble-calibrated-probes-per-base-sleeper-truth-harm-per-base"
+        },
+        {
+          "rank": 6,
+          "chunk_id": "evaluation::lora-probe-and-base-model-proximity-held-out-logit-agreement-implies-probe",
+          "score": 0.369396448135376,
+          "section_id": "evaluation::lora-probe-and-base-model-proximity-held-out-logit-agreement-implies-probe"
+        },
+        {
+          "rank": 7,
+          "chunk_id": "serving-and-export::specify-base-model-and-dtype",
+          "score": 0.3610192835330963,
+          "section_id": "serving-and-export::specify-base-model-and-dtype"
+        },
+        {
+          "rank": 8,
+          "chunk_id": "evaluation::attach-the-report-to-a-model-registry-entry-as-a-first-class-artifact::sub_000",
+          "score": 0.3601752817630768,
+          "section_id": "evaluation::attach-the-report-to-a-model-registry-entry-as-a-first-class-artifact"
+        },
+        {
+          "rank": 9,
+          "chunk_id": "training::mole-per-token-adapter-routing-task-moe-lora-routing::sub_001",
+          "score": 0.3560352623462677,
+          "section_id": "training::mole-per-token-adapter-routing-task-moe-lora-routing"
+        },
+        {
+          "rank": 10,
+          "chunk_id": "backends-and-ops::chat-with-a-lora-adapter-auto-detects-base-model",
+          "score": 0.35296571254730225,
+          "section_id": "backends-and-ops::chat-with-a-lora-adapter-auto-detects-base-model"
+        }
+      ],
+      "failure_category": "exact_relevant_chunk_top1"
+    },
+    {
+      "query_id": "manual_040",
+      "query": "position_bias in judge calibration",
+      "subset": "primary",
+      "source_document": "evaluation",
+      "candidate_subset": "clean",
+      "relevant_chunk_ids": [
+        "evaluation::run-your-judge-on-a-calibration-set-with-positions-swapped::sub_000",
+        "evaluation::run-your-judge-on-a-calibration-set-with-positions-swapped::sub_001"
+      ],
+      "relevant_section_ids": [
+        "evaluation::run-your-judge-on-a-calibration-set-with-positions-swapped"
+      ],
+      "ranked": [
+        {
+          "rank": 1,
+          "chunk_id": "evaluation::run-your-judge-on-a-calibration-set-with-positions-swapped::sub_000",
+          "score": 0.4896792769432068,
+          "section_id": "evaluation::run-your-judge-on-a-calibration-set-with-positions-swapped"
+        },
+        {
+          "rank": 2,
+          "chunk_id": "evaluation::noise-floor-v0-73-2::sub_003",
+          "score": 0.45016804337501526,
+          "section_id": "evaluation::noise-floor-v0-73-2"
+        },
+        {
+          "rank": 3,
+          "chunk_id": "training::online-dpo-task-online-dpo-judge-in-the-loop-v0-71-31::sub_002",
+          "score": 0.4492422342300415,
+          "section_id": "training::online-dpo-task-online-dpo-judge-in-the-loop-v0-71-31"
+        },
+        {
+          "rank": 4,
+          "chunk_id": "evaluation::eval-depth-soup-eval-behavior-capability-checklist-irt-subset",
+          "score": 0.4343424439430237,
+          "section_id": "evaluation::eval-depth-soup-eval-behavior-capability-checklist-irt-subset"
+        },
+        {
+          "rank": 5,
+          "chunk_id": "evaluation::run-your-judge-on-a-calibration-set-with-positions-swapped::sub_001",
+          "score": 0.4145141541957855,
+          "section_id": "evaluation::run-your-judge-on-a-calibration-set-with-positions-swapped"
+        },
+        {
+          "rank": 6,
+          "chunk_id": "evaluation::noise-floor-v0-73-2::sub_005",
+          "score": 0.3697473406791687,
+          "section_id": "evaluation::noise-floor-v0-73-2"
+        },
+        {
+          "rank": 7,
+          "chunk_id": "evaluation::base-vs-tuned-per-prompt-swap-debiased-base-0-5-coin-flip-won-winrate-0-5",
+          "score": 0.3515039086341858,
+          "section_id": "evaluation::base-vs-tuned-per-prompt-swap-debiased-base-0-5-coin-flip-won-winrate-0-5"
+        },
+        {
+          "rank": 8,
+          "chunk_id": "evaluation::leg-1-via-llm-as-a-judge-instead-of-an-accuracy-metric",
+          "score": 0.33114492893218994,
+          "section_id": "evaluation::leg-1-via-llm-as-a-judge-instead-of-an-accuracy-metric"
+        },
+        {
+          "rank": 9,
+          "chunk_id": "commands::all-commands::sub_025",
+          "score": 0.32856038212776184,
+          "section_id": "commands::all-commands"
+        },
+        {
+          "rank": 10,
+          "chunk_id": "evaluation::baseline-logits-quantized-logits-list-list-float-aligned-per-prompt",
+          "score": 0.32809120416641235,
+          "section_id": "evaluation::baseline-logits-quantized-logits-list-list-float-aligned-per-prompt"
+        }
+      ],
+      "failure_category": "exact_relevant_chunk_top1"
+    },
+    {
+      "query_id": "manual_041",
+      "query": "soup eval irt-subset size and item model options",
+      "subset": "primary",
+      "source_document": "evaluation",
+      "candidate_subset": "clean",
+      "relevant_chunk_ids": [
+        "evaluation::pick-top-info-30-of-items-5-10x-eval-bill-cut-without-losing-power",
+        "evaluation::richer-item-models-2pl-learns-per-item-discrimination-3pl-adds-a-guessing-floor"
+      ],
+      "relevant_section_ids": [
+        "evaluation::pick-top-info-30-of-items-5-10x-eval-bill-cut-without-losing-power",
+        "evaluation::richer-item-models-2pl-learns-per-item-discrimination-3pl-adds-a-guessing-floor"
+      ],
+      "ranked": [
+        {
+          "rank": 1,
+          "chunk_id": "evaluation::pick-top-info-30-of-items-5-10x-eval-bill-cut-without-losing-power",
+          "score": 0.5640972256660461,
+          "section_id": "evaluation::pick-top-info-30-of-items-5-10x-eval-bill-cut-without-losing-power"
+        },
+        {
+          "rank": 2,
+          "chunk_id": "evaluation::richer-item-models-2pl-learns-per-item-discrimination-3pl-adds-a-guessing-floor",
+          "score": 0.5221244096755981,
+          "section_id": "evaluation::richer-item-models-2pl-learns-per-item-discrimination-3pl-adds-a-guessing-floor"
+        },
+        {
+          "rank": 3,
+          "chunk_id": "evaluation::eval-depth-soup-eval-behavior-capability-checklist-irt-subset",
+          "score": 0.4260205924510956,
+          "section_id": "evaluation::eval-depth-soup-eval-behavior-capability-checklist-irt-subset"
+        },
+        {
+          "rank": 4,
+          "chunk_id": "evaluation::evaluation-diagnostics-probes::sub_003",
+          "score": 0.40506356954574585,
+          "section_id": "evaluation::evaluation-diagnostics-probes"
+        },
+        {
+          "rank": 5,
+          "chunk_id": "models::quick-size-guide",
+          "score": 0.3614337742328644,
+          "section_id": "models::quick-size-guide"
+        },
+        {
+          "rank": 6,
+          "chunk_id": "adapters-and-governance::or-via-soup-yaml-when-training-a-model-with-grace-aware-lookups::sub_000",
+          "score": 0.3430590033531189,
+          "section_id": "adapters-and-governance::or-via-soup-yaml-when-training-a-model-with-grace-aware-lookups"
+        },
+        {
+          "rank": 7,
+          "chunk_id": "models::recommended-models::sub_002",
+          "score": 0.33401456475257874,
+          "section_id": "models::recommended-models"
+        },
+        {
+          "rank": 8,
+          "chunk_id": "models::vision-models-with-modality-vision",
+          "score": 0.3314765691757202,
+          "section_id": "models::vision-models-with-modality-vision"
+        },
+        {
+          "rank": 9,
+          "chunk_id": "models::recommended-models::sub_000",
+          "score": 0.3312085270881653,
+          "section_id": "models::recommended-models"
+        },
+        {
+          "rank": 10,
+          "chunk_id": "performance-and-quantization::lf-axolotl-quant-parity-v0-53-0::sub_001",
+          "score": 0.3289300799369812,
+          "section_id": "performance-and-quantization::lf-axolotl-quant-parity-v0-53-0"
+        }
+      ],
+      "failure_category": "exact_relevant_chunk_top1"
+    },
+    {
+      "query_id": "manual_042",
+      "query": "preview which decoder layers soup shrink will drop",
+      "subset": "overlap",
+      "source_document": "peft-and-efficiency",
+      "candidate_subset": "clean",
+      "relevant_chunk_ids": [
+        "peft-and-efficiency::see-the-importance-table-chosen-block-without-writing-anything",
+        "peft-and-efficiency::depth-pruning-distill-heal-soup-shrink::sub_001",
+        "commands::all-commands::sub_030"
+      ],
+      "relevant_section_ids": [
+        "peft-and-efficiency::see-the-importance-table-chosen-block-without-writing-anything",
+        "peft-and-efficiency::depth-pruning-distill-heal-soup-shrink",
+        "commands::all-commands"
+      ],
+      "ranked": [
+        {
+          "rank": 1,
+          "chunk_id": "peft-and-efficiency::depth-pruning-distill-heal-soup-shrink::sub_000",
+          "score": 0.4560437798500061,
+          "section_id": "peft-and-efficiency::depth-pruning-distill-heal-soup-shrink"
+        },
+        {
+          "rank": 2,
+          "chunk_id": "peft-and-efficiency::depth-pruning-distill-heal-soup-shrink::sub_001",
+          "score": 0.37179917097091675,
+          "section_id": "peft-and-efficiency::depth-pruning-distill-heal-soup-shrink"
+        },
+        {
+          "rank": 3,
+          "chunk_id": "performance-and-quantization::preference-losses-over-streaming-v0-72-4::sub_004",
+          "score": 0.33994966745376587,
+          "section_id": "performance-and-quantization::preference-losses-over-streaming-v0-72-4"
+        },
+        {
+          "rank": 4,
+          "chunk_id": "commands::all-commands::sub_029",
+          "score": 0.32982760667800903,
+          "section_id": "commands::all-commands"
+        },
+        {
+          "rank": 5,
+          "chunk_id": "training::training-tasks-methods::sub_001",
+          "score": 0.3288663923740387,
+          "section_id": "training::training-tasks-methods"
+        },
+        {
+          "rank": 6,
+          "chunk_id": "performance-and-quantization::performance-quantization::sub_002",
+          "score": 0.28778988122940063,
+          "section_id": "performance-and-quantization::performance-quantization"
+        },
+        {
+          "rank": 7,
+          "chunk_id": "adapters-and-governance::preview-the-manifest-without-extracting",
+          "score": 0.2806152105331421,
+          "section_id": "adapters-and-governance::preview-the-manifest-without-extracting"
+        },
+        {
+          "rank": 8,
+          "chunk_id": "performance-and-quantization::preview-the-plan-which-shards-total-size-without-writing",
+          "score": 0.2766742706298828,
+          "section_id": "performance-and-quantization::preview-the-plan-which-shards-total-size-without-writing"
+        },
+        {
+          "rank": 9,
+          "chunk_id": "performance-and-quantization::layer-streaming-beta-v0-72-0-nf4-v0-72-2-disk-wider-archs-v0-72-3-preference-losses-v0-72-4::sub_000",
+          "score": 0.27399224042892456,
+          "section_id": "performance-and-quantization::layer-streaming-beta-v0-72-0-nf4-v0-72-2-disk-wider-archs-v0-72-3-preference-losses-v0-72-4"
+        },
+        {
+          "rank": 10,
+          "chunk_id": "performance-and-quantization::nf4-streaming-quantization-4bit::sub_005",
+          "score": 0.27371010184288025,
+          "section_id": "performance-and-quantization::nf4-streaming-quantization-4bit"
+        }
+      ],
+      "failure_category": "relevant_section_unlabeled_chunk_top1"
+    },
+    {
+      "query_id": "manual_043",
+      "query": "how does longlora shifted sparse attention work",
+      "subset": "primary",
+      "source_document": "peft-and-efficiency",
+      "candidate_subset": "clean",
+      "relevant_chunk_ids": [
+        "peft-and-efficiency::longlora-forward-override"
+      ],
+      "relevant_section_ids": [
+        "peft-and-efficiency::longlora-forward-override"
+      ],
+      "ranked": [
+        {
+          "rank": 1,
+          "chunk_id": "peft-and-efficiency::longlora-forward-override",
+          "score": 0.39044618606567383,
+          "section_id": "peft-and-efficiency::longlora-forward-override"
+        },
+        {
+          "rank": 2,
+          "chunk_id": "training::architecture-knobs-mixture-of-depths-llama-pro-longlora::sub_000",
+          "score": 0.361308217048645,
+          "section_id": "training::architecture-knobs-mixture-of-depths-llama-pro-longlora"
+        },
+        {
+          "rank": 3,
+          "chunk_id": "peft-and-efficiency::what-lisa-actually-costs-measured-at-3b-and-8b::sub_002",
+          "score": 0.3409797251224518,
+          "section_id": "peft-and-efficiency::what-lisa-actually-costs-measured-at-3b-and-8b"
+        },
+        {
+          "rank": 4,
+          "chunk_id": "performance-and-quantization::nf4-streaming-quantization-4bit::sub_000",
+          "score": 0.320438951253891,
+          "section_id": "performance-and-quantization::nf4-streaming-quantization-4bit"
+        },
+        {
+          "rank": 5,
+          "chunk_id": "adapters-and-governance::activation-steering-soup-steer",
+          "score": 0.3189612925052643,
+          "section_id": "adapters-and-governance::activation-steering-soup-steer"
+        },
+        {
+          "rank": 6,
+          "chunk_id": "performance-and-quantization::nf4-streaming-quantization-4bit::sub_004",
+          "score": 0.31771165132522583,
+          "section_id": "performance-and-quantization::nf4-streaming-quantization-4bit"
+        },
+        {
+          "rank": 7,
+          "chunk_id": "performance-and-quantization::fsdp-qlora-set-quant-storage::sub_000",
+          "score": 0.31286221742630005,
+          "section_id": "performance-and-quantization::fsdp-qlora-set-quant-storage"
+        },
+        {
+          "rank": 8,
+          "chunk_id": "performance-and-quantization::batch-size-vs-gradient-accumulation::sub_001",
+          "score": 0.3107221722602844,
+          "section_id": "performance-and-quantization::batch-size-vs-gradient-accumulation"
+        },
+        {
+          "rank": 9,
+          "chunk_id": "performance-and-quantization::nf4-streaming-quantization-4bit::sub_012",
+          "score": 0.30997684597969055,
+          "section_id": "performance-and-quantization::nf4-streaming-quantization-4bit"
+        },
+        {
+          "rank": 10,
+          "chunk_id": "peft-and-efficiency::what-lisa-actually-costs-measured-at-3b-and-8b::sub_004",
+          "score": 0.3095209002494812,
+          "section_id": "peft-and-efficiency::what-lisa-actually-costs-measured-at-3b-and-8b"
+        }
+      ],
+      "failure_category": "exact_relevant_chunk_top1"
+    },
+    {
+      "query_id": "manual_044",
+      "query": "difference between multipack and packing",
+      "subset": "primary",
+      "source_document": "peft-and-efficiency",
+      "candidate_subset": "clean",
+      "relevant_chunk_ids": [
+        "peft-and-efficiency::multipack-ffd-bin-packing-sampler::sub_000",
+        "peft-and-efficiency::multipack-ffd-bin-packing-sampler::sub_001"
+      ],
+      "relevant_section_ids": [
+        "peft-and-efficiency::multipack-ffd-bin-packing-sampler"
+      ],
+      "ranked": [
+        {
+          "rank": 1,
+          "chunk_id": "performance-and-quantization::preference-losses-over-streaming-v0-72-4::sub_001",
+          "score": 0.38247886300086975,
+          "section_id": "performance-and-quantization::preference-losses-over-streaming-v0-72-4"
+        },
+        {
+          "rank": 2,
+          "chunk_id": "performance-and-quantization::nf4-streaming-quantization-4bit::sub_000",
+          "score": 0.37561869621276855,
+          "section_id": "performance-and-quantization::nf4-streaming-quantization-4bit"
+        },
+        {
+          "rank": 3,
+          "chunk_id": "peft-and-efficiency::multipack-ffd-bin-packing-sampler::sub_005",
+          "score": 0.36906275153160095,
+          "section_id": "peft-and-efficiency::multipack-ffd-bin-packing-sampler"
+        },
+        {
+          "rank": 4,
+          "chunk_id": "peft-and-efficiency::multipack-ffd-bin-packing-sampler::sub_000",
+          "score": 0.35586071014404297,
+          "section_id": "peft-and-efficiency::multipack-ffd-bin-packing-sampler"
+        },
+        {
+          "rank": 5,
+          "chunk_id": "peft-and-efficiency::multipack-ffd-bin-packing-sampler::sub_002",
+          "score": 0.3500155210494995,
+          "section_id": "peft-and-efficiency::multipack-ffd-bin-packing-sampler"
+        },
+        {
+          "rank": 6,
+          "chunk_id": "performance-and-quantization::batch-size-vs-gradient-accumulation::sub_000",
+          "score": 0.34422045946121216,
+          "section_id": "performance-and-quantization::batch-size-vs-gradient-accumulation"
+        },
+        {
+          "rank": 7,
+          "chunk_id": "peft-and-efficiency::peft-long-context-training-efficiency::sub_001",
+          "score": 0.3378494679927826,
+          "section_id": "peft-and-efficiency::peft-long-context-training-efficiency"
+        },
+        {
+          "rank": 8,
+          "chunk_id": "peft-and-efficiency::multipack-ffd-bin-packing-sampler::sub_001",
+          "score": 0.3339734375476837,
+          "section_id": "peft-and-efficiency::multipack-ffd-bin-packing-sampler"
+        },
+        {
+          "rank": 9,
+          "chunk_id": "peft-and-efficiency::multipack-ffd-bin-packing-sampler::sub_004",
+          "score": 0.3328818380832672,
+          "section_id": "peft-and-efficiency::multipack-ffd-bin-packing-sampler"
+        },
+        {
+          "rank": 10,
+          "chunk_id": "performance-and-quantization::layer-streaming-is-a-config-key-not-a-cli-flag-just-train-normally::sub_000",
+          "score": 0.3250553011894226,
+          "section_id": "performance-and-quantization::layer-streaming-is-a-config-key-not-a-cli-flag-just-train-normally"
+        }
+      ],
+      "failure_category": "relevant_chunk_below_top1"
+    },
+    {
+      "query_id": "manual_045",
+      "query": "set up yarn for 4x context extension",
+      "subset": "primary",
+      "source_document": "peft-and-efficiency",
+      "candidate_subset": "clean",
+      "relevant_chunk_ids": [
+        "peft-and-efficiency::soup-yaml::sub_000",
+        "peft-and-efficiency::soup-yaml::sub_001"
+      ],
+      "relevant_section_ids": [
+        "peft-and-efficiency::soup-yaml"
+      ],
+      "ranked": [
+        {
+          "rank": 1,
+          "chunk_id": "peft-and-efficiency::soup-yaml::sub_001",
+          "score": 0.32353824377059937,
+          "section_id": "peft-and-efficiency::soup-yaml"
+        },
+        {
+          "rank": 2,
+          "chunk_id": "peft-and-efficiency::long-context-yarn-llama-3-1-ntk-longlora",
+          "score": 0.2964462339878082,
+          "section_id": "peft-and-efficiency::long-context-yarn-llama-3-1-ntk-longlora"
+        },
+        {
+          "rank": 3,
+          "chunk_id": "performance-and-quantization::fp8-attention-nvfp4-native-unsloth-bnb-4bit::sub_002",
+          "score": 0.2704899311065674,
+          "section_id": "performance-and-quantization::fp8-attention-nvfp4-native-unsloth-bnb-4bit"
+        },
+        {
+          "rank": 4,
+          "chunk_id": "training::asr-fine-tuning-task-asr-whisper-v0-71-32::sub_000",
+          "score": 0.25591766834259033,
+          "section_id": "training::asr-fine-tuning-task-asr-whisper-v0-71-32"
+        },
+        {
+          "rank": 5,
+          "chunk_id": "performance-and-quantization::lf-axolotl-quant-parity-v0-53-0::sub_000",
+          "score": 0.2541521191596985,
+          "section_id": "performance-and-quantization::lf-axolotl-quant-parity-v0-53-0"
+        },
+        {
+          "rank": 6,
+          "chunk_id": "performance-and-quantization::performance-quantization::sub_002",
+          "score": 0.252368301153183,
+          "section_id": "performance-and-quantization::performance-quantization"
+        },
+        {
+          "rank": 7,
+          "chunk_id": "peft-and-efficiency::soup-yaml::sub_000",
+          "score": 0.2503933906555176,
+          "section_id": "peft-and-efficiency::soup-yaml"
+        },
+        {
+          "rank": 8,
+          "chunk_id": "performance-and-quantization::fp8-attention-nvfp4-native-unsloth-bnb-4bit::sub_000",
+          "score": 0.24391065537929535,
+          "section_id": "performance-and-quantization::fp8-attention-nvfp4-native-unsloth-bnb-4bit"
+        },
+        {
+          "rank": 9,
+          "chunk_id": "performance-and-quantization::nf4-streaming-quantization-4bit::sub_002",
+          "score": 0.24383015930652618,
+          "section_id": "performance-and-quantization::nf4-streaming-quantization-4bit"
+        },
+        {
+          "rank": 10,
+          "chunk_id": "adapters-and-governance::show-full-details-config-eval-baseline-artifacts-ancestors",
+          "score": 0.24254417419433594,
+          "section_id": "adapters-and-governance::show-full-details-config-eval-baseline-artifacts-ancestors"
+        }
+      ],
+      "failure_category": "exact_relevant_chunk_top1"
+    },
+    {
+      "query_id": "manual_046",
+      "query": "Can I add fresh layers to a Llama model and only train those?",
+      "subset": "overlap",
+      "source_document": "peft-and-efficiency",
+      "candidate_subset": "clean",
+      "relevant_chunk_ids": [
+        "peft-and-efficiency::llama-pro-block-expansion",
+        "peft-and-efficiency::soup-yaml-llama-pro-continued-training-on-a-llama-3-1-base::sub_000",
+        "peft-and-efficiency::soup-yaml-llama-pro-continued-training-on-a-llama-3-1-base::sub_001",
+        "training::architecture-knobs-mixture-of-depths-llama-pro-longlora::sub_000",
+        "training::architecture-knobs-mixture-of-depths-llama-pro-longlora::sub_001"
+      ],
+      "relevant_section_ids": [
+        "peft-and-efficiency::llama-pro-block-expansion",
+        "peft-and-efficiency::soup-yaml-llama-pro-continued-training-on-a-llama-3-1-base",
+        "training::architecture-knobs-mixture-of-depths-llama-pro-longlora"
+      ],
+      "ranked": [
+        {
+          "rank": 1,
+          "chunk_id": "peft-and-efficiency::freeze-training",
+          "score": 0.5106620788574219,
+          "section_id": "peft-and-efficiency::freeze-training"
+        },
+        {
+          "rank": 2,
+          "chunk_id": "peft-and-efficiency::llama-pro-block-expansion",
+          "score": 0.4413253366947174,
+          "section_id": "peft-and-efficiency::llama-pro-block-expansion"
+        },
+        {
+          "rank": 3,
+          "chunk_id": "training::architecture-knobs-mixture-of-depths-llama-pro-longlora::sub_001",
+          "score": 0.41378718614578247,
+          "section_id": "training::architecture-knobs-mixture-of-depths-llama-pro-longlora"
+        },
+        {
+          "rank": 4,
+          "chunk_id": "peft-and-efficiency::soup-yaml-llama-pro-continued-training-on-a-llama-3-1-base::sub_000",
+          "score": 0.4008408784866333,
+          "section_id": "peft-and-efficiency::soup-yaml-llama-pro-continued-training-on-a-llama-3-1-base"
+        },
+        {
+          "rank": 5,
+          "chunk_id": "training::full-fine-tuning-lora-r-0::sub_004",
+          "score": 0.3659020662307739,
+          "section_id": "training::full-fine-tuning-lora-r-0"
+        },
+        {
+          "rank": 6,
+          "chunk_id": "peft-and-efficiency::soup-yaml-llama-pro-continued-training-on-a-llama-3-1-base::sub_001",
+          "score": 0.3640891909599304,
+          "section_id": "peft-and-efficiency::soup-yaml-llama-pro-continued-training-on-a-llama-3-1-base"
+        },
+        {
+          "rank": 7,
+          "chunk_id": "training::drop-plan-only-to-run-the-loop-plan-only-just-renders-the-per-round-plan",
+          "score": 0.34482699632644653,
+          "section_id": "training::drop-plan-only-to-run-the-loop-plan-only-just-renders-the-per-round-plan"
+        },
+        {
+          "rank": 8,
+          "chunk_id": "training::architecture-knobs-mixture-of-depths-llama-pro-longlora::sub_000",
+          "score": 0.33105024695396423,
+          "section_id": "training::architecture-knobs-mixture-of-depths-llama-pro-longlora"
+        },
+        {
+          "rank": 9,
+          "chunk_id": "backends-and-ops::specify-base-model-explicitly",
+          "score": 0.31833893060684204,
+          "section_id": "backends-and-ops::specify-base-model-explicitly"
+        },
+        {
+          "rank": 10,
+          "chunk_id": "training::full-fine-tuning-lora-r-0::sub_005",
+          "score": 0.3161197900772095,
+          "section_id": "training::full-fine-tuning-lora-r-0"
+        }
+      ],
+      "failure_category": "relevant_chunk_below_top1"
+    },
+    {
+      "query_id": "manual_047",
+      "query": "different learning rates for q_proj and v_proj",
+      "subset": "primary",
+      "source_document": "peft-and-efficiency",
+      "candidate_subset": "clean",
+      "relevant_chunk_ids": [
+        "peft-and-efficiency::optimizer-peft-zoo::sub_000"
+      ],
+      "relevant_section_ids": [
+        "peft-and-efficiency::optimizer-peft-zoo"
+      ],
+      "ranked": [
+        {
+          "rank": 1,
+          "chunk_id": "peft-and-efficiency::lora-differentiated-learning-rates",
+          "score": 0.5096713304519653,
+          "section_id": "peft-and-efficiency::lora-differentiated-learning-rates"
+        },
+        {
+          "rank": 2,
+          "chunk_id": "peft-and-efficiency::what-lisa-actually-costs-measured-at-3b-and-8b::sub_002",
+          "score": 0.4616301655769348,
+          "section_id": "peft-and-efficiency::what-lisa-actually-costs-measured-at-3b-and-8b"
+        },
+        {
+          "rank": 3,
+          "chunk_id": "peft-and-efficiency::what-lisa-actually-costs-measured-at-3b-and-8b::sub_001",
+          "score": 0.43315958976745605,
+          "section_id": "peft-and-efficiency::what-lisa-actually-costs-measured-at-3b-and-8b"
+        },
+        {
+          "rank": 4,
+          "chunk_id": "performance-and-quantization::batch-size-vs-gradient-accumulation::sub_000",
+          "score": 0.40803200006484985,
+          "section_id": "performance-and-quantization::batch-size-vs-gradient-accumulation"
+        },
+        {
+          "rank": 5,
+          "chunk_id": "performance-and-quantization::preference-losses-over-streaming-v0-72-4::sub_001",
+          "score": 0.38274484872817993,
+          "section_id": "performance-and-quantization::preference-losses-over-streaming-v0-72-4"
+        },
+        {
+          "rank": 6,
+          "chunk_id": "performance-and-quantization::nf4-streaming-quantization-4bit::sub_004",
+          "score": 0.3727167546749115,
+          "section_id": "performance-and-quantization::nf4-streaming-quantization-4bit"
+        },
+        {
+          "rank": 7,
+          "chunk_id": "peft-and-efficiency::what-lisa-actually-costs-measured-at-3b-and-8b::sub_004",
+          "score": 0.36689403653144836,
+          "section_id": "peft-and-efficiency::what-lisa-actually-costs-measured-at-3b-and-8b"
+        },
+        {
+          "rank": 8,
+          "chunk_id": "peft-and-efficiency::optimizer-peft-zoo::sub_000",
+          "score": 0.35528260469436646,
+          "section_id": "peft-and-efficiency::optimizer-peft-zoo"
+        },
+        {
+          "rank": 9,
+          "chunk_id": "performance-and-quantization::batch-size-vs-gradient-accumulation::sub_007",
+          "score": 0.34956955909729004,
+          "section_id": "performance-and-quantization::batch-size-vs-gradient-accumulation"
+        },
+        {
+          "rank": 10,
+          "chunk_id": "performance-and-quantization::cut-cross-entropy-large-vocab-models::sub_000",
+          "score": 0.3465111553668976,
+          "section_id": "performance-and-quantization::cut-cross-entropy-large-vocab-models"
+        }
+      ],
+      "failure_category": "relevant_chunk_below_top1"
+    },
+    {
+      "query_id": "manual_048",
+      "query": "does pissa init speed up lora convergence",
+      "subset": "primary",
+      "source_document": "peft-and-efficiency",
+      "candidate_subset": "partial_overlap",
+      "relevant_chunk_ids": [
+        "peft-and-efficiency::lora-quality-pissa-relora-per-pattern-rank-surgical-patches::sub_000",
+        "peft-and-efficiency::lora-quality-pissa-relora-per-pattern-rank-surgical-patches::sub_001"
+      ],
+      "relevant_section_ids": [
+        "peft-and-efficiency::lora-quality-pissa-relora-per-pattern-rank-surgical-patches"
+      ],
+      "ranked": [
+        {
+          "rank": 1,
+          "chunk_id": "peft-and-efficiency::lora-quality-pissa-relora-per-pattern-rank-surgical-patches::sub_001",
+          "score": 0.46839651465415955,
+          "section_id": "peft-and-efficiency::lora-quality-pissa-relora-per-pattern-rank-surgical-patches"
+        },
+        {
+          "rank": 2,
+          "chunk_id": "performance-and-quantization::nf4-streaming-quantization-4bit::sub_006",
+          "score": 0.36258047819137573,
+          "section_id": "performance-and-quantization::nf4-streaming-quantization-4bit"
+        },
+        {
+          "rank": 3,
+          "chunk_id": "performance-and-quantization::batch-size-vs-gradient-accumulation::sub_009",
+          "score": 0.354568213224411,
+          "section_id": "performance-and-quantization::batch-size-vs-gradient-accumulation"
+        },
+        {
+          "rank": 4,
+          "chunk_id": "performance-and-quantization::batch-size-vs-gradient-accumulation::sub_000",
+          "score": 0.3370443284511566,
+          "section_id": "performance-and-quantization::batch-size-vs-gradient-accumulation"
+        },
+        {
+          "rank": 5,
+          "chunk_id": "performance-and-quantization::train-lora-on-top-of-a-pre-quantized-gptq-checkpoint",
+          "score": 0.33686065673828125,
+          "section_id": "performance-and-quantization::train-lora-on-top-of-a-pre-quantized-gptq-checkpoint"
+        },
+        {
+          "rank": 6,
+          "chunk_id": "training::full-fine-tuning-lora-r-0::sub_007",
+          "score": 0.3201359808444977,
+          "section_id": "training::full-fine-tuning-lora-r-0"
+        },
+        {
+          "rank": 7,
+          "chunk_id": "peft-and-efficiency::what-lisa-actually-costs-measured-at-3b-and-8b::sub_001",
+          "score": 0.30892840027809143,
+          "section_id": "peft-and-efficiency::what-lisa-actually-costs-measured-at-3b-and-8b"
+        },
+        {
+          "rank": 8,
+          "chunk_id": "performance-and-quantization::batch-size-vs-gradient-accumulation::sub_005",
+          "score": 0.30862724781036377,
+          "section_id": "performance-and-quantization::batch-size-vs-gradient-accumulation"
+        },
+        {
+          "rank": 9,
+          "chunk_id": "peft-and-efficiency::llama-3-1-with-ntk-aware-scaling-out-to-128k",
+          "score": 0.3003169000148773,
+          "section_id": "peft-and-efficiency::llama-3-1-with-ntk-aware-scaling-out-to-128k"
+        },
+        {
+          "rank": 10,
+          "chunk_id": "performance-and-quantization::fsdp2-full-shard-with-cpu-offload::sub_002",
+          "score": 0.30028510093688965,
+          "section_id": "performance-and-quantization::fsdp2-full-shard-with-cpu-offload"
+        }
+      ],
+      "failure_category": "exact_relevant_chunk_top1"
+    },
+    {
+      "query_id": "manual_049",
+      "query": "loraplus_lr_ratio effect on B matrix lr",
+      "subset": "primary",
+      "source_document": "peft-and-efficiency",
+      "candidate_subset": "clean",
+      "relevant_chunk_ids": [
+        "peft-and-efficiency::lora-differentiated-learning-rates"
+      ],
+      "relevant_section_ids": [
+        "peft-and-efficiency::lora-differentiated-learning-rates"
+      ],
+      "ranked": [
+        {
+          "rank": 1,
+          "chunk_id": "peft-and-efficiency::lora-differentiated-learning-rates",
+          "score": 0.6004753112792969,
+          "section_id": "peft-and-efficiency::lora-differentiated-learning-rates"
+        },
+        {
+          "rank": 2,
+          "chunk_id": "adapters-and-governance::adapter-backdoor-scanner-soup-adapters-scan",
+          "score": 0.3001518249511719,
+          "section_id": "adapters-and-governance::adapter-backdoor-scanner-soup-adapters-scan"
+        },
+        {
+          "rank": 3,
+          "chunk_id": "adapters-and-governance::per-layer-w-frobenius-diff-effective-rank-drift-top-k-changed-projections",
+          "score": 0.29939496517181396,
+          "section_id": "adapters-and-governance::per-layer-w-frobenius-diff-effective-rank-drift-top-k-changed-projections"
+        },
+        {
+          "rank": 4,
+          "chunk_id": "evaluation::v0-71-8-auto-measure-the-matrix-live-instead-of-supplying-losses-json",
+          "score": 0.2859213352203369,
+          "section_id": "evaluation::v0-71-8-auto-measure-the-matrix-live-instead-of-supplying-losses-json"
+        },
+        {
+          "rank": 5,
+          "chunk_id": "performance-and-quantization::batch-size-vs-gradient-accumulation::sub_009",
+          "score": 0.2768230438232422,
+          "section_id": "performance-and-quantization::batch-size-vs-gradient-accumulation"
+        },
+        {
+          "rank": 6,
+          "chunk_id": "adapters-and-governance::list-all-snapshotted-branches::sub_004",
+          "score": 0.26717570424079895,
+          "section_id": "adapters-and-governance::list-all-snapshotted-branches"
+        },
+        {
+          "rank": 7,
+          "chunk_id": "peft-and-efficiency::what-lisa-actually-costs-measured-at-3b-and-8b::sub_002",
+          "score": 0.26504936814308167,
+          "section_id": "peft-and-efficiency::what-lisa-actually-costs-measured-at-3b-and-8b"
+        },
+        {
+          "rank": 8,
+          "chunk_id": "performance-and-quantization::fsdp2-full-shard-with-cpu-offload::sub_002",
+          "score": 0.26019734144210815,
+          "section_id": "performance-and-quantization::fsdp2-full-shard-with-cpu-offload"
+        },
+        {
+          "rank": 9,
+          "chunk_id": "performance-and-quantization::nf4-streaming-quantization-4bit::sub_004",
+          "score": 0.25263676047325134,
+          "section_id": "performance-and-quantization::nf4-streaming-quantization-4bit"
+        },
+        {
+          "rank": 10,
+          "chunk_id": "peft-and-efficiency::what-lisa-actually-costs-measured-at-3b-and-8b::sub_001",
+          "score": 0.24360856413841248,
+          "section_id": "peft-and-efficiency::what-lisa-actually-costs-measured-at-3b-and-8b"
+        }
+      ],
+      "failure_category": "exact_relevant_chunk_top1"
+    },
+    {
+      "query_id": "manual_050",
+      "query": "can dora and vera be enabled together",
+      "subset": "primary",
+      "source_document": "peft-and-efficiency",
+      "candidate_subset": "clean",
+      "relevant_chunk_ids": [
+        "peft-and-efficiency::vera-olora-smaller-footprint-peft"
+      ],
+      "relevant_section_ids": [
+        "peft-and-efficiency::vera-olora-smaller-footprint-peft"
+      ],
+      "ranked": [
+        {
+          "rank": 1,
+          "chunk_id": "peft-and-efficiency::dora-weight-decomposed-lora",
+          "score": 0.38828524947166443,
+          "section_id": "peft-and-efficiency::dora-weight-decomposed-lora"
+        },
+        {
+          "rank": 2,
+          "chunk_id": "training::full-fine-tuning-lora-r-0::sub_003",
+          "score": 0.3606488108634949,
+          "section_id": "training::full-fine-tuning-lora-r-0"
+        },
+        {
+          "rank": 3,
+          "chunk_id": "peft-and-efficiency::vera-olora-smaller-footprint-peft",
+          "score": 0.3266581892967224,
+          "section_id": "peft-and-efficiency::vera-olora-smaller-footprint-peft"
+        },
+        {
+          "rank": 4,
+          "chunk_id": "training::full-fine-tuning-lora-r-0::sub_004",
+          "score": 0.30747270584106445,
+          "section_id": "training::full-fine-tuning-lora-r-0"
+        },
+        {
+          "rank": 5,
+          "chunk_id": "performance-and-quantization::moe-expert-quantization-router-only-training-live-in-v0-71-20::sub_000",
+          "score": 0.27168387174606323,
+          "section_id": "performance-and-quantization::moe-expert-quantization-router-only-training-live-in-v0-71-20"
+        },
+        {
+          "rank": 6,
+          "chunk_id": "training::tts-fine-tuning-task-tts-beta-live-in-v0-71-20::sub_000",
+          "score": 0.24234707653522491,
+          "section_id": "training::tts-fine-tuning-task-tts-beta-live-in-v0-71-20"
+        },
+        {
+          "rank": 7,
+          "chunk_id": "training::ra-dit-retrieval-augmented-dual-instruction-tuning",
+          "score": 0.2342700958251953,
+          "section_id": "training::ra-dit-retrieval-augmented-dual-instruction-tuning"
+        },
+        {
+          "rank": 8,
+          "chunk_id": "performance-and-quantization::moe-expert-quantization-router-only-training-live-in-v0-71-20::sub_003",
+          "score": 0.2332155555486679,
+          "section_id": "performance-and-quantization::moe-expert-quantization-router-only-training-live-in-v0-71-20"
+        },
+        {
+          "rank": 9,
+          "chunk_id": "training::tts-fine-tuning-task-tts-beta-live-in-v0-71-20::sub_006",
+          "score": 0.2298051118850708,
+          "section_id": "training::tts-fine-tuning-task-tts-beta-live-in-v0-71-20"
+        },
+        {
+          "rank": 10,
+          "chunk_id": "performance-and-quantization::performance-quantization::sub_003",
+          "score": 0.2245497852563858,
+          "section_id": "performance-and-quantization::performance-quantization"
+        }
+      ],
+      "failure_category": "relevant_chunk_below_top1"
+    },
+    {
+      "query_id": "manual_051",
+      "query": "neftune_alpha range for chat fine tuning",
+      "subset": "primary",
+      "source_document": "peft-and-efficiency",
+      "candidate_subset": "clean",
+      "relevant_chunk_ids": [
+        "peft-and-efficiency::neftune-noisy-embeddings-fine-tuning"
+      ],
+      "relevant_section_ids": [
+        "peft-and-efficiency::neftune-noisy-embeddings-fine-tuning"
+      ],
+      "ranked": [
+        {
+          "rank": 1,
+          "chunk_id": "peft-and-efficiency::neftune-noisy-embeddings-fine-tuning",
+          "score": 0.4581698179244995,
+          "section_id": "peft-and-efficiency::neftune-noisy-embeddings-fine-tuning"
+        },
+        {
+          "rank": 2,
+          "chunk_id": "performance-and-quantization::nf4-streaming-quantization-4bit::sub_011",
+          "score": 0.38187524676322937,
+          "section_id": "performance-and-quantization::nf4-streaming-quantization-4bit"
+        },
+        {
+          "rank": 3,
+          "chunk_id": "training::asr-fine-tuning-task-asr-whisper-v0-71-32::sub_000",
+          "score": 0.37674805521965027,
+          "section_id": "training::asr-fine-tuning-task-asr-whisper-v0-71-32"
+        },
+        {
+          "rank": 4,
+          "chunk_id": "performance-and-quantization::sizing-a-streaming-run-v0-72-3::sub_001",
+          "score": 0.3696800768375397,
+          "section_id": "performance-and-quantization::sizing-a-streaming-run-v0-72-3"
+        },
+        {
+          "rank": 5,
+          "chunk_id": "peft-and-efficiency::llama-3-1-with-ntk-aware-scaling-out-to-128k",
+          "score": 0.36494940519332886,
+          "section_id": "peft-and-efficiency::llama-3-1-with-ntk-aware-scaling-out-to-128k"
+        },
+        {
+          "rank": 6,
+          "chunk_id": "performance-and-quantization::nf4-streaming-quantization-4bit::sub_013",
+          "score": 0.3540586829185486,
+          "section_id": "performance-and-quantization::nf4-streaming-quantization-4bit"
+        },
+        {
+          "rank": 7,
+          "chunk_id": "performance-and-quantization::nf4-streaming-quantization-4bit::sub_008",
+          "score": 0.34361201524734497,
+          "section_id": "performance-and-quantization::nf4-streaming-quantization-4bit"
+        },
+        {
+          "rank": 8,
+          "chunk_id": "performance-and-quantization::fsdp-qlora-set-quant-storage::sub_002",
+          "score": 0.33948129415512085,
+          "section_id": "performance-and-quantization::fsdp-qlora-set-quant-storage"
+        },
+        {
+          "rank": 9,
+          "chunk_id": "performance-and-quantization::fp8-attention-nvfp4-native-unsloth-bnb-4bit::sub_002",
+          "score": 0.3362632095813751,
+          "section_id": "performance-and-quantization::fp8-attention-nvfp4-native-unsloth-bnb-4bit"
+        },
+        {
+          "rank": 10,
+          "chunk_id": "training::tts-fine-tuning-task-tts-beta-live-in-v0-71-20::sub_001",
+          "score": 0.33578234910964966,
+          "section_id": "training::tts-fine-tuning-task-tts-beta-live-in-v0-71-20"
+        }
+      ],
+      "failure_category": "exact_relevant_chunk_top1"
+    },
+    {
+      "query_id": "manual_052",
+      "query": "does lisa actually use less memory than lora",
+      "subset": "primary",
+      "source_document": "peft-and-efficiency",
+      "candidate_subset": "clean",
+      "relevant_chunk_ids": [
+        "peft-and-efficiency::lisa-layerwise-importance-sampling-v0-71-34::sub_000",
+        "peft-and-efficiency::what-lisa-actually-costs-measured-at-3b-and-8b::sub_001",
+        "peft-and-efficiency::what-lisa-actually-costs-measured-at-3b-and-8b::sub_002",
+        "peft-and-efficiency::what-lisa-actually-costs-measured-at-3b-and-8b::sub_003"
+      ],
+      "relevant_section_ids": [
+        "peft-and-efficiency::lisa-layerwise-importance-sampling-v0-71-34",
+        "peft-and-efficiency::what-lisa-actually-costs-measured-at-3b-and-8b"
+      ],
+      "ranked": [
+        {
+          "rank": 1,
+          "chunk_id": "peft-and-efficiency::what-lisa-actually-costs-measured-at-3b-and-8b::sub_002",
+          "score": 0.5680629014968872,
+          "section_id": "peft-and-efficiency::what-lisa-actually-costs-measured-at-3b-and-8b"
+        },
+        {
+          "rank": 2,
+          "chunk_id": "peft-and-efficiency::what-lisa-actually-costs-measured-at-3b-and-8b::sub_001",
+          "score": 0.5567938089370728,
+          "section_id": "peft-and-efficiency::what-lisa-actually-costs-measured-at-3b-and-8b"
+        },
+        {
+          "rank": 3,
+          "chunk_id": "peft-and-efficiency::what-lisa-actually-costs-measured-at-3b-and-8b::sub_003",
+          "score": 0.5476955771446228,
+          "section_id": "peft-and-efficiency::what-lisa-actually-costs-measured-at-3b-and-8b"
+        },
+        {
+          "rank": 4,
+          "chunk_id": "peft-and-efficiency::what-lisa-actually-costs-measured-at-3b-and-8b::sub_004",
+          "score": 0.5461193323135376,
+          "section_id": "peft-and-efficiency::what-lisa-actually-costs-measured-at-3b-and-8b"
+        },
+        {
+          "rank": 5,
+          "chunk_id": "training::full-fine-tuning-lora-r-0::sub_007",
+          "score": 0.5031979084014893,
+          "section_id": "training::full-fine-tuning-lora-r-0"
+        },
+        {
+          "rank": 6,
+          "chunk_id": "peft-and-efficiency::what-lisa-actually-costs-measured-at-3b-and-8b::sub_000",
+          "score": 0.4975758194923401,
+          "section_id": "peft-and-efficiency::what-lisa-actually-costs-measured-at-3b-and-8b"
+        },
+        {
+          "rank": 7,
+          "chunk_id": "performance-and-quantization::batch-size-vs-gradient-accumulation::sub_009",
+          "score": 0.43498367071151733,
+          "section_id": "performance-and-quantization::batch-size-vs-gradient-accumulation"
+        },
+        {
+          "rank": 8,
+          "chunk_id": "performance-and-quantization::nf4-streaming-quantization-4bit::sub_000",
+          "score": 0.41919761896133423,
+          "section_id": "performance-and-quantization::nf4-streaming-quantization-4bit"
+        },
+        {
+          "rank": 9,
+          "chunk_id": "performance-and-quantization::nf4-streaming-quantization-4bit::sub_002",
+          "score": 0.4167281985282898,
+          "section_id": "performance-and-quantization::nf4-streaming-quantization-4bit"
+        },
+        {
+          "rank": 10,
+          "chunk_id": "peft-and-efficiency::what-lisa-actually-costs-measured-at-3b-and-8b::sub_005",
+          "score": 0.40980270504951477,
+          "section_id": "peft-and-efficiency::what-lisa-actually-costs-measured-at-3b-and-8b"
+        }
+      ],
+      "failure_category": "exact_relevant_chunk_top1"
+    },
+    {
+      "query_id": "manual_053",
+      "query": "stop training when loss spikes repeatedly",
+      "subset": "primary",
+      "source_document": "peft-and-efficiency",
+      "candidate_subset": "clean",
+      "relevant_chunk_ids": [
+        "peft-and-efficiency::loss-watchdog"
+      ],
+      "relevant_section_ids": [
+        "peft-and-efficiency::loss-watchdog"
+      ],
+      "ranked": [
+        {
+          "rank": 1,
+          "chunk_id": "peft-and-efficiency::loss-watchdog",
+          "score": 0.5145490169525146,
+          "section_id": "peft-and-efficiency::loss-watchdog"
+        },
+        {
+          "rank": 2,
+          "chunk_id": "peft-and-efficiency::loss-spike-auto-recovery",
+          "score": 0.47190627455711365,
+          "section_id": "peft-and-efficiency::loss-spike-auto-recovery"
+        },
+        {
+          "rank": 3,
+          "chunk_id": "training::closed-loop-reward-hacking-auto-mitigation-v0-71-26::sub_006",
+          "score": 0.3799769878387451,
+          "section_id": "training::closed-loop-reward-hacking-auto-mitigation-v0-71-26"
+        },
+        {
+          "rank": 4,
+          "chunk_id": "peft-and-efficiency::vram-pressure-advisory",
+          "score": 0.377407044172287,
+          "section_id": "peft-and-efficiency::vram-pressure-advisory"
+        },
+        {
+          "rank": 5,
+          "chunk_id": "training::closed-loop-reward-hacking-auto-mitigation-v0-71-26::sub_001",
+          "score": 0.36583641171455383,
+          "section_id": "training::closed-loop-reward-hacking-auto-mitigation-v0-71-26"
+        },
+        {
+          "rank": 6,
+          "chunk_id": "training::run-the-unlearn-loop-validated-on-smollm2-135m-npo-simnpo-drive-forget-loss-down",
+          "score": 0.33421462774276733,
+          "section_id": "training::run-the-unlearn-loop-validated-on-smollm2-135m-npo-simnpo-drive-forget-loss-down"
+        },
+        {
+          "rank": 7,
+          "chunk_id": "training::continued-pre-training",
+          "score": 0.32425734400749207,
+          "section_id": "training::continued-pre-training"
+        },
+        {
+          "rank": 8,
+          "chunk_id": "peft-and-efficiency::convergence-detector",
+          "score": 0.31949326395988464,
+          "section_id": "peft-and-efficiency::convergence-detector"
+        },
+        {
+          "rank": 9,
+          "chunk_id": "training::continual-learning-rehearsal-replay::sub_001",
+          "score": 0.3192894160747528,
+          "section_id": "training::continual-learning-rehearsal-replay"
+        },
+        {
+          "rank": 10,
+          "chunk_id": "training::curriculum-aware-training-beta::sub_002",
+          "score": 0.317922979593277,
+          "section_id": "training::curriculum-aware-training-beta"
+        }
+      ],
+      "failure_category": "exact_relevant_chunk_top1"
+    },
+    {
+      "query_id": "manual_054",
+      "query": "Can GaLore run with quantized weights?",
+      "subset": "primary",
+      "source_document": "peft-and-efficiency",
+      "candidate_subset": "clean",
+      "relevant_chunk_ids": [
+        "peft-and-efficiency::galore-memory-efficient-full-parameter-training"
+      ],
+      "relevant_section_ids": [
+        "peft-and-efficiency::galore-memory-efficient-full-parameter-training"
+      ],
+      "ranked": [
+        {
+          "rank": 1,
+          "chunk_id": "performance-and-quantization::deepspeed-zero-quantized-weights-gradients-hierarchical-partitioning",
+          "score": 0.42696571350097656,
+          "section_id": "performance-and-quantization::deepspeed-zero-quantized-weights-gradients-hierarchical-partitioning"
+        },
+        {
+          "rank": 2,
+          "chunk_id": "performance-and-quantization::performance-quantization::sub_005",
+          "score": 0.4092756509780884,
+          "section_id": "performance-and-quantization::performance-quantization"
+        },
+        {
+          "rank": 3,
+          "chunk_id": "performance-and-quantization::sizing-a-streaming-run-v0-72-3::sub_000",
+          "score": 0.39394277334213257,
+          "section_id": "performance-and-quantization::sizing-a-streaming-run-v0-72-3"
+        },
+        {
+          "rank": 4,
+          "chunk_id": "performance-and-quantization::fsdp-qlora-set-quant-storage::sub_000",
+          "score": 0.38616788387298584,
+          "section_id": "performance-and-quantization::fsdp-qlora-set-quant-storage"
+        },
+        {
+          "rank": 5,
+          "chunk_id": "performance-and-quantization::moe-expert-quantization-router-only-training-live-in-v0-71-20::sub_001",
+          "score": 0.3851204514503479,
+          "section_id": "performance-and-quantization::moe-expert-quantization-router-only-training-live-in-v0-71-20"
+        },
+        {
+          "rank": 6,
+          "chunk_id": "performance-and-quantization::fp8-scaling-recipes-v0-28-1::sub_001",
+          "score": 0.38093888759613037,
+          "section_id": "performance-and-quantization::fp8-scaling-recipes-v0-28-1"
+        },
+        {
+          "rank": 7,
+          "chunk_id": "performance-and-quantization::fsdp-qlora-set-quant-storage::sub_003",
+          "score": 0.37859076261520386,
+          "section_id": "performance-and-quantization::fsdp-qlora-set-quant-storage"
+        },
+        {
+          "rank": 8,
+          "chunk_id": "performance-and-quantization::fp8-training-hopper",
+          "score": 0.3761568069458008,
+          "section_id": "performance-and-quantization::fp8-training-hopper"
+        },
+        {
+          "rank": 9,
+          "chunk_id": "performance-and-quantization::train-lora-on-top-of-a-pre-quantized-gptq-checkpoint",
+          "score": 0.3760869801044464,
+          "section_id": "performance-and-quantization::train-lora-on-top-of-a-pre-quantized-gptq-checkpoint"
+        },
+        {
+          "rank": 10,
+          "chunk_id": "performance-and-quantization::batch-size-vs-gradient-accumulation::sub_005",
+          "score": 0.35530173778533936,
+          "section_id": "performance-and-quantization::batch-size-vs-gradient-accumulation"
+        }
+      ],
+      "failure_category": "wrong_document"
+    }
+  ],
+  "_per_query_scores": {
+    "hit@1": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.0,
+      1.0,
+      0.0,
+      1.0,
+      1.0,
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      1.0,
+      0.0,
+      1.0,
+      0.0,
+      1.0,
+      1.0,
+      0.0,
+      0.0,
+      1.0,
+      0.0,
+      1.0,
+      1.0,
+      1.0,
+      0.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.0,
+      1.0,
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      1.0,
+      1.0,
+      0.0,
+      1.0,
+      1.0,
+      1.0,
+      0.0
+    ],
+    "recall@1": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.3333333333333333,
+      1.0,
+      0.5,
+      0.3333333333333333,
+      1.0,
+      0.5,
+      1.0,
+      0.5,
+      0.5,
+      0.5,
+      0.0,
+      1.0,
+      0.0,
+      0.5,
+      0.5,
+      0.0,
+      0.5,
+      0.0,
+      0.0,
+      0.5,
+      0.0,
+      1.0,
+      0.0,
+      0.5,
+      0.5,
+      0.0,
+      0.0,
+      0.25,
+      0.0,
+      0.25,
+      0.25,
+      1.0,
+      0.0,
+      1.0,
+      0.3333333333333333,
+      0.5,
+      0.5,
+      0.0,
+      1.0,
+      0.0,
+      0.5,
+      0.0,
+      0.0,
+      0.5,
+      1.0,
+      0.0,
+      1.0,
+      0.25,
+      1.0,
+      0.0
+    ],
+    "hit@3": [
+      0.0,
+      1.0,
+      1.0,
+      0.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.0,
+      1.0,
+      0.0,
+      1.0,
+      1.0,
+      0.0,
+      1.0,
+      0.0,
+      1.0,
+      1.0,
+      0.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.0,
+      0.0,
+      1.0,
+      0.0,
+      1.0,
+      1.0,
+      1.0,
+      0.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.0,
+      1.0,
+      1.0,
+      0.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.0
+    ],
+    "recall@3": [
+      0.0,
+      1.0,
+      0.5,
+      0.0,
+      0.3333333333333333,
+      1.0,
+      0.5,
+      0.3333333333333333,
+      1.0,
+      0.5,
+      1.0,
+      0.5,
+      0.5,
+      1.0,
+      0.0,
+      1.0,
+      0.0,
+      0.5,
+      0.5,
+      0.0,
+      0.5,
+      0.0,
+      1.0,
+      0.5,
+      0.0,
+      1.0,
+      0.5,
+      0.5,
+      1.0,
+      0.0,
+      0.0,
+      0.25,
+      0.0,
+      0.25,
+      0.5,
+      1.0,
+      0.0,
+      1.0,
+      0.3333333333333333,
+      0.5,
+      1.0,
+      0.3333333333333333,
+      1.0,
+      0.0,
+      0.5,
+      0.4,
+      0.0,
+      0.5,
+      1.0,
+      1.0,
+      1.0,
+      0.75,
+      1.0,
+      0.0
+    ],
+    "hit@5": [
+      0.0,
+      1.0,
+      1.0,
+      0.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.0,
+      1.0,
+      0.0,
+      1.0,
+      1.0,
+      0.0,
+      1.0,
+      0.0,
+      1.0,
+      1.0,
+      0.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.0,
+      1.0,
+      1.0,
+      0.0,
+      1.0,
+      1.0,
+      1.0,
+      0.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.0
+    ],
+    "recall@5": [
+      0.0,
+      1.0,
+      0.5,
+      0.0,
+      0.3333333333333333,
+      1.0,
+      0.5,
+      0.3333333333333333,
+      1.0,
+      0.5,
+      1.0,
+      0.5,
+      0.5,
+      1.0,
+      0.0,
+      1.0,
+      0.0,
+      0.5,
+      0.5,
+      0.0,
+      0.5,
+      0.0,
+      1.0,
+      0.5,
+      0.0,
+      1.0,
+      0.5,
+      1.0,
+      1.0,
+      0.0,
+      0.3333333333333333,
+      0.5,
+      0.0,
+      0.25,
+      0.5,
+      1.0,
+      0.0,
+      1.0,
+      0.3333333333333333,
+      1.0,
+      1.0,
+      0.3333333333333333,
+      1.0,
+      0.5,
+      0.5,
+      0.6,
+      0.0,
+      0.5,
+      1.0,
+      1.0,
+      1.0,
+      0.75,
+      1.0,
+      0.0
+    ],
+    "mrr@10": [
+      0.0,
+      0.3333333333333333,
+      0.5,
+      0.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.16666666666666666,
+      1.0,
+      0.16666666666666666,
+      1.0,
+      1.0,
+      0.0,
+      1.0,
+      0.0,
+      0.5,
+      1.0,
+      0.0,
+      1.0,
+      0.3333333333333333,
+      1.0,
+      1.0,
+      0.0,
+      0.25,
+      1.0,
+      0.0,
+      1.0,
+      1.0,
+      1.0,
+      0.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.5,
+      1.0,
+      0.25,
+      1.0,
+      0.5,
+      0.125,
+      1.0,
+      1.0,
+      0.3333333333333333,
+      1.0,
+      1.0,
+      1.0,
+      0.0
+    ],
+    "sec_hit@1": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.0,
+      1.0,
+      0.0,
+      1.0,
+      1.0,
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      1.0,
+      0.0,
+      1.0,
+      0.0,
+      1.0,
+      1.0,
+      0.0,
+      0.0,
+      1.0,
+      0.0,
+      1.0,
+      1.0,
+      1.0,
+      0.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      1.0,
+      1.0,
+      0.0,
+      1.0,
+      1.0,
+      1.0,
+      0.0
+    ],
+    "sec_recall@1": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.3333333333333333,
+      1.0,
+      0.5,
+      0.3333333333333333,
+      1.0,
+      0.5,
+      1.0,
+      0.5,
+      1.0,
+      1.0,
+      0.0,
+      1.0,
+      0.0,
+      0.5,
+      1.0,
+      0.0,
+      0.5,
+      0.0,
+      0.0,
+      1.0,
+      0.0,
+      1.0,
+      0.0,
+      1.0,
+      1.0,
+      0.0,
+      0.0,
+      0.5,
+      0.0,
+      0.5,
+      0.3333333333333333,
+      1.0,
+      0.0,
+      1.0,
+      0.3333333333333333,
+      1.0,
+      0.5,
+      0.3333333333333333,
+      1.0,
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      1.0,
+      1.0,
+      0.0,
+      1.0,
+      0.5,
+      1.0,
+      0.0
+    ],
+    "sec_hit@3": [
+      0.0,
+      1.0,
+      1.0,
+      0.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.0,
+      1.0,
+      0.0,
+      1.0,
+      1.0,
+      0.0,
+      1.0,
+      0.0,
+      1.0,
+      1.0,
+      0.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.0,
+      1.0,
+      1.0,
+      0.0,
+      1.0,
+      1.0,
+      1.0,
+      0.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.0
+    ],
+    "sec_recall@3": [
+      0.0,
+      1.0,
+      0.5,
+      0.0,
+      0.3333333333333333,
+      1.0,
+      0.5,
+      0.3333333333333333,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.0,
+      1.0,
+      0.0,
+      0.5,
+      1.0,
+      0.0,
+      0.5,
+      0.0,
+      1.0,
+      1.0,
+      0.0,
+      1.0,
+      0.5,
+      1.0,
+      1.0,
+      0.0,
+      0.3333333333333333,
+      0.5,
+      0.0,
+      0.5,
+      0.6666666666666666,
+      1.0,
+      0.0,
+      1.0,
+      0.3333333333333333,
+      1.0,
+      1.0,
+      0.6666666666666666,
+      1.0,
+      1.0,
+      1.0,
+      0.6666666666666666,
+      0.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.5,
+      1.0,
+      0.0
+    ],
+    "sec_hit@5": [
+      0.0,
+      1.0,
+      1.0,
+      0.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.0,
+      1.0,
+      0.0,
+      1.0,
+      1.0,
+      0.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.0,
+      1.0,
+      1.0,
+      0.0,
+      1.0,
+      1.0,
+      1.0,
+      0.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.0
+    ],
+    "sec_recall@5": [
+      0.0,
+      1.0,
+      0.5,
+      0.0,
+      0.3333333333333333,
+      1.0,
+      0.5,
+      0.6666666666666666,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.5,
+      0.5,
+      1.0,
+      0.0,
+      0.5,
+      0.0,
+      1.0,
+      1.0,
+      0.0,
+      1.0,
+      0.5,
+      1.0,
+      1.0,
+      0.0,
+      0.3333333333333333,
+      1.0,
+      0.0,
+      0.5,
+      0.6666666666666666,
+      1.0,
+      0.0,
+      1.0,
+      0.3333333333333333,
+      1.0,
+      1.0,
+      0.6666666666666666,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.5,
+      1.0,
+      0.0
+    ],
+    "sec_mrr@10": [
+      0.0,
+      0.3333333333333333,
+      0.5,
+      0.14285714285714285,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.2,
+      1.0,
+      0.2,
+      1.0,
+      1.0,
+      0.0,
+      1.0,
+      0.0,
+      0.5,
+      1.0,
+      0.0,
+      1.0,
+      0.3333333333333333,
+      1.0,
+      1.0,
+      0.0,
+      0.3333333333333333,
+      1.0,
+      0.0,
+      1.0,
+      1.0,
+      1.0,
+      0.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.3333333333333333,
+      1.0,
+      0.5,
+      0.16666666666666666,
+      1.0,
+      1.0,
+      0.3333333333333333,
+      1.0,
+      1.0,
+      1.0,
+      0.0
+    ]
+  }
+}

@@ -1,3 +1,10 @@
+> [!WARNING]
+> **Historical Artifact Notice:** This report documents the initial Phase 1 delivery using 497 synthetically generated evaluation queries. The synthetic evaluation queries contained an inherent template/heading shortcut (469 of 497 queries contained target ATX headings verbatim), resulting in artificially inflated retrieval gains (+21.1% Recall@1).
+>
+> **This report has been superseded** by the authoritative Phase 3 multi-retriever benchmark evaluation, which evaluated 9 retrievers on 54 owner-approved natural language queries across held-out documents. For current, verified benchmark findings and statistical audits, see:
+> - [`results/PHASE_3_BENCHMARK_EVALUATION_REPORT.md`](../../results/PHASE_3_BENCHMARK_EVALUATION_REPORT.md) (Authoritative Phase 3 Benchmark Report)
+> - [`results/PHASE_3_1_INTEGRITY_AUDIT.md`](../../results/PHASE_3_1_INTEGRITY_AUDIT.md) (Phase 3.1 Statistical & Integrity Audit)
+
 # Prototype Delivery Report: Dense Retrieval Fine-Tuning with Soup
 
 **Task:** Prototype a real-world dense retrieval use case on TXT/Markdown technical documents, perform embedding fine-tuning through Soup's native training engine, and evaluate retrieval quality before and after on a separate held-out test set.
@@ -198,26 +205,28 @@ To assess model safety and identify edge cases, all queries where the fine-tuned
 
 | Component | File Path | Description |
 |---|---|---|
-| **Primary Report** | [`REPORT.md`](REPORT.md) | This formal delivery document |
-| **Reproduction Guide** | [`REPRODUCE.md`](REPRODUCE.md) | Step-by-step reproduction instructions |
-| **Repository Overview** | [`README.md`](README.md) | Landing page with final benchmark scorecard |
-| **Bootstrap Analysis** | [`results/comparison.md`](results/comparison.md) | Paired bootstrap uncertainty analysis report vs baseline |
-| **Trained Adapter** | [`output_embedding/`](output_embedding/) | Fine-tuned LoRA weights and configuration |
-| **Evaluation Data** | [`results/candidate.json`](results/candidate.json) | Full per-query retrieval predictions on test set |
-| **Baseline Data** | [`results/baseline.json`](results/baseline.json) | Baseline retrieval predictions on test set |
-| **Automated Tests** | [`tests/test_retrieval_pipeline.py`](tests/test_retrieval_pipeline.py) | 15 unit and integration test assertions |
+| **Primary Report** | [`docs/reports/PHASE_1_DELIVERY_REPORT.md`](PHASE_1_DELIVERY_REPORT.md) | This formal delivery document |
+| **Reproduction Guide** | [`REPRODUCE.md`](../../REPRODUCE.md) | Step-by-step reproduction instructions |
+| **Repository Overview** | [`README.md`](../../README.md) | Landing page with final benchmark scorecard |
+| **Bootstrap Analysis** | [`results/comparison.md`](../../results/comparison.md) | Paired bootstrap uncertainty analysis report vs baseline |
+| **Trained Adapter** | [`output_embedding/`](../../output_embedding/) | Fine-tuned LoRA weights and configuration |
+| **Evaluation Data** | [`results/candidate.json`](../../results/candidate.json) | Full per-query retrieval predictions on test set |
+| **Baseline Data** | [`results/baseline.json`](../../results/baseline.json) | Baseline retrieval predictions on test set |
+| **Automated Tests** | [`tests/test_retrieval_pipeline.py`](../../tests/test_retrieval_pipeline.py) | 15 unit and integration test assertions |
 
 ---
 
-## 11. Evaluation v2 Extension (manual benchmark, complete)
+## 11. Evaluation v2 Extension & Subsequent Phase 3 Benchmark
 
-This report describes the v1 controlled benchmark. Evaluation v2 measures
-generalization on **54 owner-approved queries, manually crafted by the project
-owner with AI assistance**, with multi-chunk/multi-section labels, chunk- and
-section-level Hit@K/Recall@K/MRR, and a four-way comparison (frozen MiniLM,
-Soup adapter, BM25, frozen `intfloat/e5-small-v2`) with doc-stratified paired
-bootstrap and leave-one-doc-out sensitivity. Full methodology:
-`docs/EVALUATION_V2_SPEC.md`; report: `results/v2/comparison.md`.
+This report describes the historical v1 controlled benchmark. The subsequent Evaluation v2 established a manual benchmark on **54 owner-approved queries, manually crafted by the project owner with AI assistance**, with multi-chunk/multi-section labels, which was subsequently expanded in Phase 3 into a comprehensive **9-retriever benchmark** evaluating diverse query training distributions (Exp B, C-matched, C-matched-balanced, C-full).
+
+For the definitive multi-retriever benchmark results, paired bootstrap analysis, and failure taxonomy, see:
+- [`results/PHASE_3_BENCHMARK_EVALUATION_REPORT.md`](../../results/PHASE_3_BENCHMARK_EVALUATION_REPORT.md)
+- [`results/PHASE_3_1_INTEGRITY_AUDIT.md`](../../results/PHASE_3_1_INTEGRITY_AUDIT.md)
+
+### Historical 4-Way v2 Benchmark Results
+
+Methodology: [`docs/EVALUATION_V2_SPEC.md`](../EVALUATION_V2_SPEC.md); report: [`results/v2/comparison.md`](../../results/v2/comparison.md).
 
 | Retriever | Hit@1 | Hit@5 | MRR@10 | Sec Hit@1 | Sec MRR@10 |
 |---|:---:|:---:|:---:|:---:|:---:|
@@ -234,7 +243,7 @@ result: on the 39 primary queries the adapter trails frozen MiniLM
 answers also appear in training documents it leads frozen MiniLM
 (Hit@1 0.533 vs 0.467), though BM25 is strongest on that subset (0.667).
 All 18 original overlap candidates were audited
-(`docs/EVALUATION_V2_OVERLAP_AUDIT.md`): 15 confirmed and 3 reclassified as
+([`docs/EVALUATION_V2_OVERLAP_AUDIT.md`](../EVALUATION_V2_OVERLAP_AUDIT.md)): 15 confirmed and 3 reclassified as
 primary with owner approval. This is consistent with the adapter having
 learned training-document text rather than a transferable retrieval skill. Frozen E5-small-v2 is the strongest retriever
 overall: it leads on Hit@1, Hit@3, MRR@10, and micro Recall@1/3/5, ties frozen MiniLM on micro Hit@5, and trails it on macro Hit@5. Four held-out documents are insufficient for

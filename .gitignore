@@ -13,3 +13,6 @@ Thumbs.db
 output_embedding/checkpoint-*/
 output_embedding/tokenizer*.json
 output_embedding/training_args.bin
+output/*/checkpoint-*/
+output/*/tokenizer*.json
+output/*/training_args.bin

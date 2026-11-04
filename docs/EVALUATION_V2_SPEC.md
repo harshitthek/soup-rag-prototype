@@ -1,3 +1,6 @@
+> [!NOTE]
+> **Historical Milestone Specification:** This document specifies the methodology for the initial Evaluation v2 milestone (which established the frozen 54-query manual benchmark and the 4-way retriever comparison). The experimental matrix was subsequently expanded in Phases 1.5–3.1 into a 9-retriever benchmark evaluating diverse training query generation and corpus expansion. For the authoritative Phase 3 benchmark results and audit, see [`results/PHASE_3_BENCHMARK_EVALUATION_REPORT.md`](../results/PHASE_3_BENCHMARK_EVALUATION_REPORT.md) and [`results/PHASE_3_1_INTEGRITY_AUDIT.md`](../results/PHASE_3_1_INTEGRITY_AUDIT.md).
+
 # Soup RAG Evaluation v2 — Experiment Specification
 
 Canonical methodology for the v2 evaluation. Implementation branches from this
@@ -220,7 +223,7 @@ Phase 6 checkpoint-removal gates were all verified before deletion on
 checkpoint-2427 adapter, `adapter_config.json`/`soup_run.json` intact;
 condition 3: root adapter loads through the existing inference path in a
 fresh venv; condition 5: pytest green apart from the three pre-existing v1
-fixture-collection errors documented in `docs/EVALUATION_V2_PROGRESS.md`).
+fixture-collection errors documented in [`docs/progress/EVALUATION_V2_PROGRESS.md`](progress/EVALUATION_V2_PROGRESS.md)).
 Deletion used `git rm` only after those checks. Phase 7 re-verified
 conditions 3 and 5 in a second clean-room venv on 2026-10-31, and the v1
 candidate evaluation reproduces exactly.
@@ -232,8 +235,8 @@ data/raw_docs/                  vendored sources + LICENSE + attribution
 data/manual_queries.jsonl       owner-approved (frozen; manually crafted with AI assistance)
 data/manual_queries_validation_report.json
 docs/EVALUATION_V2_SPEC.md      this file
-docs/EVALUATION_V2_COVERAGE.md  query worksheet (no sample queries)
-docs/EVALUATION_V2_PROGRESS.md  implementation record
+docs/evaluation/EVALUATION_V2_COVERAGE.md  query worksheet (no sample queries)
+docs/progress/EVALUATION_V2_PROGRESS.md  implementation record
 docs/EVALUATION_V2_OVERLAP_AUDIT.md  overlap-label audit (2026-10-31)
 scripts/retrieval.py            shared metrics, section mapping, classifier
 scripts/run_retrieval.py        multi-retriever CLI

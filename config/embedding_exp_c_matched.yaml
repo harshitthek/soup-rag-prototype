@@ -1,0 +1,32 @@
+base: sentence-transformers/all-MiniLM-L6-v2
+task: embedding
+backend: transformers
+
+data:
+  train: data/triplets_exp_c_matched_v1_5.jsonl
+  format: embedding
+  val_split: 0.0
+  max_length: 256
+
+training:
+  epochs: 3
+  lr: 2e-5
+  batch_size: 4
+  gradient_accumulation_steps: 1
+  seed: 42
+  data_seed: 42
+  quantization: none
+
+  embedding_loss: triplet
+  embedding_margin: 0.5
+  embedding_pooling: mean
+
+  lora:
+    r: 16
+    alpha: 32
+    dropout: 0.05
+    target_modules:
+      - query
+      - value
+
+output: output/adapter_exp_c_matched

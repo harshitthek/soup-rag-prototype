@@ -1,0 +1,752 @@
+{
+  "exp_b": {
+    "README.md": {
+      "queries": 9,
+      "unique_chunks": 5,
+      "queries_per_chunk": 1.8,
+      "type_distribution": {
+        "how_to": 2,
+        "conceptual": 7
+      },
+      "pct_of_total": 1.09
+    },
+    "backends-and-ops.md": {
+      "queries": 145,
+      "unique_chunks": 99,
+      "queries_per_chunk": 1.46,
+      "type_distribution": {
+        "how_to": 74,
+        "conceptual": 39,
+        "parameter": 31,
+        "troubleshooting": 1
+      },
+      "pct_of_total": 17.58
+    },
+    "commands.md": {
+      "queries": 67,
+      "unique_chunks": 59,
+      "queries_per_chunk": 1.14,
+      "type_distribution": {
+        "conceptual": 36,
+        "how_to": 21,
+        "parameter": 8,
+        "troubleshooting": 2
+      },
+      "pct_of_total": 8.12
+    },
+    "data.md": {
+      "queries": 145,
+      "unique_chunks": 99,
+      "queries_per_chunk": 1.46,
+      "type_distribution": {
+        "how_to": 69,
+        "conceptual": 29,
+        "troubleshooting": 1,
+        "parameter": 46
+      },
+      "pct_of_total": 17.58
+    },
+    "models.md": {
+      "queries": 26,
+      "unique_chunks": 16,
+      "queries_per_chunk": 1.62,
+      "type_distribution": {
+        "conceptual": 18,
+        "troubleshooting": 1,
+        "how_to": 6,
+        "parameter": 1
+      },
+      "pct_of_total": 3.15
+    },
+    "performance-and-quantization.md": {
+      "queries": 145,
+      "unique_chunks": 102,
+      "queries_per_chunk": 1.42,
+      "type_distribution": {
+        "conceptual": 65,
+        "parameter": 31,
+        "how_to": 49
+      },
+      "pct_of_total": 17.58
+    },
+    "serving-and-export.md": {
+      "queries": 144,
+      "unique_chunks": 95,
+      "queries_per_chunk": 1.52,
+      "type_distribution": {
+        "parameter": 36,
+        "how_to": 71,
+        "conceptual": 37
+      },
+      "pct_of_total": 17.45
+    },
+    "training.md": {
+      "queries": 144,
+      "unique_chunks": 111,
+      "queries_per_chunk": 1.3,
+      "type_distribution": {
+        "how_to": 35,
+        "conceptual": 78,
+        "parameter": 31
+      },
+      "pct_of_total": 17.45
+    }
+  },
+  "exp_c_matched": {
+    "README.md": {
+      "queries": 10,
+      "unique_chunks": 6,
+      "queries_per_chunk": 1.67,
+      "type_distribution": {
+        "conceptual": 7,
+        "how_to": 3
+      },
+      "pct_of_total": 1.21
+    },
+    "backends-and-ops.md": {
+      "queries": 39,
+      "unique_chunks": 21,
+      "queries_per_chunk": 1.86,
+      "type_distribution": {
+        "conceptual": 11,
+        "how_to": 21,
+        "parameter": 7
+      },
+      "pct_of_total": 4.73
+    },
+    "benchmarks/gate-2049-resident-vram.md": {
+      "queries": 39,
+      "unique_chunks": 28,
+      "queries_per_chunk": 1.39,
+      "type_distribution": {
+        "conceptual": 31,
+        "how_to": 7,
+        "parameter": 1
+      },
+      "pct_of_total": 4.73
+    },
+    "benchmarks/gate-2050-selective-checkpoint.md": {
+      "queries": 39,
+      "unique_chunks": 30,
+      "queries_per_chunk": 1.3,
+      "type_distribution": {
+        "how_to": 9,
+        "conceptual": 28,
+        "parameter": 2
+      },
+      "pct_of_total": 4.73
+    },
+    "benchmarks/gate-655-pinned-store-accounting.md": {
+      "queries": 34,
+      "unique_chunks": 22,
+      "queries_per_chunk": 1.55,
+      "type_distribution": {
+        "conceptual": 32,
+        "parameter": 2
+      },
+      "pct_of_total": 4.12
+    },
+    "benchmarks/gate-836-bench-train-contract.md": {
+      "queries": 39,
+      "unique_chunks": 25,
+      "queries_per_chunk": 1.56,
+      "type_distribution": {
+        "conceptual": 31,
+        "how_to": 6,
+        "parameter": 2
+      },
+      "pct_of_total": 4.73
+    },
+    "benchmarks/gate-971-async-nvme-source.md": {
+      "queries": 39,
+      "unique_chunks": 25,
+      "queries_per_chunk": 1.56,
+      "type_distribution": {
+        "conceptual": 25,
+        "how_to": 5,
+        "parameter": 9
+      },
+      "pct_of_total": 4.73
+    },
+    "benchmarks/gate-974-disk-tier-direct-io.md": {
+      "queries": 39,
+      "unique_chunks": 29,
+      "queries_per_chunk": 1.34,
+      "type_distribution": {
+        "conceptual": 30,
+        "how_to": 9
+      },
+      "pct_of_total": 4.73
+    },
+    "benchmarks/gate-expert-streaming.md": {
+      "queries": 15,
+      "unique_chunks": 12,
+      "queries_per_chunk": 1.25,
+      "type_distribution": {
+        "conceptual": 13,
+        "parameter": 1,
+        "how_to": 1
+      },
+      "pct_of_total": 1.82
+    },
+    "benchmarks/gate-v0.72.0-layer-streaming.md": {
+      "queries": 39,
+      "unique_chunks": 29,
+      "queries_per_chunk": 1.34,
+      "type_distribution": {
+        "how_to": 8,
+        "conceptual": 30,
+        "parameter": 1
+      },
+      "pct_of_total": 4.73
+    },
+    "benchmarks/gate-v0.72.2-nf4.md": {
+      "queries": 39,
+      "unique_chunks": 27,
+      "queries_per_chunk": 1.44,
+      "type_distribution": {
+        "how_to": 5,
+        "conceptual": 33,
+        "parameter": 1
+      },
+      "pct_of_total": 4.73
+    },
+    "benchmarks/gate-v0.72.3-breadth.md": {
+      "queries": 39,
+      "unique_chunks": 30,
+      "queries_per_chunk": 1.3,
+      "type_distribution": {
+        "how_to": 9,
+        "conceptual": 29,
+        "parameter": 1
+      },
+      "pct_of_total": 4.73
+    },
+    "benchmarks/gate-v0.72.4-preference-losses.md": {
+      "queries": 39,
+      "unique_chunks": 30,
+      "queries_per_chunk": 1.3,
+      "type_distribution": {
+        "how_to": 5,
+        "conceptual": 34
+      },
+      "pct_of_total": 4.73
+    },
+    "benchmarks/probe-v0.73.0-what-bounds-streaming.md": {
+      "queries": 39,
+      "unique_chunks": 26,
+      "queries_per_chunk": 1.5,
+      "type_distribution": {
+        "conceptual": 34,
+        "how_to": 3,
+        "parameter": 2
+      },
+      "pct_of_total": 4.73
+    },
+    "benchmarks/run-m1-8gb-mlx-sft.md": {
+      "queries": 39,
+      "unique_chunks": 26,
+      "queries_per_chunk": 1.5,
+      "type_distribution": {
+        "how_to": 6,
+        "conceptual": 30,
+        "parameter": 3
+      },
+      "pct_of_total": 4.73
+    },
+    "benchmarks/run-t4-colab-free-tier.md": {
+      "queries": 39,
+      "unique_chunks": 30,
+      "queries_per_chunk": 1.3,
+      "type_distribution": {
+        "conceptual": 32,
+        "how_to": 7
+      },
+      "pct_of_total": 4.73
+    },
+    "benchmarks/unsloth-4bit-weight-dtypes.md": {
+      "queries": 16,
+      "unique_chunks": 12,
+      "queries_per_chunk": 1.33,
+      "type_distribution": {
+        "how_to": 4,
+        "conceptual": 12
+      },
+      "pct_of_total": 1.94
+    },
+    "changelog.d/0.77.1/2185.fixed.md": {
+      "queries": 3,
+      "unique_chunks": 2,
+      "queries_per_chunk": 1.5,
+      "type_distribution": {
+        "parameter": 1,
+        "how_to": 2
+      },
+      "pct_of_total": 0.36
+    },
+    "changelog.d/0.77.1/2285.added.md": {
+      "queries": 2,
+      "unique_chunks": 2,
+      "queries_per_chunk": 1.0,
+      "type_distribution": {
+        "how_to": 2
+      },
+      "pct_of_total": 0.24
+    },
+    "changelog.d/0.77.1/2315.added.md": {
+      "queries": 2,
+      "unique_chunks": 1,
+      "queries_per_chunk": 2.0,
+      "type_distribution": {
+        "how_to": 1,
+        "conceptual": 1
+      },
+      "pct_of_total": 0.24
+    },
+    "changelog.d/0.77.1/2329.changed.md": {
+      "queries": 3,
+      "unique_chunks": 2,
+      "queries_per_chunk": 1.5,
+      "type_distribution": {
+        "parameter": 2,
+        "how_to": 1
+      },
+      "pct_of_total": 0.36
+    },
+    "changelog.d/0.77.1/2333.added.md": {
+      "queries": 1,
+      "unique_chunks": 1,
+      "queries_per_chunk": 1.0,
+      "type_distribution": {
+        "how_to": 1
+      },
+      "pct_of_total": 0.12
+    },
+    "changelog.d/0.77.1/2372.fixed.md": {
+      "queries": 3,
+      "unique_chunks": 3,
+      "queries_per_chunk": 1.0,
+      "type_distribution": {
+        "how_to": 1,
+        "conceptual": 2
+      },
+      "pct_of_total": 0.36
+    },
+    "changelog.d/0.77.1/2386.added.md": {
+      "queries": 2,
+      "unique_chunks": 2,
+      "queries_per_chunk": 1.0,
+      "type_distribution": {
+        "conceptual": 2
+      },
+      "pct_of_total": 0.24
+    },
+    "changelog.d/README.md": {
+      "queries": 4,
+      "unique_chunks": 2,
+      "queries_per_chunk": 2.0,
+      "type_distribution": {
+        "conceptual": 4
+      },
+      "pct_of_total": 0.48
+    },
+    "commands.md": {
+      "queries": 39,
+      "unique_chunks": 21,
+      "queries_per_chunk": 1.86,
+      "type_distribution": {
+        "how_to": 7,
+        "conceptual": 30,
+        "troubleshooting": 1,
+        "parameter": 1
+      },
+      "pct_of_total": 4.73
+    },
+    "data.md": {
+      "queries": 39,
+      "unique_chunks": 22,
+      "queries_per_chunk": 1.77,
+      "type_distribution": {
+        "conceptual": 16,
+        "how_to": 11,
+        "parameter": 12
+      },
+      "pct_of_total": 4.73
+    },
+    "models.md": {
+      "queries": 30,
+      "unique_chunks": 20,
+      "queries_per_chunk": 1.5,
+      "type_distribution": {
+        "parameter": 1,
+        "conceptual": 26,
+        "how_to": 3
+      },
+      "pct_of_total": 3.64
+    },
+    "performance-and-quantization.md": {
+      "queries": 39,
+      "unique_chunks": 23,
+      "queries_per_chunk": 1.7,
+      "type_distribution": {
+        "conceptual": 25,
+        "how_to": 7,
+        "parameter": 7
+      },
+      "pct_of_total": 4.73
+    },
+    "serving-and-export.md": {
+      "queries": 38,
+      "unique_chunks": 29,
+      "queries_per_chunk": 1.31,
+      "type_distribution": {
+        "how_to": 20,
+        "conceptual": 9,
+        "parameter": 9
+      },
+      "pct_of_total": 4.61
+    },
+    "training.md": {
+      "queries": 38,
+      "unique_chunks": 27,
+      "queries_per_chunk": 1.41,
+      "type_distribution": {
+        "how_to": 7,
+        "conceptual": 26,
+        "parameter": 5
+      },
+      "pct_of_total": 4.61
+    }
+  },
+  "exp_c_matched_balanced": {
+    "README.md": {
+      "queries": 10,
+      "unique_chunks": 6,
+      "queries_per_chunk": 1.67,
+      "type_distribution": {
+        "conceptual": 7,
+        "how_to": 3
+      },
+      "pct_of_total": 1.21
+    },
+    "backends-and-ops.md": {
+      "queries": 67,
+      "unique_chunks": 58,
+      "queries_per_chunk": 1.16,
+      "type_distribution": {
+        "conceptual": 14,
+        "how_to": 27,
+        "parameter": 24,
+        "troubleshooting": 2
+      },
+      "pct_of_total": 8.12
+    },
+    "benchmarks/gate-2049-resident-vram.md": {
+      "queries": 25,
+      "unique_chunks": 22,
+      "queries_per_chunk": 1.14,
+      "type_distribution": {
+        "conceptual": 14,
+        "how_to": 8,
+        "parameter": 3
+      },
+      "pct_of_total": 3.03
+    },
+    "benchmarks/gate-2050-selective-checkpoint.md": {
+      "queries": 25,
+      "unique_chunks": 23,
+      "queries_per_chunk": 1.09,
+      "type_distribution": {
+        "how_to": 9,
+        "conceptual": 14,
+        "parameter": 2
+      },
+      "pct_of_total": 3.03
+    },
+    "benchmarks/gate-655-pinned-store-accounting.md": {
+      "queries": 16,
+      "unique_chunks": 13,
+      "queries_per_chunk": 1.23,
+      "type_distribution": {
+        "conceptual": 14,
+        "parameter": 2
+      },
+      "pct_of_total": 1.94
+    },
+    "benchmarks/gate-836-bench-train-contract.md": {
+      "queries": 38,
+      "unique_chunks": 35,
+      "queries_per_chunk": 1.09,
+      "type_distribution": {
+        "how_to": 16,
+        "parameter": 7,
+        "conceptual": 14,
+        "troubleshooting": 1
+      },
+      "pct_of_total": 4.61
+    },
+    "benchmarks/gate-971-async-nvme-source.md": {
+      "queries": 40,
+      "unique_chunks": 36,
+      "queries_per_chunk": 1.11,
+      "type_distribution": {
+        "how_to": 15,
+        "parameter": 11,
+        "conceptual": 14
+      },
+      "pct_of_total": 4.85
+    },
+    "benchmarks/gate-974-disk-tier-direct-io.md": {
+      "queries": 42,
+      "unique_chunks": 42,
+      "queries_per_chunk": 1.0,
+      "type_distribution": {
+        "how_to": 27,
+        "conceptual": 14,
+        "parameter": 1
+      },
+      "pct_of_total": 5.09
+    },
+    "benchmarks/gate-expert-streaming.md": {
+      "queries": 15,
+      "unique_chunks": 12,
+      "queries_per_chunk": 1.25,
+      "type_distribution": {
+        "conceptual": 13,
+        "parameter": 1,
+        "how_to": 1
+      },
+      "pct_of_total": 1.82
+    },
+    "benchmarks/gate-v0.72.0-layer-streaming.md": {
+      "queries": 24,
+      "unique_chunks": 22,
+      "queries_per_chunk": 1.09,
+      "type_distribution": {
+        "how_to": 9,
+        "conceptual": 14,
+        "parameter": 1
+      },
+      "pct_of_total": 2.91
+    },
+    "benchmarks/gate-v0.72.2-nf4.md": {
+      "queries": 34,
+      "unique_chunks": 32,
+      "queries_per_chunk": 1.06,
+      "type_distribution": {
+        "how_to": 17,
+        "conceptual": 13,
+        "parameter": 4
+      },
+      "pct_of_total": 4.12
+    },
+    "benchmarks/gate-v0.72.3-breadth.md": {
+      "queries": 33,
+      "unique_chunks": 30,
+      "queries_per_chunk": 1.1,
+      "type_distribution": {
+        "how_to": 15,
+        "conceptual": 13,
+        "parameter": 5
+      },
+      "pct_of_total": 4.0
+    },
+    "benchmarks/gate-v0.72.4-preference-losses.md": {
+      "queries": 20,
+      "unique_chunks": 18,
+      "queries_per_chunk": 1.11,
+      "type_distribution": {
+        "how_to": 6,
+        "conceptual": 13,
+        "parameter": 1
+      },
+      "pct_of_total": 2.42
+    },
+    "benchmarks/probe-v0.73.0-what-bounds-streaming.md": {
+      "queries": 26,
+      "unique_chunks": 24,
+      "queries_per_chunk": 1.08,
+      "type_distribution": {
+        "conceptual": 13,
+        "how_to": 10,
+        "parameter": 2,
+        "troubleshooting": 1
+      },
+      "pct_of_total": 3.15
+    },
+    "benchmarks/run-m1-8gb-mlx-sft.md": {
+      "queries": 25,
+      "unique_chunks": 22,
+      "queries_per_chunk": 1.14,
+      "type_distribution": {
+        "how_to": 9,
+        "conceptual": 13,
+        "parameter": 3
+      },
+      "pct_of_total": 3.03
+    },
+    "benchmarks/run-t4-colab-free-tier.md": {
+      "queries": 21,
+      "unique_chunks": 20,
+      "queries_per_chunk": 1.05,
+      "type_distribution": {
+        "conceptual": 13,
+        "how_to": 8
+      },
+      "pct_of_total": 2.55
+    },
+    "benchmarks/unsloth-4bit-weight-dtypes.md": {
+      "queries": 16,
+      "unique_chunks": 12,
+      "queries_per_chunk": 1.33,
+      "type_distribution": {
+        "how_to": 4,
+        "conceptual": 12
+      },
+      "pct_of_total": 1.94
+    },
+    "changelog.d/0.77.1/2185.fixed.md": {
+      "queries": 3,
+      "unique_chunks": 2,
+      "queries_per_chunk": 1.5,
+      "type_distribution": {
+        "parameter": 1,
+        "how_to": 2
+      },
+      "pct_of_total": 0.36
+    },
+    "changelog.d/0.77.1/2285.added.md": {
+      "queries": 2,
+      "unique_chunks": 2,
+      "queries_per_chunk": 1.0,
+      "type_distribution": {
+        "how_to": 2
+      },
+      "pct_of_total": 0.24
+    },
+    "changelog.d/0.77.1/2315.added.md": {
+      "queries": 2,
+      "unique_chunks": 1,
+      "queries_per_chunk": 2.0,
+      "type_distribution": {
+        "how_to": 1,
+        "conceptual": 1
+      },
+      "pct_of_total": 0.24
+    },
+    "changelog.d/0.77.1/2329.changed.md": {
+      "queries": 3,
+      "unique_chunks": 2,
+      "queries_per_chunk": 1.5,
+      "type_distribution": {
+        "parameter": 2,
+        "how_to": 1
+      },
+      "pct_of_total": 0.36
+    },
+    "changelog.d/0.77.1/2333.added.md": {
+      "queries": 1,
+      "unique_chunks": 1,
+      "queries_per_chunk": 1.0,
+      "type_distribution": {
+        "how_to": 1
+      },
+      "pct_of_total": 0.12
+    },
+    "changelog.d/0.77.1/2372.fixed.md": {
+      "queries": 3,
+      "unique_chunks": 3,
+      "queries_per_chunk": 1.0,
+      "type_distribution": {
+        "how_to": 1,
+        "conceptual": 2
+      },
+      "pct_of_total": 0.36
+    },
+    "changelog.d/0.77.1/2386.added.md": {
+      "queries": 2,
+      "unique_chunks": 2,
+      "queries_per_chunk": 1.0,
+      "type_distribution": {
+        "conceptual": 2
+      },
+      "pct_of_total": 0.24
+    },
+    "changelog.d/README.md": {
+      "queries": 4,
+      "unique_chunks": 2,
+      "queries_per_chunk": 2.0,
+      "type_distribution": {
+        "conceptual": 4
+      },
+      "pct_of_total": 0.48
+    },
+    "commands.md": {
+      "queries": 60,
+      "unique_chunks": 43,
+      "queries_per_chunk": 1.4,
+      "type_distribution": {
+        "how_to": 27,
+        "conceptual": 13,
+        "parameter": 19,
+        "troubleshooting": 1
+      },
+      "pct_of_total": 7.27
+    },
+    "data.md": {
+      "queries": 64,
+      "unique_chunks": 58,
+      "queries_per_chunk": 1.1,
+      "type_distribution": {
+        "conceptual": 13,
+        "how_to": 27,
+        "parameter": 24
+      },
+      "pct_of_total": 7.76
+    },
+    "models.md": {
+      "queries": 17,
+      "unique_chunks": 15,
+      "queries_per_chunk": 1.13,
+      "type_distribution": {
+        "parameter": 1,
+        "conceptual": 13,
+        "how_to": 3
+      },
+      "pct_of_total": 2.06
+    },
+    "performance-and-quantization.md": {
+      "queries": 63,
+      "unique_chunks": 55,
+      "queries_per_chunk": 1.15,
+      "type_distribution": {
+        "conceptual": 13,
+        "how_to": 26,
+        "parameter": 24
+      },
+      "pct_of_total": 7.64
+    },
+    "serving-and-export.md": {
+      "queries": 62,
+      "unique_chunks": 54,
+      "queries_per_chunk": 1.15,
+      "type_distribution": {
+        "how_to": 26,
+        "parameter": 23,
+        "conceptual": 13
+      },
+      "pct_of_total": 7.52
+    },
+    "training.md": {
+      "queries": 62,
+      "unique_chunks": 53,
+      "queries_per_chunk": 1.17,
+      "type_distribution": {
+        "parameter": 23,
+        "conceptual": 13,
+        "how_to": 26
+      },
+      "pct_of_total": 7.52
+    }
+  }
+}

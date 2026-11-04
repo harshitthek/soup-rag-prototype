@@ -247,9 +247,8 @@ class TestMiningLogicSynthetic:
 class TestMiningRealCorpusIntegration:
     """Integration test running mine_hard_negatives on real corpus to temp files."""
 
-    @classmethod
     @pytest.fixture(scope="class")
-    def mined_results(cls, tmp_path_factory):
+    def mined_results(self, tmp_path_factory):
         tmp_dir = tmp_path_factory.mktemp("mining_test")
         triplets_file = tmp_dir / "test_triplets.jsonl"
         hn_file = tmp_dir / "test_hard_negatives.jsonl"
