@@ -223,7 +223,7 @@ Phase 6 checkpoint-removal gates were all verified before deletion on
 checkpoint-2427 adapter, `adapter_config.json`/`soup_run.json` intact;
 condition 3: root adapter loads through the existing inference path in a
 fresh venv; condition 5: pytest green apart from the three pre-existing v1
-fixture-collection errors documented in `docs/EVALUATION_V2_PROGRESS.md`).
+fixture-collection errors documented in [`docs/progress/EVALUATION_V2_PROGRESS.md`](progress/EVALUATION_V2_PROGRESS.md)).
 Deletion used `git rm` only after those checks. Phase 7 re-verified
 conditions 3 and 5 in a second clean-room venv on 2026-10-31, and the v1
 candidate evaluation reproduces exactly.
@@ -235,8 +235,8 @@ data/raw_docs/                  vendored sources + LICENSE + attribution
 data/manual_queries.jsonl       owner-approved (frozen; manually crafted with AI assistance)
 data/manual_queries_validation_report.json
 docs/EVALUATION_V2_SPEC.md      this file
-docs/EVALUATION_V2_COVERAGE.md  query worksheet (no sample queries)
-docs/EVALUATION_V2_PROGRESS.md  implementation record
+docs/evaluation/EVALUATION_V2_COVERAGE.md  query worksheet (no sample queries)
+docs/progress/EVALUATION_V2_PROGRESS.md  implementation record
 docs/EVALUATION_V2_OVERLAP_AUDIT.md  overlap-label audit (2026-10-31)
 scripts/retrieval.py            shared metrics, section mapping, classifier
 scripts/run_retrieval.py        multi-retriever CLI

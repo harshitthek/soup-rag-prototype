@@ -90,7 +90,7 @@ The authoritative Phase 3 multi-retriever benchmark evaluated **nine distinct re
 
 | Stage / Component | Status | Description |
 |:---|:---:|:---|
-| **Phase 0: Audit & Architecture** | **Completed** | Full corpus audit, leakage checks, document separation contracts (`docs/PHASE_0_AUDIT.md`). |
+| **Phase 0: Audit & Architecture** | **Completed** | Full corpus audit, leakage checks, document separation contracts ([`docs/phase0/PHASE_0_AUDIT.md`](docs/phase0/PHASE_0_AUDIT.md)). |
 | **Phase 1: Dataset & Benchmark** | **Completed** | 54 owner-approved manual queries, diverse query generation (`results/PHASE_1_5_QUERY_QUALITY_REPORT.md`). |
 | **Phase 2: Adapter Training Matrix** | **Completed** | 5 authorized LoRA adapters trained with isolated configs (`results/PHASE_2_TRAINING_EXECUTION_REPORT.md`). |
 | **Phase 3: Multi-Retriever Benchmark** | **Completed** | 9-retriever benchmark evaluation, bootstrap CI, integrity audit (`results/PHASE_3_BENCHMARK_EVALUATION_REPORT.md`). |
@@ -103,13 +103,18 @@ The authoritative Phase 3 multi-retriever benchmark evaluated **nine distinct re
 
 ## 6. Repository Navigation & Deliverables
 
-- **Core Documentation:**
+- **Core Entry Points:**
+  - [`docs/README.md`](docs/README.md): Master technical documentation index and executive summaries.
+  - [`REPRODUCE.md`](REPRODUCE.md): Reproduction guide covering testing, result inspection, and evaluation workflows.
+- **Audited Results & Findings:**
   - [`results/PHASE_3_BENCHMARK_EVALUATION_REPORT.md`](results/PHASE_3_BENCHMARK_EVALUATION_REPORT.md): Authoritative Phase 3 benchmark evaluation report across all 9 retrievers.
   - [`results/PHASE_3_1_INTEGRITY_AUDIT.md`](results/PHASE_3_1_INTEGRITY_AUDIT.md): Statistical verification, bootstrap invariant audit, and failure classification.
   - [`results/PHASE_3_DOCUMENTATION_AUDIT.md`](results/PHASE_3_DOCUMENTATION_AUDIT.md): Repository-wide documentation audit and consistency verification.
-  - [`REPRODUCE.md`](REPRODUCE.md): Reproduction guide covering testing, result inspection, and evaluation workflows.
-  - [`REVIEW.md`](REVIEW.md): Architectural review and experimental design decisions.
-  - [`REPORT.md`](REPORT.md): Historical delivery report for the earlier Phase 1 synthetic evaluation (superseded by Phase 3).
+- **Detailed Technical Docs (`docs/`):**
+  - [`docs/REVIEW.md`](docs/REVIEW.md): Architectural review and experimental design decisions.
+  - [`docs/EVALUATION_V2_SPEC.md`](docs/EVALUATION_V2_SPEC.md): Benchmark methodology and evaluation specification.
+  - [`docs/evaluation/EVALUATION_V2_COVERAGE.md`](docs/evaluation/EVALUATION_V2_COVERAGE.md): 54-query authoring worksheet and chunk allocations.
+  - [`docs/reports/PHASE_1_DELIVERY_REPORT.md`](docs/reports/PHASE_1_DELIVERY_REPORT.md): Historical Phase 1 delivery report (synthetic benchmark).
 - **Data & Config:**
   - `data/manual_queries.jsonl`: 54 owner-approved manual evaluation queries with multi-chunk relevance labels.
   - `data/corpus.jsonl`: 1,068 token-bounded chunks across 12 Soup documentation files.

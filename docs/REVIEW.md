@@ -1,13 +1,13 @@
 # Experiment Review — Soup RAG Retrieval Fine-Tuning
 
 > [!NOTE]
-> **Status:** Updated to reflect the completed Phase 3 multi-retriever benchmark evaluation. For the comprehensive evaluation report, see [`results/PHASE_3_BENCHMARK_EVALUATION_REPORT.md`](results/PHASE_3_BENCHMARK_EVALUATION_REPORT.md) and [`results/PHASE_3_1_INTEGRITY_AUDIT.md`](results/PHASE_3_1_INTEGRITY_AUDIT.md).
+> **Status:** Updated to reflect the completed Phase 3 multi-retriever benchmark evaluation. For the comprehensive evaluation report, see [`results/PHASE_3_BENCHMARK_EVALUATION_REPORT.md`](../results/PHASE_3_BENCHMARK_EVALUATION_REPORT.md) and [`results/PHASE_3_1_INTEGRITY_AUDIT.md`](../results/PHASE_3_1_INTEGRITY_AUDIT.md).
 
 Concise review of the Soup embedding fine-tuning experiments in this repository.
-- **Authoritative Phase 3 Benchmark:** [`results/PHASE_3_BENCHMARK_EVALUATION_REPORT.md`](results/PHASE_3_BENCHMARK_EVALUATION_REPORT.md) (9-retriever benchmark on 54 owner-approved queries).
-- **Integrity & Statistical Audit:** [`results/PHASE_3_1_INTEGRITY_AUDIT.md`](results/PHASE_3_1_INTEGRITY_AUDIT.md).
-- **Reproduction Guide:** [`REPRODUCE.md`](REPRODUCE.md).
-- **Historical Reports:** `results/comparison.md` (v1 synthetic benchmark) and `results/v2/comparison.md` (initial 4-retriever v2 comparison).
+- **Authoritative Phase 3 Benchmark:** [`results/PHASE_3_BENCHMARK_EVALUATION_REPORT.md`](../results/PHASE_3_BENCHMARK_EVALUATION_REPORT.md) (9-retriever benchmark on 54 owner-approved queries).
+- **Integrity & Statistical Audit:** [`results/PHASE_3_1_INTEGRITY_AUDIT.md`](../results/PHASE_3_1_INTEGRITY_AUDIT.md).
+- **Reproduction Guide:** [`REPRODUCE.md`](../REPRODUCE.md).
+- **Historical Reports:** `../results/comparison.md` (v1 synthetic benchmark) and `../results/v2/comparison.md` (initial 4-retriever v2 comparison).
 
 ---
 

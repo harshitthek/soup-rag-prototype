@@ -22,37 +22,73 @@ Every maintained documentation artifact in the repository has been surveyed, cat
 | # | File Path | Primary Purpose | Category | Issues Identified Before Audit | Action Taken |
 |---|---|---|:---:|---|---|
 | 1 | `README.md` | Primary landing page & entry point | **3** | Displayed outdated v1 synthetic results (+21.12% Recall@1); omitted prominent negative result (Frozen E5-small outperformed fine-tuned MiniLM); showed partial 4-retriever comparison rather than all 9 retrievers; lacked clear separation between completed prototype and future work. | Overhauled to position project as a configuration-driven RAG prototype; added full 9-retriever Phase 3 scorecard; highlighted negative result; added explicit limitations, pipeline architecture, and roadmap distinctions. |
-| 2 | `REPORT.md` | Phase 1 prototype delivery report | **5** | Historical delivery report based on 497 synthetic queries; risk of readers confusing synthetic heading-overlap metrics with real retrieval performance. | Added prominent historical warning banner explaining synthetic heading shortcuts and directing readers to authoritative Phase 3 reports. Updated Section 11 to link to Phase 3. |
-| 3 | `REPRODUCE.md` | Reproduction & verification guide | **3** | Lacked clear separation between running tests, inspecting precomputed results, running read-only retrieval, and retraining; omitted instructions for the 182-test invariant suite; missing warning about batch scripts. | Restructured into 4 functional operational modes; added test suite instructions; added SHA256 manifest verification steps; documented batch script execution caveats. |
-| 4 | `REVIEW.md` | Architectural review & design decisions | **3** | Stated only v1 and initial 4-retriever v2 results; omitted the Phase 2 training matrix (Exp B, C-matched, C-matched-balanced, C-full) and Phase 3 9-retriever findings. | Added status banner; updated architecture, dataset strategies, and full 9-retriever results table; integrated links to Phase 3 reports. |
-| 5 | `docs/EVALUATION_V2_SPEC.md` | Canonical specification for v2 benchmark | **5** | Historical specification for the initial 54-query manual benchmark milestone (Phases 0–7); lacked explicit link to subsequent Phase 1.5–3.1 expansion. | Added historical milestone banner clarifying relationship to subsequent Phase 1.5–3.1 multi-retriever benchmark. |
-| 6 | `docs/EVALUATION_V2_PROGRESS.md` | Implementation progress log for v2 | **5** | Living log terminating at PR #3 review fixes (2026-11-01); lacked explicit context on subsequent Phase 1.5–3.1 work. | Added historical implementation record banner directing readers to Phase 3 reports for subsequent progress. |
-| 7 | `docs/EVALUATION_V2_COVERAGE.md` | Manual query authoring worksheet | **1** | None. Accurately maps the 54 owner-approved queries across section headings and candidate chunk IDs. | Preserved without changes. |
-| 8 | `docs/EVALUATION_V2_OVERLAP_AUDIT.md` | Audit of 18 candidate overlap queries | **1** | None. Authoritative record of the 18 candidate overlap queries (15 confirmed, 3 reclassified as primary with owner approval). | Preserved without changes. |
-| 9 | `docs/PHASE_0_AUDIT.md` | Pre-training corpus & split audit | **1** | None. Comprehensive audit of 12 core documents, chunk distributions, and leakage prevention. | Preserved without changes. |
-| 10 | `docs/PHASE_0_RECOMMENDATION.md` | Architectural recommendations for split | **1** | None. Accurate architectural rationale for document-level splitting and candidate expansion. | Preserved without changes. |
-| 11 | `docs/PHASE_0_CORPUS_INVENTORY.csv` | Inventory of 23 candidate expansion docs | **1** | None. Accurate tabular catalog of candidate documents. | Preserved without changes. |
-| 12 | `results/PHASE_3_BENCHMARK_EVALUATION_REPORT.md` | Authoritative Phase 3 benchmark report | **1** | None. Authoritative, audited evaluation report across all 9 retrievers on 54 manual queries. | Preserved without changes (Authoritative Source of Truth). |
-| 13 | `results/PHASE_3_1_INTEGRITY_AUDIT.md` | Statistical verification & invariant audit | **1** | None. Authoritative audit of bootstrap CI, failure classifications, and test invariants. | Preserved without changes (Authoritative Source of Truth). |
-| 14 | `results/PHASE_2_TRAINING_EXECUTION_REPORT.md` | Training execution report for 5 adapters | **1** | None. Complete training metrics, batch accounting, and execution times for authorized runs. | Preserved without changes. |
-| 15 | `results/PHASE_2_1_ARTIFACT_VERIFICATION_REPORT.md` | Post-training artifact integrity check | **1** | None. Verified checksums, configuration normalization, and PEFT invariants. | Preserved without changes. |
-| 16 | `results/PHASE_1_10_FINAL_EXPERIMENT_LOCK.md` | Final experiment lock & model revision | **1** | None. Pinned HuggingFace base model commit and authorized Path A training. | Preserved without changes. |
-| 17 | `results/PHASE_1_9_CONFIG_AND_PROVENANCE_LOCK.md` | Config & provenance audit | **1** | None. Complete verification of YAML configs and source manifests. | Preserved without changes. |
-| 18 | `results/PHASE_1_8_FINAL_RUN_MANIFEST.md` | Run manifest for experimental matrix | **2** | Positive chunk count column in Section 2 listed 586 for C-matched-balanced (copy-pasted from B) instead of actual 720 positive chunks. | Updated table entry to `720*` and added explicit footnote clarifying the sampling coverage. |
-| 19 | `results/PHASE_1_7_TRAINING_READINESS_REPORT.md` | Training readiness audit | **1** | None. Verification of triplets, negative mining, and training configs. | Preserved without changes. |
-| 20 | `results/PHASE_1_6_RECONCILIATION_REPORT.md` | Candidate corpus reconciliation | **1** | None. Accurate accounting of expanded corpus chunks and intent distributions. | Preserved without changes. |
-| 21 | `results/PHASE_1_5_QUERY_QUALITY_REPORT.md` | Diverse query quality audit | **1** | None. Semantic quality and intent class distribution analysis. | Preserved without changes. |
-| 22 | `results/query_partitions_reconciliation_table.md` | Partition reconciliation table | **1** | None. Tabular breakdown of query allocations across documents. | Preserved without changes. |
-| 23 | `results/comparison.md` | Historical v1 synthetic bootstrap report | **5** | Historical artifact comparing Frozen MiniLM vs Soup LoRA on 497 synthetic queries. | Preserved without changes (Historical record). |
-| 24 | `results/v2/comparison.md` | Historical v2 4-way retriever report | **5** | Historical artifact comparing initial 4 retrievers before Phase 2 retraining. | Preserved without changes (Historical record). |
-| 25 | `data/raw_docs/README.md` | Upstream Soup documentation index | **5** | Vendored upstream document index; relative links point to upstream structure. | Documented in `ATTRIBUTION.md` and `REPRODUCE.md` as vendored upstream source text; left untouched to preserve byte-exact SHA256 checksum against `data/source_manifest.json`. |
-| 26 | `data/raw_docs/ATTRIBUTION.md` | License & provenance attribution | **1** | None. Documents Apache-2.0 license, upstream commit hash (`8ab2664`), and file checksums. | Preserved without changes. |
+| 2 | `REPRODUCE.md` | Reproduction & verification guide | **3** | Lacked clear separation between running tests, inspecting precomputed results, running read-only retrieval, and retraining; omitted instructions for the 182-test invariant suite; missing warning about batch scripts. | Restructured into 4 functional operational modes; added test suite instructions; added SHA256 manifest verification steps; documented batch script execution caveats. Retained at root as core entry point. |
+| 3 | `docs/README.md` | Master technical documentation index | **1** | Did not exist previously. | Created master index providing concise up-front summaries of query coverage, implementation progress, pre-training audits, and navigation map. |
+| 4 | `docs/REVIEW.md` | Architectural review & design decisions | **3** | Stated only v1 and initial 4-retriever v2 results; omitted the Phase 2 training matrix (Exp B, C-matched, C-matched-balanced, C-full) and Phase 3 9-retriever findings. Located at root (`REVIEW.md`). | Moved to `docs/REVIEW.md` via `git mv`; added status banner; updated architecture, dataset strategies, and full 9-retriever results table; integrated links to Phase 3 reports. |
+| 5 | `docs/reports/PHASE_1_DELIVERY_REPORT.md` | Phase 1 prototype delivery report | **5** | Historical delivery report based on 497 synthetic queries; risk of readers confusing synthetic heading-overlap metrics with real retrieval performance. Located at root (`REPORT.md`). | Moved to `docs/reports/PHASE_1_DELIVERY_REPORT.md` via `git mv`; added prominent historical warning banner explaining synthetic heading shortcuts; updated Section 11 to link to Phase 3. |
+| 6 | `docs/EVALUATION_V2_SPEC.md` | Canonical specification for v2 benchmark | **5** | Historical specification for the initial 54-query manual benchmark milestone (Phases 0–7); lacked explicit link to subsequent Phase 1.5–3.1 expansion. | Added historical milestone banner clarifying relationship to subsequent Phase 1.5–3.1 multi-retriever benchmark. |
+| 7 | `docs/EVALUATION_V2_OVERLAP_AUDIT.md` | Audit of 18 candidate overlap queries | **1** | None. Authoritative record of the 18 candidate overlap queries (15 confirmed, 3 reclassified as primary with owner approval). | Preserved at current path to satisfy test invariant in `tests/test_compare_retrievers.py`. |
+| 8 | `docs/evaluation/EVALUATION_V2_COVERAGE.md` | Manual query authoring worksheet (1,305 lines) | **1** | Cluttered top-level `docs/` with massive 1,305-line chunk allocation tables. | Moved to `docs/evaluation/EVALUATION_V2_COVERAGE.md` via `git mv`; summarized up-front in `docs/README.md`. |
+| 9 | `docs/progress/EVALUATION_V2_PROGRESS.md` | Implementation progress log (458 lines) | **5** | Living log terminating at PR #3 review fixes (2026-11-01); cluttered top-level `docs/`. | Moved to `docs/progress/EVALUATION_V2_PROGRESS.md` via `git mv`; added historical record banner; summarized up-front in `docs/README.md`. |
+| 10 | `docs/phase0/PHASE_0_AUDIT.md` | Pre-training corpus & split audit (372 lines) | **1** | Pre-training audit located at top-level `docs/`. | Moved to `docs/phase0/PHASE_0_AUDIT.md` via `git mv`; summarized in `docs/README.md`. |
+| 11 | `docs/phase0/PHASE_0_RECOMMENDATION.md` | Architectural recommendations for split (216 lines) | **1** | Architectural recommendation at top-level `docs/`. | Moved to `docs/phase0/PHASE_0_RECOMMENDATION.md` via `git mv`; summarized in `docs/README.md`. |
+| 12 | `docs/phase0/PHASE_0_CORPUS_INVENTORY.csv` | Inventory of 23 candidate expansion docs (733 lines) | **1** | Large CSV catalog at top-level `docs/`. | Moved to `docs/phase0/PHASE_0_CORPUS_INVENTORY.csv` via `git mv`. |
+| 13 | `results/PHASE_3_BENCHMARK_EVALUATION_REPORT.md` | Authoritative Phase 3 benchmark report | **1** | None. Authoritative, audited evaluation report across all 9 retrievers on 54 manual queries. | Preserved without changes (Authoritative Source of Truth). |
+| 14 | `results/PHASE_3_1_INTEGRITY_AUDIT.md` | Statistical verification & invariant audit | **1** | None. Authoritative audit of bootstrap CI, failure classifications, and test invariants. | Preserved without changes (Authoritative Source of Truth). |
+| 15 | `results/PHASE_2_TRAINING_EXECUTION_REPORT.md` | Training execution report for 5 adapters | **1** | None. Complete training metrics, batch accounting, and execution times for authorized runs. | Preserved without changes. |
+| 16 | `results/PHASE_2_1_ARTIFACT_VERIFICATION_REPORT.md` | Post-training artifact integrity check | **1** | None. Verified checksums, configuration normalization, and PEFT invariants. | Preserved without changes. |
+| 17 | `results/PHASE_1_10_FINAL_EXPERIMENT_LOCK.md` | Final experiment lock & model revision | **1** | None. Pinned HuggingFace base model commit and authorized Path A training. | Preserved without changes. |
+| 18 | `results/PHASE_1_9_CONFIG_AND_PROVENANCE_LOCK.md` | Config & provenance audit | **1** | None. Complete verification of YAML configs and source manifests. | Preserved without changes. |
+| 19 | `results/PHASE_1_8_FINAL_RUN_MANIFEST.md` | Run manifest for experimental matrix | **2** | Positive chunk count column in Section 2 listed 586 for C-matched-balanced (copy-pasted from B) instead of actual 720 positive chunks. | Updated table entry to `720*` and added explicit footnote clarifying the sampling coverage. |
+| 20 | `results/PHASE_1_7_TRAINING_READINESS_REPORT.md` | Training readiness audit | **1** | None. Verification of triplets, negative mining, and training configs. | Preserved without changes. |
+| 21 | `results/PHASE_1_6_RECONCILIATION_REPORT.md` | Candidate corpus reconciliation | **1** | None. Accurate accounting of expanded corpus chunks and intent distributions. | Preserved without changes. |
+| 22 | `results/PHASE_1_5_QUERY_QUALITY_REPORT.md` | Diverse query quality audit | **1** | None. Semantic quality and intent class distribution analysis. | Preserved without changes. |
+| 23 | `results/query_partitions_reconciliation_table.md` | Partition reconciliation table | **1** | None. Tabular breakdown of query allocations across documents. | Preserved without changes. |
+| 24 | `results/comparison.md` | Historical v1 synthetic bootstrap report | **5** | Historical artifact comparing Frozen MiniLM vs Soup LoRA on 497 synthetic queries. | Preserved without changes (Historical record). |
+| 25 | `results/v2/comparison.md` | Historical v2 4-way retriever report | **5** | Historical artifact comparing initial 4 retrievers before Phase 2 retraining. | Preserved without changes (Historical record). |
+| 26 | `data/raw_docs/README.md` | Upstream Soup documentation index | **5** | Vendored upstream document index; relative links point to upstream structure. | Documented in `ATTRIBUTION.md` and `REPRODUCE.md` as vendored upstream source text; left untouched to preserve byte-exact SHA256 checksum against `data/source_manifest.json`. |
+| 27 | `data/raw_docs/ATTRIBUTION.md` | License & provenance attribution | **1** | None. Documents Apache-2.0 license, upstream commit hash (`8ab2664`), and file checksums. | Preserved without changes. |
 
 ---
 
-## 2. Summary of Major Inconsistencies Found
+## 2. Structural Restructuring & Length Reduction (Alpamys Review Feedback)
 
-During the repository-wide audit, five major categories of inconsistencies and misleading presentations were identified:
+### Maintainer Feedback Addressed
+> *"The docs got heavy for a prototype (progress and coverage files are 1000+ lines). A short summary up front and the rest under docs/ is enough."*
+
+To address this feedback directly, the repository documentation architecture was restructured around the core principle:
+- **Repository Root:** Concise introduction, architecture diagram, headline Phase 3 results, limitations, quickstart, and navigation front door.
+- **`docs/README.md`:** Concise executive summaries up front for query coverage (54 queries across 4 documents), progress milestones (Phases 0–3), and pre-training audits, providing clear links to detailed files.
+- **`docs/` Subdirectories:** Detailed tracking, massive coverage tables, and phase records organized logically into `docs/evaluation/`, `docs/progress/`, `docs/phase0/`, and `docs/reports/`.
+
+### Before and After Structural Comparison
+
+| Document | Before Path | Before Location | After Path | After Location | Lines | Purpose / Content |
+|---|---|---|---|---|---:|---|
+| **`README.md`** | `README.md` | Root | `README.md` | Root | 164 | Concise front-door overview, results, quickstart |
+| **`REPRODUCE.md`** | `REPRODUCE.md` | Root | `REPRODUCE.md` | Root | 187 | Entry-point verification and reproduction guide |
+| **`REPORT.md`** | `REPORT.md` | Root | `docs/reports/PHASE_1_DELIVERY_REPORT.md` | `docs/reports/` | 253 | Historical Phase 1 delivery report |
+| **`REVIEW.md`** | `REVIEW.md` | Root | `docs/REVIEW.md` | `docs/` | 69 | Architectural review & key decisions |
+| **`docs/README.md`** | *(New)* | N/A | `docs/README.md` | `docs/` | 102 | Master index & up-front executive summaries |
+| **`EVALUATION_V2_COVERAGE.md`** | `docs/EVALUATION_V2_COVERAGE.md` | `docs/` root | `docs/evaluation/EVALUATION_V2_COVERAGE.md` | `docs/evaluation/` | 1,305 | Detailed chunk allocation tables & query worksheet |
+| **`EVALUATION_V2_PROGRESS.md`** | `docs/EVALUATION_V2_PROGRESS.md` | `docs/` root | `docs/progress/EVALUATION_V2_PROGRESS.md` | `docs/progress/` | 458 | Detailed milestone commit diary & rehearsal logs |
+| **`PHASE_0_AUDIT.md`** | `docs/PHASE_0_AUDIT.md` | `docs/` root | `docs/phase0/PHASE_0_AUDIT.md` | `docs/phase0/` | 372 | Pre-training corpus audit |
+| **`PHASE_0_RECOMMENDATION.md`** | `docs/PHASE_0_RECOMMENDATION.md` | `docs/` root | `docs/phase0/PHASE_0_RECOMMENDATION.md` | `docs/phase0/` | 216 | Pre-training architectural recommendations |
+| **`PHASE_0_CORPUS_INVENTORY.csv`**| `docs/PHASE_0_CORPUS_INVENTORY.csv`| `docs/` root | `docs/phase0/PHASE_0_CORPUS_INVENTORY.csv`| `docs/phase0/` | 733 | Candidate document inventory catalog |
+| **`EVALUATION_V2_SPEC.md`** | `docs/EVALUATION_V2_SPEC.md` | `docs/` root | `docs/EVALUATION_V2_SPEC.md` | `docs/` | 246 | Evaluation benchmark specification |
+| **`EVALUATION_V2_OVERLAP_AUDIT.md`**| `docs/EVALUATION_V2_OVERLAP_AUDIT.md`| `docs/` root | `docs/EVALUATION_V2_OVERLAP_AUDIT.md`| `docs/` | 181 | Query overlap audit (retained for test invariant) |
+
+### Rationale for Files Retained at Root
+- **`README.md`:** Standard primary entry point for any open-source repository; provides immediate clarity for Alpamys on prototype status, architecture, and headline findings.
+- **`REPRODUCE.md`:** Essential for maintainer review, enabling immediate, copy-pasteable verification (`pytest tests/`) and precomputed result checks without navigating into subfolders.
+
+All other detailed tracking documents, large worksheets (1,305 lines), and historical delivery reports were removed from the root and placed into appropriate subdirectories under `docs/`.
+
+---
+
+## 3. Summary of Major Inconsistencies Found
+
+During the repository-wide audit, five major categories of inconsistencies and misleading presentations were identified and resolved:
 
 1. **Outdated Headline Claims in `README.md`:**
    - *Issue:* The root README prominently displayed the Phase 1 v1 synthetic benchmark (+21.12% Recall@1, +18.62% MRR@10) as current performance, while the subsequent manual evaluation demonstrated that these gains were an artifact of synthetic heading-overlap shortcuts.
@@ -76,29 +112,6 @@ During the repository-wide audit, five major categories of inconsistencies and m
 
 ---
 
-## 3. Files Modified and Justifications
-
-Only documentation files were modified. No source code, tests, configs, datasets, or evaluation outputs were touched:
-
-1. **[`README.md`](../README.md):**
-   - *Justification:* Primary entry point for maintainer review. Overhauled to clearly define the project as an experimental RAG research prototype, specify the TXT/Markdown use case, outline the 7-step architecture, publish the full 9-retriever Phase 3 scorecard, highlight negative findings, detail limitations, and separate completed work from future directions.
-2. **[`REPORT.md`](../REPORT.md):**
-   - *Justification:* Added a prominent historical warning banner and updated Section 11 to ensure readers understand that the v1 synthetic metrics (+21.1% Recall@1) were superseded by the Phase 3 manual benchmark.
-3. **[`REPRODUCE.md`](../REPRODUCE.md):**
-   - *Justification:* Restructured into clear functional categories (testing, inspecting results, read-only retrieval, training); added instructions for the 182-test suite; added SHA256 manifest verification; documented CLI behavior of batch scripts.
-4. **[`REVIEW.md`](../REVIEW.md):**
-   - *Justification:* Added status banner; updated experimental architecture and data strategies; incorporated full 9-retriever benchmark results table and key empirical insights.
-5. **[`docs/EVALUATION_V2_SPEC.md`](../docs/EVALUATION_V2_SPEC.md):**
-   - *Justification:* Added historical milestone banner clarifying that this specification established the initial 54-query benchmark, subsequently expanded through Phase 3.
-6. **[`docs/EVALUATION_V2_PROGRESS.md`](../docs/EVALUATION_V2_PROGRESS.md):**
-   - *Justification:* Added historical implementation record banner directing readers to Phase 3 reports for post-November 1 progress.
-7. **[`results/PHASE_1_8_FINAL_RUN_MANIFEST.md`](PHASE_1_8_FINAL_RUN_MANIFEST.md):**
-   - *Justification:* Clarified positive chunk coverage for `C-matched-balanced` (720 unique positive chunks across 31 candidate documents).
-8. **[`results/PHASE_3_DOCUMENTATION_AUDIT.md`](PHASE_3_DOCUMENTATION_AUDIT.md):**
-   - *Justification:* Created this comprehensive formal documentation audit deliverable.
-
----
-
 ## 4. Verification Sources of Truth
 
 Every factual correction and reported metric was verified directly against authoritative repository artifacts:
@@ -109,7 +122,7 @@ Every factual correction and reported metric was verified directly against autho
 | **Statistical & Bootstrap Invariants** | `results/phase3/bootstrap_ci.json`<br>`results/PHASE_3_1_INTEGRITY_AUDIT.md` | Verified 10,000 bootstrap resamples, random seed 42, document-stratified paired resampling plan. |
 | **Adapter Training Hyperparameters** | `config/embedding_exp_*.yaml`<br>`results/PHASE_2_1_ARTIFACT_VERIFICATION_REPORT.md` | Inspected YAML configs and adapter JSON files (`output/adapter_exp_*/adapter_config.json`). |
 | **Base Model & Revision Locks** | `results/PHASE_1_10_FINAL_EXPERIMENT_LOCK.md` | Pinned commit `1110a243fdf4706b3f48f1d95db1a4f5529b4d41` (`all-MiniLM-L6-v2`) and `ffb93f3bd4047442299a41ebb6fa998a38507c52` (`e5-small-v2`). |
-| **Manual Evaluation Queries & Labels** | `data/manual_queries.jsonl`<br>`docs/EVALUATION_V2_COVERAGE.md` | Verified 54 queries, query-set hash `971e157083c31e5e55131a35597dc492d20996a02c7a491543e02d7cbef362b3`. |
+| **Manual Evaluation Queries & Labels** | `data/manual_queries.jsonl`<br>`docs/evaluation/EVALUATION_V2_COVERAGE.md` | Verified 54 queries, query-set hash `971e157083c31e5e55131a35597dc492d20996a02c7a491543e02d7cbef362b3`. |
 | **Corpus Integrity & Chunk Splits** | `data/corpus.jsonl`<br>`data/source_manifest.json` | Verified 1,068 chunks (761 train / 307 test); corpus hash `76ab5e884d6dd21e86971a8ea97a95b871c53e878788915aa4ad04a621ed0f90`. |
 | **Test Suite Invariants** | `tests/test_*_invariants.py` | Executed full pytest suite (182 passed in ~24s). |
 
@@ -117,15 +130,15 @@ Every factual correction and reported metric was verified directly against autho
 
 ## 5. Broken Links and Commands Discovered & Resolved
 
-1. **Relative Links in `data/raw_docs/README.md`:**
-   - *Observation:* `data/raw_docs/README.md` contains relative links like `[← Back to the main README](../README.md)`, which were written for the upstream Soup repository structure.
-   - *Resolution:* Left `data/raw_docs/README.md` untouched to preserve its byte-exact SHA256 checksum (`4cb577c5...`) recorded in `data/source_manifest.json`. Documented in `REPRODUCE.md` and `README.md` that files in `data/raw_docs/` are vendored snapshots, and directed readers to `data/raw_docs/ATTRIBUTION.md`.
-2. **Missing Document Links in Documentation:**
-   - *Observation:* Several historical documents referred to filenames without clickable relative links.
-   - *Resolution:* Added standard relative Markdown links linking `README.md`, `REPORT.md`, `REPRODUCE.md`, and `REVIEW.md` to `results/PHASE_3_BENCHMARK_EVALUATION_REPORT.md` and `results/PHASE_3_1_INTEGRITY_AUDIT.md`.
-3. **Execution Behavior of Evaluation & Training Scripts:**
-   - *Observation:* `scripts/evaluate_phase3_retrievers.py` and `scripts/train_authorized_adapters.py` do not implement CLI argument parsing (`--help`), and passing arguments caused them to execute batch operations or fail on overwrite guards.
-   - *Resolution:* Documented in `REPRODUCE.md` that these are dedicated batch scripts, and provided safe, individual CLI evaluation commands using `scripts/run_retrieval.py` which properly handles `--retriever`, `--adapter-dir`, and `--output`.
+1. **Relative Links in `data/raw_docs/` and Candidate Benchmarks:**
+   - *Observation:* Upstream files in `data/raw_docs/` and `data/candidate_docs/` contain relative links written for upstream repository structures (e.g. `[← Back to the main README](../README.md)`).
+   - *Resolution:* Left vendored documents untouched to preserve their byte-exact SHA256 checksums (`data/source_manifest.json`). Documented in `ATTRIBUTION.md` and `REPRODUCE.md` that these are vendored snapshots.
+2. **Updated Relative Paths Across Moved Documents:**
+   - *Observation:* Moving documents into subdirectories (`docs/reports/`, `docs/progress/`, `docs/evaluation/`, `docs/phase0/`) altered relative depths to `results/` and root files.
+   - *Resolution:* Audited and corrected all relative links in `docs/README.md`, `docs/REVIEW.md`, `docs/reports/PHASE_1_DELIVERY_REPORT.md`, `docs/progress/EVALUATION_V2_PROGRESS.md`, `docs/EVALUATION_V2_SPEC.md`, and root `README.md`.
+3. **Preservation of `docs/EVALUATION_V2_OVERLAP_AUDIT.md`:**
+   - *Observation:* `tests/test_compare_retrievers.py` line 292 contains a strict test assertion: `assert "docs/EVALUATION_V2_OVERLAP_AUDIT.md" in report`.
+   - *Resolution:* Retained `docs/EVALUATION_V2_OVERLAP_AUDIT.md` at its exact path directly under `docs/` to guarantee that all 182 test assertions continue passing without modifying test code.
 
 ---
 
@@ -144,28 +157,28 @@ Every factual correction and reported metric was verified directly against autho
 
 | # | Validation Command | Scope / Purpose | Outcome |
 |---|---|---|---|
-| 1 | `pytest tests/ -v` | Full repository test suite | **PASS** — 182 passed in 24.05s. |
+| 1 | `pytest tests/ -v` | Full repository test suite | **PASS** — 182 passed in 23.70s. |
 | 2 | `cd results/phase3 && sha256sum -c manifest.sha256` | Phase 3 result artifact integrity | **PASS** — All 16 Phase 3 result files report `OK`. |
 | 3 | `python scripts/validate_manual_queries.py` | Manual query dataset validation | **PASS** — 54 queries checked, 0 errors, 0 warnings. |
-| 4 | Markdown Link Validator (Python script) | Internal relative link verification | **PASS** — All relative links in modified docs resolve to valid paths. |
-| 5 | `git status` | Working tree cleanliness check | **PASS** — Only documentation files modified. |
+| 4 | Markdown Link Validator (Python script) | Internal relative link verification | **PASS** — All relative links in prototype documentation resolve to valid paths. |
+| 5 | `git status` | Working tree cleanliness check | **PASS** — Only documentation files modified/moved. |
 
 ---
 
 ## 8. Final Git Diff Summary
 
-The changes in the working tree are strictly limited to documentation updates:
+The changes in the working tree are strictly limited to documentation updates and file reorganizations:
 
-- `README.md`: Overhauled project landing page with Phase 3 scorecard, negative result disclosure, pipeline diagram, and roadmap.
-- `REPORT.md`: Added historical warning banner and Phase 3 reference note in Section 11.
-- `REPRODUCE.md`: Restructured into 4 operational categories; added test suite instructions and SHA256 manifest verification.
-- `REVIEW.md`: Updated architecture, dataset descriptions, full 9-retriever table, and empirical findings.
-- `docs/EVALUATION_V2_SPEC.md`: Added historical milestone banner.
-- `docs/EVALUATION_V2_PROGRESS.md`: Added historical implementation record banner.
-- `results/PHASE_1_8_FINAL_RUN_MANIFEST.md`: Added positive chunk count clarification footnote for `C-matched-balanced`.
-- `results/PHASE_3_DOCUMENTATION_AUDIT.md`: Created this audit deliverable.
-
-*(Note: Pre-existing uncommitted modifications in `scripts/mine_hard_negatives.py` and `tests/test_retrieval_pipeline.py` from earlier development sessions were preserved completely untouched).*
+- **Root Cleared of Heavy Tracking Docs:** Only `README.md` and `REPRODUCE.md` remain at root.
+- **`docs/README.md` Created:** 102-line master index with up-front executive summaries.
+- **Git-Aware Moves Executed:**
+  - `git mv REPORT.md docs/reports/PHASE_1_DELIVERY_REPORT.md`
+  - `git mv REVIEW.md docs/REVIEW.md`
+  - `git mv docs/EVALUATION_V2_COVERAGE.md docs/evaluation/EVALUATION_V2_COVERAGE.md`
+  - `git mv docs/EVALUATION_V2_PROGRESS.md docs/progress/EVALUATION_V2_PROGRESS.md`
+  - `git mv docs/PHASE_0_AUDIT.md docs/phase0/PHASE_0_AUDIT.md`
+  - `git mv docs/PHASE_0_RECOMMENDATION.md docs/phase0/PHASE_0_RECOMMENDATION.md`
+  - `git mv docs/PHASE_0_CORPUS_INVENTORY.csv docs/phase0/PHASE_0_CORPUS_INVENTORY.csv`
 
 ---
 
@@ -188,7 +201,8 @@ All 16 result files in `results/phase3/` remain 100% bit-exact identical to thei
 **Verdict: READY FOR MAINTAINER SUBMISSION**
 
 The repository is now in an optimal state for review by Alpamys:
-1. **Clear Identity:** The repository clearly identifies itself as an experimental research prototype evaluating retrieval and fine-tuning on Soup documentation, avoiding any confusion with an integrated production feature.
-2. **Honest, Evidence-Backed Findings:** The README and reports clearly state the primary negative result: off-the-shelf Frozen E5-small is the strongest retriever, and fine-tuning MiniLM did not surpass it.
-3. **Data Quality Insights:** The findings demonstrate clear, actionable insights for Soup: diverse LLM-generated training queries drastically outperform synthetic template queries, and corpus expansion requires careful curation to prevent noise.
-4. **Reproducible & Navigable:** The documentation cleanly separates testing, result inspection, and historical reproduction, supported by 182 passing tests and SHA256-verified result manifests.
+1. **Uncluttered Root:** The root directory is clean, presenting only a focused `README.md` and `REPRODUCE.md`.
+2. **Short Summaries Up Front:** `docs/README.md` summarizes query coverage, milestone progress, and pre-training audits up front, preventing reviewer fatigue from 1,000+ line tracking files.
+3. **Honest, Evidence-Backed Findings:** The README and reports clearly state the primary negative result: off-the-shelf Frozen E5-small is the strongest retriever, and fine-tuning MiniLM did not surpass it.
+4. **Data Quality Insights:** The findings demonstrate clear, actionable insights for Soup: diverse LLM-generated training queries drastically outperform synthetic template queries, and corpus expansion requires careful curation to prevent noise.
+5. **Preserved Technical Depth:** All detailed 1,000+ line allocation worksheets, historical logs, and audits remain fully accessible under logical subdirectories in `docs/`.
