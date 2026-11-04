@@ -1,0 +1,463 @@
+{
+  "metadata": {
+    "source_file": "results/PHASE_1_5_QUERY_AUDIT.json",
+    "audit_rubric": "6-Point Quality Rubric",
+    "evaluator": "Antigravity AI Agent (agentic automated evaluation)"
+  },
+  "sample_counts": {
+    "exp_b_v1_5_records": 85,
+    "exp_c_matched_v1_5_records": 85,
+    "exp_c_full_v1_5_records": 226,
+    "total_audit_records_reviewed": 396
+  },
+  "unique_query_accounting": {
+    "unique_exp_b_queries": 85,
+    "unique_exp_c_matched_queries": 85,
+    "unique_exp_c_full_queries": 226,
+    "c_matched_and_c_full_shared_queries": 29,
+    "unique_queries_across_c_family": 282,
+    "total_unique_queries_evaluated": 367
+  },
+  "overlap_consistency": {
+    "shared_query_count": 29,
+    "status_agreement_pct": 100.0,
+    "rubric_agreement_pct": 100.0,
+    "overlapping_records": [
+      {
+        "query_id": "gen_c_0017_backends-and-ops_7c1dadc9",
+        "query": "What configuration is controlled by the  --model  flag in Soup?",
+        "source_doc": "backends-and-ops.md",
+        "positive_chunk_id": "backends-and-ops::other-goals-chat-code-reasoning-instruct-vision",
+        "status": "ACCEPTED",
+        "rubric": {
+          "answerable_from_chunk_alone": true,
+          "factually_correct": true,
+          "no_unsupported_assumptions": true,
+          "natural_phrasing": true,
+          "appropriate_breadth": true,
+          "semantic_uniqueness": true
+        }
+      },
+      {
+        "query_id": "gen_c_0796_README_778e8be8",
+        "query": "What does the `soup shrink` command do?",
+        "source_doc": "README.md",
+        "positive_chunk_id": "README::soup-documentation::sub_002",
+        "status": "ACCEPTED",
+        "rubric": {
+          "answerable_from_chunk_alone": true,
+          "factually_correct": true,
+          "no_unsupported_assumptions": true,
+          "natural_phrasing": true,
+          "appropriate_breadth": true,
+          "semantic_uniqueness": true
+        }
+      },
+      {
+        "query_id": "gen_c_0798_README_61772f88",
+        "query": "How does Soup handle ship verdict, post in this workflow?",
+        "source_doc": "README.md",
+        "positive_chunk_id": "README::soup-documentation::sub_003",
+        "status": "ACCEPTED",
+        "rubric": {
+          "answerable_from_chunk_alone": true,
+          "factually_correct": true,
+          "no_unsupported_assumptions": true,
+          "natural_phrasing": true,
+          "appropriate_breadth": true,
+          "semantic_uniqueness": true
+        }
+      },
+      {
+        "query_id": "gen_c_1233_gate-2049-resident-vram_3a2a6162",
+        "query": "What memory overhead is caused by logits loss during training preflight?",
+        "source_doc": "benchmarks/gate-2049-resident-vram.md",
+        "positive_chunk_id": "gate-2049-resident-vram::the-rows::sub_014",
+        "status": "ACCEPTED",
+        "rubric": {
+          "answerable_from_chunk_alone": true,
+          "factually_correct": true,
+          "no_unsupported_assumptions": true,
+          "natural_phrasing": true,
+          "appropriate_breadth": true,
+          "semantic_uniqueness": true
+        }
+      },
+      {
+        "query_id": "gen_c_1279_gate-2050-selective-checkpoint_45f26a62",
+        "query": "How does Soup handle counts below cover in this workflow?",
+        "source_doc": "benchmarks/gate-2050-selective-checkpoint.md",
+        "positive_chunk_id": "gate-2050-selective-checkpoint::executed-operations-in-the-separate-profiles::sub_000",
+        "status": "ACCEPTED",
+        "rubric": {
+          "answerable_from_chunk_alone": true,
+          "factually_correct": true,
+          "no_unsupported_assumptions": true,
+          "natural_phrasing": true,
+          "appropriate_breadth": true,
+          "semantic_uniqueness": true
+        }
+      },
+      {
+        "query_id": "gen_c_1296_gate-2050-selective-checkpoint_9b75b327",
+        "query": "What setting does the `--tree` flag configure?",
+        "source_doc": "benchmarks/gate-2050-selective-checkpoint.md",
+        "positive_chunk_id": "gate-2050-selective-checkpoint::decision-and-reproducibility::sub_002",
+        "status": "ACCEPTED",
+        "rubric": {
+          "answerable_from_chunk_alone": true,
+          "factually_correct": true,
+          "no_unsupported_assumptions": true,
+          "natural_phrasing": true,
+          "appropriate_breadth": true,
+          "semantic_uniqueness": true
+        }
+      },
+      {
+        "query_id": "gen_c_1312_gate-655-pinned-store-accounting_538d4de7",
+        "query": "What setting does the `--kind` flag configure?",
+        "source_doc": "benchmarks/gate-655-pinned-store-accounting.md",
+        "positive_chunk_id": "gate-655-pinned-store-accounting::original-measurement-record::sub_006",
+        "status": "ACCEPTED",
+        "rubric": {
+          "answerable_from_chunk_alone": true,
+          "factually_correct": true,
+          "no_unsupported_assumptions": true,
+          "natural_phrasing": true,
+          "appropriate_breadth": true,
+          "semantic_uniqueness": true
+        }
+      },
+      {
+        "query_id": "gen_c_1315_gate-655-pinned-store-accounting_7856fc99",
+        "query": "How does Soup handle splitlines controllers, relative in this workflow?",
+        "source_doc": "benchmarks/gate-655-pinned-store-accounting.md",
+        "positive_chunk_id": "gate-655-pinned-store-accounting::original-measurement-record::sub_008",
+        "status": "ACCEPTED",
+        "rubric": {
+          "answerable_from_chunk_alone": true,
+          "factually_correct": true,
+          "no_unsupported_assumptions": true,
+          "natural_phrasing": true,
+          "appropriate_breadth": true,
+          "semantic_uniqueness": true
+        }
+      },
+      {
+        "query_id": "gen_c_1354_gate-836-bench-train-contract_769286be",
+        "query": "How does Soup implement 2. The fixture, and the four shapes in this configuration?",
+        "source_doc": "benchmarks/gate-836-bench-train-contract.md",
+        "positive_chunk_id": "gate-836-bench-train-contract::2-the-fixture-and-the-four-shapes::sub_000",
+        "status": "ACCEPTED",
+        "rubric": {
+          "answerable_from_chunk_alone": true,
+          "factually_correct": true,
+          "no_unsupported_assumptions": true,
+          "natural_phrasing": true,
+          "appropriate_breadth": true,
+          "semantic_uniqueness": true
+        }
+      },
+      {
+        "query_id": "gen_c_1448_gate-971-async-nvme-source_65ad057f",
+        "query": "How does Soup handle stream probe.py instrument, in this workflow?",
+        "source_doc": "benchmarks/gate-971-async-nvme-source.md",
+        "positive_chunk_id": "gate-971-async-nvme-source::1-the-harness-had-to-change-first::sub_000",
+        "status": "ACCEPTED",
+        "rubric": {
+          "answerable_from_chunk_alone": true,
+          "factually_correct": true,
+          "no_unsupported_assumptions": true,
+          "natural_phrasing": true,
+          "appropriate_breadth": true,
+          "semantic_uniqueness": true
+        }
+      },
+      {
+        "query_id": "gen_c_1586_gate-974-disk-tier-direct-io_5690ae82",
+        "query": "How does Soup execute 1. Warm, position-matched: no regression in this configuration?",
+        "source_doc": "benchmarks/gate-974-disk-tier-direct-io.md",
+        "positive_chunk_id": "gate-974-disk-tier-direct-io::1-warm-position-matched-no-regression::sub_001",
+        "status": "ACCEPTED",
+        "rubric": {
+          "answerable_from_chunk_alone": true,
+          "factually_correct": true,
+          "no_unsupported_assumptions": true,
+          "natural_phrasing": true,
+          "appropriate_breadth": true,
+          "semantic_uniqueness": true
+        }
+      },
+      {
+        "query_id": "gen_c_1587_gate-974-disk-tier-direct-io_33b82d90",
+        "query": "How does Soup handle order slot step, in this workflow?",
+        "source_doc": "benchmarks/gate-974-disk-tier-direct-io.md",
+        "positive_chunk_id": "gate-974-disk-tier-direct-io::1-warm-position-matched-no-regression::sub_002",
+        "status": "ACCEPTED",
+        "rubric": {
+          "answerable_from_chunk_alone": true,
+          "factually_correct": true,
+          "no_unsupported_assumptions": true,
+          "natural_phrasing": true,
+          "appropriate_breadth": true,
+          "semantic_uniqueness": true
+        }
+      },
+      {
+        "query_id": "gen_c_1722_gate-expert-streaming_3e760455",
+        "query": "How do you configure  input  in the Soup configuration file?",
+        "source_doc": "benchmarks/gate-expert-streaming.md",
+        "positive_chunk_id": "gate-expert-streaming::2-decision-rule-written-before-any-run::sub_001",
+        "status": "ACCEPTED",
+        "rubric": {
+          "answerable_from_chunk_alone": true,
+          "factually_correct": true,
+          "no_unsupported_assumptions": true,
+          "natural_phrasing": true,
+          "appropriate_breadth": true,
+          "semantic_uniqueness": true
+        }
+      },
+      {
+        "query_id": "gen_c_1723_gate-expert-streaming_55211e5f",
+        "query": "How does Soup execute 2. Decision rule (written before any run) in this configuration?",
+        "source_doc": "benchmarks/gate-expert-streaming.md",
+        "positive_chunk_id": "gate-expert-streaming::2-decision-rule-written-before-any-run::sub_002",
+        "status": "ACCEPTED",
+        "rubric": {
+          "answerable_from_chunk_alone": true,
+          "factually_correct": true,
+          "no_unsupported_assumptions": true,
+          "natural_phrasing": true,
+          "appropriate_breadth": true,
+          "semantic_uniqueness": true
+        }
+      },
+      {
+        "query_id": "gen_c_1766_gate-v0.72.0-layer-streaming_2125063d",
+        "query": "How do you configure  session  in the Soup configuration file?",
+        "source_doc": "benchmarks/gate-v0.72.0-layer-streaming.md",
+        "positive_chunk_id": "gate-v0.72.0-layer-streaming::honesty-caveats-on-these-numbers::sub_000",
+        "status": "ACCEPTED",
+        "rubric": {
+          "answerable_from_chunk_alone": true,
+          "factually_correct": true,
+          "no_unsupported_assumptions": true,
+          "natural_phrasing": true,
+          "appropriate_breadth": true,
+          "semantic_uniqueness": true
+        }
+      },
+      {
+        "query_id": "gen_c_1886_gate-v0.72.3-breadth_f9106cbd",
+        "query": "How does Soup execute GATE 1 — multi-arch (Mistral / Gemma / Phi) — PASS 14/14 (2026-07-28) in this configuration?",
+        "source_doc": "benchmarks/gate-v0.72.3-breadth.md",
+        "positive_chunk_id": "gate-v0.72.3-breadth::gate-1-multi-arch-mistral-gemma-phi-pass-14-14-2026-07-28::sub_007",
+        "status": "ACCEPTED",
+        "rubric": {
+          "answerable_from_chunk_alone": true,
+          "factually_correct": true,
+          "no_unsupported_assumptions": true,
+          "natural_phrasing": true,
+          "appropriate_breadth": true,
+          "semantic_uniqueness": true
+        }
+      },
+      {
+        "query_id": "gen_c_2031_probe-v0.73.0-what-bounds-streaming_869acc4e",
+        "query": "How does Soup handle pinned host buffers in this workflow?",
+        "source_doc": "benchmarks/probe-v0.73.0-what-bounds-streaming.md",
+        "positive_chunk_id": "probe-v0.73.0-what-bounds-streaming::1-what-this-box-can-actually-do-t1a::sub_000",
+        "status": "ACCEPTED",
+        "rubric": {
+          "answerable_from_chunk_alone": true,
+          "factually_correct": true,
+          "no_unsupported_assumptions": true,
+          "natural_phrasing": true,
+          "appropriate_breadth": true,
+          "semantic_uniqueness": true
+        }
+      },
+      {
+        "query_id": "gen_c_2042_probe-v0.73.0-what-bounds-streaming_d90ea9a6",
+        "query": "How does Soup handle finding transfers essentially in this workflow?",
+        "source_doc": "benchmarks/probe-v0.73.0-what-bounds-streaming.md",
+        "positive_chunk_id": "probe-v0.73.0-what-bounds-streaming::3-where-the-step-actually-goes-t1c::sub_002",
+        "status": "ACCEPTED",
+        "rubric": {
+          "answerable_from_chunk_alone": true,
+          "factually_correct": true,
+          "no_unsupported_assumptions": true,
+          "natural_phrasing": true,
+          "appropriate_breadth": true,
+          "semantic_uniqueness": true
+        }
+      },
+      {
+        "query_id": "gen_c_2146_run-m1-8gb-mlx-sft_e310baba",
+        "query": "What setting does the `--mlx-community--` flag configure?",
+        "source_doc": "benchmarks/run-m1-8gb-mlx-sft.md",
+        "positive_chunk_id": "run-m1-8gb-mlx-sft::the-failure-the-fixture-23-recommends-does-not-load::sub_000",
+        "status": "ACCEPTED",
+        "rubric": {
+          "answerable_from_chunk_alone": true,
+          "factually_correct": true,
+          "no_unsupported_assumptions": true,
+          "natural_phrasing": true,
+          "appropriate_breadth": true,
+          "semantic_uniqueness": true
+        }
+      },
+      {
+        "query_id": "gen_c_2234_unsloth-4bit-weight-dtypes_c8231cf3",
+        "query": "How does Soup handle import unsloth before in this workflow?",
+        "source_doc": "benchmarks/unsloth-4bit-weight-dtypes.md",
+        "positive_chunk_id": "unsloth-4bit-weight-dtypes::reproduce-the-dtype-observation::sub_000",
+        "status": "ACCEPTED",
+        "rubric": {
+          "answerable_from_chunk_alone": true,
+          "factually_correct": true,
+          "no_unsupported_assumptions": true,
+          "natural_phrasing": true,
+          "appropriate_breadth": true,
+          "semantic_uniqueness": true
+        }
+      },
+      {
+        "query_id": "gen_c_2237_2185.fixed_aabed8d9",
+        "query": "How do I use `--tasks` when running fine-tuning commands in Soup?",
+        "source_doc": "changelog.d/0.77.1/2185.fixed.md",
+        "positive_chunk_id": "2185.fixed::preamble::sub_000",
+        "status": "ACCEPTED",
+        "rubric": {
+          "answerable_from_chunk_alone": true,
+          "factually_correct": true,
+          "no_unsupported_assumptions": true,
+          "natural_phrasing": true,
+          "appropriate_breadth": true,
+          "semantic_uniqueness": true
+        }
+      },
+      {
+        "query_id": "gen_c_2238_2185.fixed_e9327773",
+        "query": "What does the  soup eval quant-check  command do in the Soup CLI?",
+        "source_doc": "changelog.d/0.77.1/2185.fixed.md",
+        "positive_chunk_id": "2185.fixed::preamble::sub_000",
+        "status": "ACCEPTED",
+        "rubric": {
+          "answerable_from_chunk_alone": true,
+          "factually_correct": true,
+          "no_unsupported_assumptions": true,
+          "natural_phrasing": true,
+          "appropriate_breadth": true,
+          "semantic_uniqueness": true
+        }
+      },
+      {
+        "query_id": "gen_c_2242_2315.added_30f35653",
+        "query": "What does the `soup plan` command do?",
+        "source_doc": "changelog.d/0.77.1/2315.added.md",
+        "positive_chunk_id": "2315.added::preamble",
+        "status": "ACCEPTED",
+        "rubric": {
+          "answerable_from_chunk_alone": true,
+          "factually_correct": true,
+          "no_unsupported_assumptions": true,
+          "natural_phrasing": true,
+          "appropriate_breadth": true,
+          "semantic_uniqueness": true
+        }
+      },
+      {
+        "query_id": "gen_c_2243_2315.added_eb49d10d",
+        "query": "How does Soup handle on-policy minillm planning. in this workflow?",
+        "source_doc": "changelog.d/0.77.1/2315.added.md",
+        "positive_chunk_id": "2315.added::preamble",
+        "status": "ACCEPTED",
+        "rubric": {
+          "answerable_from_chunk_alone": true,
+          "factually_correct": true,
+          "no_unsupported_assumptions": true,
+          "natural_phrasing": true,
+          "appropriate_breadth": true,
+          "semantic_uniqueness": true
+        }
+      },
+      {
+        "query_id": "gen_c_2246_2329.changed_63f86f5a",
+        "query": "How does Soup execute 2329.changed in this configuration?",
+        "source_doc": "changelog.d/0.77.1/2329.changed.md",
+        "positive_chunk_id": "2329.changed::preamble::sub_001",
+        "status": "ACCEPTED",
+        "rubric": {
+          "answerable_from_chunk_alone": true,
+          "factually_correct": true,
+          "no_unsupported_assumptions": true,
+          "natural_phrasing": true,
+          "appropriate_breadth": true,
+          "semantic_uniqueness": true
+        }
+      },
+      {
+        "query_id": "gen_c_2247_2333.added_306c9ab6",
+        "query": "How does Soup execute 2333.added in this configuration?",
+        "source_doc": "changelog.d/0.77.1/2333.added.md",
+        "positive_chunk_id": "2333.added::preamble",
+        "status": "ACCEPTED",
+        "rubric": {
+          "answerable_from_chunk_alone": true,
+          "factually_correct": true,
+          "no_unsupported_assumptions": true,
+          "natural_phrasing": true,
+          "appropriate_breadth": true,
+          "semantic_uniqueness": true
+        }
+      },
+      {
+        "query_id": "gen_c_2248_2372.fixed_57b9395c",
+        "query": "How does Soup execute 2372.fixed in this configuration?",
+        "source_doc": "changelog.d/0.77.1/2372.fixed.md",
+        "positive_chunk_id": "2372.fixed::preamble::sub_000",
+        "status": "ACCEPTED",
+        "rubric": {
+          "answerable_from_chunk_alone": true,
+          "factually_correct": true,
+          "no_unsupported_assumptions": true,
+          "natural_phrasing": true,
+          "appropriate_breadth": true,
+          "semantic_uniqueness": true
+        }
+      },
+      {
+        "query_id": "gen_c_2249_2372.fixed_77ddd4e5",
+        "query": "How does Soup handle forward without argument in this workflow?",
+        "source_doc": "changelog.d/0.77.1/2372.fixed.md",
+        "positive_chunk_id": "2372.fixed::preamble::sub_001",
+        "status": "ACCEPTED",
+        "rubric": {
+          "answerable_from_chunk_alone": true,
+          "factually_correct": true,
+          "no_unsupported_assumptions": true,
+          "natural_phrasing": true,
+          "appropriate_breadth": true,
+          "semantic_uniqueness": true
+        }
+      },
+      {
+        "query_id": "gen_c_2251_2386.added_fcc57f06",
+        "query": "How does Soup handle grpo trains pre-quantized in this workflow?",
+        "source_doc": "changelog.d/0.77.1/2386.added.md",
+        "positive_chunk_id": "2386.added::preamble::sub_000",
+        "status": "ACCEPTED",
+        "rubric": {
+          "answerable_from_chunk_alone": true,
+          "factually_correct": true,
+          "no_unsupported_assumptions": true,
+          "natural_phrasing": true,
+          "appropriate_breadth": true,
+          "semantic_uniqueness": true
+        }
+      }
+    ]
+  }
+}

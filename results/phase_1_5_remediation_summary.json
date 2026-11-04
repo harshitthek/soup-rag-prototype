@@ -1,0 +1,59 @@
+{
+  "exp_a_matched_v1_5": {
+    "query_count": 825,
+    "unique_positive_chunks": 586,
+    "provenance": {
+      "accepted_unchanged": 825
+    },
+    "query_types": {
+      "synthetic": 825
+    }
+  },
+  "exp_b_v1_5": {
+    "query_count": 825,
+    "unique_positive_chunks": 586,
+    "provenance": {
+      "accepted_unchanged": 323,
+      "regenerated_and_accepted": 502
+    },
+    "query_types": {
+      "how_to": 327,
+      "conceptual": 309,
+      "parameter": 184,
+      "troubleshooting": 5
+    }
+  },
+  "exp_c_matched_v1_5": {
+    "query_count": 825,
+    "unique_positive_chunks": 565,
+    "provenance": {
+      "accepted_unchanged": 521,
+      "regenerated_and_accepted": 304
+    },
+    "query_types": {
+      "conceptual": 583,
+      "how_to": 171,
+      "parameter": 70,
+      "troubleshooting": 1
+    },
+    "subset_of_c_full": true
+  },
+  "exp_c_full_v1_5": {
+    "query_count": 2257,
+    "unique_positive_chunks": 1522,
+    "provenance": {
+      "regenerated_and_accepted": 1031,
+      "accepted_unchanged": 1226
+    },
+    "query_types": {
+      "conceptual": 1353,
+      "how_to": 594,
+      "parameter": 303,
+      "troubleshooting": 7
+    }
+  },
+  "matching_verification": {
+    "a_matched_vs_b_identical_positive_chunks": true,
+    "c_matched_is_strict_subset_of_c_full": true
+  }
+}

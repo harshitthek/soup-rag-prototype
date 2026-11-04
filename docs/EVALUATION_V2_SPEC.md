@@ -1,3 +1,6 @@
+> [!NOTE]
+> **Historical Milestone Specification:** This document specifies the methodology for the initial Evaluation v2 milestone (which established the frozen 54-query manual benchmark and the 4-way retriever comparison). The experimental matrix was subsequently expanded in Phases 1.5–3.1 into a 9-retriever benchmark evaluating diverse training query generation and corpus expansion. For the authoritative Phase 3 benchmark results and audit, see [`results/PHASE_3_BENCHMARK_EVALUATION_REPORT.md`](../results/PHASE_3_BENCHMARK_EVALUATION_REPORT.md) and [`results/PHASE_3_1_INTEGRITY_AUDIT.md`](../results/PHASE_3_1_INTEGRITY_AUDIT.md).
+
 # Soup RAG Evaluation v2 — Experiment Specification
 
 Canonical methodology for the v2 evaluation. Implementation branches from this

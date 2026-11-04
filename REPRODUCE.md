@@ -1,111 +1,160 @@
-# Reproduction Guide: Soup Embedding Fine-Tuning Prototype
+# Reproduction & Verification Guide: Soup RAG Prototype
 
-This guide provides exact, copy-pasteable instructions to verify the benchmark numbers or reproduce the entire pipeline from scratch.
+This guide provides step-by-step instructions for verifying test invariants, inspecting audited Phase 3 benchmark outputs, running read-only retrieval evaluations, and understanding the training and dataset reproduction workflows.
 
----
-
-## 1. Quick Verification (Fast Path: ~30 Seconds)
-
-If you already have the repository cloned and the fine-tuned adapter weights in `output_embedding/`, you can verify the benchmark numbers immediately without retraining:
-
-### Step 1: Run the Automated Test Suite
-Verify that all formatting, section deduplication, model adapter loading, and configuration invariants pass:
-```bash
-pytest tests/test_retrieval_pipeline.py -v
-```
-*Expected: 15 passed in ~23s.*
-
-### Step 2: Evaluate the Fine-Tuned Model on Held-Out Queries
-```bash
-python scripts/evaluate_retrieval.py \
-    --adapter-dir output_embedding \
-    --output results/candidate.json
-```
-*Expected Terminal Output:*
-```
-==================================================
-  Mode: candidate
-  recall@1: 0.7565
-  recall@3: 0.9336
-  recall@5: 0.9718
-  mrr@10: 0.8477
-==================================================
-```
-
-### Step 3: Run Paired Bootstrap Comparison
-```bash
-python scripts/compare_results.py \
-    --baseline results/baseline.json \
-    --candidate results/candidate.json \
-    --output results/comparison.md
-```
-*Check output in `results/comparison.md`: Recall@1 delta = +0.2113, 95% CI [+0.1650, +0.2555].*
+> [!NOTE]
+> **Operational Distinctions:**
+> 1. **Running tests:** Quick assertion checks validating invariants, formatting, and mathematical consistency (`pytest tests/`).
+> 2. **Inspecting results:** Reading precomputed, checksum-verified Phase 3 benchmark artifacts in `results/phase3/`.
+> 3. **Running retrieval evaluation:** Read-only execution of trained adapters or frozen baselines against benchmark queries (`scripts/run_retrieval.py`).
+> 4. **Retraining adapters:** Multi-minute training runs via Soup CLI modifying LoRA weights. All five authorized adapters are already trained and evaluated; re-running training is not required for verification.
 
 ---
 
-## 2. Full Reproduction from Scratch (~7 Minutes)
+## 1. Environment Setup
 
-To rebuild the corpus, regenerate queries, mine triplets, train the LoRA adapter with Soup, and re-evaluate from zero:
+### System Prerequisites
+- **OS:** Linux or macOS (Apple Silicon MPS supported).
+- **Python:** Python 3.10+ (tested on Python 3.10 and 3.14).
+- **Package Manager:** `uv` (recommended) or standard `pip`.
 
-### Prerequisites & Environment Setup
-
-Python 3.10+ is required. Install required dependencies:
+### Setup Virtual Environment
 ```bash
-pip install torch transformers "peft>=0.14.0" datasets numpy pyyaml rich pytest
-pip install soup-cli
+# Using uv (fastest)
+uv venv .venv
+source .venv/bin/activate
+uv pip install -r requirements.txt
+
+# Or using standard python venv
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
 ```
 
-### Step 1: Chunk the Markdown Documentation
-Reads the 12 Markdown files, applies ATX heading splitting, sub-splits sections exceeding 220 tokens, and assigns document-level train/test splits (8 train docs / 4 held-out test docs):
+---
+
+## 2. Fast Verification: Running the Automated Test Suite
+
+Run the full automated test suite (182 unit and invariant assertions) to verify corpus integrity, validator logic, model loading, and Phase 1–3 statistical invariants:
+
+```bash
+pytest tests/ -v
+```
+
+*Expected output:*
+```
+============================= 182 passed in ~24s =============================
+```
+
+### Key Test Coverage Areas:
+- `tests/test_retrieval_pipeline.py`: Chunk formatting, token boundaries, and base model loading.
+- `tests/test_manual_queries_validation.py`: Schema validation and heading overlap checks for the 54 manual queries.
+- `tests/test_retrieval_metrics.py`: Ranking metric implementations (Hit@K, Recall@K, MRR@K).
+- `tests/test_phase1_*_invariants.py`: Invariant checks on training datasets, query intent splits, and corpus manifests.
+- `tests/test_phase2_1_invariants.py`: Bit-exact configuration integrity checks across all 5 trained adapters.
+- `tests/test_phase3_invariants.py`: Bootstrap resampling invariants (10,000 iterations, seed 42, document stratification).
+
+---
+
+## 3. Inspecting Precomputed Phase 3 Benchmark Results
+
+All Phase 3 benchmark runs, per-query ranked results, aggregate comparisons, and bootstrap confidence intervals are permanently committed in `results/phase3/`.
+
+### Verify File Checksums
+Verify that all 16 Phase 3 result artifacts match their pinned SHA256 checksums:
+```bash
+cd results/phase3
+sha256sum -c manifest.sha256
+cd ../..
+```
+*Expected output:* All 16 files report `OK`.
+
+### Primary Result Artifacts
+- `results/phase3/aggregate_comparison.json`: Complete micro and macro metrics (Hit@1, Recall@3, MRR@10, etc.) across all 9 retrievers.
+- `results/phase3/bootstrap_ci.json`: 10,000-iteration document-stratified paired percentile bootstrap intervals for all retriever contrasts.
+- `results/phase3/per_query_ranked_results.json`: Full top-10 retrieved chunk rankings for all 54 queries across all 9 retrievers.
+- `results/phase3/failure_classification_summary.json`: Detailed 7-leaf root-cause failure taxonomy for all non-hit queries.
+
+---
+
+## 4. Running Read-Only Retrieval on Benchmark Queries
+
+You can execute retrieval evaluation for any individual retriever against the frozen 54-query manual benchmark (`data/manual_queries.jsonl`) without modifying any trained checkpoints or datasets.
+
+### Evaluate Frozen Baselines
+```bash
+# 1. Classical BM25 Lexical Baseline
+python scripts/run_retrieval.py --retriever bm25 --output results/test_bm25.json
+
+# 2. Frozen MiniLM Baseline
+python scripts/run_retrieval.py --retriever mini_lm_frozen --output results/test_minilm.json
+
+# 3. Frozen E5-small Baseline (Strongest Retriever)
+python scripts/run_retrieval.py --retriever e5_small --output results/test_e5.json
+```
+
+### Evaluate Fine-Tuned Adapters
+```bash
+# 4. Baseline Soup Adapter (A-full: output_embedding/)
+python scripts/run_retrieval.py --retriever mini_lm_soup --output results/test_soup.json
+
+# 5. Top-Performing MiniLM Adapter (C-matched-balanced)
+python scripts/run_retrieval.py \
+    --retriever mini_lm_adapter \
+    --adapter-dir output/adapter_exp_c_matched_balanced \
+    --output results/test_c_matched_balanced.json
+
+# 6. Diverse Query Adapter (Experiment B)
+python scripts/run_retrieval.py \
+    --retriever mini_lm_adapter \
+    --adapter-dir output/adapter_exp_b \
+    --output results/test_b.json
+```
+
+### Generate Comparative Markdown Summary
+To compare any set of generated evaluation runs:
+```bash
+python scripts/compare_retrievers.py
+```
+*Outputs comparative ranking tables to `results/v2/comparison.md`.*
+
+> [!WARNING]
+> **Batch Script Note:** `scripts/evaluate_phase3_retrievers.py` is a batch script that sequentially evaluates all 9 retrievers and overwrites `results/phase3/`. It does not support CLI flags (`--help`). Do **not** execute it unless you intend to rerun the full evaluation suite from scratch.
+
+---
+
+## 5. Historical Pipeline Reproduction (Phase 1 Synthetic Benchmark)
+
+The original Phase 1 prototype used 497 synthetically generated queries over 12 Soup documentation files. This workflow is documented here for historical completeness.
+
+### Step 1: Chunk Markdown Documentation
 ```bash
 python scripts/prepare_corpus.py
 ```
-*Output: `data/corpus.jsonl` (1,068 chunks) and `data/document_split.json`.*
+*Reads the 12 documentation files, applies ATX heading splitting, sub-splits sections exceeding 220 tokens with 28 tokens overlap, and produces `data/corpus.jsonl` (1,068 chunks) and `data/document_split.json`.*
 
 ### Step 2: Generate Synthetic Evaluation Queries
-Deterministically synthesizes training queries and 497 held-out test queries from the document splits:
 ```bash
 python scripts/generate_queries.py
 ```
-*Output: `data/train_query_labels.jsonl` (1,078 train queries) and `data/eval_queries.jsonl` (497 test queries).*
+*Generates `data/train_query_labels.jsonl` (1,078 synthetic queries) and `data/eval_queries.jsonl` (497 held-out queries).*
 
-### Step 3: Mine Hard Negatives with Section Deduplication
-Computes cosine similarities on prefixed chunks, applies section deduplication (avoiding sibling and relevant sections), and generates top-3 negatives per query with prepended heading prefixes:
+### Step 3: Mine Hard Negatives
 ```bash
 python scripts/mine_hard_negatives.py --num-negatives 3
 ```
-*Output: `data/train_triplets.jsonl` (3,234 triplets) and `data/hard_negatives.jsonl` (3,234 records across 618 chunks).*
+*Mines top-3 hard negatives per query using dense cosine similarity with section deduplication, writing `data/train_triplets.jsonl` (3,234 triplets).*
 
-### Step 4: Evaluate Baseline Retrieval (Before Fine-Tuning)
-Ranks all 1,068 chunks for the 497 test queries using the frozen `sentence-transformers/all-MiniLM-L6-v2` base model:
-```bash
-python scripts/evaluate_retrieval.py --output results/baseline.json
-```
-*Expected: Recall@1: 0.5453, Recall@3: 0.7606, Recall@5: 0.8209, MRR@10: 0.6615.*
-
-### Step 5: Fine-Tune with Soup
-Launches Soup's native embedding trainer (`val_split: 0.0`, triplet loss, LoRA $r=16, \alpha=32$):
+### Step 4: Fine-Tune Adapter via Soup CLI
 ```bash
 soup train -y --config config/embedding.yaml
 ```
-*Runtime:*
-- **Apple Silicon (MPS)**: ~6 minutes (2,427 steps at ~6.5–8.5 it/s)
-- **NVIDIA GPU (CUDA)**: ~2–4 minutes
-- **CPU**: ~80 minutes
-*Output: Checkpoints and final LoRA adapter in `output_embedding/`.*
+*Executes LoRA fine-tuning ($r=16, \alpha=32$) over 3 epochs (~6 minutes on Apple Silicon MPS), saving adapter weights to `output_embedding/`.*
 
-### Step 6: Evaluate Fine-Tuned Retrieval (After Fine-Tuning)
-Evaluates the newly trained LoRA adapter on the exact same 497 held-out test queries:
+### Step 5: Evaluate on Synthetic Queries
 ```bash
-python scripts/evaluate_retrieval.py \
-    --adapter-dir output_embedding \
-    --output results/candidate.json
-```
-*Expected: Recall@1: 0.7565, Recall@3: 0.9336, Recall@5: 0.9718, MRR@10: 0.8477.*
-
-### Step 7: Compute Paired Bootstrap Uncertainty Intervals
-Runs paired bootstrap resampling (10,000 iterations) to compute 95% confidence intervals on paired metric deltas:
-```bash
+python scripts/evaluate_retrieval.py --output results/baseline.json
+python scripts/evaluate_retrieval.py --adapter-dir output_embedding --output results/candidate.json
 python scripts/compare_results.py \
     --baseline results/baseline.json \
     --candidate results/candidate.json \
@@ -114,65 +163,25 @@ python scripts/compare_results.py \
 
 ---
 
-## 3. Troubleshooting & Notes
+## 6. Adapter Retraining Workflows (Phase 2 Matrix)
 
-- **Apple Silicon Warning**: During training or matrix multiplication on macOS, you may see benign PyTorch/NumPy runtime warnings regarding BLAS floating-point exception status registers. These do not affect numerical correctness and are safely filtered in testing scripts.
-- **Paths**: All configuration paths are relative to the repository root. Ensure commands are executed from the repository root directory.
+During Phase 2, five authorized adapter configurations were trained to isolate the effects of query diversity, corpus size, and intent balancing:
+
+| Run | Configuration File | Training Dataset | Optimizer Updates | Output Directory |
+|---|---|---|---:|---|
+| **A-matched** | `config/embedding_exp_a_matched.yaml` | `data/triplets_exp_a_matched_v1_5.jsonl` | 1,857 | `output/adapter_exp_a_matched/` |
+| **B** | `config/embedding_exp_b.yaml` | `data/triplets_exp_b_v1_5.jsonl` | 1,857 | `output/adapter_exp_b/` |
+| **C-matched** | `config/embedding_exp_c_matched.yaml` | `data/triplets_exp_c_matched_v1_5.jsonl` | 1,857 | `output/adapter_exp_c_matched/` |
+| **C-matched-balanced** | `config/embedding_exp_c_matched_balanced.yaml` | `data/triplets_exp_c_matched_balanced_v1_6.jsonl` | 1,857 | `output/adapter_exp_c_matched_balanced/` |
+| **C-full** | `config/embedding_exp_c_full.yaml` | `data/triplets_exp_c_full_v1_5.jsonl` | 5,079 | `output/adapter_exp_c_full/` |
+
+> [!CAUTION]
+> **Immutable Weights:** All five adapter weight directories under `output/` and the baseline in `output_embedding/` are verified and locked. `scripts/train_authorized_adapters.py` includes a safety guard that will refuse to overwrite existing output directories. Do not re-execute training without user authorization.
 
 ---
 
-## 4. Evaluation v2 (manual benchmark)
+## 7. Troubleshooting & Notes
 
-The v2 layer evaluates the existing adapter and baselines on 54 owner-approved
-manual queries, manually crafted by the project owner with AI assistance. It
-never retrains the adapter and never modifies v1 data.
-
-Environment (once):
-
-```bash
-uv venv .venv
-uv pip install --python .venv/bin/python -r requirements.txt
-```
-
-Dataset workflow (already complete; documented for revalidation):
-
-```bash
-# 1. Queries were manually crafted by the owner with AI assistance,
-#    then owner-reviewed and frozen
-#    (worksheet: docs/EVALUATION_V2_COVERAGE.md)
-# 2. Verbatim transcription into data/manual_queries.jsonl; 54 records
-# 3. Validate (errors block; overlap flags are provisional review material)
-.venv/bin/python scripts/validate_manual_queries.py
-.venv/bin/python scripts/validate_manual_queries.py --semantic   # optional embedding-based flags
-# 4. Frozen: query-set fingerprint
-#    971e157083c31e5e55131a35597dc492d20996a02c7a491543e02d7cbef362b3
-```
-
-Final split: 39 primary / 15 overlap. The 18 original overlap candidates were
-audited against chunk text (`docs/EVALUATION_V2_OVERLAP_AUDIT.md`); 15 were
-confirmed and 3 reclassified as primary with owner approval.
-
-Expected validator output: `checked 54 queries`, `errors: 0`, `warnings: 0`,
-`overlap flags: 1` (`manual_010`, a provisional lexical flag against the
-two-line training chunk `backends-and-ops::machine-readable-output`; the real
-registry-diff duplicate is already labeled `overlap`).
-
-Four-way retrieval run:
-
-```bash
-.venv/bin/python scripts/run_retrieval.py --retriever mini_lm_frozen --output results/v2/mini_lm_frozen.json
-.venv/bin/python scripts/run_retrieval.py --retriever mini_lm_soup   --output results/v2/mini_lm_soup.json
-.venv/bin/python scripts/run_retrieval.py --retriever bm25           --output results/v2/bm25.json
-.venv/bin/python scripts/run_retrieval.py --retriever e5_small       --output results/v2/e5_small.json
-.venv/bin/python scripts/compare_retrievers.py                       # -> results/v2/comparison.md
-```
-
-Expected micro metrics (Hit@1 / Hit@5 / MRR@10): E5-small-v2
-0.6852 / 0.8704 / 0.7834; MiniLM frozen 0.5741 / 0.8704 / 0.6928;
-MiniLM + Soup 0.5370 / 0.7963 / 0.6501; BM25 0.4815 / 0.7222 / 0.5953.
-All four result files must share corpus fingerprint `76ab5e88…` and
-query-set fingerprint `971e1570…`; the report must state the no-p-value,
-four-document caveat. Repeated report generation is deterministic; the
-verification history is recorded in `docs/EVALUATION_V2_PROGRESS.md`.
-
-Methodology and gates: `docs/EVALUATION_V2_SPEC.md`.
+- **macOS / Apple Silicon Floating-Point Warnings:** During matrix operations on MPS, you may observe benign runtime warnings regarding BLAS floating-point exception status flags (`fpexception: ...`). These are internal PyTorch/Metal status messages and do not affect numerical correctness.
+- **Paths and Working Directory:** All configuration paths and script commands assume execution from the repository root directory (`soup-rag-prototype/`).
+- **Vendored Upstream Documentation:** Files under `data/raw_docs/` are vendored upstream reference snapshots of Soup CLI documentation (Apache-2.0). They serve as the raw corpus source text, not instructions for this repository. See `data/raw_docs/ATTRIBUTION.md` for licensing and provenance details.

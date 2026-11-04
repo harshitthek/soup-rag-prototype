@@ -229,6 +229,18 @@ def main() -> None:
         description="Mine hard negatives for training triplets using baseline embeddings."
     )
     parser.add_argument(
+        "--corpus-path",
+        type=Path,
+        default=None,
+        help="Path to corpus JSONL (default: data/corpus.jsonl)",
+    )
+    parser.add_argument(
+        "--queries-path",
+        type=Path,
+        default=None,
+        help="Path to queries JSONL (default: data/train_query_labels.jsonl)",
+    )
+    parser.add_argument(
         "--num-negatives",
         type=int,
         default=3,
@@ -249,6 +261,8 @@ def main() -> None:
     args = parser.parse_args()
     mine_hard_negatives(
         num_negatives=args.num_negatives,
+        corpus_path=args.corpus_path,
+        queries_path=args.queries_path,
         output_triplets=args.output_triplets,
         output_hard_negatives=args.output_hard_negatives,
     )

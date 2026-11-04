@@ -1,3 +1,6 @@
+> [!NOTE]
+> **Historical Implementation Record:** This document records the implementation progression through the initial Evaluation v2 milestone (Phases 0–7 and PR #3 reviews, completed 2026-11-01). Subsequent research expanded the project through Phase 1.5–1.10 (training data generation, audit, and experiment locks), Phase 2.0–2.1 (adapter retraining and verification), and Phase 3.0–3.1 (9-retriever benchmark and statistical audit). For the definitive Phase 3 results and reports, see [`results/PHASE_3_BENCHMARK_EVALUATION_REPORT.md`](../results/PHASE_3_BENCHMARK_EVALUATION_REPORT.md) and [`results/PHASE_3_1_INTEGRITY_AUDIT.md`](../results/PHASE_3_1_INTEGRITY_AUDIT.md).
+
 # Evaluation v2 — Implementation Record
 
 Living log of implementation progress, decisions, test results, and

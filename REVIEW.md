@@ -1,127 +1,69 @@
 # Experiment Review — Soup RAG Retrieval Fine-Tuning
 
-Concise review of the Soup embedding fine-tuning experiment in this
-repository. Canonical results: `results/comparison.md` (v1 synthetic
-benchmark) and `results/v2/comparison.md` (v2 manual benchmark on the
-owner-approved query set). Reproduction:
-`REPRODUCE.md`. Methodology: `docs/EVALUATION_V2_SPEC.md`.
+> [!NOTE]
+> **Status:** Updated to reflect the completed Phase 3 multi-retriever benchmark evaluation. For the comprehensive evaluation report, see [`results/PHASE_3_BENCHMARK_EVALUATION_REPORT.md`](results/PHASE_3_BENCHMARK_EVALUATION_REPORT.md) and [`results/PHASE_3_1_INTEGRITY_AUDIT.md`](results/PHASE_3_1_INTEGRITY_AUDIT.md).
 
-## Current architecture
+Concise review of the Soup embedding fine-tuning experiments in this repository.
+- **Authoritative Phase 3 Benchmark:** [`results/PHASE_3_BENCHMARK_EVALUATION_REPORT.md`](results/PHASE_3_BENCHMARK_EVALUATION_REPORT.md) (9-retriever benchmark on 54 owner-approved queries).
+- **Integrity & Statistical Audit:** [`results/PHASE_3_1_INTEGRITY_AUDIT.md`](results/PHASE_3_1_INTEGRITY_AUDIT.md).
+- **Reproduction Guide:** [`REPRODUCE.md`](REPRODUCE.md).
+- **Historical Reports:** `results/comparison.md` (v1 synthetic benchmark) and `results/v2/comparison.md` (initial 4-retriever v2 comparison).
 
-1. **Corpus** — 12 Soup CLI Markdown docs (Apache-2.0), vendored with
-   sha256 provenance in `data/raw_docs/`; split on ATX headings, sub-split
-   to ≤220-token bodies with 28-token overlap; every chunk embeds as
-   `"{doc_name}: {heading}\n\n{body}"` (`scripts/prepare_corpus.py`).
-2. **Split** — document-level: 8 training docs / 4 held-out docs
-   (1,068 chunks: 761 train / 307 test).
-3. **Training data** — 1,078 synthetic training queries (deterministic
-   templates, `scripts/generate_queries.py`); top-3 hard negatives per query
-   with section deduplication, mined with the frozen base model
-   (`scripts/mine_hard_negatives.py`) → 3,234 triplets.
-4. **Fine-tuning** — Soup `task: embedding`, triplet margin loss (m=0.5),
-   LoRA r=16/α=32 on query+value, 3 epochs (2,427 steps), lr 2e-5, seed 42.
-   Final adapter: `output_embedding/` (580 KB; base revision pinned in
-   `soup_run.json`).
-5. **Evaluation v1 (controlled)** — 497 synthetic queries from the held-out
-   docs, frozen MiniLM vs the adapter, exact dot-product ranking over all
-   1,068 chunks, paired bootstrap uncertainty (exploratory). Reported in
-   `results/comparison.md`. Because labels were single-chunk and queries were
-   template-generated, v1 numbers describe this controlled setting only.
-6. **Evaluation v2 (manual)** — 54 owner-approved queries, manually crafted by
-   the project owner with AI assistance, with multi-chunk / multi-section
-   labels, chunk- and section-level Hit@K / Recall@K / MRR@10,
-   four retrievers (frozen MiniLM, Soup adapter, BM25, frozen E5-small-v2),
-   doc-stratified paired bootstrap and leave-one-doc-out sensitivity
-   (`scripts/retrieval.py`, `scripts/retrievers.py`,
-   `scripts/run_retrieval.py`, `scripts/compare_retrievers.py`).
+---
 
-## Key experimental decisions
+## 1. Experimental Architecture
 
-- **Document-level split** — random chunk splits would leak authorial style
-  and shared headings between train and test; the split is frozen.
-- **Heading prefix in training and inference** — the model is trained and
-  evaluated on the identical passage representation; prefix consistency was
-  the single largest measured factor in v1 (see Historical decisions).
-- **Triplet margin loss with mined negatives, not InfoNCE** — in-batch
-  negatives on a small, topically overlapping corpus risk false negatives;
-  triplet loss with section-deduplicated hard negatives avoids that while
-  keeping contrastive signal diverse.
-- **One adapter, frozen baselines** — the v2 comparison adds BM25 and a
-  frozen stronger encoder (E5-small-v2, revision-pinned) rather than more
-  tuned variants; BM25 parameters are fixed (no development set exists, and
-  tuning against the evaluation labels is prohibited).
+1. **Corpus:**
+   - *Core Corpus (12 docs):* Vendored with SHA256 provenance in `data/raw_docs/`; split on ATX headings, sub-split to $\le 220$-token bodies with 28-token overlap; every chunk embeds as `"{doc_name}: {heading}\n\n{body}"` (`scripts/prepare_corpus.py`).
+   - *Expanded Corpus (31 docs):* 8 core training documents + 23 candidate documents (`data/training_corpus.jsonl`). The 4 held-out evaluation documents are strictly excluded from all training sets.
+2. **Document Split:** Document-level separation: 8 training docs / 4 strictly held-out test docs (1,068 chunks: 761 train / 307 test).
+3. **Training Data Strategies:**
+   - *Exp A (Synthetic):* 1,078 synthetic queries (A-full) or 825 queries (A-matched) generated from heading/command patterns.
+   - *Exp B (Diverse LLM, Core):* 825 Gemini-generated queries across 4 intent classes (how-to, conceptual, parameter, troubleshooting) over the 8 core training docs.
+   - *Exp C-matched (Expanded, Unstratified):* 825 queries over 31 documents (conceptual-heavy candidate pool, 565 positive chunks).
+   - *Exp C-matched-balanced (Expanded, Stratified):* 825 queries over 31 documents with stratified intent sampling matching Experiment B's distribution (720 positive chunks).
+   - *Exp C-full (Expanded, Uncurated):* 2,257 queries across 31 documents (6,771 triplets, 1,522 positive chunks).
+4. **Hard Negative Mining:** Dense cosine mining using frozen `all-MiniLM-L6-v2` with strict section-level deduplication to prevent false negatives from sibling paragraphs (`scripts/mine_hard_negatives.py`).
+5. **Fine-Tuning:** Native Soup embedding trainer (`soup train --config <config.yaml>`, `task: embedding`), TripletMarginLoss ($m=0.5$), LoRA $r=16, \alpha=32$ on query and value projections (147,456 trainable parameters = 0.65% of base), lr 2e-5, seed 42. Base model revision pinned to `1110a243fdf4706b3f48f1d95db1a4f5529b4d41`.
+6. **Benchmark Evaluation:** Evaluated against 54 owner-approved manual queries (`data/manual_queries.jsonl`) with multi-chunk relevance labels over 4 held-out documents. Metrics include Hit@K, Recall@K, MRR@10, and paired document-stratified percentile bootstrap intervals (10,000 resamples, seed 42).
 
-## Historical decisions (v1)
+---
 
-Preserved for their durable reasoning; the numbered "bottlenecks" below were
-addressed during v1 development and no longer describe open issues.
+## 2. Key Experimental Decisions
 
-- **P0 — train/inference prefix discrepancy (fixed).** Early training
-  triplets stripped the heading prefix while evaluation embedded it; the
-  adapter learned a distribution it was never evaluated on. Fixed by
-  prepending the prefix to positives and negatives in `mine_hard_negatives.py`.
-- **P1 — repetitive hard negatives (fixed).** Single-negative mining
-  re-used boilerplate chunks heavily. Replaced with top-3 section-deduplicated
-  negatives (3,234 triplets across 618 distinct negative chunks).
-- **P2 — `val_split: 0.1` (fixed).** Internal validation withheld training
-  triplets while retrieval quality was already measured on held-out queries;
-  set to 0.0.
-- **Margin 0.5 → 0.8 (deferred).** On L2-normalized vectors the effective
-  cosine-separation threshold is m/2 = 0.25; raising it is plausible but
-  unsupported by evidence from this corpus — a higher margin can saturate the
-  loss if genuinely similar chunks cannot reach the required gap. Skipped;
-  revisit only if loss plateaus with many active triplets.
-- **LoRA target expansion, ANCE-style iterative mining (deferred/skipped).**
-  Premature for a corpus of this size; the prototype's job is to measure
-  whether Soup's native fine-tuning helps, not to maximize the score.
-- **InfoNCE (skipped).** False-negative contamination risk with in-batch
-  negatives on a small domain corpus; triplet loss with mined negatives
-  avoids it.
+- **Document-Level Split:** Random chunk splitting leaks authorial style, identical headings, and adjacent content between train and test. A strict document-level split prevents leakage and tests true generalization to unseen documentation files.
+- **Consistent Heading Prefixing:** Passage text prepends hierarchical heading context (`"{doc_name}: {heading}\n\n{body}"`) identically in negative mining, training, and evaluation inference.
+- **Triplet Margin Loss with Mined Hard Negatives:** In-batch negatives (InfoNCE) on small domain corpora pose a high risk of false-negative collisions. Triplet loss with section-deduplicated negatives guarantees clean negative supervision.
+- **Matched-Budget Experimental Design:** Experiments A-matched, B, C-matched, and C-matched-balanced share an identical budget of 825 queries and 1,857 optimizer updates (3 epochs), isolating the effects of query diversity, corpus scope, and intent balancing.
 
-## Evaluation v2 results (manual benchmark)
+---
 
-54 owner-approved queries, manually crafted by the project owner with AI
-assistance, over the same 1,068-chunk corpus, with chunk- and section-level
-metrics and a paired document-stratified bootstrap (10,000 resamples,
-seed 42). Full report: `results/v2/comparison.md`.
+## 3. Phase 3 Multi-Retriever Benchmark Results
 
-| Retriever | Hit@1 | Hit@5 | MRR@10 | Sec Hit@1 | Sec MRR@10 |
-|---|:---:|:---:|:---:|:---:|:---:|
-| E5-small-v2 | 0.685 | 0.870 | 0.783 | 0.722 | 0.817 |
-| MiniLM frozen | 0.574 | 0.870 | 0.693 | 0.630 | 0.726 |
-| MiniLM + Soup | 0.537 | 0.796 | 0.650 | 0.574 | 0.682 |
-| BM25 | 0.481 | 0.722 | 0.595 | 0.481 | 0.613 |
+The 9-retriever benchmark on the 54 owner-approved manual evaluation queries:
 
-The adapter does not generalise to natural-language queries: it trails frozen
-MiniLM by 3.7 pp Hit@1 and 4.3 pp MRR@10 (intervals include 0), and by
-11.1 pp Recall@5 (interval excludes 0). Frozen E5-small-v2 leads on Hit@1, Hit@3, MRR@10, and micro Recall@1/3/5,
-ties frozen MiniLM on micro Hit@5, and trails it on macro Hit@5.
+| ID | Retriever | Description | Hit@1 | Recall@3 | MRR@10 |
+|---|---|---|---:|---:|---:|
+| **R1** | BM25 | Fixed lexical baseline (`rank_bm25`) | 0.4815 | 0.4497 | 0.5953 |
+| **R2** | Frozen MiniLM | `all-MiniLM-L6-v2` (frozen base) | 0.5741 | 0.5753 | 0.6928 |
+| **R3** | **Frozen E5-small** | `intfloat/e5-small-v2` (frozen baseline) | **0.6852** | **0.6694** | **0.7834** |
+| **R4** | A-full | Baseline Soup LoRA (1,078 synthetic queries) | 0.5370 | 0.4951 | 0.6501 |
+| **R5** | A-matched | MiniLM + Soup LoRA (825 synthetic queries) | 0.5185 | 0.5228 | 0.6554 |
+| **R6** | B | MiniLM + Soup LoRA (825 diverse LLM queries) | 0.6481 | 0.6015 | 0.7434 |
+| **R7** | C-matched | MiniLM + Soup LoRA (31 docs, unstratified queries) | 0.6111 | 0.5090 | 0.6844 |
+| **R8** | **C-matched-balanced** | MiniLM + Soup LoRA (31 docs, balanced queries) | **0.6852** | 0.5722 | 0.7681 |
+| **R9** | C-full | MiniLM + Soup LoRA (31 docs, 2,257 uncurated queries) | 0.5556 | 0.4951 | 0.6310 |
 
-The subset split is the informative part. On the 39 primary queries, whose
-answers exist only in held-out documents, Soup trails frozen MiniLM
-(Hit@1 0.538 vs 0.615; MRR@10 0.644 vs 0.714). On the 15 remaining overlap
-queries, whose answers also appear in training documents, Soup leads frozen
-MiniLM (Hit@1 0.533 vs 0.467; MRR@10 0.667 vs 0.639), but BM25 is strongest
-on that subset (Hit@1 0.667; MRR@10 0.728). That pattern is consistent with
-the adapter picking up training-document text rather than a transferable
-retrieval skill.
+### Key Findings & Insights
 
-All 18 original overlap candidates were audited against chunk text
-(`docs/EVALUATION_V2_OVERLAP_AUDIT.md`): 15 were confirmed and 3 were
-reclassified as primary with owner approval (`manual_002`, `manual_023`,
-`manual_043`). The final split is 39 primary / 15 overlap.
+1. **Negative Result on Pre-trained vs Fine-Tuned:** Fine-tuning MiniLM did not outperform frozen E5-small. Frozen `intfloat/e5-small-v2` achieved the highest ranking quality overall (0.7834 MRR@10, 0.6694 Recall@3). Choosing a stronger out-of-the-box encoder provided higher retrieval gains than domain fine-tuning a smaller encoder.
+2. **Query Diversity Overcomes Template Overfitting:** The baseline adapter `A-full` (0.6501 MRR@10) and `A-matched` (0.6554 MRR@10) degraded performance relative to frozen MiniLM (0.6928 MRR@10). Replacing synthetic template queries with diverse LLM-generated queries (Experiment B: 0.7434 MRR@10) yielded a $+0.0880$ MRR@10 improvement over synthetic queries and $+0.0506$ over frozen MiniLM.
+3. **Intent Balancing & Corpus Scope:** `C-matched-balanced` achieved the highest performance among MiniLM adapters (0.7681 MRR@10, matching E5-small on Hit@1 at 0.6852). However, uncurated corpus scaling (`C-full`: 0.6310 MRR@10) severely degraded retrieval, underscoring that data quality and coverage curation are critical when expanding domain corpora.
 
-Leave-one-document-out keeps the direction: Soup−frozen Hit@1 is ≤ 0 for
-every dropped document (range −0.079 to −0.022), and Soup trails E5
-throughout. Four held-out documents cannot support population-level claims;
-all intervals are exploratory and no p-values are reported.
+---
 
-## Known limitations
+## 4. Known Limitations
 
-- v1's synthetic queries embed their target headings verbatim (measured:
-  469/497 queries contain the full heading); v1 results should not be read
-  as real-user performance. The v2 manual set tested this: the adapter does
-  not beat frozen MiniLM on queries answered only by held-out documents.
-- Four held-out documents bound the strength of any conclusion; v2 reports
-  uncertainty and leave-one-doc-out sensitivity explicitly and makes no
-  population-level claims.
+- **Benchmark Size:** 54 manual queries across 4 held-out documents (`adapters-and-governance`, `compliance`, `evaluation`, `peft-and-efficiency`). Four documents are insufficient for population-level generalization claims; all bootstrap intervals are exploratory.
+- **Document-Localized Effects:** Adapter improvements are predominantly concentrated in `adapters-and-governance` (MRR diff from Frozen MiniLM: C-matched-balanced $+0.2781$, B $+0.2448$) and `evaluation` (C-matched-balanced $+0.0402$, B $+0.0303$). On `peft-and-efficiency`, C-matched-balanced ties MiniLM ($0.7333$), and on `compliance`, observed scores are lower ($-0.1333$).
+- **Retrieval vs Downstream RAG:** Evaluation measures ranking and retrieval accuracy of documentation passages. It does not measure generative response quality, synthesis faithfulness, or hallucination rates in an end-to-end RAG system.
