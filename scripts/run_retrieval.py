@@ -27,6 +27,11 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from retrieval import classify_failure, compute_metrics, get_base_section  # noqa: E402
 from retrievers import build_retriever, retrieve_ranked  # noqa: E402
 
+try:
+    from benchmark_manifest import validate_benchmark_manifest
+except ImportError:
+    from scripts.benchmark_manifest import validate_benchmark_manifest
+
 TOP_K = 10
 
 
@@ -177,24 +182,128 @@ def run(
     return result
 
 
+def run_benchmark(
+    manifest_path: Path,
+    retriever_id: str,
+    output_path: Path,
+    top_k: int = TOP_K,
+) -> dict[str, Any]:
+    """Run retrieval against an explicitly registered, validated benchmark manifest."""
+    if top_k < 10:
+        raise ValueError(f"top_k must be at least 10, got {top_k}")
+
+    validated = validate_benchmark_manifest(manifest_path, REPO_ROOT)
+    corpus_path = validated["corpus_path"]
+    queries_path = validated["query_path"]
+    manifest = validated["manifest"]
+
+    try:
+        output_path.resolve().relative_to(RESULTS_DIR.resolve())
+    except ValueError:
+        raise ValueError(
+            f"output_path '{output_path}' must resolve under '{RESULTS_DIR}'"
+        )
+
+    corpus_bytes = corpus_path.read_bytes()
+    chunks = [
+        json.loads(line)
+        for line in corpus_bytes.decode("utf-8").splitlines()
+        if line.strip()
+    ]
+    queries = [
+        json.loads(line)
+        for line in queries_path.read_text(encoding="utf-8").splitlines()
+        if line.strip()
+    ]
+    chunk_ids = [c["chunk_id"] for c in chunks]
+
+    retriever = build_retriever(retriever_id, repo_root=REPO_ROOT)
+    query_texts = [q["query"] for q in queries]
+
+    t0 = time.perf_counter()
+    ranked_lists = retrieve_ranked(retriever, chunks, query_texts, top_k=top_k)
+    encode_time = time.perf_counter() - t0
+
+    has_relevance = all("relevant_chunk_ids" in q and q["relevant_chunk_ids"] for q in queries)
+    per_query_results = []
+    for q, ranked in zip(queries, ranked_lists):
+        for entry in ranked:
+            entry["section_id"] = get_base_section(entry["chunk_id"])
+        category = None
+        if has_relevance:
+            category = classify_failure(
+                ranked,
+                q.get("relevant_chunk_ids", []),
+                q.get("relevant_section_ids", []),
+                q.get("source_document"),
+            )
+        per_query_results.append(
+            {
+                "query_id": q["query_id"],
+                "query": q["query"],
+                "relevant_chunk_ids": q.get("relevant_chunk_ids", []),
+                "relevant_section_ids": q.get("relevant_section_ids", []),
+                "ranked": ranked,
+                "failure_category": category,
+            }
+        )
+
+    metrics = compute_metrics(per_query_results)["metrics"] if has_relevance else {}
+
+    result = {
+        "benchmark_id": manifest["benchmark_id"],
+        "retriever_id": retriever_id,
+        "retriever_config": retriever.config(),
+        "corpus_fingerprint": validated["corpus_sha256"],
+        "query_set_fingerprint": validated["query_sha256"],
+        "corpus_size": len(chunk_ids),
+        "query_count": len(queries),
+        "top_k": top_k,
+        "encode_time_s": round(encode_time, 3),
+        "metrics": metrics,
+        "per_query_results": per_query_results,
+    }
+
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    with open(output_path, "w", encoding="utf-8") as f:
+        json.dump(result, f, indent=2, ensure_ascii=False)
+
+    print(f"benchmark: {manifest['benchmark_id']}")
+    print(f"retriever: {retriever_id}")
+    if metrics:
+        for name, value in sorted(metrics.items()):
+            print(f"  {name}: {value:.4f}")
+    print(f"encode_time_s: {result['encode_time_s']}")
+    print(f"saved -> {output_path}")
+    return result
+
+
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Run one retriever on the manual dataset")
+    parser = argparse.ArgumentParser(description="Run one retriever on benchmark queries")
     parser.add_argument(
         "--retriever",
         required=True,
-        choices=["mini_lm_frozen", "mini_lm_soup", "bm25", "e5_small"],
+        choices=["mini_lm_frozen", "mini_lm_soup", "bm25", "bm25_legacy", "e5_small", "e5_small_ft"],
     )
+    parser.add_argument("--benchmark", type=Path, default=None, help="Path to benchmark manifest JSON")
     parser.add_argument("--queries", type=Path, default=DATA_DIR / "manual_queries.jsonl")
     parser.add_argument("--corpus", type=Path, default=DATA_DIR / "corpus.jsonl")
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
 
-    run(
-        retriever_id=args.retriever,
-        queries_path=args.queries,
-        corpus_path=args.corpus,
-        output_path=args.output,
-    )
+    if args.benchmark is not None:
+        run_benchmark(
+            manifest_path=args.benchmark,
+            retriever_id=args.retriever,
+            output_path=args.output,
+        )
+    else:
+        run(
+            retriever_id=args.retriever,
+            queries_path=args.queries,
+            corpus_path=args.corpus,
+            output_path=args.output,
+        )
     return 0
 
 

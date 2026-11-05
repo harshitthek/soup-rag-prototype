@@ -1,0 +1,410 @@
+{
+  "retriever_id": "e5_small_ft_lr2e5",
+  "frozen_e5": {
+    "metrics": {
+      "hit@1": 0.6851851851851852,
+      "recall@1": 0.4188271604938272,
+      "hit@3": 0.8703703703703703,
+      "recall@3": 0.6694444444444444,
+      "hit@5": 0.8703703703703703,
+      "recall@5": 0.7302469135802468,
+      "mrr@10": 0.7833774250440917,
+      "sec_hit@1": 0.7222222222222222,
+      "sec_recall@1": 0.5617283950617283,
+      "sec_hit@3": 0.8888888888888888,
+      "sec_recall@3": 0.7592592592592593,
+      "sec_hit@5": 0.9074074074074074,
+      "sec_recall@5": 0.8117283950617284,
+      "sec_mrr@10": 0.8165343915343916
+    },
+    "failure_counts": {
+      "relevant_chunk_below_top1": 13,
+      "relevant_section_below_top1": 1,
+      "relevant_section_unlabeled_chunk_top1": 2,
+      "exact_relevant_chunk_top1": 37,
+      "wrong_document": 1
+    }
+  },
+  "fine_tuned_e5": {
+    "metrics": {
+      "hit@1": 0.5,
+      "recall@1": 0.3271604938271605,
+      "hit@3": 0.7777777777777778,
+      "recall@3": 0.5506172839506173,
+      "hit@5": 0.8333333333333334,
+      "recall@5": 0.6444444444444444,
+      "mrr@10": 0.6457524985302763,
+      "sec_hit@1": 0.5740740740740741,
+      "sec_recall@1": 0.4537037037037037,
+      "sec_hit@3": 0.8148148148148148,
+      "sec_recall@3": 0.6759259259259259,
+      "sec_hit@5": 0.8888888888888888,
+      "sec_recall@5": 0.7561728395061729,
+      "sec_mrr@10": 0.7087154614932393
+    },
+    "failure_counts": {
+      "relevant_chunk_below_top1": 19,
+      "relevant_section_unlabeled_chunk_top1": 4,
+      "exact_relevant_chunk_top1": 27,
+      "wrong_document": 3,
+      "wrong_section_same_document": 1
+    }
+  },
+  "bootstrap_comparison": {
+    "hit@1": {
+      "observed_frozen": 0.6851851851851852,
+      "observed_ft": 0.5,
+      "observed_delta": -0.18518518518518523,
+      "ci_lower": -0.29629629629629634,
+      "ci_upper": -0.07407407407407407,
+      "spans_zero": false
+    },
+    "recall@1": {
+      "observed_frozen": 0.4188271604938272,
+      "observed_ft": 0.3271604938271605,
+      "observed_delta": -0.09166666666666673,
+      "ci_lower": -0.16203703703703703,
+      "ci_upper": -0.0203240740740747,
+      "spans_zero": false
+    },
+    "hit@3": {
+      "observed_frozen": 0.8703703703703703,
+      "observed_ft": 0.7777777777777778,
+      "observed_delta": -0.09259259259259256,
+      "ci_lower": -0.2037037037037036,
+      "ci_upper": 0.0,
+      "spans_zero": true
+    },
+    "recall@3": {
+      "observed_frozen": 0.6694444444444444,
+      "observed_ft": 0.5506172839506173,
+      "observed_delta": -0.11882716049382713,
+      "ci_lower": -0.19444444444444442,
+      "ci_upper": -0.04629629629629639,
+      "spans_zero": false
+    },
+    "hit@5": {
+      "observed_frozen": 0.8703703703703703,
+      "observed_ft": 0.8333333333333334,
+      "observed_delta": -0.03703703703703698,
+      "ci_lower": -0.12962962962962965,
+      "ci_upper": 0.05555555555555558,
+      "spans_zero": true
+    },
+    "recall@5": {
+      "observed_frozen": 0.7302469135802468,
+      "observed_ft": 0.6444444444444444,
+      "observed_delta": -0.08580246913580247,
+      "ci_lower": -0.1635802469135802,
+      "ci_upper": -0.009259259259259297,
+      "spans_zero": false
+    },
+    "mrr@10": {
+      "observed_frozen": 0.7833774250440917,
+      "observed_ft": 0.6457524985302763,
+      "observed_delta": -0.13762492651381553,
+      "ci_lower": -0.2154034391534392,
+      "ci_upper": -0.06399103468547915,
+      "spans_zero": false
+    },
+    "sec_hit@1": {
+      "observed_frozen": 0.7222222222222222,
+      "observed_ft": 0.5740740740740741,
+      "observed_delta": -0.14814814814814814,
+      "ci_lower": -0.2592592592592593,
+      "ci_upper": -0.03703703703703698,
+      "spans_zero": false
+    },
+    "sec_mrr@10": {
+      "observed_frozen": 0.8165343915343916,
+      "observed_ft": 0.7087154614932393,
+      "observed_delta": -0.10781893004115228,
+      "ci_lower": -0.17997795414462087,
+      "ci_upper": -0.03934927983539099,
+      "spans_zero": false
+    }
+  },
+  "per_document": {
+    "adapters-and-governance": {
+      "query_count": 16,
+      "frozen": {
+        "hit@1": 0.5,
+        "recall@3": 0.53125,
+        "recall@5": 0.6145833333333333,
+        "mrr@10": 0.6506696428571428
+      },
+      "fine_tuned": {
+        "hit@1": 0.375,
+        "recall@3": 0.46875,
+        "recall@5": 0.6041666666666666,
+        "mrr@10": 0.5679563492063492
+      },
+      "delta": {
+        "hit@1": -0.125,
+        "recall@3": -0.0625,
+        "recall@5": -0.01041666666666663,
+        "mrr@10": -0.0827132936507936
+      }
+    },
+    "compliance": {
+      "query_count": 8,
+      "frozen": {
+        "hit@1": 0.75,
+        "recall@3": 0.6875,
+        "recall@5": 0.6875,
+        "mrr@10": 0.828125
+      },
+      "fine_tuned": {
+        "hit@1": 0.25,
+        "recall@3": 0.4375,
+        "recall@5": 0.625,
+        "mrr@10": 0.48333333333333334
+      },
+      "delta": {
+        "hit@1": -0.5,
+        "recall@3": -0.25,
+        "recall@5": -0.0625,
+        "mrr@10": -0.34479166666666666
+      }
+    },
+    "evaluation": {
+      "query_count": 17,
+      "frozen": {
+        "hit@1": 0.7647058823529411,
+        "recall@3": 0.7156862745098039,
+        "recall@5": 0.784313725490196,
+        "mrr@10": 0.8431372549019607
+      },
+      "fine_tuned": {
+        "hit@1": 0.5882352941176471,
+        "recall@3": 0.5588235294117647,
+        "recall@5": 0.6029411764705882,
+        "mrr@10": 0.6813725490196079
+      },
+      "delta": {
+        "hit@1": -0.17647058823529405,
+        "recall@3": -0.1568627450980392,
+        "recall@5": -0.18137254901960775,
+        "mrr@10": -0.1617647058823528
+      }
+    },
+    "peft-and-efficiency": {
+      "query_count": 13,
+      "frozen": {
+        "hit@1": 0.7692307692307693,
+        "recall@3": 0.7679487179487179,
+        "recall@5": 0.8282051282051281,
+        "mrr@10": 0.841025641025641
+      },
+      "fine_tuned": {
+        "hit@1": 0.6923076923076923,
+        "recall@3": 0.7102564102564102,
+        "recall@5": 0.7602564102564102,
+        "mrr@10": 0.7948717948717948
+      },
+      "delta": {
+        "hit@1": -0.07692307692307698,
+        "recall@3": -0.05769230769230771,
+        "recall@5": -0.06794871794871793,
+        "mrr@10": -0.04615384615384621
+      }
+    }
+  },
+  "query_transitions": {
+    "improved_count": 4,
+    "degraded_count": 18,
+    "unchanged_count": 32,
+    "improved_queries": [
+      {
+        "query_id": "manual_003",
+        "query": "how do I see which training rows influenced an adapter",
+        "document": "adapters-and-governance",
+        "frozen_mrr": 0.0,
+        "ft_mrr": 0.3333333333333333,
+        "delta": 0.3333333333333333
+      },
+      {
+        "query_id": "manual_004",
+        "query": "what does soup loop automate",
+        "document": "adapters-and-governance",
+        "frozen_mrr": 0.14285714285714285,
+        "ft_mrr": 0.5,
+        "delta": 0.35714285714285715
+      },
+      {
+        "query_id": "manual_021",
+        "query": "publish a model to huggingface with my own model card",
+        "document": "compliance",
+        "frozen_mrr": 0.125,
+        "ft_mrr": 0.2,
+        "delta": 0.07500000000000001
+      },
+      {
+        "query_id": "manual_038",
+        "query": "custom eval jsonl fields for exact and regex scoring",
+        "document": "evaluation",
+        "frozen_mrr": 0.5,
+        "ft_mrr": 1.0,
+        "delta": 0.5
+      }
+    ],
+    "degraded_queries": [
+      {
+        "query_id": "manual_005",
+        "query": "does soup roll back a canary automatically if the eval regresses",
+        "document": "adapters-and-governance",
+        "frozen_mrr": 0.5,
+        "ft_mrr": 0.25,
+        "delta": -0.25
+      },
+      {
+        "query_id": "manual_008",
+        "query": "build a control vector from positive and negative prompts",
+        "document": "adapters-and-governance",
+        "frozen_mrr": 0.5,
+        "ft_mrr": 0.3333333333333333,
+        "delta": -0.16666666666666669
+      },
+      {
+        "query_id": "manual_009",
+        "query": "grace codebook size limit",
+        "document": "adapters-and-governance",
+        "frozen_mrr": 1.0,
+        "ft_mrr": 0.5,
+        "delta": -0.5
+      },
+      {
+        "query_id": "manual_010",
+        "query": "soup registry diff output",
+        "document": "adapters-and-governance",
+        "frozen_mrr": 0.5,
+        "ft_mrr": 0.16666666666666666,
+        "delta": -0.33333333333333337
+      },
+      {
+        "query_id": "manual_012",
+        "query": "how do signed attestations get embedded in a soup can",
+        "document": "adapters-and-governance",
+        "frozen_mrr": 1.0,
+        "ft_mrr": 0.25,
+        "delta": -0.75
+      },
+      {
+        "query_id": "manual_016",
+        "query": "Soup refuses to load a .bin adapter, what formats are allowed?",
+        "document": "adapters-and-governance",
+        "frozen_mrr": 0.125,
+        "ft_mrr": 0.1111111111111111,
+        "delta": -0.013888888888888895
+      },
+      {
+        "query_id": "manual_017",
+        "query": "which soup init templates exist for regulated industries",
+        "document": "compliance",
+        "frozen_mrr": 1.0,
+        "ft_mrr": 0.3333333333333333,
+        "delta": -0.6666666666666667
+      },
+      {
+        "query_id": "manual_019",
+        "query": "bom --attach-to-registry wrote the files but exited non-zero",
+        "document": "compliance",
+        "frozen_mrr": 1.0,
+        "ft_mrr": 0.3333333333333333,
+        "delta": -0.6666666666666667
+      },
+      {
+        "query_id": "manual_020",
+        "query": "what ends up in the generated model card",
+        "document": "compliance",
+        "frozen_mrr": 1.0,
+        "ft_mrr": 0.0,
+        "delta": -1.0
+      },
+      {
+        "query_id": "manual_023",
+        "query": "which expectation checks can go in expectations.yaml",
+        "document": "compliance",
+        "frozen_mrr": 1.0,
+        "ft_mrr": 0.5,
+        "delta": -0.5
+      },
+      {
+        "query_id": "manual_025",
+        "query": "Should I fine-tune with DPO or SFT for my dataset?",
+        "document": "evaluation",
+        "frozen_mrr": 0.3333333333333333,
+        "ft_mrr": 0.0,
+        "delta": -0.3333333333333333
+      },
+      {
+        "query_id": "manual_027",
+        "query": "do two eval designs with the same content hash the same",
+        "document": "evaluation",
+        "frozen_mrr": 1.0,
+        "ft_mrr": 0.3333333333333333,
+        "delta": -0.6666666666666667
+      },
+      {
+        "query_id": "manual_029",
+        "query": "eval_gate block settings in soup.yaml",
+        "document": "evaluation",
+        "frozen_mrr": 1.0,
+        "ft_mrr": 0.5,
+        "delta": -0.5
+      },
+      {
+        "query_id": "manual_033",
+        "query": "Task accuracy went up but MMLU dropped, should I ship?",
+        "document": "evaluation",
+        "frozen_mrr": 1.0,
+        "ft_mrr": 0.125,
+        "delta": -0.875
+      },
+      {
+        "query_id": "manual_034",
+        "query": "noise floor flag effect on ship verdict",
+        "document": "evaluation",
+        "frozen_mrr": 1.0,
+        "ft_mrr": 0.5,
+        "delta": -0.5
+      },
+      {
+        "query_id": "manual_035",
+        "query": "how do I make a ship verdict replayable in CI",
+        "document": "evaluation",
+        "frozen_mrr": 0.5,
+        "ft_mrr": 0.125,
+        "delta": -0.375
+      },
+      {
+        "query_id": "manual_046",
+        "query": "Can I add fresh layers to a Llama model and only train those?",
+        "document": "peft-and-efficiency",
+        "frozen_mrr": 1.0,
+        "ft_mrr": 0.5,
+        "delta": -0.5
+      },
+      {
+        "query_id": "manual_047",
+        "query": "different learning rates for q_proj and v_proj",
+        "document": "peft-and-efficiency",
+        "frozen_mrr": 0.1,
+        "ft_mrr": 0.0,
+        "delta": -0.1
+      }
+    ]
+  },
+  "latency_profile": {
+    "cold_start": {
+      "model_and_adapter_load_s": 0.0,
+      "corpus_encode_1068_s": 15.348,
+      "total_cold_start_s": 15.348
+    },
+    "warm_steady_state": {
+      "query_encode_per_query_ms": 1.58,
+      "matrix_search_per_query_ms": 0.08,
+      "total_per_query_ms": 1.66
+    }
+  }
+}

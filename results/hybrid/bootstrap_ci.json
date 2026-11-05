@@ -1,0 +1,203 @@
+{
+  "improved_bm25_vs_original_bm25": {
+    "mrr@10": {
+      "delta": 0.1759,
+      "ci_lower": 0.0712,
+      "ci_upper": 0.2828
+    },
+    "hit@1": {
+      "delta": 0.1667,
+      "ci_lower": 0.0185,
+      "ci_upper": 0.3148
+    },
+    "recall@1": {
+      "delta": 0.1522,
+      "ci_lower": 0.046,
+      "ci_upper": 0.2623
+    },
+    "hit@3": {
+      "delta": 0.1852,
+      "ci_lower": 0.0741,
+      "ci_upper": 0.3148
+    },
+    "recall@3": {
+      "delta": 0.2568,
+      "ci_lower": 0.1636,
+      "ci_upper": 0.3546
+    },
+    "hit@5": {
+      "delta": 0.1852,
+      "ci_lower": 0.0741,
+      "ci_upper": 0.2963
+    },
+    "recall@5": {
+      "delta": 0.2605,
+      "ci_lower": 0.1704,
+      "ci_upper": 0.3574
+    },
+    "sec_hit@1": {
+      "delta": 0.2037,
+      "ci_lower": 0.0741,
+      "ci_upper": 0.3333
+    },
+    "sec_hit@3": {
+      "delta": 0.1296,
+      "ci_lower": 0.0185,
+      "ci_upper": 0.2407
+    },
+    "sec_recall@3": {
+      "delta": 0.1944,
+      "ci_lower": 0.0957,
+      "ci_upper": 0.2963
+    },
+    "sec_hit@5": {
+      "delta": 0.1481,
+      "ci_lower": 0.0556,
+      "ci_upper": 0.2593
+    },
+    "sec_recall@5": {
+      "delta": 0.179,
+      "ci_lower": 0.0772,
+      "ci_upper": 0.284
+    },
+    "sec_mrr@10": {
+      "delta": 0.177,
+      "ci_lower": 0.0862,
+      "ci_upper": 0.271
+    }
+  },
+  "hybrid_rrf_vs_frozen_e5": {
+    "mrr@10": {
+      "delta": 0.0719,
+      "ci_lower": 0.0081,
+      "ci_upper": 0.1402
+    },
+    "hit@1": {
+      "delta": 0.0926,
+      "ci_lower": 0.0,
+      "ci_upper": 0.2037
+    },
+    "recall@1": {
+      "delta": 0.0858,
+      "ci_lower": 0.0148,
+      "ci_upper": 0.1673
+    },
+    "hit@3": {
+      "delta": 0.037,
+      "ci_lower": -0.0556,
+      "ci_upper": 0.1296
+    },
+    "recall@3": {
+      "delta": 0.0772,
+      "ci_lower": -0.0062,
+      "ci_upper": 0.1667
+    },
+    "hit@5": {
+      "delta": 0.0926,
+      "ci_lower": 0.0185,
+      "ci_upper": 0.1667
+    },
+    "recall@5": {
+      "delta": 0.0926,
+      "ci_lower": 0.0154,
+      "ci_upper": 0.1759
+    },
+    "sec_hit@1": {
+      "delta": 0.0926,
+      "ci_lower": 0.0,
+      "ci_upper": 0.2037
+    },
+    "sec_hit@3": {
+      "delta": 0.0185,
+      "ci_lower": -0.0741,
+      "ci_upper": 0.1111
+    },
+    "sec_recall@3": {
+      "delta": 0.0586,
+      "ci_lower": -0.0123,
+      "ci_upper": 0.1358
+    },
+    "sec_hit@5": {
+      "delta": 0.0556,
+      "ci_lower": 0.0,
+      "ci_upper": 0.1296
+    },
+    "sec_recall@5": {
+      "delta": 0.0648,
+      "ci_lower": 0.0062,
+      "ci_upper": 0.1296
+    },
+    "sec_mrr@10": {
+      "delta": 0.0605,
+      "ci_lower": -0.0012,
+      "ci_upper": 0.1271
+    }
+  },
+  "hybrid_rrf_vs_improved_bm25": {
+    "mrr@10": {
+      "delta": 0.0841,
+      "ci_lower": 0.0168,
+      "ci_upper": 0.1521
+    },
+    "hit@1": {
+      "delta": 0.1296,
+      "ci_lower": 0.0185,
+      "ci_upper": 0.2407
+    },
+    "recall@1": {
+      "delta": 0.1003,
+      "ci_lower": 0.0262,
+      "ci_upper": 0.1852
+    },
+    "hit@3": {
+      "delta": 0.0185,
+      "ci_lower": -0.037,
+      "ci_upper": 0.0741
+    },
+    "recall@3": {
+      "delta": 0.0401,
+      "ci_lower": -0.0031,
+      "ci_upper": 0.0926
+    },
+    "hit@5": {
+      "delta": 0.0556,
+      "ci_lower": 0.0,
+      "ci_upper": 0.1296
+    },
+    "recall@5": {
+      "delta": 0.0509,
+      "ci_lower": 0.0046,
+      "ci_upper": 0.1049
+    },
+    "sec_hit@1": {
+      "delta": 0.1296,
+      "ci_lower": 0.0185,
+      "ci_upper": 0.2407
+    },
+    "sec_hit@3": {
+      "delta": 0.0185,
+      "ci_lower": -0.037,
+      "ci_upper": 0.0741
+    },
+    "sec_recall@3": {
+      "delta": 0.0309,
+      "ci_lower": -0.0123,
+      "ci_upper": 0.0833
+    },
+    "sec_hit@5": {
+      "delta": 0.0556,
+      "ci_lower": 0.0,
+      "ci_upper": 0.1296
+    },
+    "sec_recall@5": {
+      "delta": 0.0556,
+      "ci_lower": 0.0123,
+      "ci_upper": 0.108
+    },
+    "sec_mrr@10": {
+      "delta": 0.0873,
+      "ci_lower": 0.0205,
+      "ci_upper": 0.1558
+    }
+  }
+}

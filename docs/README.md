@@ -12,6 +12,7 @@ Welcome to the technical documentation for the `soup-rag-prototype`. This direct
 ```
 docs/
 ├── README.md                          # This documentation index & executive summaries
+├── RESEARCH_INTEGRITY.md              # AI disclosure, claim corrections, & human eval protocol
 ├── REVIEW.md                          # Architectural review & key experimental decisions
 ├── EVALUATION_V2_SPEC.md              # Canonical specification for the 54-query manual benchmark
 ├── EVALUATION_V2_OVERLAP_AUDIT.md     # Audit of the 18 candidate overlap queries (15 confirmed, 3 primary)
@@ -74,8 +75,9 @@ Before adapter fine-tuning was initiated, Phase 0 audited the 12 core documentat
 
 ---
 
-### 2.4 Architectural Decisions & Reviews
+### 2.4 Research Integrity, Reviews & Architecture
 
+- **Research Integrity Protocol:** [`RESEARCH_INTEGRITY.md`](RESEARCH_INTEGRITY.md) provides full AI assistance disclosures, dataset provenance, corrected experimental claims, and the protocol for the independent human-authored query evaluation check.
 - **Architecture Review:** [`REVIEW.md`](REVIEW.md) details durable design choices: document-level separation, consistent heading prefixing (`"{doc_name}: {heading}\n\n{body}"`), triplet margin loss with section-deduplicated negatives, matched-budget training matrices, and key findings.
 - **Historical Delivery Report:** [`reports/PHASE_1_DELIVERY_REPORT.md`](reports/PHASE_1_DELIVERY_REPORT.md) preserves the Phase 1 delivery report evaluated on 497 synthetic queries.
 
@@ -84,6 +86,10 @@ Before adapter fine-tuning was initiated, Phase 0 audited the 12 core documentat
 ## 3. Authoritative Experimental Results
 
 For verified benchmark scores, bootstrap confidence intervals, and statistical integrity audits:
+- **Hybrid & Tokenizer Research Audit:** [`../results/HYBRID_AND_TOKENIZER_RESEARCH_AUDIT.md`](../results/HYBRID_AND_TOKENIZER_RESEARCH_AUDIT.md)
+- **Hybrid Retrieval Benchmark Report:** [`../results/HYBRID_RETRIEVAL_RESULTS.md`](../results/HYBRID_RETRIEVAL_RESULTS.md)
+- **BM25 Tokenizer Benchmark Report:** [`../results/BM25_TOKENIZER_COMPARISON.md`](../results/BM25_TOKENIZER_COMPARISON.md)
 - **Phase 3 Benchmark Evaluation Report:** [`../results/PHASE_3_BENCHMARK_EVALUATION_REPORT.md`](../results/PHASE_3_BENCHMARK_EVALUATION_REPORT.md)
 - **Phase 3.1 Statistical Integrity Audit:** [`../results/PHASE_3_1_INTEGRITY_AUDIT.md`](../results/PHASE_3_1_INTEGRITY_AUDIT.md)
+- **Research Integrity & Disclosure:** [`RESEARCH_INTEGRITY.md`](RESEARCH_INTEGRITY.md)
 - **Documentation Audit Report:** [`../results/PHASE_3_DOCUMENTATION_AUDIT.md`](../results/PHASE_3_DOCUMENTATION_AUDIT.md)

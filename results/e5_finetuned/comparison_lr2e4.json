@@ -1,0 +1,539 @@
+{
+  "retriever_id": "e5_small_ft_lr2e4",
+  "frozen_e5": {
+    "metrics": {
+      "hit@1": 0.6851851851851852,
+      "recall@1": 0.4188271604938272,
+      "hit@3": 0.8703703703703703,
+      "recall@3": 0.6694444444444444,
+      "hit@5": 0.8703703703703703,
+      "recall@5": 0.7302469135802468,
+      "mrr@10": 0.7833774250440917,
+      "sec_hit@1": 0.7222222222222222,
+      "sec_recall@1": 0.5617283950617283,
+      "sec_hit@3": 0.8888888888888888,
+      "sec_recall@3": 0.7592592592592593,
+      "sec_hit@5": 0.9074074074074074,
+      "sec_recall@5": 0.8117283950617284,
+      "sec_mrr@10": 0.8165343915343916
+    },
+    "failure_counts": {
+      "relevant_chunk_below_top1": 13,
+      "relevant_section_below_top1": 1,
+      "relevant_section_unlabeled_chunk_top1": 2,
+      "exact_relevant_chunk_top1": 37,
+      "wrong_document": 1
+    }
+  },
+  "fine_tuned_e5": {
+    "metrics": {
+      "hit@1": 0.3148148148148148,
+      "recall@1": 0.19444444444444445,
+      "hit@3": 0.37037037037037035,
+      "recall@3": 0.24907407407407406,
+      "hit@5": 0.4074074074074074,
+      "recall@5": 0.320679012345679,
+      "mrr@10": 0.3529835390946502,
+      "sec_hit@1": 0.3333333333333333,
+      "sec_recall@1": 0.25925925925925924,
+      "sec_hit@3": 0.4444444444444444,
+      "sec_recall@3": 0.3611111111111111,
+      "sec_hit@5": 0.46296296296296297,
+      "sec_recall@5": 0.39197530864197533,
+      "sec_mrr@10": 0.39043209876543206
+    },
+    "failure_counts": {
+      "wrong_document": 22,
+      "exact_relevant_chunk_top1": 17,
+      "wrong_section_same_document": 7,
+      "relevant_section_below_top1": 1,
+      "relevant_chunk_below_top1": 6,
+      "relevant_section_unlabeled_chunk_top1": 1
+    }
+  },
+  "bootstrap_comparison": {
+    "hit@1": {
+      "observed_frozen": 0.6851851851851852,
+      "observed_ft": 0.3148148148148148,
+      "observed_delta": -0.3703703703703704,
+      "ci_lower": -0.5185185185185186,
+      "ci_upper": -0.2222222222222222,
+      "spans_zero": false
+    },
+    "recall@1": {
+      "observed_frozen": 0.4188271604938272,
+      "observed_ft": 0.19444444444444445,
+      "observed_delta": -0.22438271604938273,
+      "ci_lower": -0.32993827160493816,
+      "ci_upper": -0.12098765432098763,
+      "spans_zero": false
+    },
+    "hit@3": {
+      "observed_frozen": 0.8703703703703703,
+      "observed_ft": 0.37037037037037035,
+      "observed_delta": -0.5,
+      "ci_lower": -0.6296296296296297,
+      "ci_upper": -0.37037037037037035,
+      "spans_zero": false
+    },
+    "recall@3": {
+      "observed_frozen": 0.6694444444444444,
+      "observed_ft": 0.24907407407407406,
+      "observed_delta": -0.42037037037037034,
+      "ci_lower": -0.5271604938271603,
+      "ci_upper": -0.3138888888888889,
+      "spans_zero": false
+    },
+    "hit@5": {
+      "observed_frozen": 0.8703703703703703,
+      "observed_ft": 0.4074074074074074,
+      "observed_delta": -0.46296296296296297,
+      "ci_lower": -0.5925925925925927,
+      "ci_upper": -0.33333333333333326,
+      "spans_zero": false
+    },
+    "recall@5": {
+      "observed_frozen": 0.7302469135802468,
+      "observed_ft": 0.320679012345679,
+      "observed_delta": -0.4095679012345678,
+      "ci_lower": -0.5320987654320987,
+      "ci_upper": -0.28672839506172837,
+      "spans_zero": false
+    },
+    "mrr@10": {
+      "observed_frozen": 0.7833774250440917,
+      "observed_ft": 0.3529835390946502,
+      "observed_delta": -0.4303938859494416,
+      "ci_lower": -0.5581722148736038,
+      "ci_upper": -0.304106407995297,
+      "spans_zero": false
+    },
+    "sec_hit@1": {
+      "observed_frozen": 0.7222222222222222,
+      "observed_ft": 0.3333333333333333,
+      "observed_delta": -0.3888888888888889,
+      "ci_lower": -0.537037037037037,
+      "ci_upper": -0.24074074074074076,
+      "spans_zero": false
+    },
+    "sec_mrr@10": {
+      "observed_frozen": 0.8165343915343916,
+      "observed_ft": 0.39043209876543206,
+      "observed_delta": -0.4261022927689595,
+      "ci_lower": -0.5460345017636685,
+      "ci_upper": -0.30837632275132265,
+      "spans_zero": false
+    }
+  },
+  "per_document": {
+    "adapters-and-governance": {
+      "query_count": 16,
+      "frozen": {
+        "hit@1": 0.5,
+        "recall@3": 0.53125,
+        "recall@5": 0.6145833333333333,
+        "mrr@10": 0.6506696428571428
+      },
+      "fine_tuned": {
+        "hit@1": 0.25,
+        "recall@3": 0.25,
+        "recall@5": 0.3125,
+        "mrr@10": 0.296875
+      },
+      "delta": {
+        "hit@1": -0.25,
+        "recall@3": -0.28125,
+        "recall@5": -0.30208333333333326,
+        "mrr@10": -0.3537946428571428
+      }
+    },
+    "compliance": {
+      "query_count": 8,
+      "frozen": {
+        "hit@1": 0.75,
+        "recall@3": 0.6875,
+        "recall@5": 0.6875,
+        "mrr@10": 0.828125
+      },
+      "fine_tuned": {
+        "hit@1": 0.125,
+        "recall@3": 0.0625,
+        "recall@5": 0.0625,
+        "mrr@10": 0.125
+      },
+      "delta": {
+        "hit@1": -0.625,
+        "recall@3": -0.625,
+        "recall@5": -0.625,
+        "mrr@10": -0.703125
+      }
+    },
+    "evaluation": {
+      "query_count": 17,
+      "frozen": {
+        "hit@1": 0.7647058823529411,
+        "recall@3": 0.7156862745098039,
+        "recall@5": 0.784313725490196,
+        "mrr@10": 0.8431372549019607
+      },
+      "fine_tuned": {
+        "hit@1": 0.4117647058823529,
+        "recall@3": 0.2892156862745098,
+        "recall@5": 0.31862745098039214,
+        "mrr@10": 0.4411764705882353
+      },
+      "delta": {
+        "hit@1": -0.3529411764705882,
+        "recall@3": -0.42647058823529416,
+        "recall@5": -0.4656862745098038,
+        "mrr@10": -0.4019607843137254
+      }
+    },
+    "peft-and-efficiency": {
+      "query_count": 13,
+      "frozen": {
+        "hit@1": 0.7692307692307693,
+        "recall@3": 0.7679487179487179,
+        "recall@5": 0.8282051282051281,
+        "mrr@10": 0.841025641025641
+      },
+      "fine_tuned": {
+        "hit@1": 0.38461538461538464,
+        "recall@3": 0.31025641025641026,
+        "recall@5": 0.49230769230769234,
+        "mrr@10": 0.447008547008547
+      },
+      "delta": {
+        "hit@1": -0.38461538461538464,
+        "recall@3": -0.4576923076923076,
+        "recall@5": -0.3358974358974358,
+        "mrr@10": -0.39401709401709406
+      }
+    }
+  },
+  "query_transitions": {
+    "improved_count": 4,
+    "degraded_count": 34,
+    "unchanged_count": 16,
+    "improved_queries": [
+      {
+        "query_id": "manual_010",
+        "query": "soup registry diff output",
+        "document": "adapters-and-governance",
+        "frozen_mrr": 0.5,
+        "ft_mrr": 1.0,
+        "delta": 0.5
+      },
+      {
+        "query_id": "manual_038",
+        "query": "custom eval jsonl fields for exact and regex scoring",
+        "document": "evaluation",
+        "frozen_mrr": 0.5,
+        "ft_mrr": 1.0,
+        "delta": 0.5
+      },
+      {
+        "query_id": "manual_042",
+        "query": "preview which decoder layers soup shrink will drop",
+        "document": "peft-and-efficiency",
+        "frozen_mrr": 0.3333333333333333,
+        "ft_mrr": 1.0,
+        "delta": 0.6666666666666667
+      },
+      {
+        "query_id": "manual_047",
+        "query": "different learning rates for q_proj and v_proj",
+        "document": "peft-and-efficiency",
+        "frozen_mrr": 0.1,
+        "ft_mrr": 0.2,
+        "delta": 0.1
+      }
+    ],
+    "degraded_queries": [
+      {
+        "query_id": "manual_001",
+        "query": "why does soup lock check exit with code 3",
+        "document": "adapters-and-governance",
+        "frozen_mrr": 0.5,
+        "ft_mrr": 0.0,
+        "delta": -0.5
+      },
+      {
+        "query_id": "manual_002",
+        "query": "How do I bisect training checkpoints when an eval regresses?",
+        "document": "adapters-and-governance",
+        "frozen_mrr": 0.14285714285714285,
+        "ft_mrr": 0.0,
+        "delta": -0.14285714285714285
+      },
+      {
+        "query_id": "manual_004",
+        "query": "what does soup loop automate",
+        "document": "adapters-and-governance",
+        "frozen_mrr": 0.14285714285714285,
+        "ft_mrr": 0.0,
+        "delta": -0.14285714285714285
+      },
+      {
+        "query_id": "manual_005",
+        "query": "does soup roll back a canary automatically if the eval regresses",
+        "document": "adapters-and-governance",
+        "frozen_mrr": 0.5,
+        "ft_mrr": 0.0,
+        "delta": -0.5
+      },
+      {
+        "query_id": "manual_007",
+        "query": "compare model answers before and after a knowledge edit",
+        "document": "adapters-and-governance",
+        "frozen_mrr": 1.0,
+        "ft_mrr": 0.0,
+        "delta": -1.0
+      },
+      {
+        "query_id": "manual_008",
+        "query": "build a control vector from positive and negative prompts",
+        "document": "adapters-and-governance",
+        "frozen_mrr": 0.5,
+        "ft_mrr": 0.0,
+        "delta": -0.5
+      },
+      {
+        "query_id": "manual_009",
+        "query": "grace codebook size limit",
+        "document": "adapters-and-governance",
+        "frozen_mrr": 1.0,
+        "ft_mrr": 0.0,
+        "delta": -1.0
+      },
+      {
+        "query_id": "manual_012",
+        "query": "how do signed attestations get embedded in a soup can",
+        "document": "adapters-and-governance",
+        "frozen_mrr": 1.0,
+        "ft_mrr": 0.25,
+        "delta": -0.75
+      },
+      {
+        "query_id": "manual_013",
+        "query": "can I merge adapters whose licenses conflict",
+        "document": "adapters-and-governance",
+        "frozen_mrr": 1.0,
+        "ft_mrr": 0.5,
+        "delta": -0.5
+      },
+      {
+        "query_id": "manual_014",
+        "query": "what stops a hijacked huggingface repo from being pulled",
+        "document": "adapters-and-governance",
+        "frozen_mrr": 1.0,
+        "ft_mrr": 0.0,
+        "delta": -1.0
+      },
+      {
+        "query_id": "manual_016",
+        "query": "Soup refuses to load a .bin adapter, what formats are allowed?",
+        "document": "adapters-and-governance",
+        "frozen_mrr": 0.125,
+        "ft_mrr": 0.0,
+        "delta": -0.125
+      },
+      {
+        "query_id": "manual_017",
+        "query": "which soup init templates exist for regulated industries",
+        "document": "compliance",
+        "frozen_mrr": 1.0,
+        "ft_mrr": 0.0,
+        "delta": -1.0
+      },
+      {
+        "query_id": "manual_018",
+        "query": "clean emails and phone numbers out of my training data",
+        "document": "compliance",
+        "frozen_mrr": 1.0,
+        "ft_mrr": 0.0,
+        "delta": -1.0
+      },
+      {
+        "query_id": "manual_020",
+        "query": "what ends up in the generated model card",
+        "document": "compliance",
+        "frozen_mrr": 1.0,
+        "ft_mrr": 0.0,
+        "delta": -1.0
+      },
+      {
+        "query_id": "manual_021",
+        "query": "publish a model to huggingface with my own model card",
+        "document": "compliance",
+        "frozen_mrr": 0.125,
+        "ft_mrr": 0.0,
+        "delta": -0.125
+      },
+      {
+        "query_id": "manual_022",
+        "query": "generated ci workflow steps",
+        "document": "compliance",
+        "frozen_mrr": 0.5,
+        "ft_mrr": 0.0,
+        "delta": -0.5
+      },
+      {
+        "query_id": "manual_023",
+        "query": "which expectation checks can go in expectations.yaml",
+        "document": "compliance",
+        "frozen_mrr": 1.0,
+        "ft_mrr": 0.0,
+        "delta": -1.0
+      },
+      {
+        "query_id": "manual_024",
+        "query": "what steps does soup's compliance workflow cover",
+        "document": "compliance",
+        "frozen_mrr": 1.0,
+        "ft_mrr": 0.0,
+        "delta": -1.0
+      },
+      {
+        "query_id": "manual_025",
+        "query": "Should I fine-tune with DPO or SFT for my dataset?",
+        "document": "evaluation",
+        "frozen_mrr": 0.3333333333333333,
+        "ft_mrr": 0.0,
+        "delta": -0.3333333333333333
+      },
+      {
+        "query_id": "manual_026",
+        "query": "generate an eval suite from my training data",
+        "document": "evaluation",
+        "frozen_mrr": 1.0,
+        "ft_mrr": 0.0,
+        "delta": -1.0
+      },
+      {
+        "query_id": "manual_027",
+        "query": "do two eval designs with the same content hash the same",
+        "document": "evaluation",
+        "frozen_mrr": 1.0,
+        "ft_mrr": 0.0,
+        "delta": -1.0
+      },
+      {
+        "query_id": "manual_028",
+        "query": "block a git push when eval accuracy regresses",
+        "document": "evaluation",
+        "frozen_mrr": 1.0,
+        "ft_mrr": 0.0,
+        "delta": -1.0
+      },
+      {
+        "query_id": "manual_029",
+        "query": "eval_gate block settings in soup.yaml",
+        "document": "evaluation",
+        "frozen_mrr": 1.0,
+        "ft_mrr": 0.5,
+        "delta": -0.5
+      },
+      {
+        "query_id": "manual_030",
+        "query": "how does soup ab decide when to stop collecting samples",
+        "document": "evaluation",
+        "frozen_mrr": 1.0,
+        "ft_mrr": 0.0,
+        "delta": -1.0
+      },
+      {
+        "query_id": "manual_033",
+        "query": "Task accuracy went up but MMLU dropped, should I ship?",
+        "document": "evaluation",
+        "frozen_mrr": 1.0,
+        "ft_mrr": 0.0,
+        "delta": -1.0
+      },
+      {
+        "query_id": "manual_035",
+        "query": "how do I make a ship verdict replayable in CI",
+        "document": "evaluation",
+        "frozen_mrr": 0.5,
+        "ft_mrr": 0.0,
+        "delta": -0.5
+      },
+      {
+        "query_id": "manual_036",
+        "query": "score BLEU and ROUGE on custom eval outputs",
+        "document": "evaluation",
+        "frozen_mrr": 1.0,
+        "ft_mrr": 0.0,
+        "delta": -1.0
+      },
+      {
+        "query_id": "manual_043",
+        "query": "how does longlora shifted sparse attention work",
+        "document": "peft-and-efficiency",
+        "frozen_mrr": 1.0,
+        "ft_mrr": 0.0,
+        "delta": -1.0
+      },
+      {
+        "query_id": "manual_044",
+        "query": "difference between multipack and packing",
+        "document": "peft-and-efficiency",
+        "frozen_mrr": 1.0,
+        "ft_mrr": 0.0,
+        "delta": -1.0
+      },
+      {
+        "query_id": "manual_045",
+        "query": "set up yarn for 4x context extension",
+        "document": "peft-and-efficiency",
+        "frozen_mrr": 1.0,
+        "ft_mrr": 0.0,
+        "delta": -1.0
+      },
+      {
+        "query_id": "manual_046",
+        "query": "Can I add fresh layers to a Llama model and only train those?",
+        "document": "peft-and-efficiency",
+        "frozen_mrr": 1.0,
+        "ft_mrr": 0.5,
+        "delta": -0.5
+      },
+      {
+        "query_id": "manual_050",
+        "query": "can dora and vera be enabled together",
+        "document": "peft-and-efficiency",
+        "frozen_mrr": 0.5,
+        "ft_mrr": 0.0,
+        "delta": -0.5
+      },
+      {
+        "query_id": "manual_052",
+        "query": "does lisa actually use less memory than lora",
+        "document": "peft-and-efficiency",
+        "frozen_mrr": 1.0,
+        "ft_mrr": 0.1111111111111111,
+        "delta": -0.8888888888888888
+      },
+      {
+        "query_id": "manual_054",
+        "query": "Can GaLore run with quantized weights?",
+        "document": "peft-and-efficiency",
+        "frozen_mrr": 1.0,
+        "ft_mrr": 0.0,
+        "delta": -1.0
+      }
+    ]
+  },
+  "latency_profile": {
+    "cold_start": {
+      "model_and_adapter_load_s": 0.0,
+      "corpus_encode_1068_s": 13.918,
+      "total_cold_start_s": 13.918
+    },
+    "warm_steady_state": {
+      "query_encode_per_query_ms": 1.53,
+      "matrix_search_per_query_ms": 0.08,
+      "total_per_query_ms": 1.61
+    }
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "bm25_improved": {
+    "model_loading_ms": 0.007458002073690295,
+    "corpus_indexing_ms": 113.67379099829122,
+    "steady_state_query_mean_ms": 2.311315999880511,
+    "steady_state_query_median_ms": 2.119104508892633,
+    "steady_state_query_p95_ms": 4.193218801810872
+  },
+  "e5_small": {
+    "model_loading_ms": 0.005833018803969026,
+    "corpus_indexing_ms": 30287.13099999004,
+    "steady_state_query_mean_ms": 9.414026041971132,
+    "steady_state_query_median_ms": 9.030354005517438,
+    "steady_state_query_p95_ms": 11.112181197677273
+  },
+  "e5_small_ft_lr2e5": {
+    "model_loading_ms": 0.009124982170760632,
+    "corpus_indexing_ms": 28384.50045802165,
+    "steady_state_query_mean_ms": 11.135303753690096,
+    "steady_state_query_median_ms": 10.649666510289535,
+    "steady_state_query_p95_ms": 13.743939362757374
+  },
+  "hybrid_rrf": {
+    "model_loading_ms": 0.01329102087765932,
+    "corpus_indexing_ms": 30400.80479098833,
+    "steady_state_query_mean_ms": 11.746999960450923,
+    "steady_state_query_median_ms": 11.167312011821195,
+    "steady_state_query_p95_ms": 15.335970556770917
+  },
+  "mini_lm_frozen": {
+    "model_loading_ms": 0.003958004526793957,
+    "corpus_indexing_ms": 13610.407792002661,
+    "steady_state_query_mean_ms": 5.26387854188215,
+    "steady_state_query_median_ms": 5.04320849722717,
+    "steady_state_query_p95_ms": 6.110274977982044
+  },
+  "adapter_exp_c_matched_balanced": {
+    "model_loading_ms": 0.0037079735193401575,
+    "corpus_indexing_ms": 14386.976082983892,
+    "steady_state_query_mean_ms": 6.059534580951246,
+    "steady_state_query_median_ms": 5.808374990010634,
+    "steady_state_query_p95_ms": 7.721937386668286
+  }
+}

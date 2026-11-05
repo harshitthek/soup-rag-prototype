@@ -31,8 +31,14 @@ import yaml
 from huggingface_hub import HfApi
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-SOUP_BIN = "/Users/pernavjain/Documents/Soup/.venv/bin/soup"
-SOUP_PYTHON = "/Users/pernavjain/Documents/Soup/.venv/bin/python"
+
+try:
+    from soup_cli_discovery import resolve_python_interpreter, resolve_soup_binary
+except ImportError:
+    from scripts.soup_cli_discovery import resolve_python_interpreter, resolve_soup_binary
+
+SOUP_BIN = str(resolve_soup_binary(REPO_ROOT))
+SOUP_PYTHON = resolve_python_interpreter()
 LOGS_DIR = REPO_ROOT / "results" / "training_logs"
 LOGS_DIR.mkdir(parents=True, exist_ok=True)
 

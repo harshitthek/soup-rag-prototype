@@ -1,131 +1,82 @@
-# Soup RAG Prototype: Retrieval & Embedding Fine-Tuning Experimentation
+# Soup RAG Prototype: Technical Documentation Retrieval
 
-Configuration-driven RAG and dense retrieval experimentation prototype built around [Soup CLI](https://github.com/MakazhanAlpamys/Soup) technical documentation.
+Soup RAG Prototype is a configuration-driven retrieval experimentation framework built around [Soup CLI](https://github.com/MakazhanAlpamys/Soup) technical documentation. It investigates whether parameter-efficient fine-tuning (LoRA), off-the-shelf dense encoders, or hybrid lexical-dense retrieval (Reciprocal Rank Fusion) best solve the retrieval challenges of command-line tools—specifically high lexical overlap, nested flag syntax, and boilerplate distractors.
 
 > [!IMPORTANT]
-> **Prototype Status:** This repository is an experimental research prototype evaluating dense retrieval quality, embedding fine-tuning strategies, and alternative encoders on technical Markdown documentation. It is **not** a production-ready feature or fully integrated Soup CLI command.
+> **Prototype Status:** This repository is an experimental research prototype evaluating retrieval quality and embedding adaptation strategies on technical Markdown documentation. It is **not** a production-ready feature or an upstream Soup CLI command.
 
 ---
 
-## 1. The Use Case
+## Architecture
 
-Developer documentation for command-line tools and machine learning frameworks (such as Soup) presents unique retrieval challenges:
-- **High Lexical Overlap:** Distinct commands share common terminology (`yaml`, `train`, `lora`, `quantization`, `checkpoint`, `eval`).
-- **Hierarchical Option Syntax:** Nested sub-commands, global flags, and configuration schemas look syntactically similar across different feature areas.
-- **Boilerplate Distractors:** Documentation files frequently repeat standard headers, common options, and setup recipes, confounding generic off-the-shelf retrieval models.
-
-This prototype investigates:
-1. Whether parameter-efficient fine-tuning (LoRA) of a lightweight embedding model (`sentence-transformers/all-MiniLM-L6-v2`) via Soup's native `task: embedding` training path improves retrieval accuracy over held-out technical documentation.
-2. How synthetic template-based training queries compare against diverse LLM-generated training queries across distinct user intent classes.
-3. How fine-tuned lightweight models compare against stronger off-the-shelf frozen encoders (`intfloat/e5-small-v2`) and classical lexical retrieval (BM25).
-
----
-
-## 2. Implemented Architecture & Pipeline
-
-The repository implements a modular, configuration-driven retrieval experimentation pipeline:
+The candidate hybrid pipeline combines domain-aware lexical tokenization with a frozen dense encoder using Reciprocal Rank Fusion (RRF):
 
 ```
-┌─────────────────────────┐     ┌────────────────────────┐     ┌────────────────────────┐
-│  1. Document Ingestion  │ ──> │   2. Syntax Chunking   │ ──> │ 3. Query Generation    │
-│  12 core / 23 candidate │     │  ATX heading split     │     │  Synthetic (A) vs      │
-│  Markdown documents     │     │  ≤220 tokens, overlap  │     │  Diverse LLM (B, C)    │
-└─────────────────────────┘     └────────────────────────┘     └────────────────────────┘
-                                                                            │
-┌─────────────────────────┐     ┌────────────────────────┐                  │
-│  5. Retrieval & Eval    │ <── │ 4. Triplet Preparation │ <────────────────┘
-│  9 retrievers benchmark │     │  Dense cosine mining   │
-│  54 owner-approved q's  │     │  Section deduplication │
-└─────────────────────────┘     └────────────────────────┘
+                            ┌─────────────────────────────────────────────────────┐
+                            │                    User Query                       │
+                            └──────────────────────────┬──────────────────────────┘
+                                                       │
+                             ┌─────────────────────────┴────────────────────────┐
+                             │                                                  │
+                             ▼                                                  ▼
+                ┌──────────────────────────┐                      ┌──────────────────────────┐
+                │ Domain-Aware Tokenizer   │                      │ Prefix Formulation       │
+                │ Regex flags/paths/idents │                      │ Prepend "query: "        │
+                └────────────┬─────────────┘                      └─────────────┬────────────┘
+                             │                                                  │
+                             ▼                                                  ▼
+                ┌──────────────────────────┐                      ┌──────────────────────────┐
+                │ BM25 Okapi Scoring       │                      │ Frozen E5-small-v2       │
+                │ k1=1.5, b=0.75           │                      │ Mean Pool + L2 Normalize │
+                └────────────┬─────────────┘                      └─────────────┬────────────┘
+                             │                                                  │
+                             └─────────────────────────┬────────────────────────┘
+                                                       │
+                                                       ▼
+                                         ┌───────────────────────────┐
+                                         │ Reciprocal Rank Fusion    │
+                                         │ RRF (k=60, equal weights) │
+                                         └─────────────┬─────────────┘
+                                                       │
+                                                       ▼
+                                         ┌───────────────────────────┐
+                                         │ Top-K Retrieved Passages  │
+                                         └───────────────────────────┘
 ```
 
-1. **Document Ingestion:** Ingests Markdown technical documentation from the Soup CLI ecosystem. The core corpus comprises 12 documents (~368 KB). An expanded training corpus incorporates 23 additional candidate documents (~369 KB) while strictly preserving held-out evaluation documents.
-2. **Markdown-Aware Chunking:** Splits documents on ATX headings (`#`, `##`, `###`), sub-splits sections exceeding 220 tokens with 28 tokens overlap, and retains hierarchical heading prefixes (`"{doc_name}: {heading}\n\n{body}"`) so every chunk preserves its structural context.
-3. **Training Query Generation:**
-   - *Strategy A (Synthetic templates):* Deterministic regex and template extraction over headings and command flags.
-   - *Strategy B & C (Diverse LLM generation):* Context-grounded queries generated across four user intent categories: *How-To*, *Conceptual*, *Parameter Lookup*, and *Troubleshooting*.
-4. **Triplet Preparation:** Hard negatives are mined using dense cosine similarity with strict **section-level deduplication** to ensure sibling paragraphs from the same section are never selected as false negatives.
-5. **Optional Embedding Fine-Tuning:** Parameter-efficient fine-tuning (LoRA $r=16, \alpha=32$ on query/value projections; 147,456 trainable parameters = 0.65% of base) using Soup's native embedding trainer (`soup train --config <config.yaml>`, TripletMarginLoss with margin $m=0.5$).
-6. **Retrieval & Evaluation:** Evaluates exact dot-product ranking over L2-normalized embeddings across a frozen benchmark of 54 owner-approved natural-language queries across 4 held-out documents.
+---
+
+## Primary Benchmark: Independent Human Evaluation (`human_eval_v2`)
+
+The primary benchmark evaluates retrieval systems on **24 authentic queries** authored by the project owner without AI assistance, evaluated across all 12 Soup documentation files (1,068 canonical chunks in `data/corpus.jsonl`).
+
+| System | Architecture / Mode | Hit@1 | Recall@3 | Recall@5 | MRR@10 | Sec-Hit@1 | Sec-MRR@10 | Warm Latency | Cold Start |
+|:---|:---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| **Hybrid RRF** | Improved BM25 + Frozen E5 ($k=60$) | **0.6250** | **0.4923** | **0.5551** | **0.7254** | **0.6250** | **0.7292** | 11.75 ms | 30.4 s |
+| **Frozen E5-small** | `intfloat/e5-small-v2` (frozen, 384d) | **0.6250** | 0.4562 | **0.5690** | 0.7101 | **0.6250** | 0.7240 | 9.41 ms | 30.3 s |
+| **C-matched-bal** | MiniLM + Exp C balanced LoRA | 0.5833 | 0.5103 | 0.5196 | 0.7004 | 0.5833 | 0.7073 | 6.06 ms | 14.4 s |
+| **Improved BM25** | Domain-aware regex ($k_1=1.5, b=0.75$) | **0.6250** | 0.4929 | 0.5150 | 0.6921 | **0.6250** | 0.6921 | **2.31 ms** | **0.11 s** |
+| **Frozen MiniLM** | `all-MiniLM-L6-v2` (frozen, 256d) | 0.5417 | 0.4929 | 0.5497 | 0.6587 | 0.5417 | 0.6622 | 5.26 ms | 13.6 s |
+| **Fine-Tuned E5** | E5-small + LoRA (matched lr=2e-5) | 0.5417 | **0.5177** | 0.5591 | 0.6413 | 0.5417 | 0.6448 | 11.14 ms | 28.4 s |
+
+*Steady-state warm latency measured per query on Apple Silicon with preloaded corpus embeddings.*
+
+For full bootstrap uncertainty intervals, ablation analyses, and comparison with the historical 54-query AI-assisted benchmark, see [`RESULTS.md`](RESULTS.md).
 
 ---
 
-## 3. Authoritative Benchmark Results (Phase 3)
+## Key Experimental Takeaways
 
-The authoritative Phase 3 multi-retriever benchmark evaluated **nine distinct retrievers** on the identical frozen benchmark (54 owner-approved manual queries, 1,068 chunks across 12 documents, 4 held-out evaluation documents):
-
-| ID | Retriever | Base Architecture / Checkpoint | Training Data & Query Strategy | Hit@1 | Recall@3 | MRR@10 |
-|:---|:---|:---|:---|:---:|:---:|:---:|
-| **R1** | BM25 | Fixed BM25 (`rank_bm25`) | Lexical baseline (no training) | 0.4815 | 0.4497 | 0.5953 |
-| **R2** | Frozen MiniLM | `all-MiniLM-L6-v2` (frozen) | Off-the-shelf baseline (no training) | 0.5741 | 0.5753 | 0.6928 |
-| **R3** | **Frozen E5-small** | `intfloat/e5-small-v2` (frozen) | **Strong off-the-shelf baseline** | **0.6852** | **0.6694** | **0.7834** |
-| **R4** | A-full | MiniLM + Soup LoRA | Core corpus (8 docs), 1,078 synthetic queries | 0.5370 | 0.4951 | 0.6501 |
-| **R5** | A-matched | MiniLM + Soup LoRA | Core corpus (8 docs), 825 synthetic queries | 0.5185 | 0.5228 | 0.6554 |
-| **R6** | B | MiniLM + Soup LoRA | Core corpus (8 docs), 825 diverse LLM queries | 0.6481 | 0.6015 | 0.7434 |
-| **R7** | C-matched | MiniLM + Soup LoRA | Expanded corpus (31 docs), 825 unstratified queries | 0.6111 | 0.5090 | 0.6844 |
-| **R8** | **C-matched-balanced** | MiniLM + Soup LoRA | Expanded corpus (31 docs), 825 balanced queries | **0.6852** | 0.5722 | 0.7681 |
-| **R9** | C-full | MiniLM + Soup LoRA | Expanded corpus (31 docs), 2,257 uncurated queries | 0.5556 | 0.4951 | 0.6310 |
-
-*Full evaluation methodology, paired bootstrap uncertainty intervals, and leave-one-document-out analyses are detailed in [`results/PHASE_3_BENCHMARK_EVALUATION_REPORT.md`](results/PHASE_3_BENCHMARK_EVALUATION_REPORT.md) and [`results/PHASE_3_1_INTEGRITY_AUDIT.md`](results/PHASE_3_1_INTEGRITY_AUDIT.md).*
-
-### Key Empirical Findings
-
-1. **Primary Negative Finding:** Fine-tuning MiniLM did **not** outperform frozen E5-small. Frozen `intfloat/e5-small-v2` remains the strongest retriever overall (0.7834 MRR@10, 0.6852 Hit@1). In practical settings, deploying a stronger pre-trained encoder out-of-the-box is substantially more effective than fine-tuning a smaller encoder on limited domain text.
-2. **Best MiniLM Adapter:** `C-matched-balanced` was the top-performing MiniLM adapter (0.7681 MRR@10, 0.6852 Hit@1). It matched E5-small on Hit@1 (0.6852) and outperformed Frozen MiniLM (+0.0753 MRR@10), but trailed E5-small on overall ranking quality (MRR@10 0.7681 vs 0.7834) and top-3 recall (0.5722 vs 0.6694).
-3. **Training Query Quality Outweighs Quantity:** Diverse LLM-generated training queries (Experiment B: 0.7434 MRR@10) substantially outperformed synthetic template-based queries (Experiment A-matched: 0.6554 MRR@10; $\Delta = +0.0880$ MRR@10). Synthetic template queries caused the model to overfit to formulaic heading structures, leading the baseline adapter `A-full` (0.6501 MRR@10) to perform **worse** than frozen MiniLM (0.6928 MRR@10) on natural user queries.
-4. **Corpus Expansion Requires Careful Data Curation:** Expanding the training corpus to 31 documents with balanced intent sampling (`C-matched-balanced`) improved upon Experiment B (+0.0247 MRR@10). However, training on the uncurated full expanded corpus (`C-full`, 2,257 queries) degraded performance severely (0.6310 MRR@10; -0.0618 below frozen MiniLM), demonstrating that naive dataset scaling introduces significant domain noise.
+1. **Hybrid Retrieval Delivers Highest Overall Effectiveness:** Reciprocal Rank Fusion ($k=60$) combining domain-aware BM25 and frozen E5-small achieves the top MRR@10 (**0.7254**), Sec-MRR@10 (**0.7292**), and a statistically positive improvement on Recall@3 (+0.0361, 95% CI `[+0.0069, +0.0653]`).
+2. **Fine-Tuning E5 Induces Negative Transfer on Human Queries:** Parameter-efficient fine-tuning on synthetic domain triplets degraded E5-small retrieval on authentic developer queries (MRR@10 dropped from **0.7101 to 0.6413**; Hit@1 dropped from **0.6250 to 0.5417**). Off-the-shelf frozen E5-small remains strictly superior.
+3. **Lexical BM25 is Highly Competitive on Real Developer Queries:** Human queries rely heavily on exact technical identifiers, flags, and error tokens (`--track-energy`, `check-safetensors`, `bitnet_1.58`, `onebitllms`, `LISA`). Improved BM25 matches dense Hit@1 (**0.6250**) at **2.31 ms** query latency and **0.11 s** cold start.
+4. **Synthetic Benchmarks Overstate Adapter Gains:** Synthetic queries favor dense models trained on similar distributions while penalizing lexical search. Independent, unassisted human queries are essential to detect negative transfer and accurately evaluate retrieval utility.
 
 ---
 
-## 4. Limitations & Scope
+## Quickstart & Reproduction
 
-- **Evaluation Set Size:** The benchmark consists of 54 owner-approved manual queries evaluated across 4 held-out documents (307 chunks). While suitable for prototyping, four documents cannot support broad population-level statistical inference.
-- **Document-Localized Improvements:** Adapter gains over Frozen MiniLM are concentrated predominantly in `adapters-and-governance` (MRR difference from Frozen MiniLM: C-matched-balanced $+0.2781$, B $+0.2448$) and `evaluation` (C-matched-balanced $+0.0402$, B $+0.0303$). On `peft-and-efficiency`, C-matched-balanced ties MiniLM ($0.7333$), and on `compliance`, observed scores are lower ($-0.1333$).
-- **No Cross-Domain Generalization:** The results demonstrate domain adaptation within the Soup documentation corpus; generalization to completely unseen software domains or non-technical text is not established.
-- **Retrieval vs Generation:** Retrieval metrics (Hit@K, Recall@K, MRR@10) measure chunk retrieval accuracy. They do not evaluate downstream response generation quality, prompt synthesis, or LLM hallucination rates.
-
----
-
-## 5. Project Status & Roadmap
-
-| Stage / Component | Status | Description |
-|:---|:---:|:---|
-| **Phase 0: Audit & Architecture** | **Completed** | Full corpus audit, leakage checks, document separation contracts ([`docs/phase0/PHASE_0_AUDIT.md`](docs/phase0/PHASE_0_AUDIT.md)). |
-| **Phase 1: Dataset & Benchmark** | **Completed** | 54 owner-approved manual queries, diverse query generation (`results/PHASE_1_5_QUERY_QUALITY_REPORT.md`). |
-| **Phase 2: Adapter Training Matrix** | **Completed** | 5 authorized LoRA adapters trained with isolated configs (`results/PHASE_2_TRAINING_EXECUTION_REPORT.md`). |
-| **Phase 3: Multi-Retriever Benchmark** | **Completed** | 9-retriever benchmark evaluation, bootstrap CI, integrity audit (`results/PHASE_3_BENCHMARK_EVALUATION_REPORT.md`). |
-| *Phase 4: Hybrid BM25 + Dense Retrieval* | *Planned Future Work* | Reciprocal Rank Fusion (RRF) combining sparse lexical and dense representations. |
-| *Phase 5: Cross-Encoder Reranking* | *Planned Future Work* | Two-stage pipeline evaluating cross-encoder rerankers (e.g. `bge-reranker-base`). |
-| *Phase 6: Multi-Domain Generalization* | *Planned Future Work* | Evaluating fine-tuned adapters on third-party documentation sets. |
-| *Phase 7: Soup CLI Integration* | *Planned Future Work* | Native integration into Soup CLI search commands (`soup docs search`). |
-
----
-
-## 6. Repository Navigation & Deliverables
-
-- **Core Entry Points:**
-  - [`docs/README.md`](docs/README.md): Master technical documentation index and executive summaries.
-  - [`REPRODUCE.md`](REPRODUCE.md): Reproduction guide covering testing, result inspection, and evaluation workflows.
-- **Audited Results & Findings:**
-  - [`results/PHASE_3_BENCHMARK_EVALUATION_REPORT.md`](results/PHASE_3_BENCHMARK_EVALUATION_REPORT.md): Authoritative Phase 3 benchmark evaluation report across all 9 retrievers.
-  - [`results/PHASE_3_1_INTEGRITY_AUDIT.md`](results/PHASE_3_1_INTEGRITY_AUDIT.md): Statistical verification, bootstrap invariant audit, and failure classification.
-  - [`results/PHASE_3_DOCUMENTATION_AUDIT.md`](results/PHASE_3_DOCUMENTATION_AUDIT.md): Repository-wide documentation audit and consistency verification.
-- **Detailed Technical Docs (`docs/`):**
-  - [`docs/REVIEW.md`](docs/REVIEW.md): Architectural review and experimental design decisions.
-  - [`docs/EVALUATION_V2_SPEC.md`](docs/EVALUATION_V2_SPEC.md): Benchmark methodology and evaluation specification.
-  - [`docs/evaluation/EVALUATION_V2_COVERAGE.md`](docs/evaluation/EVALUATION_V2_COVERAGE.md): 54-query authoring worksheet and chunk allocations.
-  - [`docs/reports/PHASE_1_DELIVERY_REPORT.md`](docs/reports/PHASE_1_DELIVERY_REPORT.md): Historical Phase 1 delivery report (synthetic benchmark).
-- **Data & Config:**
-  - `data/manual_queries.jsonl`: 54 owner-approved manual evaluation queries with multi-chunk relevance labels.
-  - `data/corpus.jsonl`: 1,068 token-bounded chunks across 12 Soup documentation files.
-  - `config/embedding_exp_*.yaml`: Independent training configurations for each adapter experiment.
-  - `results/phase3/`: Audited raw evaluation results and bootstrap CI outputs for all 9 retrievers.
-
----
-
-## 7. Quickstart & Verification
-
-### Prerequisites
+### Installation
 
 ```bash
 uv venv .venv
@@ -133,32 +84,27 @@ source .venv/bin/activate
 uv pip install -r requirements.txt
 ```
 
-### 1. Run Verification Test Suite (182 Passing Tests)
+### Reproduce Independent Human Benchmark (v2)
 
-Verify formatting, section deduplication, model loading, and dataset/statistical invariants:
+Execute the 6-system evaluation on the frozen 24 human queries:
+
+```bash
+python scripts/evaluate_human_eval_v2.py
+```
+
+Outputs are written to `results/human_eval_v2/` and `results/HUMAN_EVAL_V2_REPORT.md`.
+
+### Run Verification Test Suite
+
 ```bash
 pytest tests/ -v
 ```
 
-### 2. Inspect Verified Phase 3 Benchmark Results
+---
 
-All 16 Phase 3 result artifacts are pinned and verified via SHA256 manifest:
-```bash
-cd results/phase3 && sha256sum -c manifest.sha256 && cd ../..
-```
+## Documentation Links
 
-### 3. Run Read-Only Retrieval on Benchmark Queries
-
-Run individual retrievers against the frozen 54-query benchmark:
-```bash
-# Evaluate Frozen MiniLM
-python scripts/run_retrieval.py --retriever mini_lm_frozen --output results/test_minilm.json
-
-# Evaluate Frozen E5-small
-python scripts/run_retrieval.py --retriever e5_small --output results/test_e5.json
-
-# Evaluate Baseline Soup Adapter (A-full)
-python scripts/run_retrieval.py --retriever mini_lm_soup --output results/test_soup.json
-```
-
-See [`REPRODUCE.md`](REPRODUCE.md) for full instructions on reproducing training datasets and adapter runs.
+- **[`RESULTS.md`](RESULTS.md)**: Authoritative empirical findings, bootstrap confidence intervals, latency breakdowns, and research answers.
+- **[`docs/RESEARCH_INTEGRITY.md`](docs/RESEARCH_INTEGRITY.md)**: Provenance disclosures, unassisted human author verification, withdrawal of 12-query draft, and benchmark separation.
+- **[`docs/SOUP_INTEGRATION_PROPOSAL.md`](docs/SOUP_INTEGRATION_PROPOSAL.md)**: Non-invasive proposal for integrating hybrid retrieval and domain-aware tokenization into Soup CLI (`soup docs search`).
+- **[`data/human_eval/manifest_v2.json`](data/human_eval/manifest_v2.json)**: Frozen benchmark manifest with dataset hashes and system configurations.

@@ -47,6 +47,8 @@ pytest tests/ -v
 ```
 
 ### Key Test Coverage Areas:
+- `tests/test_bm25_tokenizer.py`: Domain-aware regex tokenizer unit tests (flags, compound tokens, dotted paths, versions).
+- `tests/test_rrf.py`: Reciprocal Rank Fusion mathematical unit tests (hand-calculated scores, tie-breaking, dedup).
 - `tests/test_retrieval_pipeline.py`: Chunk formatting, token boundaries, and base model loading.
 - `tests/test_manual_queries_validation.py`: Schema validation and heading overlap checks for the 54 manual queries.
 - `tests/test_retrieval_metrics.py`: Ranking metric implementations (Hit@K, Recall@K, MRR@K).
@@ -77,7 +79,30 @@ cd ../..
 
 ---
 
-## 4. Running Read-Only Retrieval on Benchmark Queries
+## 4. Running BM25 Tokenizer Benchmark & Hybrid RRF Evaluation
+
+Following maintainer feedback regarding whitespace tokenization and lexical baselines, an improved domain-aware regex tokenizer and Reciprocal Rank Fusion (RRF) hybrid pipeline are implemented.
+
+### Benchmark BM25 Tokenizers (Original vs Improved)
+```bash
+python scripts/evaluate_bm25_tokenizers.py
+```
+*Evaluates both tokenizers across the frozen 54-query benchmark and outputs `results/BM25_TOKENIZER_COMPARISON.md`.*
+
+### Benchmark Hybrid Retrieval (Original BM25, Improved BM25, Frozen E5-small, Hybrid RRF)
+```bash
+python scripts/evaluate_hybrid.py
+```
+*Executes the full 4-way evaluation, computes cross-retriever complementary analyses and failure categorizations, generates preliminary top-10 rankings for the 12 human-authored queries (without computing metrics), and writes:*
+- `results/HYBRID_RETRIEVAL_RESULTS.md`: Detailed markdown comparative report.
+- `results/hybrid/summary.json`: System metrics, latencies, failure distributions, and complementary set analyses.
+- `results/hybrid/configuration.json`: System and evaluation provenance parameters.
+- `results/hybrid/per_query_results.json`: Detailed per-query rankings and metrics across all 4 systems.
+- `~/.cache/soup-rag-prototype/quarantine/preliminary_rankings.json`: Preliminary model rankings on 12 unannotated human queries (quarantined outside workspace to ensure blinded manual annotation).
+
+---
+
+## 5. Running Read-Only Retrieval on Benchmark Queries
 
 You can execute retrieval evaluation for any individual retriever against the frozen 54-query manual benchmark (`data/manual_queries.jsonl`) without modifying any trained checkpoints or datasets.
 
@@ -89,7 +114,7 @@ python scripts/run_retrieval.py --retriever bm25 --output results/test_bm25.json
 # 2. Frozen MiniLM Baseline
 python scripts/run_retrieval.py --retriever mini_lm_frozen --output results/test_minilm.json
 
-# 3. Frozen E5-small Baseline (Strongest Retriever)
+# 3. Frozen E5-small Baseline (Highest Observed Benchmark Score)
 python scripts/run_retrieval.py --retriever e5_small --output results/test_e5.json
 ```
 
@@ -98,7 +123,7 @@ python scripts/run_retrieval.py --retriever e5_small --output results/test_e5.js
 # 4. Baseline Soup Adapter (A-full: output_embedding/)
 python scripts/run_retrieval.py --retriever mini_lm_soup --output results/test_soup.json
 
-# 5. Top-Performing MiniLM Adapter (C-matched-balanced)
+# 5. Evaluated MiniLM Adapter with Highest Observed Score (C-matched-balanced)
 python scripts/run_retrieval.py \
     --retriever mini_lm_adapter \
     --adapter-dir output/adapter_exp_c_matched_balanced \
@@ -123,7 +148,7 @@ python scripts/compare_retrievers.py
 
 ---
 
-## 5. Historical Pipeline Reproduction (Phase 1 Synthetic Benchmark)
+## 6. Historical Pipeline Reproduction (Phase 1 Synthetic Benchmark)
 
 The original Phase 1 prototype used 497 synthetically generated queries over 12 Soup documentation files. This workflow is documented here for historical completeness.
 
@@ -163,7 +188,7 @@ python scripts/compare_results.py \
 
 ---
 
-## 6. Adapter Retraining Workflows (Phase 2 Matrix)
+## 7. Adapter Retraining Workflows (Phase 2 Matrix)
 
 During Phase 2, five authorized adapter configurations were trained to isolate the effects of query diversity, corpus size, and intent balancing:
 
@@ -180,7 +205,7 @@ During Phase 2, five authorized adapter configurations were trained to isolate t
 
 ---
 
-## 7. Troubleshooting & Notes
+## 8. Troubleshooting & Notes
 
 - **macOS / Apple Silicon Floating-Point Warnings:** During matrix operations on MPS, you may observe benign runtime warnings regarding BLAS floating-point exception status flags (`fpexception: ...`). These are internal PyTorch/Metal status messages and do not affect numerical correctness.
 - **Paths and Working Directory:** All configuration paths and script commands assume execution from the repository root directory (`soup-rag-prototype/`).

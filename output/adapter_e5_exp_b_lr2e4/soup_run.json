@@ -1,0 +1,1 @@
+{"base_model": "intfloat/e5-small-v2", "base_revision": "ffb93f3bd4047442299a41ebb6fa998a38507c52", "base_revision_source": "hub_commit", "run_id": "run_20261105_110426_a99bed10", "schema_version": 1, "training_data_sha256": null}

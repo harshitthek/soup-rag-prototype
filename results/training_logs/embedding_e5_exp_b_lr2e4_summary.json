@@ -1,0 +1,17 @@
+{
+  "model_name": "E5-small (Exp B LoRA lr=2e-4)",
+  "base_model": "intfloat/e5-small-v2",
+  "base_revision": "ffb93f3bd4047442299a41ebb6fa998a38507c52",
+  "dataset_path": "data/triplets_e5_exp_b.jsonl",
+  "dataset_sha256": "41dca446c4454cd5717003b1497f307bdd76550fab2f7b9e2ace6f3ddb54c798",
+  "config_path": "config/embedding_e5_exp_b_lr2e4.yaml",
+  "config_sha256": "6572ffd23430df6a9b42ca1520750057b4a5485a7511fdc026c8d8acf98fbe4c",
+  "lr": 0.0002,
+  "start_time": "2026-11-05T05:34:26.541459+00:00",
+  "end_time": "2026-11-05T05:42:35.312948+00:00",
+  "duration_seconds": 490.7,
+  "optimizer_updates": 1857,
+  "trainable_parameters": 294912,
+  "adapter_weights_sha256": "ba15b6524291fce87cffa8c91b9e1a5c8509cd6fbaa057e188df43f204a5ce06",
+  "adapter_weights_bytes": 1186136
+}

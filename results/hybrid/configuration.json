@@ -1,0 +1,78 @@
+{
+  "corpus": {
+    "digest": "d787703e048a641884274e57f5802e328e43c637a0971217601e6a37128393e3",
+    "size": 1068,
+    "path": "data/corpus.jsonl"
+  },
+  "query_sets": {
+    "benchmark": {
+      "path": "data/manual_queries.jsonl",
+      "count": 54,
+      "status": "frozen_owner_approved"
+    },
+    "human_eval": {
+      "path": "data/human_eval/human_queries_v1.jsonl",
+      "count": 12,
+      "status": "pending_manual_annotation",
+      "metrics_computed": false
+    }
+  },
+  "retrievers": {
+    "bm25_legacy": {
+      "name": "Original BM25",
+      "description": "BM25 with whitespace tokenizer",
+      "config": {
+        "model": "bm25-okapi",
+        "k1": 1.5,
+        "b": 0.75,
+        "tokenizer": "whitespace",
+        "passage": "heading_prefix + body",
+        "tuning": "none (fixed defaults; tuning prohibited)"
+      }
+    },
+    "bm25_improved": {
+      "name": "Improved BM25",
+      "description": "BM25 with domain-aware tokenizer",
+      "config": {
+        "model": "bm25-okapi",
+        "k1": 1.5,
+        "b": 0.75,
+        "tokenizer": "domain_aware",
+        "passage": "heading_prefix + body",
+        "tuning": "none (fixed defaults; tuning prohibited)"
+      }
+    },
+    "e5_small": {
+      "name": "Frozen E5-small",
+      "description": "intfloat/e5-small-v2 (revision ffb93f3bd)",
+      "config": {
+        "model": "intfloat/e5-small-v2",
+        "revision": "ffb93f3bd4047442299a41ebb6fa998a38507c52",
+        "adapter_dir": null,
+        "max_length": 512,
+        "pooling": "mean",
+        "query_prefix": "query: ",
+        "passage_prefix": "passage: ",
+        "device": "cpu"
+      }
+    },
+    "hybrid_rrf": {
+      "name": "Hybrid RRF",
+      "description": "Reciprocal Rank Fusion (Improved BM25 + Frozen E5-small, k=60, equal weights)",
+      "config": {
+        "algorithm": "reciprocal_rank_fusion",
+        "k": 60,
+        "weights": [
+          1.0,
+          1.0
+        ],
+        "components": [
+          "bm25_improved (domain_aware)",
+          "e5_small (frozen)"
+        ],
+        "input_pool": "full_corpus (1068 chunks)",
+        "tie_breaking": "score descending, chunk_id ascending"
+      }
+    }
+  }
+}

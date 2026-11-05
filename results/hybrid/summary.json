@@ -1,0 +1,275 @@
+{
+  "systems": {
+    "bm25_legacy": {
+      "name": "Original BM25",
+      "metrics": {
+        "hit@1": 0.48148148148148145,
+        "recall@1": 0.2521604938271605,
+        "hit@3": 0.7037037037037037,
+        "recall@3": 0.44969135802469135,
+        "hit@5": 0.7222222222222222,
+        "recall@5": 0.5114197530864197,
+        "mrr@10": 0.5953115814226926,
+        "sec_hit@1": 0.48148148148148145,
+        "sec_recall@1": 0.3148148148148148,
+        "sec_hit@3": 0.7592592592592593,
+        "sec_recall@3": 0.5925925925925926,
+        "sec_hit@5": 0.7592592592592593,
+        "sec_recall@5": 0.6419753086419753,
+        "sec_mrr@10": 0.6127278071722516
+      },
+      "latency_s": 0.07683075001114048,
+      "failure_counts": {
+        "exact_relevant_chunk_top1": 26,
+        "wrong_document": 8,
+        "relevant_chunk_below_top1": 17,
+        "relevant_section_below_top1": 1,
+        "wrong_section_same_document": 2
+      }
+    },
+    "bm25_improved": {
+      "name": "Improved BM25",
+      "metrics": {
+        "hit@1": 0.6481481481481481,
+        "recall@1": 0.40432098765432095,
+        "hit@3": 0.8888888888888888,
+        "recall@3": 0.7064814814814815,
+        "hit@5": 0.9074074074074074,
+        "recall@5": 0.7719135802469135,
+        "mrr@10": 0.7711934156378601,
+        "sec_hit@1": 0.6851851851851852,
+        "sec_recall@1": 0.5030864197530864,
+        "sec_hit@3": 0.8888888888888888,
+        "sec_recall@3": 0.7870370370370371,
+        "sec_hit@5": 0.9074074074074074,
+        "sec_recall@5": 0.8209876543209877,
+        "sec_mrr@10": 0.7897119341563786
+      },
+      "latency_s": 0.10182945799897425,
+      "failure_counts": {
+        "exact_relevant_chunk_top1": 35,
+        "wrong_document": 3,
+        "relevant_chunk_below_top1": 14,
+        "relevant_section_unlabeled_chunk_top1": 2
+      }
+    },
+    "e5_small": {
+      "name": "Frozen E5-small",
+      "metrics": {
+        "hit@1": 0.6851851851851852,
+        "recall@1": 0.4188271604938272,
+        "hit@3": 0.8703703703703703,
+        "recall@3": 0.6694444444444444,
+        "hit@5": 0.8703703703703703,
+        "recall@5": 0.7302469135802468,
+        "mrr@10": 0.7833774250440917,
+        "sec_hit@1": 0.7222222222222222,
+        "sec_recall@1": 0.5617283950617283,
+        "sec_hit@3": 0.8888888888888888,
+        "sec_recall@3": 0.7592592592592593,
+        "sec_hit@5": 0.9074074074074074,
+        "sec_recall@5": 0.8117283950617284,
+        "sec_mrr@10": 0.8165343915343916
+      },
+      "latency_s": 15.54686624999158,
+      "failure_counts": {
+        "relevant_chunk_below_top1": 13,
+        "relevant_section_below_top1": 1,
+        "relevant_section_unlabeled_chunk_top1": 2,
+        "exact_relevant_chunk_top1": 37,
+        "wrong_document": 1
+      }
+    },
+    "hybrid_rrf": {
+      "name": "Hybrid RRF",
+      "metrics": {
+        "hit@1": 0.7777777777777778,
+        "recall@1": 0.5046296296296297,
+        "hit@3": 0.9074074074074074,
+        "recall@3": 0.746604938271605,
+        "hit@5": 0.9629629629629629,
+        "recall@5": 0.8228395061728394,
+        "mrr@10": 0.8552469135802468,
+        "sec_hit@1": 0.8148148148148148,
+        "sec_recall@1": 0.6450617283950618,
+        "sec_hit@3": 0.9074074074074074,
+        "sec_recall@3": 0.8179012345679012,
+        "sec_hit@5": 0.9629629629629629,
+        "sec_recall@5": 0.8765432098765432,
+        "sec_mrr@10": 0.8770576131687243
+      },
+      "latency_s": 15.683662373980042,
+      "failure_counts": {
+        "relevant_chunk_below_top1": 9,
+        "exact_relevant_chunk_top1": 42,
+        "wrong_document": 1,
+        "relevant_section_unlabeled_chunk_top1": 2
+      }
+    }
+  },
+  "complements": {
+    "bm25_wins_e5_fails": [
+      {
+        "query_id": "manual_001",
+        "query": "why does soup lock check exit with code 3",
+        "bm25_mrr": 1.0,
+        "e5_mrr": 0.5,
+        "hybrid_mrr": 0.25
+      },
+      {
+        "query_id": "manual_002",
+        "query": "How do I bisect training checkpoints when an eval regresses?",
+        "bm25_mrr": 1.0,
+        "e5_mrr": 0.14285714285714285,
+        "hybrid_mrr": 1.0
+      },
+      {
+        "query_id": "manual_008",
+        "query": "build a control vector from positive and negative prompts",
+        "bm25_mrr": 1.0,
+        "e5_mrr": 0.5,
+        "hybrid_mrr": 1.0
+      },
+      {
+        "query_id": "manual_010",
+        "query": "soup registry diff output",
+        "bm25_mrr": 1.0,
+        "e5_mrr": 0.5,
+        "hybrid_mrr": 1.0
+      },
+      {
+        "query_id": "manual_021",
+        "query": "publish a model to huggingface with my own model card",
+        "bm25_mrr": 1.0,
+        "e5_mrr": 0.125,
+        "hybrid_mrr": 0.5
+      },
+      {
+        "query_id": "manual_022",
+        "query": "generated ci workflow steps",
+        "bm25_mrr": 1.0,
+        "e5_mrr": 0.5,
+        "hybrid_mrr": 1.0
+      },
+      {
+        "query_id": "manual_038",
+        "query": "custom eval jsonl fields for exact and regex scoring",
+        "bm25_mrr": 1.0,
+        "e5_mrr": 0.5,
+        "hybrid_mrr": 1.0
+      },
+      {
+        "query_id": "manual_050",
+        "query": "can dora and vera be enabled together",
+        "bm25_mrr": 1.0,
+        "e5_mrr": 0.5,
+        "hybrid_mrr": 1.0
+      }
+    ],
+    "e5_wins_bm25_fails": [
+      {
+        "query_id": "manual_013",
+        "query": "can I merge adapters whose licenses conflict",
+        "bm25_mrr": 0.5,
+        "e5_mrr": 1.0,
+        "hybrid_mrr": 1.0
+      },
+      {
+        "query_id": "manual_014",
+        "query": "what stops a hijacked huggingface repo from being pulled",
+        "bm25_mrr": 0.3333333333333333,
+        "e5_mrr": 1.0,
+        "hybrid_mrr": 1.0
+      },
+      {
+        "query_id": "manual_015",
+        "query": "what goes into a soup airgap bundle and how big can it get",
+        "bm25_mrr": 0.5,
+        "e5_mrr": 1.0,
+        "hybrid_mrr": 1.0
+      },
+      {
+        "query_id": "manual_020",
+        "query": "what ends up in the generated model card",
+        "bm25_mrr": 0.2,
+        "e5_mrr": 1.0,
+        "hybrid_mrr": 0.5
+      },
+      {
+        "query_id": "manual_023",
+        "query": "which expectation checks can go in expectations.yaml",
+        "bm25_mrr": 0.5,
+        "e5_mrr": 1.0,
+        "hybrid_mrr": 1.0
+      },
+      {
+        "query_id": "manual_026",
+        "query": "generate an eval suite from my training data",
+        "bm25_mrr": 0.5,
+        "e5_mrr": 1.0,
+        "hybrid_mrr": 1.0
+      },
+      {
+        "query_id": "manual_033",
+        "query": "Task accuracy went up but MMLU dropped, should I ship?",
+        "bm25_mrr": 0.5,
+        "e5_mrr": 1.0,
+        "hybrid_mrr": 1.0
+      },
+      {
+        "query_id": "manual_034",
+        "query": "noise floor flag effect on ship verdict",
+        "bm25_mrr": 0.5,
+        "e5_mrr": 1.0,
+        "hybrid_mrr": 1.0
+      },
+      {
+        "query_id": "manual_043",
+        "query": "how does longlora shifted sparse attention work",
+        "bm25_mrr": 0.5,
+        "e5_mrr": 1.0,
+        "hybrid_mrr": 1.0
+      },
+      {
+        "query_id": "manual_046",
+        "query": "Can I add fresh layers to a Llama model and only train those?",
+        "bm25_mrr": 0.5,
+        "e5_mrr": 1.0,
+        "hybrid_mrr": 0.5
+      }
+    ],
+    "both_succeed_count": 27,
+    "hybrid_strictly_improves": [
+      {
+        "query_id": "manual_025",
+        "query": "Should I fine-tune with DPO or SFT for my dataset?",
+        "bm25_mrr": 0.1111111111111111,
+        "e5_mrr": 0.3333333333333333,
+        "hybrid_mrr": 1.0
+      },
+      {
+        "query_id": "manual_037",
+        "query": "My quantized model lost 8% accuracy, is that too much?",
+        "bm25_mrr": 0.0,
+        "e5_mrr": 0.0,
+        "hybrid_mrr": 0.1
+      },
+      {
+        "query_id": "manual_047",
+        "query": "different learning rates for q_proj and v_proj",
+        "bm25_mrr": 0.3333333333333333,
+        "e5_mrr": 0.1,
+        "hybrid_mrr": 0.5
+      }
+    ],
+    "hybrid_strictly_hurts": [
+      {
+        "query_id": "manual_001",
+        "query": "why does soup lock check exit with code 3",
+        "bm25_mrr": 1.0,
+        "e5_mrr": 0.5,
+        "hybrid_mrr": 0.25
+      }
+    ]
+  }
+}
