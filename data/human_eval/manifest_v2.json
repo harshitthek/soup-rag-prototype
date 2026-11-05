@@ -1,11 +1,11 @@
 {
   "dataset_id": "human_eval_v2",
-  "dataset_purpose": "Independent evaluation benchmark authored by project owner without AI assistance to verify retrieval generalization and adapter transfer across full Soup documentation",
+  "dataset_purpose": "Independent owner-authored evaluation benchmark authored directly by project owner without AI assistance to evaluate retrieval generalization across the 12 files of the Soup documentation corpus",
   "status": "frozen",
   "frozen": true,
   "query_count": 24,
-  "authorship_declaration": "Authored and supplied directly by project owner",
-  "ai_assistance_declaration": "Project owner confirmed 24 queries were human-authored without AI assistance; no LLM rewrites or paraphrases",
+  "authorship_declaration": "Authored and supplied directly by project owner without AI assistance; intended target sections identified by owner",
+  "ai_assistance_declaration": "All 24 queries were written by project owner without AI assistance; no LLM rewrites, paraphrases, or automated query generation were used",
   "creation_date": "2026-11-05",
   "freeze_timestamp": "2026-11-05T08:19:07.561131+00:00",
   "repository_commit": "1754dff4831181e55763a73fa1645739f9ee18b2",
@@ -409,7 +409,7 @@
     }
   ],
   "retrieval_system_configurations": {
-    "bm25_original": "Legacy lowercase whitespace BM25 retriever (text.lower().split(), k1=1.5, b=0.75)",
+    "bm25_original": "Supplemental baseline analysis added during corrective research audit: legacy lowercase whitespace BM25 retriever (text.lower().split(), k1=1.5, b=0.75) evaluated over the identical frozen benchmark",
     "bm25_improved": "Domain-aware BM25 retriever (token-split, camelCase/snake_case/kebab-case splitting, CLI preservation, punctuation filtering, k1=1.5, b=0.75)",
     "frozen_e5_small": "intfloat/e5-small-v2 (revision ffb93f3bd4047442299a41ebb6fa998a38507c52, frozen weights, 384d, query_prefix=\"query: \", passage_prefix=\"passage: \")",
     "fine_tuned_e5_small_lr2e5": "intfloat/e5-small-v2 with PEFT LoRA adapter (r=16, alpha=32, target=[q_proj, v_proj]), trained with matched lr=2e-5, 3 epochs, 1857 steps on 2475 triplets",
@@ -462,5 +462,7 @@
     "MRR@10": "Mean reciprocal rank of the first relevant chunk in top 10 rankings",
     "Sec-Hit@1": "Proportion of queries where the top-ranked chunk belongs to relevant_section_ids",
     "Sec-MRR@10": "Mean reciprocal rank of the first chunk belonging to relevant_section_ids in top 10 rankings"
-  }
+  },
+  "relevance_annotation_disclosure": "Relevance mapping from owner-supplied target sections to canonical chunk IDs in data/corpus.jsonl was performed mechanically; no independent third-party relevance annotation was conducted; does not represent production user query logs or a statistically sampled developer population",
+  "supplemental_baseline_disclosure": "Original whitespace BM25 was added during the post-freeze corrective audit as a supplemental baseline analysis to isolate the impact of domain-aware tokenization against standard whitespace splitting over the identical frozen benchmark"
 }

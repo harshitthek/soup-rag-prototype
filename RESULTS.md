@@ -4,9 +4,9 @@ This document provides the authoritative record of empirical findings, bootstrap
 
 ---
 
-## 1. Independent Human Evaluation Benchmark (`human_eval_v2`)
+## 1. Independent Owner-Authored Evaluation Benchmark (`human_eval_v2`)
 
-The primary standard for retrieval effectiveness is the independent human evaluation benchmark (`data/human_eval/manifest_v2.json`), comprising **24 genuine queries** authored directly by the project owner without AI assistance, evaluated across all 12 files (1,068 chunks) of the Soup documentation corpus (`data/corpus.jsonl`).
+The primary standard for retrieval effectiveness is the independent owner-authored evaluation benchmark (`data/human_eval/manifest_v2.json`), comprising **24 genuine queries** authored directly by the project owner without AI assistance, evaluated across all 12 files (1,068 chunks) of the Soup documentation corpus (`data/corpus.jsonl`). Target documentation sections were supplied directly by the project owner and mechanically mapped to canonical chunk IDs; no independent third-party relevance annotation was conducted, and the benchmark does not represent production telemetry or a sampled developer population.
 
 ### 1.1 Benchmark Results (24 Human Queries, Full 1,068-Chunk Corpus)
 
@@ -18,7 +18,7 @@ The primary standard for retrieval effectiveness is the independent human evalua
 | **Improved BM25** | Domain-aware tokenization ($k_1=1.5, b=0.75$) | **0.6250** | 0.4929 | 0.5150 | 0.6921 | **0.6250** | 0.6921 | **0.11 s** | **2.37 ms / query** |
 | **Frozen MiniLM** | `sentence-transformers/all-MiniLM-L6-v2` | 0.5417 | 0.4929 | 0.5497 | 0.6587 | 0.5417 | 0.6622 | 16.0 s | 6.23 ms / query |
 | **Fine-Tuned E5** | E5-small + Exp B LoRA (matched lr=2e-5) | 0.5417 | **0.5177** | 0.5591 | 0.6413 | 0.5417 | 0.6448 | 36.4 s | 11.44 ms / query |
-| **Original BM25** | Whitespace baseline (`text.lower().split()`) | 0.2917 | 0.3153 | 0.3688 | 0.4140 | 0.2917 | 0.4200 | **0.03 s** | **2.12 ms / query** |
+| **Original BM25** | Whitespace baseline (`text.lower().split()`, supplemental baseline) | 0.2917 | 0.3153 | 0.3688 | 0.4140 | 0.2917 | 0.4200 | **0.03 s** | **2.12 ms / query** |
 
 ### 1.2 Paired Document-Stratified Bootstrap Intervals (10,000 resamples, seed 42)
 
@@ -26,10 +26,10 @@ Reported as `observed delta [95% CI lower, 95% CI upper]` with document stratifi
 
 | Contrast | Metric | Observed Delta | 95% Bootstrap CI | Zero in CI? | Interpretation |
 | :--- | :--- | :---: | :---: | :---: | :--- |
-| **Improved BM25 vs Original BM25** | MRR@10 | +0.2781 | `[+0.1685, +0.3912]` | **NO** | **Statistically significant retrieval gain from domain-aware tokenization** |
-| | Hit@1 | +0.3333 | `[+0.2083, +0.4583]` | **NO** | **Statistically significant +33.3% top-1 accuracy improvement** |
-| | Recall@3 | +0.1776 | `[+0.0734, +0.2956]` | **NO** | **Statistically significant top-3 candidate coverage improvement** |
-| | Sec-MRR@10 | +0.2722 | `[+0.1603, +0.3873]` | **NO** | **Statistically significant section-level ranking gain** |
+| **Improved BM25 vs Original BM25** | MRR@10 | +0.2781 | `[+0.1685, +0.3912]` | **NO** | **Paired 95% bootstrap CI strictly excludes zero; observed positive gain** |
+| | Hit@1 | +0.3333 | `[+0.2083, +0.4583]` | **NO** | **Paired 95% bootstrap CI strictly excludes zero (+33.3% top-1 accuracy improvement)** |
+| | Recall@3 | +0.1776 | `[+0.0734, +0.2956]` | **NO** | **Paired 95% bootstrap CI strictly excludes zero (improved top-3 recall)** |
+| | Sec-MRR@10 | +0.2722 | `[+0.1603, +0.3873]` | **NO** | **Paired 95% bootstrap CI strictly excludes zero (section-level ranking gain)** |
 | **Hybrid RRF vs Frozen E5** | MRR@10 | +0.0153 | `[-0.0687, +0.0996]` | Yes | Positive point estimate; not statistically separable on $N=24$ |
 | | Recall@3 | +0.0361 | `[+0.0069, +0.0653]` | **NO** | **Strictly positive top-3 candidate recall improvement** |
 | | Hit@1 | +0.0000 | `[-0.1250, +0.1250]` | Yes | Identical top-1 accuracy (15 of 24 queries correct) |
@@ -65,29 +65,30 @@ Fine-Tuned E5-small (`lr=2e-5`) observed lower point estimates on ranking metric
 `C-matched-balanced` achieved an observed MRR@10 of **0.7004** versus **0.6587** for Frozen MiniLM (+0.0417 delta) and Hit@1 of **0.5833** vs **0.5417** (+0.0417 delta). While the observed direction matches earlier findings, the 95% bootstrap interval includes zero (`[-0.0382, +0.1215]`), meaning the $N=24$ sample size is insufficient to establish a reliable improvement over frozen MiniLM.
 
 ### 4. How does BM25 perform on human queries compared to the baseline?
-**Domain-aware BM25 substantially outperforms original whitespace BM25 with statistically significant gains.**
-Original whitespace BM25 (`text.lower().split()`) achieved only **0.4140 MRR@10** and **0.2917 Hit@1** on the 24 technical human queries. Improved domain-aware BM25 increased MRR@10 to **0.6921** (+0.2781 delta, 95% CI `[+0.1685, +0.3912]`) and Hit@1 to **0.6250** (+0.3333 delta, 95% CI `[+0.2083, +0.4583]`). Both confidence intervals strictly exclude zero.
+**Domain-aware BM25 substantially outperforms original whitespace BM25; paired 95% bootstrap confidence intervals strictly exclude zero across all metrics.**
+The original whitespace BM25 baseline (`text.lower().split()`) was evaluated as a supplemental baseline during corrective research audit to isolate tokenization effects over the identical frozen benchmark. It achieved an MRR@10 of **0.4140**, Hit@1 of **0.2917**, Recall@3 of **0.3153**, and Recall@5 of **0.3688** on the 24 technical queries. Improved domain-aware BM25 increased MRR@10 to **0.6921** (+0.2781 delta, 95% CI `[+0.1685, +0.3912]`), Hit@1 to **0.6250** (+0.3333 delta, 95% CI `[+0.2083, +0.4583]`), Recall@3 to **0.4929** (+0.1776 delta, 95% CI `[+0.0734, +0.2956]`), and Sec-MRR@10 to **0.6921** (+0.2722 delta, 95% CI `[+0.1603, +0.3873]`). The paired 95% bootstrap confidence interval strictly excludes zero across all metrics.
 
-*Reconciliation of Historical Results:* On the 54 AI-assisted queries (`data/manual_queries.jsonl`) evaluated against 307 chunks across 4 held-out documents, canonical Phase 3 recorded Whitespace BM25 at **0.5953 MRR@10** (0.4815 Hit@1) and Improved BM25 at **0.7712 MRR@10** (0.6481 Hit@1). Previously cited figures of 0.5755 MRR@10 and 0.4630 Hit@1 were unverified draft narrative artifacts and are formally retracted.
+*Reconciliation of Historical Results:* Both the 54 AI-assisted queries (`data/manual_queries.jsonl`) and the 24 owner-authored queries (`data/human_eval/human_queries_v2.jsonl`) were evaluated against the identical 1,068-chunk canonical documentation corpus (`data/corpus.jsonl`). On the 54 AI-assisted queries (which targeted sections within 4 held-out documents), canonical Phase 3 recorded Whitespace BM25 at **0.5953 MRR@10** (0.4815 Hit@1) and Improved BM25 at **0.7712 MRR@10** (0.6481 Hit@1). Previously cited figures of 0.5755 MRR@10 and 0.4630 Hit@1 were unverified draft narrative artifacts and are formally retracted.
 
-### 5. What does the contrast between the AI-assisted (54 queries) and human-authored (24 queries) benchmarks indicate?
-**The performance differences reflect differences in benchmark scale, corpus distractor size, and document scope, not solely query authorship.**
-The 54-query benchmark and 24-query benchmark cannot be directly compared causally because three structural variables differ simultaneously:
-1. **Query set size and authorship:** 54 AI-assisted queries vs 24 owner-authored queries created without AI assistance.
-2. **Document coverage:** 4 held-out documents vs full 12 documentation files.
-3. **Corpus search space:** 307 candidate chunks vs 1,068 candidate chunks ($>3.4\times$ larger distractor space).
+### 5. What does the contrast between the AI-assisted (54 queries) and owner-authored (24 queries) benchmarks indicate?
+**Differences reflect query authorship, query formulation style, and target document scope, while candidate retrieval operated over the identical 1,068-chunk corpus.**
+Inspection of Phase 3 execution records (`results/phase3/experiment_summary.json`, `results/phase3/retriever_bm25.json`, `results/phase3/per_query_ranked_results.json`) confirms that both evaluations searched the full 1,068-chunk canonical documentation corpus (`data/corpus.jsonl`, SHA256: `d787703e...`). The figure of 307 chunks reflects only the subset of chunks belonging to the 4 held-out target documents, not the search space. Chunks outside those 4 documents routinely appeared in Phase 3 candidate rankings.
 
-Evaluating across the full 1,068-chunk corpus naturally lowers absolute metric scores due to the larger distractor space (e.g. Improved BM25 scored 0.7712 on 307 chunks vs 0.6921 on 1,068 chunks). Real technical queries frequently contain exact flags and identifiers (`--track-energy`, `check-safetensors`, `onebitllms`, `bitnet_1.58`, `pip install`, `OpenAPI`, `MCP`, `LISA`, `#353`), which domain-aware lexical retrieval matches directly. Independent human evaluation across the complete corpus provides an essential empirical safeguard against overfitting to automated query distributions.
+Key Benchmark Contrasts:
+1. **Query Authorship & Provenance:** The 54 queries were collaboratively drafted with AI assistance, whereas the 24 queries in `human_eval_v2` were authored by the project owner without AI assistance.
+2. **Target Document Distribution:** The 54 AI-assisted queries targeted sections located exclusively within 4 held-out documents (representing 307 chunks of the corpus), whereas the 24 owner-authored queries target sections across all 12 documentation files.
+3. **Lexical Precision:** Authentic developer queries contain specific command flags, version numbers, and identifier strings (`--track-energy`, `check-safetensors`, `onebitllms`, `bitnet_1.58`, `pip install`, `OpenAPI`, `MCP`, `LISA`, `#353`), which domain-aware lexical tokenization indexes directly without semantic drift.
+4. **Evaluation Provenance:** `human_eval_v2` is an independent owner-authored query evaluation where target sections were identified by the owner and mechanically mapped to canonical chunk IDs without third-party relevance annotation; it does not represent production user query logs or a statistically sampled developer population.
 
 ---
 
-## 3. Reference: Historical Benchmark (54 AI-Assisted Queries, 4 Held-Out Documents)
+## 3. Reference: Historical Benchmark (54 AI-Assisted Queries Across 4 Held-Out Documents, Full 1,068-Chunk Corpus)
 
-For historical continuity, the table below records performance on the original 54 AI-assisted queries across the 4 held-out documents (`adapters-and-governance`, `compliance`, `evaluation`, `peft-and-efficiency`) over 307 chunks:
+For historical continuity, the table below records performance on the original 54 AI-assisted queries across the 4 held-out documents (`adapters-and-governance`, `compliance`, `evaluation`, `peft-and-efficiency`), evaluated against the full 1,068-chunk canonical corpus:
 
 | Model / System | Hit@1 | Recall@3 | Recall@5 | MRR@10 | Sec-Hit@1 | Sec-MRR@10 | Benchmark Status |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
-| **Original BM25** (whitespace) | 0.4815 | 0.4497 | 0.5114 | 0.5953 | 0.4815 | 0.6127 | Baseline |
+| **Original BM25** (whitespace) | 0.4815 | 0.4497 | 0.5114 | 0.5953 | 0.4815 | 0.6127 | Baseline (canonical Phase 3) |
 | **Improved BM25** (domain-aware) | 0.6481 | 0.7065 | 0.7719 | 0.7712 | 0.6852 | 0.7897 | Tokenizer evaluation |
 | **Frozen MiniLM** | 0.5741 | 0.5898 | 0.6389 | 0.6928 | 0.6296 | 0.7301 | Pinned control baseline |
 | **Adapter A-matched** (MiniLM) | 0.5185 | 0.5525 | 0.6358 | 0.6554 | 0.5926 | 0.7107 | Degraded heuristic adapter |
@@ -106,7 +107,7 @@ Measured on Apple Silicon (warm steady-state vs cold start):
 
 | Component | Model Loading | Corpus Indexing | Steady-State Query (Mean) | Steady-State Query (P95) | Operational Footprint |
 | :--- | :---: | :---: | :---: | :---: | :--- |
-| **Original BM25** | $<0.01$ ms | 31.3 ms | **2.12 ms** | **2.72 ms** | Zero GPU/torch dependency; CPU only |
+| **Original BM25** | $<0.01$ ms | 31.3 ms | **2.12 ms** | **2.72 ms** | Whitespace supplemental baseline; zero GPU/torch |
 | **Improved BM25** | $<0.01$ ms | 107.0 ms | **2.37 ms** | **4.21 ms** | Zero GPU/torch dependency; CPU only |
 | **Frozen MiniLM** | $<0.01$ ms | 15,979 ms | **6.23 ms** | **7.15 ms** | 22M parameters, 256 dimensions |
 | **C-matched-bal** | $<0.01$ ms | 16,953 ms | **6.67 ms** | **8.05 ms** | MiniLM + LoRA adapter weights |

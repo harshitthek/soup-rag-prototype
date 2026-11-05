@@ -1,7 +1,7 @@
-# Independent Human Evaluation Benchmark (v2) Report
+# Independent Owner-Authored Evaluation Benchmark (v2) Report
 
-**Date:** 2026-11-05 08:57:08 UTC
-**Benchmark:** `data/human_eval/manifest_v2.json` (24 queries, 100% human-authored without AI assistance)
+**Date:** 2026-11-05 09:31:22 UTC
+**Benchmark:** `data/human_eval/manifest_v2.json` (24 queries authored directly by project owner without AI assistance; target sections mechanically mapped to canonical chunk IDs; no third-party relevance annotation; not representative of production telemetry or sampled populations)
 **Corpus:** `data/corpus.jsonl` (1,068 canonical chunks across 12 Soup documentation files)
 
 ---
@@ -16,7 +16,7 @@
 | **Improved BM25** | 0.6250 | 0.4929 | 0.5150 | 0.6921 | 0.6250 | 0.6921 | 107.0 | 2.37 |
 | **Frozen MiniLM-L6-v2** | 0.5417 | 0.4929 | 0.5497 | 0.6587 | 0.5417 | 0.6622 | 15,979.4 | 6.23 |
 | **Fine-Tuned E5-small (lr=2e-5)** | 0.5417 | 0.5177 | 0.5591 | 0.6413 | 0.5417 | 0.6448 | 36,355.2 | 11.44 |
-| **Original BM25 (whitespace)** | 0.2917 | 0.3153 | 0.3688 | 0.4140 | 0.2917 | 0.4200 | 31.3 | 2.12 |
+| **Original BM25 (whitespace, supplemental baseline)** | 0.2917 | 0.3153 | 0.3688 | 0.4140 | 0.2917 | 0.4200 | 31.3 | 2.12 |
 
 ---
 
@@ -93,28 +93,30 @@ Values reported as `observed delta [95% CI lower, 95% CI upper]` with document s
 
 ### 4. How does BM25 perform on human queries compared to the baseline?
 
-**Domain-aware BM25 substantially outperforms original whitespace BM25 with statistically significant gains.**
-- **Whitespace BM25 baseline:** Original whitespace BM25 (`text.lower().split()`) collapsed on technical queries, achieving an MRR@10 of **0.4140**, Hit@1 of **0.2917**, Recall@3 of **0.3153**, and Recall@5 of **0.3688**.
+**Domain-aware BM25 substantially outperforms original whitespace BM25; paired 95% bootstrap confidence intervals strictly exclude zero across all metrics.**
+- **Supplemental baseline analysis:** The original whitespace BM25 baseline (`text.lower().split()`) was added during corrective research audit to isolate the impact of domain-aware tokenization against standard whitespace splitting over the identical frozen benchmark. It achieved an MRR@10 of **0.4140**, Hit@1 of **0.2917**, Recall@3 of **0.3153**, and Recall@5 of **0.3688**.
 - **Improved BM25:** Domain-aware tokenization increased MRR@10 to **0.6921** (Observed Delta: **+0.2781**, 95% CI `[+0.1685, +0.3912]`), Hit@1 to **0.6250** (Observed Delta: **+0.3333**, 95% CI `[+0.2083, +0.4583]`), Recall@3 to **0.4929** (Observed Delta: **+0.1776**, 95% CI `[+0.0734, +0.2956]`), and Sec-MRR@10 to **0.6921** (Observed Delta: **+0.2722**, 95% CI `[+0.1603, +0.3873]`).
-- **Statistical significance:** All paired bootstrap confidence intervals between Improved BM25 and Original BM25 strictly exclude zero.
-- **Historical BM25 Reconciliation:** On the 54 AI-assisted queries (`data/manual_queries.jsonl`) evaluated against 307 chunks across 4 held-out documents, canonical Phase 3 recorded Whitespace BM25 at **0.5953 MRR@10** (0.4815 Hit@1) and Improved BM25 at **0.7712 MRR@10** (0.6481 Hit@1). Previously cited figures of 0.5755 MRR@10 and 0.4630 Hit@1 were unverified draft narrative artifacts and are formally retracted.
+- **Observed Bootstrap Evidence:** The paired 95% bootstrap confidence interval strictly excludes zero for all metrics, indicating an observed gain from domain-aware tokenization.
+- **Historical BM25 Reconciliation:** Both the 54 AI-assisted queries (`data/manual_queries.jsonl`) and the 24 owner-authored queries (`data/human_eval/human_queries_v2.jsonl`) were evaluated against the identical 1,068-chunk canonical documentation corpus (`data/corpus.jsonl`). On the 54 AI-assisted queries (which targeted sections within 4 held-out documents), canonical Phase 3 recorded Whitespace BM25 at **0.5953 MRR@10** (0.4815 Hit@1) and Improved BM25 at **0.7712 MRR@10** (0.6481 Hit@1). Previously cited figures of 0.5755 MRR@10 and 0.4630 Hit@1 were unverified draft narrative artifacts and are formally retracted.
 
-### 5. What does the contrast between the AI-assisted (54 queries) and human-authored (24 queries) benchmarks indicate?
+### 5. What does the contrast between the AI-assisted (54 queries) and owner-authored (24 queries) benchmarks indicate?
 
-**The performance differences reflect differences in benchmark scale, corpus distractor size, and document scope, not solely query authorship.**
-- **Structural differences:** The 54-query benchmark and 24-query benchmark cannot be directly compared causally because three key variables differ simultaneously:
-  1. **Query set size and authorship:** 54 AI-assisted queries vs 24 owner-authored queries created without AI assistance.
-  2. **Document coverage:** 4 held-out documents vs full 12 documentation files.
-  3. **Corpus search space:** 307 candidate chunks vs 1,068 candidate chunks ($>3.4\times$ larger distractor space).
-- **Methodological implications:**
-  1. Evaluating across the full 1,068-chunk corpus naturally lowers absolute metric scores due to the larger distractor pool (e.g. Improved BM25 scored 0.7712 on 307 chunks vs 0.6921 on 1,068 chunks).
-  2. Human technical queries naturally feature exact identifiers, flags, and version tags (`--track-energy`, `check-safetensors`, `onebitllms`, `bitnet_1.58`, `pip install`, `OpenAPI`, `MCP`, `LISA`, `#353`), which domain-aware lexical tokenization indexes effectively.
-  3. Independent human evaluation on the full corpus provides a realistic, uncheatable test of retrieval utility that automated AI-assisted queries on partial corpora cannot replicate.
+**Differences reflect query authorship, query formulation style, and target document scope, while candidate retrieval operated over the identical 1,068-chunk corpus.**
+- **Corpus Verification:** Inspection of Phase 3 execution records (`results/phase3/experiment_summary.json`, `results/phase3/retriever_bm25.json`, `results/phase3/per_query_ranked_results.json`) confirms that both evaluations searched the full 1,068-chunk canonical documentation corpus (`data/corpus.jsonl`, SHA256: `d787703e...`). The figure of 307 chunks reflects only the subset of chunks belonging to the 4 held-out target documents, not the search space. Chunks outside those 4 documents routinely appeared in Phase 3 candidate rankings.
+- **Key Benchmark Contrasts:**
+  1. **Query Authorship & Provenance:** The 54 queries were collaboratively drafted with AI assistance, whereas the 24 queries in `human_eval_v2` were authored by the project owner without AI assistance.
+  2. **Relevance Target Distribution:** The 54 AI-assisted queries targeted sections located exclusively within 4 held-out documents (representing 307 chunks), whereas the 24 owner-authored queries target sections across all 12 documentation files.
+  3. **Exact Token Matching:** Authentic developer queries contain specific command flags, version numbers, and identifier strings (`--track-energy`, `check-safetensors`, `onebitllms`, `bitnet_1.58`, `pip install`, `OpenAPI`, `MCP`, `LISA`, `#353`), which domain-aware lexical tokenization indexes directly without semantic drift.
+  4. **Evaluation Methodology:** `human_eval_v2` is an independent owner-authored query evaluation where target sections were identified by the owner and mechanically mapped to canonical chunk IDs without third-party relevance annotation; it does not represent production user query logs or a statistically sampled developer population.
 
 ---
 
 ## 4. Provenance & Audit Metadata
 
+- **Evaluation Provenance:** Independent owner-authored query evaluation on Soup documentation.
+- **Authorship & Assistance:** All 24 queries written by the project owner without AI assistance; target sections identified directly by the owner.
+- **Relevance Mapping:** Section headings resolved mechanically to canonical chunk IDs in `data/corpus.jsonl`; no third-party annotation was conducted; does not represent production telemetry or sampled populations.
+- **Supplemental Baseline:** Original whitespace BM25 evaluated as a supplemental baseline during corrective audit to isolate tokenization effects.
 - **Query File:** `data/human_eval/human_queries_v2.jsonl` (SHA256: `6d917ef3e89e18d0e87084804d3598bf53ef51971ff77259a768150f3a730d58`)
 - **Annotations File:** `data/human_eval/relevance_annotations_v2.jsonl` (SHA256: `51f66a794505c6e9cc18e3f8d8008850c4c114aabf3682304196e7dfba2426a5`)
 - **Corpus File:** `data/corpus.jsonl` (SHA256: `d787703e048a641884274e57f5802e328e43c637a0971217601e6a37128393e3`)
