@@ -67,29 +67,29 @@ Values reported as `observed delta [95% CI lower, 95% CI upper]` with document s
 
 ## 3. Evaluation Questions and Answers
 
-### 1. Does the hybrid system outperform the best single retriever on human-authored queries?
+### 1. How does Hybrid RRF compare with Frozen E5?
 
-**Yes in point estimates and Recall@3 over Frozen E5; overall MRR delta is statistically inconclusive on $N=24$.**
-- **MRR@10:** Hybrid RRF achieves an observed MRR@10 of **0.7254** versus **0.7101** for Frozen E5-small (Observed Delta: **+0.0153**) and **0.6921** for Improved BM25 (Observed Delta: **+0.0333**).
-- **Recall@3:** The paired 95% bootstrap confidence interval for Hybrid RRF versus Frozen E5 on top-3 recall strictly excludes zero: **0.4923** vs **0.4562** (Observed Delta: **+0.0361**, 95% bootstrap CI `[+0.0069, +0.0653]`). Note that across all systems, Fine-Tuned E5 achieved higher Recall@3 (0.5177) and Improved BM25 reached 0.4929.
+**Hybrid RRF achieves higher observed MRR@10 and improves Recall@3 over Frozen E5, while the MRR@10 confidence interval includes zero.**
+- **MRR@10:** Hybrid RRF achieves the highest observed MRR@10 of **0.7254** versus **0.7101** for Frozen E5-small (Observed Delta: **+0.0153**) and **0.6921** for Improved BM25 (Observed Delta: **+0.0333**).
+- **Recall@3:** Hybrid RRF improves Recall@3 over Frozen E5 (**0.4923** vs **0.4562**, Observed Delta: **+0.0361**); the paired 95% bootstrap confidence interval excludes zero (`[+0.0069, +0.0653]`). Note that Hybrid RRF does not have the highest Recall@3 across all evaluated systems: Fine-Tuned E5 achieves **0.5177** and Improved BM25 achieves **0.4929**.
 - **Recall@5:** Hybrid RRF reaches **0.5551** vs **0.5690** for Frozen E5 (Delta: **-0.0139**, 95% CI `[-0.1181, +0.0833]`).
 - **Hit@1:** Hit@1 is tied at **0.6250** (15 of 24 queries correct at rank 1) across Hybrid RRF, Frozen E5-small, and Improved BM25.
 - **Sec-MRR@10:** Reaches **0.7292** vs **0.7240** for Frozen E5 (Delta: **+0.0052**, 95% CI `[-0.0750, +0.0867]`).
-- **Inference:** Because the 95% bootstrap CI for MRR@10 includes zero (`[-0.0687, +0.0996]`), the overall ranking difference between Hybrid RRF and Frozen E5 alone cannot be asserted as statistically distinguishable on this 24-query sample. The empirical benefit of RRF fusion specifically over Frozen E5 on $N=24$ is confined to enhanced top-3 candidate recall.
+- **Inference:** The paired 95% bootstrap confidence interval for the MRR@10 difference includes zero (`[-0.0687, +0.0996]`). The paired 95% bootstrap confidence interval for the Recall@3 difference excludes zero (`[+0.0069, +0.0653]`).
 
 ### 2. Does fine-tuning E5-small with matched lr=2e-5 improve over frozen E5-small on human queries?
 
-**No; results are statistically inconclusive with negative observed ranking performance.**
+**The paired 95% bootstrap confidence intervals include zero across all evaluated metrics, with lower observed ranking point estimates.**
 - **Ranking metrics:** Fine-Tuned E5-small (`lr=2e-5`) observed lower point estimates on ranking metrics: MRR@10 fell from **0.7101 to 0.6413** (Delta: **-0.0688**, 95% CI `[-0.1740, +0.0364]`), Hit@1 dropped from **0.6250 to 0.5417** (Delta: **-0.0833**, 95% CI `[-0.1667, +0.0000]`), and Sec-MRR@10 declined from **0.7240 to 0.6448** (Delta: **-0.0792**, 95% CI `[-0.1806, +0.0232]`).
 - **Candidate coverage:** However, fine-tuning was not strictly inferior across all metrics: observed Recall@3 was higher for the fine-tuned adapter (**0.5177** vs **0.4562**, Delta: **+0.0615**, 95% CI `[-0.0565, +0.1796]`). Recall@5 was slightly lower (**0.5591** vs **0.5690**, Delta: **-0.0099**, 95% CI `[-0.1240, +0.0972]`).
-- **Inference:** Because all 95% bootstrap confidence intervals include zero, the difference is statistically inconclusive on $N=24$. Directionally, fine-tuning on 2,475 synthetic triplets observed lower Hit@1 (0.5417 vs 0.6250) and lower MRR@10 (0.6413 vs 0.7101) while slightly broadening mid-tier candidate retrieval (Recall@3 of 0.5177 vs 0.4562). Frozen E5-small remains the more reliable out-of-the-box choice.
+- **Inference:** The paired 95% bootstrap confidence interval includes zero for every evaluated metric. Directionally, fine-tuning on 2,475 synthetic triplets observed lower Hit@1 (0.5417 vs 0.6250) and lower MRR@10 (0.6413 vs 0.7101) while slightly broadening mid-tier candidate retrieval (Recall@3 of 0.5177 vs 0.4562). Frozen E5-small remains the more reliable out-of-the-box choice.
 
 ### 3. Does the MiniLM adapter advantage over frozen MiniLM replicate on human queries?
 
-**Positive observed point estimates, but within sampling uncertainty on $N=24$.**
+**Positive observed point estimates, with confidence intervals including zero.**
 - **Point estimates:** `C-matched-balanced` achieved an MRR@10 of **0.7004** versus **0.6587** for Frozen MiniLM-L6-v2 (Observed Delta: **+0.0417**), Hit@1 of **0.5833** vs **0.5417** (Observed Delta: **+0.0417**), and Sec-MRR@10 of **0.7073** vs **0.6622** (Observed Delta: **+0.0451**).
-- **Confidence intervals:** The 95% bootstrap confidence intervals for all metrics span zero (e.g. MRR@10 CI `[-0.0382, +0.1215]`, Hit@1 CI `[-0.0833, +0.1667]`).
-- **Inference:** While the observed direction of improvement matches earlier observations (+0.0417 MRR@10), a sample size of $N=24$ does not provide sufficient statistical power to establish a reliable improvement over frozen MiniLM.
+- **Confidence intervals:** The paired 95% bootstrap confidence intervals for all metrics include zero (e.g. MRR@10 CI `[-0.0382, +0.1215]`, Hit@1 CI `[-0.0833, +0.1667]`).
+- **Inference:** While the observed direction of improvement matches earlier observations (+0.0417 MRR@10), the paired 95% bootstrap confidence interval includes zero across all metrics.
 
 ### 4. How does BM25 perform on human queries compared to the baseline?
 
