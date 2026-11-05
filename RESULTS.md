@@ -30,21 +30,21 @@ Reported as `observed delta [95% CI lower, 95% CI upper]` with document stratifi
 | | Hit@1 | +0.3333 | `[+0.2083, +0.4583]` | **NO** | **Paired 95% bootstrap CI strictly excludes zero (+33.3% top-1 accuracy improvement)** |
 | | Recall@3 | +0.1776 | `[+0.0734, +0.2956]` | **NO** | **Paired 95% bootstrap CI strictly excludes zero (improved top-3 recall)** |
 | | Sec-MRR@10 | +0.2722 | `[+0.1603, +0.3873]` | **NO** | **Paired 95% bootstrap CI strictly excludes zero (section-level ranking gain)** |
-| **Hybrid RRF vs Frozen E5** | MRR@10 | +0.0153 | `[-0.0687, +0.0996]` | Yes | Positive point estimate; not statistically separable on $N=24$ |
-| | Recall@3 | +0.0361 | `[+0.0069, +0.0653]` | **NO** | **Strictly positive top-3 candidate recall improvement** |
+| **Hybrid RRF vs Frozen E5** | MRR@10 | +0.0153 | `[-0.0687, +0.0996]` | Yes | Positive point estimate; interval includes zero on $N=24$ |
+| | Recall@3 | +0.0361 | `[+0.0069, +0.0653]` | **NO** | **Paired 95% bootstrap CI strictly excludes zero** |
 | | Hit@1 | +0.0000 | `[-0.1250, +0.1250]` | Yes | Identical top-1 accuracy (15 of 24 queries correct) |
 | | Sec-MRR@10 | +0.0052 | `[-0.0750, +0.0867]` | Yes | Marginal positive section-level delta |
-| **Hybrid RRF vs Improved BM25** | MRR@10 | +0.0333 | `[-0.0427, +0.1060]` | Yes | Positive point estimate; interval spans zero on $N=24$ |
+| **Hybrid RRF vs Improved BM25** | MRR@10 | +0.0333 | `[-0.0427, +0.1060]` | Yes | Positive point estimate; interval includes zero on $N=24$ |
 | | Hit@1 | +0.0000 | `[-0.1250, +0.1250]` | Yes | Identical top-1 accuracy |
 | | Recall@5 | +0.0401 | `[-0.0224, +0.1050]` | Yes | Directional candidate coverage improvement |
-| **Fine-Tuned E5 vs Frozen E5** | MRR@10 | -0.0688 | `[-0.1740, +0.0364]` | Yes | Inconclusive on $N=24$; negative observed ranking delta |
-| | Hit@1 | -0.0833 | `[-0.1667, +0.0000]` | Yes | Inconclusive on $N=24$; observed reduction in top-1 matches |
-| | Recall@3 | +0.0615 | `[-0.0565, +0.1796]` | Yes | Inconclusive on $N=24$; positive observed top-3 recall delta |
-| | Sec-MRR@10 | -0.0792 | `[-0.1806, +0.0232]` | Yes | Inconclusive on $N=24$; negative observed section ranking delta |
-| **C-matched-bal vs Frozen MiniLM** | MRR@10 | +0.0417 | `[-0.0382, +0.1215]` | Yes | Positive point estimate; CI spans zero, not establishing reliable gain |
-| | Hit@1 | +0.0417 | `[-0.0833, +0.1667]` | Yes | Positive point estimate; CI spans zero on $N=24$ |
+| **Fine-Tuned E5 vs Frozen E5** | MRR@10 | -0.0688 | `[-0.1740, +0.0364]` | Yes | Interval includes zero on $N=24$; negative observed ranking delta |
+| | Hit@1 | -0.0833 | `[-0.1667, +0.0000]` | Yes | Interval includes zero on $N=24$; observed reduction in top-1 matches |
+| | Recall@3 | +0.0615 | `[-0.0565, +0.1796]` | Yes | Interval includes zero on $N=24$; positive observed top-3 recall delta |
+| | Sec-MRR@10 | -0.0792 | `[-0.1806, +0.0232]` | Yes | Interval includes zero on $N=24$; negative observed section ranking delta |
+| **C-matched-bal vs Frozen MiniLM** | MRR@10 | +0.0417 | `[-0.0382, +0.1215]` | Yes | Positive point estimate; interval includes zero on $N=24$ |
+| | Hit@1 | +0.0417 | `[-0.0833, +0.1667]` | Yes | Positive point estimate; interval includes zero on $N=24$ |
 | | Sec-MRR@10 | +0.0451 | `[-0.0347, +0.1225]` | Yes | Positive section-level trend |
-| **Improved BM25 vs Frozen E5** | MRR@10 | -0.0180 | `[-0.1366, +0.1020]` | Yes | Competitive with dense encoder at 4x lower query latency |
+| **Improved BM25 vs Frozen E5** | MRR@10 | -0.0180 | `[-0.1366, +0.1020]` | Yes | Interval includes zero; competitive with dense encoder at 4x lower query latency |
 | | Hit@1 | +0.0000 | `[-0.1667, +0.1667]` | Yes | Exact tie on top-1 accuracy |
 | | Recall@3 | +0.0367 | `[-0.0327, +0.1062]` | Yes | Comparable top-3 candidate coverage |
 
@@ -53,12 +53,12 @@ Reported as `observed delta [95% CI lower, 95% CI upper]` with document stratifi
 ## 2. Answers to Core Research Questions
 
 ### 1. Does the hybrid system outperform the best single retriever on human-authored queries?
-**Yes in point estimates and top-3 candidate recall; overall MRR delta is statistically inconclusive on $N=24$.**
-Hybrid RRF achieves the highest observed MRR@10 (**0.7254** vs 0.7101 for Frozen E5 and 0.6921 for Improved BM25) and Sec-MRR@10 (**0.7292** vs 0.7240). On Recall@3, Hybrid RRF delivers a statistically positive improvement over Frozen E5 (+0.0361, 95% bootstrap CI `[+0.0069, +0.0653]`), strictly excluding zero. Because the MRR interval crosses zero on $N=24$ (`[-0.0687, +0.0996]`), the overall ranking difference cannot be asserted as statistically distinguishable from frozen E5 alone. The empirical advantage of hybrid fusion on this sample is specifically confined to top-3 candidate recall.
+**Yes in point estimates and Recall@3 over Frozen E5; overall MRR delta is statistically inconclusive on $N=24$.**
+Hybrid RRF achieves the highest observed MRR@10 (**0.7254** vs 0.7101 for Frozen E5 and 0.6921 for Improved BM25) and Sec-MRR@10 (**0.7292** vs 0.7240). On Recall@3, Hybrid RRF improves top-3 candidate recall specifically over Frozen E5 (**0.4923** vs **0.4562**), with the paired 95% bootstrap confidence interval strictly excluding zero (+0.0361, 95% bootstrap CI `[+0.0069, +0.0653]`). Note that across all systems, Fine-Tuned E5 achieved higher Recall@3 (0.5177) and Improved BM25 reached 0.4929. Because the MRR interval includes zero on $N=24$ (`[-0.0687, +0.0996]`), the overall ranking difference cannot be asserted as statistically distinguishable from frozen E5 alone. The empirical advantage of hybrid fusion over Frozen E5 is specifically confined to top-3 candidate recall.
 
 ### 2. Does fine-tuning E5-small with matched lr=2e-5 improve over frozen E5-small on human queries?
 **No; the evaluation is statistically inconclusive with negative observed ranking performance.**
-Fine-Tuned E5-small (`lr=2e-5`) observed lower point estimates on ranking metrics: MRR@10 declined from **0.7101 to 0.6413** (-0.0688 delta, 95% CI `[-0.1740, +0.0364]`), Hit@1 fell from **0.6250 to 0.5417** (-0.0833 delta, 95% CI `[-0.1667, +0.0000]`), and Sec-MRR@10 fell from **0.7240 to 0.6448** (-0.0792 delta, 95% CI `[-0.1806, +0.0232]`). However, the adapter was not strictly inferior across all metrics: observed Recall@3 was higher for the fine-tuned adapter (**0.5177** vs **0.4562**, +0.0615 delta, 95% CI `[-0.0565, +0.1796]`). Because all 95% bootstrap intervals cross zero, the difference is statistically inconclusive on $N=24$. Directionally, fine-tuning on synthetic triplets degraded ranking precision, and Frozen E5-small remains the more reliable out-of-the-box choice.
+Fine-Tuned E5-small (`lr=2e-5`) observed lower point estimates on ranking metrics: MRR@10 declined from **0.7101 to 0.6413** (-0.0688 delta, 95% CI `[-0.1740, +0.0364]`), Hit@1 fell from **0.6250 to 0.5417** (-0.0833 delta, 95% CI `[-0.1667, +0.0000]`), and Sec-MRR@10 fell from **0.7240 to 0.6448** (-0.0792 delta, 95% CI `[-0.1806, +0.0232]`). However, the adapter was not strictly inferior across all metrics: observed Recall@3 was higher for the fine-tuned adapter (**0.5177** vs **0.4562**, +0.0615 delta, 95% CI `[-0.0565, +0.1796]`). Because all 95% bootstrap intervals include zero, the difference is statistically inconclusive on $N=24$. Directionally, fine-tuning on synthetic triplets observed lower Hit@1 (0.5417 vs 0.6250) and lower MRR@10 (0.6413 vs 0.7101), while Frozen E5-small remains the more reliable out-of-the-box choice.
 
 ### 3. Does the MiniLM adapter advantage over frozen MiniLM replicate on human queries?
 **Positive observed point estimates, but within sampling uncertainty on $N=24$.**
@@ -71,13 +71,13 @@ The original whitespace BM25 baseline (`text.lower().split()`) was evaluated as 
 *Reconciliation of Historical Results:* Both the 54 AI-assisted queries (`data/manual_queries.jsonl`) and the 24 owner-authored queries (`data/human_eval/human_queries_v2.jsonl`) were evaluated against the identical 1,068-chunk canonical documentation corpus (`data/corpus.jsonl`). On the 54 AI-assisted queries (which targeted sections within 4 held-out documents), canonical Phase 3 recorded Whitespace BM25 at **0.5953 MRR@10** (0.4815 Hit@1) and Improved BM25 at **0.7712 MRR@10** (0.6481 Hit@1). Previously cited figures of 0.5755 MRR@10 and 0.4630 Hit@1 were unverified draft narrative artifacts and are formally retracted.
 
 ### 5. What does the contrast between the AI-assisted (54 queries) and owner-authored (24 queries) benchmarks indicate?
-**Differences reflect query authorship, query formulation style, and target document scope, while candidate retrieval operated over the identical 1,068-chunk corpus.**
+**Differences reflect differences in benchmark design, query formulation style, and relevance target distribution, while candidate retrieval operated over the identical 1,068-chunk corpus.**
 Inspection of Phase 3 execution records (`results/phase3/experiment_summary.json`, `results/phase3/retriever_bm25.json`, `results/phase3/per_query_ranked_results.json`) confirms that both evaluations searched the full 1,068-chunk canonical documentation corpus (`data/corpus.jsonl`, SHA256: `d787703e...`). The figure of 307 chunks reflects only the subset of chunks belonging to the 4 held-out target documents, not the search space. Chunks outside those 4 documents routinely appeared in Phase 3 candidate rankings.
 
 Key Benchmark Contrasts:
-1. **Query Authorship & Provenance:** The 54 queries were collaboratively drafted with AI assistance, whereas the 24 queries in `human_eval_v2` were authored by the project owner without AI assistance.
+1. **Benchmark Design & Query Provenance:** The 54 queries were collaboratively drafted with AI assistance, whereas the 24 queries in `human_eval_v2` were authored directly by the project owner without AI assistance. Differences in observed scores reflect benchmark design and query formulation rather than query authorship alone.
 2. **Target Document Distribution:** The 54 AI-assisted queries targeted sections located exclusively within 4 held-out documents (representing 307 chunks of the corpus), whereas the 24 owner-authored queries target sections across all 12 documentation files.
-3. **Lexical Precision:** Authentic developer queries contain specific command flags, version numbers, and identifier strings (`--track-energy`, `check-safetensors`, `onebitllms`, `bitnet_1.58`, `pip install`, `OpenAPI`, `MCP`, `LISA`, `#353`), which domain-aware lexical tokenization indexes directly without semantic drift.
+3. **Exact Token Matching:** Authentic developer queries contain specific command flags, version numbers, and identifier strings (`--track-energy`, `check-safetensors`, `onebitllms`, `bitnet_1.58`, `pip install`, `OpenAPI`, `MCP`, `LISA`, `#353`), which domain-aware lexical tokenization indexes directly without semantic drift.
 4. **Evaluation Provenance:** `human_eval_v2` is an independent owner-authored query evaluation where target sections were identified by the owner and mechanically mapped to canonical chunk IDs without third-party relevance annotation; it does not represent production user query logs or a statistically sampled developer population.
 
 ---
