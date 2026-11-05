@@ -58,7 +58,11 @@ Hybrid RRF achieves the highest observed MRR@10 (**0.7254** vs 0.7101 for Frozen
 
 ### 2. Does fine-tuning E5-small with matched lr=2e-5 improve over frozen E5-small on human queries?
 **The paired 95% bootstrap confidence intervals include zero across all evaluated metrics, with lower observed ranking point estimates.**
-Fine-Tuned E5-small (`lr=2e-5`) observed lower point estimates on ranking metrics: MRR@10 declined from **0.7101 to 0.6413** (-0.0688 delta, 95% CI `[-0.1740, +0.0364]`), Hit@1 fell from **0.6250 to 0.5417** (-0.0833 delta, 95% CI `[-0.1667, +0.0000]`), and Sec-MRR@10 fell from **0.7240 to 0.6448** (-0.0792 delta, 95% CI `[-0.1806, +0.0232]`). However, the adapter was not strictly inferior across all metrics: observed Recall@3 was higher for the fine-tuned adapter (**0.5177** vs **0.4562**, +0.0615 delta, 95% CI `[-0.0565, +0.1796]`). The paired 95% bootstrap confidence interval includes zero for every evaluated metric. Directionally, fine-tuning on synthetic triplets observed lower Hit@1 (0.5417 vs 0.6250) and lower MRR@10 (0.6413 vs 0.7101), while Frozen E5-small remains the more reliable out-of-the-box choice.
+Fine-Tuned E5-small (`lr=2e-5`) was evaluated against Frozen E5-small across the 24 human queries:
+- **Frozen E5-small:** MRR@10 **0.7101**, Hit@1 **0.6250**, Recall@3 **0.4562**.
+- **Fine-Tuned E5-small (lr=2e-5):** MRR@10 **0.6413**, Hit@1 **0.5417**, Recall@3 **0.5177**.
+
+Frozen E5-small achieved higher observed MRR@10 (-0.0688 delta, 95% CI `[-0.1740, +0.0364]`) and Hit@1 (-0.0833 delta, 95% CI `[-0.1667, +0.0000]`), while Fine-Tuned E5-small achieved higher observed Recall@3 (+0.0615 delta, 95% CI `[-0.0565, +0.1796]`). All paired 95% bootstrap confidence intervals between them include zero. Fine-tuning on 2,475 synthetic triplets observed lower Hit@1 and lower MRR@10 while slightly broadening top-3 candidate recall.
 
 ### 3. Does the MiniLM adapter advantage over frozen MiniLM replicate on human queries?
 **Positive observed point estimates, with confidence intervals including zero.**
@@ -116,4 +120,4 @@ Measured on Apple Silicon (warm steady-state vs cold start):
 | **Hybrid RRF** | $<0.02$ ms | 35,979 ms | **12.76 ms** | **16.20 ms** | BM25 + Frozen E5 + RRF ($k=60$) |
 
 > [!NOTE]
-> **Production Recommendation:** For interactive CLI commands where sub-second latency is critical without running a background daemon, **Improved BM25** delivers top-1 hit accuracy equal to Frozen E5 (**0.6250**) with only **107 ms** startup and **2.4 ms** query time. In server or daemon deployments where corpus embeddings are resident in memory, **Hybrid RRF** provides the highest ranking quality (**0.7254 MRR@10**).
+> **Observed Latency Trade-offs:** All latency numbers reported above are prototype measurements on Apple Silicon with preloaded corpus embeddings, not production deployment measurements. Improved BM25 achieves a **107 ms** cold start and **2.37 ms** warm retrieval, matching Frozen E5 top-1 hit accuracy (0.6250). Hybrid RRF achieves **12.76 ms** warm retrieval and the highest observed MRR@10 (**0.7254**). While BM25 is the fastest single retriever and Hybrid RRF achieves the highest observed MRR@10 on this benchmark, these measurements reflect prototype code running on local hardware and do not constitute production SLAs.

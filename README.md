@@ -13,8 +13,15 @@ The proposed pipeline is a hybrid retrieval architecture combining:
 
 Evaluated against 24 unassisted owner-authored technical queries over the complete 1,068-chunk Soup documentation corpus:
 - **Hybrid RRF** achieved the highest observed MRR@10 (**0.7254**) and Sec-MRR@10 (**0.7292**), improving top-3 recall over Frozen E5 (**0.4923** vs **0.4562**; the paired 95% bootstrap CI excludes zero: `[+0.0069, +0.0653]`). The paired 95% bootstrap interval for the MRR@10 difference against Frozen E5 includes zero (`[-0.0687, +0.0996]`).
+- **Fine-Tuned E5-small (lr=2e-5):** Evaluated against Frozen E5-small across the 24 human queries (Frozen E5: MRR@10 0.7101, Hit@1 0.6250, Recall@3 0.4562 vs Fine-Tuned E5: MRR@10 0.6413, Hit@1 0.5417, Recall@3 0.5177). Frozen E5-small achieved higher observed MRR@10 and Hit@1, while Fine-Tuned E5-small achieved higher observed Recall@3, and all paired 95% bootstrap confidence intervals between them include zero.
 - **Domain-Aware BM25** substantially outperformed the standard whitespace baseline (MRR@10 **0.6921** vs **0.4140**; the paired 95% bootstrap CI excludes zero), matching Frozen E5 top-1 accuracy (**0.6250**) at **2.4 ms** query latency and **107 ms** index cold-start.
-- **Fine-Tuning E5-small** on 2,475 synthetic domain triplets observed lower ranking point estimates (MRR@10 **0.6413** vs **0.7101**; the paired 95% bootstrap CI includes zero for every evaluated metric). Off-the-shelf Frozen E5 remains more reliable.
+
+## Observed Latency Trade-offs
+
+All latency numbers are prototype measurements on Apple Silicon with preloaded corpus embeddings, not production deployment measurements:
+- **Improved BM25:** 107 ms cold start, 2.37 ms warm retrieval.
+- **Hybrid RRF:** 12.76 ms warm retrieval, MRR@10 0.7254.
+While BM25 is the fastest single retriever and Hybrid RRF achieves the highest observed MRR@10 on this benchmark, these measurements reflect prototype code running on local hardware and do not constitute production SLAs.
 
 ## Evaluation Limitations
 
