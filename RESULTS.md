@@ -37,11 +37,11 @@ Authoritative chunk-level resolution (`resolve_document_attribution`) partitions
 | (domain-aware) | Training Documents ($N=16$) | 0.6250 | 0.4476 | 0.4670 | 0.6632 | 0.6250 | 0.6632 |
 | | Held-Out Documents ($N=8$) | 0.6250 | 0.5833 | 0.6111 | 0.7500 | 0.6250 | 0.7500 |
 | **Frozen E5-small** | All Queries ($N=24$) | 0.6250 | 0.4562 | 0.5690 | 0.7101 | 0.6250 | 0.7240 |
-| (pretrained, 384d) | Training Documents ($N=16$) | 0.6875 | 0.4238 | 0.5167 | 0.7417 | 0.6875 | 0.7562 |
-| | Held-Out Documents ($N=8$) | 0.5000 | 0.5208 | 0.6736 | 0.6470 | 0.5000 | 0.6597 |
+| (pretrained, 384d) | Training Documents ($N=16$) | 0.6875 | 0.4238 | 0.5167 | 0.7417 | 0.6875 | 0.7521 |
+| | Held-Out Documents ($N=8$) | 0.5000 | 0.5208 | 0.6736 | 0.6470 | 0.5000 | 0.6679 |
 | **Fine-Tuned E5** | All Queries ($N=24$) | 0.5417 | 0.5177 | 0.5591 | 0.6413 | 0.5417 | 0.6448 |
-| (lr=2e-5) | Training Documents ($N=16$) | 0.4375 | 0.4536 | 0.5018 | 0.5557 | 0.4375 | 0.5592 |
-| | Held-Out Documents ($N=8$) | 0.7500 | 0.6458 | 0.6736 | 0.8125 | 0.7500 | 0.8160 |
+| (lr=2e-5) | Training Documents ($N=16$) | 0.4375 | 0.4536 | 0.5018 | 0.5557 | 0.4375 | 0.5610 |
+| | Held-Out Documents ($N=8$) | 0.7500 | 0.6458 | 0.6736 | 0.8125 | 0.7500 | 0.8125 |
 | **Hybrid RRF** | All Queries ($N=24$) | 0.6250 | 0.4923 | 0.5551 | 0.7254 | 0.6250 | 0.7292 |
 | (BM25 + Frozen E5) | Training Documents ($N=16$) | 0.5625 | 0.4467 | 0.5271 | 0.6756 | 0.5625 | 0.6813 |
 | | Held-Out Documents ($N=8$) | 0.7500 | 0.5833 | 0.6111 | 0.8250 | 0.7500 | 0.8250 |
@@ -56,8 +56,18 @@ Authoritative chunk-level resolution (`resolve_document_attribution`) partitions
 > **Sample Size Limitations on Held-Out Subset ($N=8$):**
 > The held-out subset comprises only 8 queries (2 per held-out document). At this sample size, a single query ranking change swings Hit@1 by **12.5 percentage points**. While `C-matched-bal` observed high point estimates on these 8 queries (0.8750 Hit@1, 0.9375 MRR@10), this reflects an exploratory sample and does not establish statistically significant cross-document generalization—especially since on the 16 training document queries, `C-matched-bal` scored lower than Frozen E5 (0.5818 vs 0.7417 MRR@10).
 >
-> **Mixed-Query Sensitivity Analysis:**
-> Query `soup_human_019` spans both `README` (train) and `evaluation` (held-out). Excluding `soup_human_019` leaves a pure training subset of $N=15$, on which `C-matched-bal` achieves Hit@1 0.4667 and MRR@10 0.6111, while Frozen E5 achieves Hit@1 0.7333 and MRR@10 0.7778, and Improved BM25 achieves Hit@1 0.6667 and MRR@10 0.7074.
+> **Mixed-Query Sensitivity Analysis (Pure-Training Subset, $N=15$):**
+> Query `soup_human_019` spans both `README` (training document) and `evaluation` (held-out document). Excluding `soup_human_019` isolates a pure training subset of $N=15$ queries. On this subset, Frozen E5 leads in ranking accuracy, while C-matched-bal performs on par with Frozen MiniLM:
+>
+> | System | Hit@1 | Recall@3 | Recall@5 | MRR@10 | Sec-Hit@1 | Sec-MRR@10 |
+> | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
+> | **Frozen E5-small** | **0.7333** | 0.4521 | 0.5511 | **0.7800** | **0.7333** | **0.7889** |
+> | **Hybrid RRF** | 0.6000 | 0.4765 | **0.5622** | 0.7206 | 0.6000 | 0.7267 |
+> | **Improved BM25** | 0.6667 | 0.4775 | 0.4981 | 0.7074 | 0.6667 | 0.7074 |
+> | **Frozen MiniLM** | 0.4667 | **0.5108** | 0.5203 | 0.6278 | 0.4667 | 0.6333 |
+> | **C-matched-bal** | 0.4667 | 0.4387 | 0.4387 | 0.6206 | 0.4667 | 0.6317 |
+> | **Fine-Tuned E5** | 0.4667 | 0.4616 | 0.5130 | 0.5594 | 0.4667 | 0.5651 |
+> | **Original BM25** | 0.2667 | 0.2822 | 0.3013 | 0.3828 | 0.2667 | 0.3828 |
 
 ### 1.3 Paired Document-Stratified Bootstrap Intervals (10,000 resamples, seed 42)
 
@@ -93,7 +103,7 @@ Reported as `observed delta [95% CI lower, 95% CI upper]` with document stratifi
 
 ### 1. How does Hybrid RRF compare with Frozen E5?
 **Hybrid RRF and Frozen E5 perform broadly on par across ranking metrics; the MRR@10 confidence interval includes zero.**
-Hybrid RRF achieves an observed MRR@10 of **0.7254** vs **0.7101** for Frozen E5 (Observed Delta: **+0.0153**) and identical Hit@1 of **0.6250** (15 of 24 queries correct). The paired 95% bootstrap confidence interval for MRR@10 (`[-0.0687, +0.0996]`) includes zero. On Recall@3, Hybrid RRF achieves **0.4923** vs **0.4562** for Frozen E5 (+0.0361, paired 95% bootstrap CI `[+0.0069, +0.0653]`), though across all systems Fine-Tuned E5 reached 0.5177 and Improved BM25 reached 0.4929. The Recall@3 difference is driven by positive improvements on only 3 of 24 queries (21 queries have identical rank coverage) and does not survive multiple testing correction (Bonferroni-adjusted CI `[-0.0039, +0.0761]` spans zero). Claiming general statistical superiority is unsupported; the systems perform on par.
+Hybrid RRF achieves an observed MRR@10 of **0.7254** vs **0.7101** for Frozen E5 (Observed Delta: **+0.0153**) and identical Hit@1 of **0.6250** (15 of 24 queries correct). The paired 95% bootstrap confidence interval for MRR@10 (`[-0.0687, +0.0996]`) includes zero. On Recall@3, Hybrid RRF achieves **0.4923** vs **0.4562** for Frozen E5 (+0.0361, paired 95% bootstrap CI `[+0.0069, +0.0653]`), though across all systems Fine-Tuned E5 reached 0.5177 and Improved BM25 reached 0.4929. The Recall@3 difference is driven by positive improvements on only 3 of 24 queries (21 queries have identical rank coverage) and does not survive multiple testing correction (Bonferroni-adjusted CI `[0.0000, 0.0722]` touches zero under empirical quantile calculation over 6 comparisons). Claiming general statistical superiority is unsupported; the systems perform on par.
 
 ### 2. Does fine-tuning E5-small with matched lr=2e-5 improve over frozen E5-small on human queries?
 **The paired 95% bootstrap confidence intervals include zero across all evaluated metrics, with lower observed ranking point estimates.**
@@ -111,7 +121,7 @@ Frozen E5-small achieved higher observed MRR@10 (-0.0688 delta, 95% CI `[-0.1740
 **Domain-aware BM25 substantially outperforms original whitespace BM25; paired 95% bootstrap confidence intervals strictly exclude zero across all metrics.**
 The original whitespace BM25 baseline (`text.lower().split()`) was evaluated as an unmodified baseline to isolate tokenization effects over the identical frozen benchmark. It achieved an MRR@10 of **0.4140**, Hit@1 of **0.2917**, Recall@3 of **0.3153**, and Recall@5 of **0.3688** on the 24 technical queries. Improved domain-aware BM25 increased MRR@10 to **0.6921** (+0.2781 delta, 95% CI `[+0.1685, +0.3912]`), Hit@1 to **0.6250** (+0.3333 delta, 95% CI `[+0.2083, +0.4583]`), Recall@3 to **0.4929** (+0.1776 delta, 95% CI `[+0.0734, +0.2956]`), and Sec-MRR@10 to **0.6921** (+0.2722 delta, 95% CI `[+0.1603, +0.3873]`). The paired 95% bootstrap confidence interval strictly excludes zero across all metrics.
 
-*Tokenizer Chronology Disclosure:* Whitespace BM25 represents the unmodified baseline. Domain-aware tokenization (`tokenize_domain_aware`) was developed concurrently during the 24-query benchmark freeze and historical query evaluation. The benchmark manifest records a freeze timestamp of `2026-11-05T08:19:07Z`, and the earliest Git commit containing `tokenize_domain_aware` (`c644f1c`) was committed 11 minutes 56 seconds later at `2026-11-05T08:31:03Z`. Git commit timestamps record when changes entered version control and do not establish when uncommitted local prototyping occurred. Domain-aware BM25 is therefore an evaluated retrieval enhancement rather than a pre-existing blind baseline.
+*Tokenizer Chronology Disclosure:* Whitespace BM25 represents the unmodified baseline. Domain-aware tokenization (`tokenize_domain_aware`) was developed concurrently during the 24-query benchmark freeze and historical query evaluation. The benchmark manifest records a freeze timestamp of `2026-11-05T08:19:07Z`, and the earliest Git commit containing `tokenize_domain_aware` (`d17bc24`, full SHA `d17bc245df8253034dfb318a0cb2b590b68b8046` on `archive/research-history`) was committed 11 minutes 56 seconds later at `2026-11-05T08:31:03Z`. (Note: The citation `c644f1c` in preliminary drafts was an invalid commit hash.) Git commit timestamps record when changes entered version control and do not establish when uncommitted local prototyping occurred. Domain-aware BM25 is therefore an evaluated retrieval enhancement rather than a pre-existing blind baseline. Furthermore, the paired bootstrap confidence intervals evaluate sample variability over the frozen queries and do not account for potential tokenizer selection or development leakage.
 
 *Reconciliation of Historical Results:* Both the 54 AI-assisted queries (`data/manual_queries.jsonl`) and the 24 human-authored queries (`data/human_eval/human_queries_v2.jsonl`) were evaluated against the identical 1,068-chunk canonical documentation corpus (`data/corpus.jsonl`). On the 54 AI-assisted queries (which targeted sections within 4 held-out documents), canonical Phase 3 recorded Whitespace BM25 at **0.5953 MRR@10** (0.4815 Hit@1) and Improved BM25 at **0.7712 MRR@10** (0.6481 Hit@1). Previously cited figures of 0.5755 MRR@10 and 0.4630 Hit@1 were unverified draft narrative artifacts and are formally retracted.
 
