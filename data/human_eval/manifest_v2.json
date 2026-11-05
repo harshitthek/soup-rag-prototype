@@ -1,0 +1,466 @@
+{
+  "dataset_id": "human_eval_v2",
+  "dataset_purpose": "Independent evaluation benchmark authored by project owner without AI assistance to verify retrieval generalization and adapter transfer across full Soup documentation",
+  "status": "frozen",
+  "frozen": true,
+  "query_count": 24,
+  "authorship_declaration": "Authored and supplied directly by project owner",
+  "ai_assistance_declaration": "Project owner confirmed 24 queries were human-authored without AI assistance; no LLM rewrites or paraphrases",
+  "creation_date": "2026-11-05",
+  "freeze_timestamp": "2026-11-05T08:19:07.561131+00:00",
+  "repository_commit": "1754dff4831181e55763a73fa1645739f9ee18b2",
+  "corpus_fingerprint": "d787703e048a641884274e57f5802e328e43c637a0971217601e6a37128393e3",
+  "corpus_manifest_reference": "data/corpus.jsonl",
+  "chunking_configuration": "Canonical indexed markdown chunking, header-aware sub-chunking, 1,068 chunks",
+  "queries_sha256": "6d917ef3e89e18d0e87084804d3598bf53ef51971ff77259a768150f3a730d58",
+  "annotations_sha256": "51f66a794505c6e9cc18e3f8d8008850c4c114aabf3682304196e7dfba2426a5",
+  "query_ids": [
+    "soup_human_001",
+    "soup_human_002",
+    "soup_human_003",
+    "soup_human_004",
+    "soup_human_005",
+    "soup_human_006",
+    "soup_human_007",
+    "soup_human_008",
+    "soup_human_009",
+    "soup_human_010",
+    "soup_human_011",
+    "soup_human_012",
+    "soup_human_013",
+    "soup_human_014",
+    "soup_human_015",
+    "soup_human_016",
+    "soup_human_017",
+    "soup_human_018",
+    "soup_human_019",
+    "soup_human_020",
+    "soup_human_021",
+    "soup_human_022",
+    "soup_human_023",
+    "soup_human_024"
+  ],
+  "queries": [
+    {
+      "id": "soup_human_001",
+      "query": "how is energy and CO2 measurements done in soup?",
+      "source_file": "data/raw_docs/adapters-and-governance.md",
+      "owner_reference": "Energy & CO\u2082 measurement (--track-energy)",
+      "resolved_heading": "Energy & CO\u2082 measurement (`--track-energy`)",
+      "relevant_chunk_ids": [
+        "adapters-and-governance::energy-co-measurement-track-energy"
+      ],
+      "relevant_section_ids": [
+        "adapters-and-governance::energy-co-measurement-track-energy"
+      ]
+    },
+    {
+      "id": "soup_human_002",
+      "query": "what is strict safetensors mode?",
+      "source_file": "data/raw_docs/adapters-and-governance.md",
+      "owner_reference": "Strict Safetensors Mode (soup adapters check-safetensors)",
+      "resolved_heading": "Strict Safetensors Mode (`soup adapters check-safetensors`)",
+      "relevant_chunk_ids": [
+        "adapters-and-governance::strict-safetensors-mode-soup-adapters-check-safetensors"
+      ],
+      "relevant_section_ids": [
+        "adapters-and-governance::strict-safetensors-mode-soup-adapters-check-safetensors"
+      ]
+    },
+    {
+      "id": "soup_human_003",
+      "query": "I want to track the experiment is there something in soup that i can use?",
+      "source_file": "data/raw_docs/backends-and-ops.md",
+      "owner_reference": "Experiment Tracking",
+      "resolved_heading": "Experiment Tracking",
+      "relevant_chunk_ids": [
+        "backends-and-ops::experiment-tracking"
+      ],
+      "relevant_section_ids": [
+        "backends-and-ops::experiment-tracking"
+      ]
+    },
+    {
+      "id": "soup_human_004",
+      "query": "I was training my model but my pc crashed in between is there some way i can resume it?",
+      "source_file": "data/raw_docs/adapters-and-governance.md",
+      "owner_reference": "Resume Training",
+      "resolved_heading": "Resume Training",
+      "relevant_chunk_ids": [
+        "backends-and-ops::resume-training"
+      ],
+      "relevant_section_ids": [
+        "backends-and-ops::resume-training"
+      ],
+      "owner_source_file": "data/raw_docs/adapters-and-governance.md",
+      "resolved_source_file": "data/raw_docs/backends-and-ops.md",
+      "status": "resolved_with_source_correction",
+      "audit_rationale": "Owner cited data/raw_docs/adapters-and-governance.md, but the \"Resume Training\" section is located in data/raw_docs/backends-and-ops.md at section backends-and-ops::resume-training. In adapters-and-governance.md, pause/resume refers only to the data flywheel daemon (). Mapped to the actual Resume Training section in backends-and-ops.md without altering the frozen relevance annotations byte hash."
+    },
+    {
+      "id": "soup_human_005",
+      "query": "can i use soup from my coding agent?",
+      "source_file": "data/raw_docs/commands.md",
+      "owner_reference": "Fine-tune from your coding agent (MCP)",
+      "resolved_heading": "Fine-tune from your coding agent (MCP)",
+      "relevant_chunk_ids": [
+        "commands::fine-tune-from-your-coding-agent-mcp::sub_000",
+        "commands::fine-tune-from-your-coding-agent-mcp::sub_001",
+        "commands::fine-tune-from-your-coding-agent-mcp::sub_002",
+        "commands::fine-tune-from-your-coding-agent-mcp::sub_003",
+        "commands::fine-tune-from-your-coding-agent-mcp::sub_004",
+        "commands::fine-tune-from-your-coding-agent-mcp::sub_005"
+      ],
+      "relevant_section_ids": [
+        "commands::fine-tune-from-your-coding-agent-mcp"
+      ]
+    },
+    {
+      "id": "soup_human_006",
+      "query": "give soup command for  Full traceback on errors.",
+      "source_file": "data/raw_docs/commands.md",
+      "owner_reference": "All Commands",
+      "resolved_heading": "All Commands (entry: soup --verbose <command>)",
+      "relevant_chunk_ids": [
+        "commands::all-commands::sub_065"
+      ],
+      "relevant_section_ids": [
+        "commands::all-commands"
+      ]
+    },
+    {
+      "id": "soup_human_007",
+      "query": "how can i check if model memorized the data & for leak detection and provenance.",
+      "source_file": "data/raw_docs/data.md",
+      "owner_reference": "Canaries (soup data canary insert|check)",
+      "resolved_heading": "Canaries (`soup data canary insert|check`)",
+      "relevant_chunk_ids": [
+        "data::canaries-soup-data-canary-insert-check",
+        "data::1-insert-k-unique-secrets-keep-the-manifest-out-of-your-repo",
+        "data::2-train-on-canaried-jsonl-as-usual-then::sub_000",
+        "data::2-train-on-canaried-jsonl-as-usual-then::sub_001",
+        "data::2-train-on-canaried-jsonl-as-usual-then::sub_002"
+      ],
+      "relevant_section_ids": [
+        "data::canaries-soup-data-canary-insert-check",
+        "data::1-insert-k-unique-secrets-keep-the-manifest-out-of-your-repo",
+        "data::2-train-on-canaried-jsonl-as-usual-then"
+      ]
+    },
+    {
+      "id": "soup_human_008",
+      "query": "which data formats are supported by soup?",
+      "source_file": "data/raw_docs/data.md",
+      "owner_reference": "Data Formats",
+      "resolved_heading": "Data Formats",
+      "relevant_chunk_ids": [
+        "data::data-formats::sub_000",
+        "data::data-formats::sub_001",
+        "data::data-formats::sub_002",
+        "data::data-formats::sub_003",
+        "data::data-formats::sub_004",
+        "data::data-formats::sub_005",
+        "data::data-formats::sub_006"
+      ],
+      "relevant_section_ids": [
+        "data::data-formats"
+      ]
+    },
+    {
+      "id": "soup_human_009",
+      "query": "how does soup guarentees Proper sequential testing with early-stop?",
+      "source_file": "data/raw_docs/evaluation.md",
+      "owner_reference": "Sequential A/B Harness (soup ab)",
+      "resolved_heading": "Sequential A/B Harness (`soup ab`)",
+      "relevant_chunk_ids": [
+        "evaluation::sequential-a-b-harness-soup-ab",
+        "evaluation::or-with-custom-alpha-beta::sub_000",
+        "evaluation::or-with-custom-alpha-beta::sub_001"
+      ],
+      "relevant_section_ids": [
+        "evaluation::sequential-a-b-harness-soup-ab",
+        "evaluation::or-with-custom-alpha-beta"
+      ]
+    },
+    {
+      "id": "soup_human_010",
+      "query": "how can i know if the model got better or did it break?",
+      "source_file": "data/raw_docs/evaluation.md",
+      "owner_reference": "Ship Verdict (soup ship)",
+      "resolved_heading": "Ship Verdict (`soup ship`)",
+      "relevant_chunk_ids": [
+        "evaluation::ship-verdict-soup-ship::sub_000",
+        "evaluation::ship-verdict-soup-ship::sub_001"
+      ],
+      "relevant_section_ids": [
+        "evaluation::ship-verdict-soup-ship"
+      ]
+    },
+    {
+      "id": "soup_human_011",
+      "query": "can i create a model card using soup? if yes then how?",
+      "source_file": "data/raw_docs/compliance.md",
+      "owner_reference": "7. Generate a documented model card",
+      "resolved_heading": "7. Generate a documented model card",
+      "relevant_chunk_ids": [
+        "compliance::7-generate-a-documented-model-card"
+      ],
+      "relevant_section_ids": [
+        "compliance::7-generate-a-documented-model-card"
+      ]
+    },
+    {
+      "id": "soup_human_012",
+      "query": "how the model card links every file needed for verification?",
+      "source_file": "data/raw_docs/compliance.md",
+      "owner_reference": "4. Register the run, then emit BOM + attestation",
+      "resolved_heading": "4. Register the run, then emit BOM + attestation",
+      "relevant_chunk_ids": [
+        "compliance::4-register-the-run-then-emit-bom-attestation::sub_000",
+        "compliance::4-register-the-run-then-emit-bom-attestation::sub_001"
+      ],
+      "relevant_section_ids": [
+        "compliance::4-register-the-run-then-emit-bom-attestation"
+      ]
+    },
+    {
+      "id": "soup_human_013",
+      "query": "why should i use unsloth backend instead of simple?",
+      "source_file": "data/raw_docs/models.md",
+      "owner_reference": "fast: pip install \"soup-cli[fast]\" \u2014 Unsloth backend (2-5x faster, lower VRAM)",
+      "resolved_heading": "The extras table (entry: fast: unsloth)",
+      "relevant_chunk_ids": [
+        "models::the-extras-table::sub_001"
+      ],
+      "relevant_section_ids": [
+        "models::the-extras-table"
+      ]
+    },
+    {
+      "id": "soup_human_014",
+      "query": "diff between onnx and awq? whats there use case?",
+      "source_file": "data/raw_docs/models.md",
+      "owner_reference": "onnx / tensorrt: ONNX / TensorRT-LLM export and awq / gptq: AWQ / GPTQ quantized export",
+      "resolved_heading": "The extras table (entries: onnx / tensorrt and awq / gptq)",
+      "relevant_chunk_ids": [
+        "models::the-extras-table::sub_004"
+      ],
+      "relevant_section_ids": [
+        "models::the-extras-table"
+      ]
+    },
+    {
+      "id": "soup_human_015",
+      "query": "why cant i use GaLore with unsloth?",
+      "source_file": "data/raw_docs/peft-and-efficiency.md",
+      "owner_reference": "GaLore",
+      "resolved_heading": "GaLore (Memory-Efficient Full-Parameter Training)",
+      "relevant_chunk_ids": [
+        "peft-and-efficiency::galore-memory-efficient-full-parameter-training"
+      ],
+      "relevant_section_ids": [
+        "peft-and-efficiency::galore-memory-efficient-full-parameter-training"
+      ]
+    },
+    {
+      "id": "soup_human_016",
+      "query": "tell me the gives and takes of lisa.",
+      "source_file": "data/raw_docs/peft-and-efficiency.md",
+      "owner_reference": "LISA",
+      "resolved_heading": "LISA \u2014 Layerwise Importance Sampling (v0.71.34) / What LISA actually costs, measured at 3B and 8B",
+      "relevant_chunk_ids": [
+        "peft-and-efficiency::lisa-layerwise-importance-sampling-v0-71-34::sub_000",
+        "peft-and-efficiency::lisa-layerwise-importance-sampling-v0-71-34::sub_001",
+        "peft-and-efficiency::lisa-layerwise-importance-sampling-v0-71-34::sub_002",
+        "peft-and-efficiency::what-lisa-actually-costs-measured-at-3b-and-8b::sub_000",
+        "peft-and-efficiency::what-lisa-actually-costs-measured-at-3b-and-8b::sub_001",
+        "peft-and-efficiency::what-lisa-actually-costs-measured-at-3b-and-8b::sub_002",
+        "peft-and-efficiency::what-lisa-actually-costs-measured-at-3b-and-8b::sub_003",
+        "peft-and-efficiency::what-lisa-actually-costs-measured-at-3b-and-8b::sub_004",
+        "peft-and-efficiency::what-lisa-actually-costs-measured-at-3b-and-8b::sub_005"
+      ],
+      "relevant_section_ids": [
+        "peft-and-efficiency::lisa-layerwise-importance-sampling-v0-71-34",
+        "peft-and-efficiency::what-lisa-actually-costs-measured-at-3b-and-8b"
+      ]
+    },
+    {
+      "id": "soup_human_017",
+      "query": "why I'm facing error like runtime error when i use training.quantization: bitnet_1.58.",
+      "source_file": "data/raw_docs/performance-and-quantization.md",
+      "owner_reference": "BitNet",
+      "resolved_heading": "BitNet 1.58-Bit Fine-Tuning (BETA, live in v0.71.20)",
+      "relevant_chunk_ids": [
+        "performance-and-quantization::bitnet-1-58-bit-fine-tuning-beta-live-in-v0-71-20::sub_000",
+        "performance-and-quantization::bitnet-1-58-bit-fine-tuning-beta-live-in-v0-71-20::sub_001"
+      ],
+      "relevant_section_ids": [
+        "performance-and-quantization::bitnet-1-58-bit-fine-tuning-beta-live-in-v0-71-20"
+      ]
+    },
+    {
+      "id": "soup_human_018",
+      "query": "Do i have to manually do pre-quantized bases when i use Quant Menu II + Export Pipeline (v0.53.1)",
+      "source_file": "data/raw_docs/performance-and-quantization.md",
+      "owner_reference": "Quant Menu II + Export Pipeline (v0.53.1)",
+      "resolved_heading": "Quant Menu II + Export Pipeline (v0.53.1)",
+      "relevant_chunk_ids": [
+        "performance-and-quantization::quant-menu-ii-export-pipeline-v0-53-1"
+      ],
+      "relevant_section_ids": [
+        "performance-and-quantization::quant-menu-ii-export-pipeline-v0-53-1"
+      ]
+    },
+    {
+      "id": "soup_human_019",
+      "query": "is there any feature i can use to get advice on eval etc?",
+      "source_file": "data/raw_docs/README.md",
+      "owner_reference": "Evaluation & probes",
+      "resolved_heading": "Soup Documentation (Evaluation & probes link to evaluation.md: soup advise)",
+      "relevant_chunk_ids": [
+        "README::soup-documentation::sub_002",
+        "README::soup-documentation::sub_003",
+        "evaluation::pre-flight-decision-soup-advise"
+      ],
+      "relevant_section_ids": [
+        "README::soup-documentation",
+        "evaluation::pre-flight-decision-soup-advise"
+      ]
+    },
+    {
+      "id": "soup_human_020",
+      "query": "where can i get info about OpenAI-compatible server?",
+      "source_file": "data/raw_docs/README.md",
+      "owner_reference": "Serving & export (serving-and-export.md)",
+      "resolved_heading": "Soup Documentation (Serving & export link to serving-and-export.md: Inference Server)",
+      "relevant_chunk_ids": [
+        "README::soup-documentation::sub_003",
+        "serving-and-export::inference-server"
+      ],
+      "relevant_section_ids": [
+        "README::soup-documentation",
+        "serving-and-export::inference-server"
+      ]
+    },
+    {
+      "id": "soup_human_021",
+      "query": "why does my training breaked when i used pip install -r ~/.soup/llama.cpp/requirements.txt??",
+      "source_file": "data/raw_docs/serving-and-export.md",
+      "owner_reference": "Toolchain validated on Windows note",
+      "resolved_heading": "Building llama.cpp (required for quantized GGUF)",
+      "relevant_chunk_ids": [
+        "serving-and-export::building-llama-cpp-required-for-quantized-gguf::sub_002",
+        "serving-and-export::building-llama-cpp-required-for-quantized-gguf::sub_003"
+      ],
+      "relevant_section_ids": [
+        "serving-and-export::building-llama-cpp-required-for-quantized-gguf"
+      ]
+    },
+    {
+      "id": "soup_human_022",
+      "query": "can i even turn an OpenAPI 3.x, MCP server manifest, or GraphQL introspection JSON straight into a tool-calling SFT dataset without manual labelling and no scaffolding?",
+      "source_file": "data/raw_docs/serving-and-export.md",
+      "owner_reference": "Agent Forge",
+      "resolved_heading": "Agent Forge",
+      "relevant_chunk_ids": [
+        "serving-and-export::agent-forge"
+      ],
+      "relevant_section_ids": [
+        "serving-and-export::agent-forge"
+      ]
+    },
+    {
+      "id": "soup_human_023",
+      "query": "How do you configure the text-to-speech (TTS) fine-tuning pipeline introduced in version 0.52.0, and what specific data format does its audio dataset require?",
+      "source_file": "data/raw_docs/training.md",
+      "owner_reference": "TTS fine-tuning pipeline introduced in version 0.52.0",
+      "resolved_heading": "TTS Fine-Tuning (`task='tts'`, BETA, live in v0.71.20)",
+      "relevant_chunk_ids": [
+        "training::tts-fine-tuning-task-tts-beta-live-in-v0-71-20::sub_000",
+        "training::tts-fine-tuning-task-tts-beta-live-in-v0-71-20::sub_001",
+        "training::tts-fine-tuning-task-tts-beta-live-in-v0-71-20::sub_002",
+        "training::tts-fine-tuning-task-tts-beta-live-in-v0-71-20::sub_003",
+        "training::tts-fine-tuning-task-tts-beta-live-in-v0-71-20::sub_004",
+        "training::tts-fine-tuning-task-tts-beta-live-in-v0-71-20::sub_005",
+        "training::tts-fine-tuning-task-tts-beta-live-in-v0-71-20::sub_006"
+      ],
+      "relevant_section_ids": [
+        "training::tts-fine-tuning-task-tts-beta-live-in-v0-71-20"
+      ]
+    },
+    {
+      "id": "soup_human_024",
+      "query": "What happens to the initialization of the LoRA adapter (lora_A) and classification heads in an unseeded run after update #353, and how does this change the behavior from previous versions?",
+      "source_file": "data/raw_docs/training.md",
+      "owner_reference": "Seeds & reproducibility (training.seed)",
+      "resolved_heading": "Seeds & reproducibility (`training.seed`)",
+      "relevant_chunk_ids": [
+        "training::seeds-reproducibility-training-seed::sub_000",
+        "training::seeds-reproducibility-training-seed::sub_001",
+        "training::seeds-reproducibility-training-seed::sub_002",
+        "training::seeds-reproducibility-training-seed::sub_003",
+        "training::seeds-reproducibility-training-seed::sub_004",
+        "training::seeds-reproducibility-training-seed::sub_005",
+        "training::seeds-reproducibility-training-seed::sub_006"
+      ],
+      "relevant_section_ids": [
+        "training::seeds-reproducibility-training-seed"
+      ]
+    }
+  ],
+  "retrieval_system_configurations": {
+    "bm25_original": "Legacy lowercase whitespace BM25 retriever (text.lower().split(), k1=1.5, b=0.75)",
+    "bm25_improved": "Domain-aware BM25 retriever (token-split, camelCase/snake_case/kebab-case splitting, CLI preservation, punctuation filtering, k1=1.5, b=0.75)",
+    "frozen_e5_small": "intfloat/e5-small-v2 (revision ffb93f3bd4047442299a41ebb6fa998a38507c52, frozen weights, 384d, query_prefix=\"query: \", passage_prefix=\"passage: \")",
+    "fine_tuned_e5_small_lr2e5": "intfloat/e5-small-v2 with PEFT LoRA adapter (r=16, alpha=32, target=[q_proj, v_proj]), trained with matched lr=2e-5, 3 epochs, 1857 steps on 2475 triplets",
+    "hybrid_rrf": "Reciprocal Rank Fusion with k=60 combining Improved BM25 and Frozen E5-small rankings",
+    "frozen_minilm": "sentence-transformers/all-MiniLM-L6-v2 (revision 1110a243fdf4706b3f48f1d95db1a4f5529b4d41, frozen weights, 384d)",
+    "adapter_exp_c_matched_balanced": "sentence-transformers/all-MiniLM-L6-v2 with PEFT LoRA adapter trained on Exp C balanced triplets"
+  },
+  "evaluation_metrics": [
+    "Hit@1",
+    "Recall@3",
+    "Recall@5",
+    "MRR@10",
+    "Sec-Hit@1",
+    "Sec-MRR@10"
+  ],
+  "bootstrap_configuration": {
+    "method": "paired document-stratified bootstrap resampling",
+    "seed": 42,
+    "resamples": 10000,
+    "confidence_interval": 0.95
+  },
+  "model_revisions": {
+    "intfloat/e5-small-v2": "ffb93f3bd4047442299a41ebb6fa998a38507c52",
+    "sentence-transformers/all-MiniLM-L6-v2": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41"
+  },
+  "checkpoint_hashes": {
+    "output/adapter_e5_exp_b_lr2e5/adapter_model.safetensors": "04c48664fea942c25371bd5bad1c84d47e6630270777a5df42f075bce5bf47dd",
+    "output/adapter_e5_exp_b_lr2e5/adapter_config.json": "00e5708ae6f0d64d7e01222b640d3b8ac904f507e1cba6c01cc1d38fb1efcaf2",
+    "output/adapter_exp_c_matched_balanced/adapter_model.safetensors": "25e0064078516ff068b6db2bface1065059f0d44a7a33592e8c0eb2094367137",
+    "output/adapter_exp_c_matched_balanced/adapter_config.json": "9f1ae0887d14404fcef2e160db94e50bc0ff0537f212cc7052900e8b4b048670"
+  },
+  "config_hashes": {
+    "config/embedding_e5_exp_b_lr2e5.yaml": "d0055d8948d05ae481baf0dee9620da8d5d70ea25c09a8020c4c414921574298",
+    "config/embedding_exp_c_matched_balanced.yaml": "b1c64fc741dda6eb6f72dd4187da86a898e1ac67b1b4e0c12f9562e602560c87"
+  },
+  "tokenizer_specifications": {
+    "whitespace": "text.lower().split()",
+    "domain_aware": "Decomposes CLI flags, file paths, dot-notation, camelCase, snake_case, and kebab-case while preserving intact compounds; case-normalized; single-character punctuation removed"
+  },
+  "fusion_parameters": {
+    "algorithm": "Reciprocal Rank Fusion (RRF)",
+    "formula": "score(d) = sum(1.0 / (k + rank_r(d)))",
+    "k": 60,
+    "top_k": 10
+  },
+  "metric_definitions": {
+    "Hit@1": "Proportion of queries where the top-ranked chunk is in relevant_chunk_ids",
+    "Recall@3": "Proportion of relevant chunks retrieved in top 3 ranked chunks",
+    "Recall@5": "Proportion of relevant chunks retrieved in top 5 ranked chunks",
+    "MRR@10": "Mean reciprocal rank of the first relevant chunk in top 10 rankings",
+    "Sec-Hit@1": "Proportion of queries where the top-ranked chunk belongs to relevant_section_ids",
+    "Sec-MRR@10": "Mean reciprocal rank of the first chunk belonging to relevant_section_ids in top 10 rankings"
+  }
+}

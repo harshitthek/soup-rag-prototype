@@ -15,6 +15,7 @@ inside the classes so that metric-only workflows stay stdlib.
 
 from __future__ import annotations
 
+import re
 from typing import Any, Sequence
 
 MINILM_MODEL_ID = "sentence-transformers/all-MiniLM-L6-v2"
@@ -43,6 +44,15 @@ RETRIEVER_SPECS: dict[str, dict[str, Any]] = {
         "model": "bm25-okapi",
         "k1": 1.5,
         "b": 0.75,
+        "tokenizer": "domain_aware",
+        "query_prefix": "",
+        "passage_prefix": "",
+    },
+    "bm25_legacy": {
+        "model": "bm25-okapi",
+        "k1": 1.5,
+        "b": 0.75,
+        "tokenizer": "whitespace",
         "query_prefix": "",
         "passage_prefix": "",
     },
@@ -50,6 +60,30 @@ RETRIEVER_SPECS: dict[str, dict[str, Any]] = {
         "model": E5_MODEL_ID,
         "revision": E5_REVISION,
         "adapter_dir": None,
+        "max_length": 512,
+        "query_prefix": "query: ",
+        "passage_prefix": "passage: ",
+    },
+    "e5_small_ft": {
+        "model": E5_MODEL_ID,
+        "revision": E5_REVISION,
+        "adapter_dir": "output/adapter_e5_exp_b",
+        "max_length": 512,
+        "query_prefix": "query: ",
+        "passage_prefix": "passage: ",
+    },
+    "e5_small_ft_lr2e5": {
+        "model": E5_MODEL_ID,
+        "revision": E5_REVISION,
+        "adapter_dir": "output/adapter_e5_exp_b_lr2e5",
+        "max_length": 512,
+        "query_prefix": "query: ",
+        "passage_prefix": "passage: ",
+    },
+    "e5_small_ft_lr2e4": {
+        "model": E5_MODEL_ID,
+        "revision": E5_REVISION,
+        "adapter_dir": "output/adapter_e5_exp_b_lr2e4",
         "max_length": 512,
         "query_prefix": "query: ",
         "passage_prefix": "passage: ",
@@ -176,13 +210,123 @@ class DenseRetriever:
         )
 
 
-class BM25Retriever:
-    """BM25Okapi over prefixed passages, lowercase whitespace tokenization."""
+VERSION_RE = re.compile(r"^v?\d+(?:\.\d+)+$")
+STRIP_PUNCT = "\"'`()[]{}<>,;?!~*#%^&|=+"
 
-    def __init__(self, retriever_id: str = "bm25", k1: float = 1.5, b: float = 0.75):
+
+def tokenize_whitespace(text: str) -> list[str]:
+    """Legacy lowercase whitespace tokenizer for BM25."""
+    return text.lower().split()
+
+
+def tokenize_domain_aware(text: str) -> list[str]:
+    """Deterministic, lightweight domain-aware technical tokenizer.
+
+    Handles:
+    - Case normalization (lowercase).
+    - Preserves full CLI flags (e.g., ``--gradient-accumulation-steps``) alongside sub-words.
+    - Preserves underscore and dotted identifiers (e.g., ``torch.nn.Linear``, ``lora.r``).
+    - Preserves package names and slash identifiers (e.g., ``sentence-transformers``, ``intfloat/e5-small-v2``).
+    - Preserves version strings (e.g., ``v0.77.1``, ``3.12.13``) without splitting into single digits.
+    - Preserves file paths and file extensions.
+    - Strips noisy punctuation (quotes, backticks, brackets, Markdown headers) while preserving internal delimiters.
+    """
+    text = text.lower()
+    raw_tokens = text.split()
+    tokens: list[str] = []
+
+    for raw in raw_tokens:
+        t = raw.strip(STRIP_PUNCT)
+        # Strip trailing punctuation like colons, commas, dots, slashes
+        while t and t[-1] in ".:,/":
+            if t.endswith(".") and not VERSION_RE.match(t):
+                t = t[:-1]
+            elif t.endswith(":") or t.endswith(",") or t.endswith("/"):
+                t = t[:-1]
+            else:
+                break
+
+        if not t or not any(c.isalnum() for c in t):
+            continue
+
+        # Check for flag assignment e.g. --margin=0.5
+        if t.startswith("--") and "=" in t:
+            flag_part, val_part = t.split("=", 1)
+            candidate_tokens = [flag_part, val_part]
+        else:
+            candidate_tokens = [t]
+
+        for cand in candidate_tokens:
+            cand = cand.strip(STRIP_PUNCT)
+            if not cand or not any(c.isalnum() for c in cand):
+                continue
+
+            # Version number check e.g. v0.77.1 or 3.12.13
+            if VERSION_RE.match(cand):
+                tokens.append(cand)
+                if cand.startswith("v") and cand[1:]:
+                    tokens.append(cand[1:])
+                continue
+
+            # CLI flag check e.g. --gradient-accumulation-steps
+            if cand.startswith("--"):
+                clean_flag = cand.rstrip(".,;:")
+                tokens.append(clean_flag)
+                parts = clean_flag[2:].split("-")
+                for p in parts:
+                    if len(p) > 1 and any(c.isalnum() for c in p):
+                        tokens.append(p)
+                continue
+
+            # Path with slashes e.g. output/adapter_model.safetensors
+            if "/" in cand:
+                tokens.append(cand)
+                segments = cand.split("/")
+                for seg in segments:
+                    if seg and any(c.isalnum() for c in seg) and seg != cand:
+                        tokens.append(seg)
+                        if any(s in seg for s in ("_", "-", ".")):
+                            for sp in re.split(r"[_.-]", seg):
+                                if sp and any(c.isalnum() for c in sp) and sp != seg:
+                                    tokens.append(sp)
+                continue
+
+            # Compound identifiers with underscores, hyphens, or dots
+            has_compound = any(sep in cand for sep in ("_", "-", "."))
+            if has_compound:
+                tokens.append(cand)
+                sub_parts = re.split(r"[_.-]", cand)
+                for sp in sub_parts:
+                    if sp and any(c.isalnum() for c in sp) and sp != cand:
+                        tokens.append(sp)
+            else:
+                tokens.append(cand)
+
+    return tokens
+
+
+class BM25Retriever:
+    """BM25Okapi over prefixed passages with selectable tokenizer."""
+
+    def __init__(
+        self,
+        retriever_id: str = "bm25",
+        k1: float = 1.5,
+        b: float = 0.75,
+        tokenizer: str = "domain_aware",
+    ):
         self.retriever_id = retriever_id
         self.k1 = k1
         self.b = b
+        self.tokenizer_name = tokenizer
+        if tokenizer == "whitespace":
+            self._tokenize_func = tokenize_whitespace
+        elif tokenizer == "domain_aware":
+            self._tokenize_func = tokenize_domain_aware
+        else:
+            raise ValueError(
+                f"unknown tokenizer '{tokenizer}'; choose 'domain_aware' or 'whitespace'"
+            )
         self._index = None
 
     def config(self) -> dict[str, Any]:
@@ -190,14 +334,13 @@ class BM25Retriever:
             "model": "bm25-okapi",
             "k1": self.k1,
             "b": self.b,
-            "tokenizer": "lowercase whitespace",
+            "tokenizer": self.tokenizer_name,
             "passage": "heading_prefix + body",
             "tuning": "none (fixed defaults; tuning prohibited)",
         }
 
-    @staticmethod
-    def _tokenize(text: str) -> list[str]:
-        return text.lower().split()
+    def _tokenize(self, text: str) -> list[str]:
+        return self._tokenize_func(text)
 
     def fit(self, chunks: Sequence[dict[str, Any]]) -> None:
         from rank_bm25 import BM25Okapi
@@ -224,8 +367,13 @@ def build_retriever(retriever_id: str, repo_root: Any = None) -> Any:
             f"unknown retriever '{retriever_id}'; choose from {sorted(RETRIEVER_SPECS)}"
         )
     spec = RETRIEVER_SPECS[retriever_id]
-    if retriever_id == "bm25":
-        return BM25Retriever(retriever_id, k1=spec["k1"], b=spec["b"])
+    if retriever_id in ("bm25", "bm25_legacy"):
+        return BM25Retriever(
+            retriever_id,
+            k1=spec["k1"],
+            b=spec["b"],
+            tokenizer=spec.get("tokenizer", "domain_aware"),
+        )
     adapter_dir = spec.get("adapter_dir")
     if adapter_dir and repo_root is not None:
         adapter_dir = str(Path(repo_root) / adapter_dir)
@@ -255,7 +403,10 @@ def retrieve_ranked(
     if not queries:
         return []
 
-    from retrieval import rank_corpus
+    try:
+        from retrieval import rank_corpus
+    except ImportError:
+        from scripts.retrieval import rank_corpus
 
     chunk_ids = [c["chunk_id"] for c in chunks]
     if isinstance(retriever, BM25Retriever):

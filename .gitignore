@@ -9,10 +9,18 @@ Thumbs.db
 # Project virtualenv
 .venv/
 
-# v2: future training checkpoints and redundant artifacts stay out of git
+# Logs and transient execution dumps
+*.log
+results/training_logs/
+
+# Intermediate checkpoints and non-essential model files
 output_embedding/checkpoint-*/
 output_embedding/tokenizer*.json
 output_embedding/training_args.bin
 output/*/checkpoint-*/
 output/*/tokenizer*.json
 output/*/training_args.bin
+output/*_lr2e4/
+
+# External evaluation temporary directory
+data/external_eval/

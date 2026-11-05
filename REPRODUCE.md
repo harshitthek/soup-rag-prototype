@@ -47,6 +47,8 @@ pytest tests/ -v
 ```
 
 ### Key Test Coverage Areas:
+- `tests/test_bm25_tokenizer.py`: Domain-aware regex tokenizer unit tests (flags, compound tokens, dotted paths, versions).
+- `tests/test_rrf.py`: Reciprocal Rank Fusion mathematical unit tests (hand-calculated scores, tie-breaking, dedup).
 - `tests/test_retrieval_pipeline.py`: Chunk formatting, token boundaries, and base model loading.
 - `tests/test_manual_queries_validation.py`: Schema validation and heading overlap checks for the 54 manual queries.
 - `tests/test_retrieval_metrics.py`: Ranking metric implementations (Hit@K, Recall@K, MRR@K).
@@ -77,7 +79,24 @@ cd ../..
 
 ---
 
-## 4. Running Read-Only Retrieval on Benchmark Queries
+## 4. Running Independent Human Evaluation Benchmark (v2)
+
+The primary benchmark evaluates 6 retrieval systems across 24 human-authored queries:
+
+```bash
+python scripts/evaluate_human_eval_v2.py
+```
+
+*Executes the 6-system evaluation (Improved BM25, Frozen E5, Fine-Tuned E5, Hybrid RRF, Frozen MiniLM, C-matched-balanced) over the 1,068-chunk Soup documentation corpus, computes 10,000 paired bootstrap intervals (seed 42), and writes:*
+- `results/HUMAN_EVAL_V2_REPORT.md`: Comprehensive evaluation report and answers to research questions.
+- `results/human_eval_v2/summary.json`: Micro-averaged retrieval metrics across all 6 systems.
+- `results/human_eval_v2/bootstrap_intervals.json`: Document-stratified bootstrap confidence intervals.
+- `results/human_eval_v2/latency.json`: Cold-start and steady-state latency profiles.
+- `results/human_eval_v2/per_query_results.json`: Full rankings and query-level scores.
+
+---
+
+## 5. Running Read-Only Retrieval on Benchmark Queries
 
 You can execute retrieval evaluation for any individual retriever against the frozen 54-query manual benchmark (`data/manual_queries.jsonl`) without modifying any trained checkpoints or datasets.
 
@@ -89,7 +108,7 @@ python scripts/run_retrieval.py --retriever bm25 --output results/test_bm25.json
 # 2. Frozen MiniLM Baseline
 python scripts/run_retrieval.py --retriever mini_lm_frozen --output results/test_minilm.json
 
-# 3. Frozen E5-small Baseline (Strongest Retriever)
+# 3. Frozen E5-small Baseline (Highest Observed Benchmark Score)
 python scripts/run_retrieval.py --retriever e5_small --output results/test_e5.json
 ```
 
@@ -98,7 +117,7 @@ python scripts/run_retrieval.py --retriever e5_small --output results/test_e5.js
 # 4. Baseline Soup Adapter (A-full: output_embedding/)
 python scripts/run_retrieval.py --retriever mini_lm_soup --output results/test_soup.json
 
-# 5. Top-Performing MiniLM Adapter (C-matched-balanced)
+# 5. Evaluated MiniLM Adapter with Highest Observed Score (C-matched-balanced)
 python scripts/run_retrieval.py \
     --retriever mini_lm_adapter \
     --adapter-dir output/adapter_exp_c_matched_balanced \
@@ -123,7 +142,7 @@ python scripts/compare_retrievers.py
 
 ---
 
-## 5. Historical Pipeline Reproduction (Phase 1 Synthetic Benchmark)
+## 6. Historical Pipeline Reproduction (Phase 1 Synthetic Benchmark)
 
 The original Phase 1 prototype used 497 synthetically generated queries over 12 Soup documentation files. This workflow is documented here for historical completeness.
 
@@ -163,7 +182,7 @@ python scripts/compare_results.py \
 
 ---
 
-## 6. Adapter Retraining Workflows (Phase 2 Matrix)
+## 7. Adapter Retraining Workflows (Phase 2 Matrix)
 
 During Phase 2, five authorized adapter configurations were trained to isolate the effects of query diversity, corpus size, and intent balancing:
 
@@ -180,7 +199,7 @@ During Phase 2, five authorized adapter configurations were trained to isolate t
 
 ---
 
-## 7. Troubleshooting & Notes
+## 8. Troubleshooting & Notes
 
 - **macOS / Apple Silicon Floating-Point Warnings:** During matrix operations on MPS, you may observe benign runtime warnings regarding BLAS floating-point exception status flags (`fpexception: ...`). These are internal PyTorch/Metal status messages and do not affect numerical correctness.
 - **Paths and Working Directory:** All configuration paths and script commands assume execution from the repository root directory (`soup-rag-prototype/`).
