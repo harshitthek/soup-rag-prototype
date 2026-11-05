@@ -35,7 +35,7 @@ pip install -r requirements.txt
 
 ## 2. Fast Verification: Running the Automated Test Suite
 
-Run the full automated test suite (182 unit and invariant assertions) to verify corpus integrity, validator logic, model loading, and Phase 1–3 statistical invariants:
+Run the full automated test suite (226 passing tests across the 7 test files) to verify corpus integrity, validator logic, model loading, and Phase 1–3 statistical invariants:
 
 ```bash
 pytest tests/ -v
@@ -43,7 +43,7 @@ pytest tests/ -v
 
 *Expected output:*
 ```
-============================= 182 passed in ~24s =============================
+============================= 226 passed in ~40s =============================
 ```
 
 ### Key Test Coverage Areas:
@@ -75,19 +75,19 @@ cd ../..
 - `results/phase3/aggregate_comparison.json`: Complete micro and macro metrics (Hit@1, Recall@3, MRR@10, etc.) across all 9 retrievers.
 - `results/phase3/bootstrap_ci.json`: 10,000-iteration document-stratified paired percentile bootstrap intervals for all retriever contrasts.
 - `results/phase3/per_query_ranked_results.json`: Full top-10 retrieved chunk rankings for all 54 queries across all 9 retrievers.
-- `results/phase3/failure_classification_summary.json`: Detailed 7-leaf root-cause failure taxonomy for all non-hit queries.
+- `results/phase3/failure_analysis.json`: Detailed 7-leaf root-cause failure taxonomy for all non-hit queries.
 
 ---
 
 ## 4. Running Independent Human Evaluation Benchmark (v2)
 
-The primary benchmark evaluates 6 retrieval systems across 24 human-authored queries:
+The primary benchmark evaluates 7 retrieval systems across 24 human-authored queries:
 
 ```bash
 python scripts/evaluate_human_eval_v2.py
 ```
 
-*Executes the 6-system evaluation (Improved BM25, Frozen E5, Fine-Tuned E5, Hybrid RRF, Frozen MiniLM, C-matched-balanced) over the 1,068-chunk Soup documentation corpus, computes 10,000 paired bootstrap intervals (seed 42), and writes:*
+*Executes the 7-system evaluation (Original BM25, Improved BM25, Frozen MiniLM, Adapter C-matched, Frozen E5, Fine-Tuned E5 lr=2e-4, Fine-Tuned E5 lr=2e-5) over the 1,068-chunk Soup documentation corpus, computes 10,000 paired bootstrap intervals (seed 42), and writes:*
 - `results/HUMAN_EVAL_V2_REPORT.md`: Comprehensive evaluation report and answers to research questions.
 - `results/human_eval_v2/summary.json`: Micro-averaged retrieval metrics across all 6 systems.
 - `results/human_eval_v2/bootstrap_intervals.json`: Document-stratified bootstrap confidence intervals.

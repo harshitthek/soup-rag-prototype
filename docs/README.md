@@ -58,9 +58,9 @@ Project execution evolved across multiple structured phases:
 |:---|:---|:---:|:---|
 | **Phase 0** | Corpus Audit & Separation | Complete | [`phase0/PHASE_0_AUDIT.md`](phase0/PHASE_0_AUDIT.md), [`phase0/PHASE_0_RECOMMENDATION.md`](phase0/PHASE_0_RECOMMENDATION.md) |
 | **Phase 1.0–1.4** | Benchmark Authoring & Setup | Complete | [`EVALUATION_V2_SPEC.md`](EVALUATION_V2_SPEC.md), [`progress/EVALUATION_V2_PROGRESS.md`](progress/EVALUATION_V2_PROGRESS.md) |
-| **Phase 1.5–1.10** | Diverse Training Data & Locks | Complete | `results/PHASE_1_5_QUERY_QUALITY_REPORT.md`, `results/PHASE_1_10_FINAL_EXPERIMENT_LOCK.md` |
-| **Phase 2.0–2.1** | Adapter Retraining Matrix | Complete | `results/PHASE_2_TRAINING_EXECUTION_REPORT.md`, `results/PHASE_2_1_ARTIFACT_VERIFICATION_REPORT.md` |
-| **Phase 3.0–3.1** | 9-Retriever Benchmark & Audit | Complete | `results/PHASE_3_BENCHMARK_EVALUATION_REPORT.md`, `results/PHASE_3_1_INTEGRITY_AUDIT.md` |
+| **Phase 1.5–1.10** | Diverse Training Data & Locks | Complete | [`PHASE_1_5_QUERY_QUALITY_REPORT.md`](https://github.com/harshitthek/soup-rag-prototype/blob/archive/research-history/results/PHASE_1_5_QUERY_QUALITY_REPORT.md), [`PHASE_1_10_FINAL_EXPERIMENT_LOCK.md`](https://github.com/harshitthek/soup-rag-prototype/blob/archive/research-history/results/PHASE_1_10_FINAL_EXPERIMENT_LOCK.md) |
+| **Phase 2.0–2.1** | Adapter Retraining Matrix | Complete | [`PHASE_2_TRAINING_EXECUTION_REPORT.md`](https://github.com/harshitthek/soup-rag-prototype/blob/archive/research-history/results/PHASE_2_TRAINING_EXECUTION_REPORT.md), [`PHASE_2_1_ARTIFACT_VERIFICATION_REPORT.md`](https://github.com/harshitthek/soup-rag-prototype/blob/archive/research-history/results/PHASE_2_1_ARTIFACT_VERIFICATION_REPORT.md) |
+| **Phase 3.0–3.1** | 9-Retriever Benchmark & Audit | Complete | [`PHASE_3_BENCHMARK_EVALUATION_REPORT.md`](https://github.com/harshitthek/soup-rag-prototype/blob/archive/research-history/results/PHASE_3_BENCHMARK_EVALUATION_REPORT.md), [`PHASE_3_1_INTEGRITY_AUDIT.md`](https://github.com/harshitthek/soup-rag-prototype/blob/archive/research-history/results/PHASE_3_1_INTEGRITY_AUDIT.md) |
 
 - **Detailed Progress Diary:** [`progress/EVALUATION_V2_PROGRESS.md`](progress/EVALUATION_V2_PROGRESS.md) preserves the historical day-by-day implementation notes, review resolutions, and rehearsal logs for the initial Evaluation v2 milestone.
 

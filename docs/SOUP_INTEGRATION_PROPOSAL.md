@@ -2,7 +2,7 @@
 
 **Document Version:** 1.0  
 **Target Maintainer:** Alpamys (@MakazhanAlpamys)  
-**Status:** Proposal for Maintainer Discussion (No upstream changes applied)  
+**Status:** Proposal for Maintainer Discussion (Unapproved proposal awaiting maintainer review; no upstream changes applied)
 **Scope:** Minimal, decoupled documentation retrieval component for Soup CLI  
 
 ---
@@ -10,9 +10,9 @@
 ## 1. Executive Summary
 
 This proposal defines a minimal, configuration-driven documentation retrieval integration for Soup. Based on the empirical findings from the Soup RAG prototype benchmark:
-1. **Domain-Aware BM25** provides high-precision keyword retrieval on CLI flags (`--gradient-accumulation-steps`), configuration keys (`loraplus_lr_ratio`), and code paths without neural inference latency.
+1. **Domain-Aware BM25** provides lexical matching for exact keywords, CLI flags (`--gradient-accumulation-steps`), configuration keys (`loraplus_lr_ratio`), and file paths without neural inference latency (107 ms index build, 2.37 ms query time measured on Apple Silicon).
 2. **Dense Retrieval (E5-small)** provides semantic retrieval on natural developer questions.
-3. **Reciprocal Rank Fusion (RRF, $k=60$)** unifies lexical and dense strengths into a robust ranker without requiring learned parameters or complex rerankers.
+3. **Reciprocal Rank Fusion (RRF, $k=60$)** unifies lexical and dense rankings, achieving the highest observed MRR@10 (**0.7254**) on the 24-query benchmark and improving top-3 recall over Frozen E5 (+0.0361, 95% bootstrap CI `[+0.0069, +0.0653]`), though the paired 95% bootstrap CI for the MRR@10 difference against Frozen E5 includes zero (`[-0.0687, +0.0996]`).
 
 The objective is to establish a small, maintainable boundary that exposes fast, relevant documentation search to Soup users (`soup docs search <query>`) and feeds context to downstream LLM generation commands (`soup advise`, `soup init`, or chat assistants) without introducing heavy external databases, services, or multi-tenant complexity.
 
@@ -153,7 +153,7 @@ Each item returned by `search()` is a dictionary matching:
   ├── bm25_index.pkl           # Lightweight pickled Okapi BM25 state (~200 KB)
   └── embeddings_e5.npy        # Float32 memory-mapped embedding matrix (~1.6 MB for 1k chunks)
   ```
-- Fast loading via `numpy.load(..., mmap_mode="r")` ensures search startup takes $<50$ ms when cached.
+- Fast loading via `numpy.load(..., mmap_mode="r")` is proposed to ensure search startup takes $<50$ ms when cached. (Note: These are design targets; in prototype benchmarks on Apple Silicon, cold start took ~36 seconds when indexing and loading the model into memory, while steady-state warm retrieval was 12.76 ms).
 
 ### 5.3 Cache Invalidation
 Upon calling `build_index()` or invoking search:
@@ -207,7 +207,7 @@ retrieval:
 
 ## 7. Open Decisions for Alpamys
 
-Before creating an upstream PR, the maintainer should decide:
+This integration proposal remains unapproved and requires maintainer discussion before any upstream PR is opened. Before proceeding, the maintainer should decide:
 1. **CLI Command Naming:** Do you prefer `soup docs search "<query>"` or a top-level `soup search "<query>"`?
-2. **Default Strategy:** Should the default be `hybrid` (highest accuracy, requires model load) or `bm25` (zero startup delay, strictly lexical)?
+2. **Default Strategy:** Should the default be `hybrid` (highest observed MRR@10 on the 24-query benchmark, requires model load) or `bm25` (zero startup delay, strictly lexical)?
 3. **Packaging:** Should `rank-bm25` be added to base dependencies in `pyproject.toml` (~50 KB pure Python) or gated under an optional extra (e.g. `pip install soup-cli[docs]`)?

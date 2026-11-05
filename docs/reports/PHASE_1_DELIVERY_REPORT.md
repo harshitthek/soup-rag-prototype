@@ -2,8 +2,8 @@
 > **Historical Artifact Notice:** This report documents the initial Phase 1 delivery using 497 synthetically generated evaluation queries. The synthetic evaluation queries contained an inherent template/heading shortcut (469 of 497 queries contained target ATX headings verbatim), resulting in artificially inflated retrieval gains (+21.1% Recall@1).
 >
 > **This report has been superseded** by the authoritative Phase 3 multi-retriever benchmark evaluation, which evaluated 9 retrievers on 54 owner-approved natural language queries across held-out documents. For current, verified benchmark findings and statistical audits, see:
-> - [`results/PHASE_3_BENCHMARK_EVALUATION_REPORT.md`](../../results/PHASE_3_BENCHMARK_EVALUATION_REPORT.md) (Authoritative Phase 3 Benchmark Report)
-> - [`results/PHASE_3_1_INTEGRITY_AUDIT.md`](../../results/PHASE_3_1_INTEGRITY_AUDIT.md) (Phase 3.1 Statistical & Integrity Audit)
+> - [`results/PHASE_3_BENCHMARK_EVALUATION_REPORT.md`](https://github.com/harshitthek/soup-rag-prototype/blob/archive/research-history/results/PHASE_3_BENCHMARK_EVALUATION_REPORT.md) (Authoritative Phase 3 Benchmark Report on branch `archive/research-history`)
+> - [`results/PHASE_3_1_INTEGRITY_AUDIT.md`](https://github.com/harshitthek/soup-rag-prototype/blob/archive/research-history/results/PHASE_3_1_INTEGRITY_AUDIT.md) (Phase 3.1 Statistical & Integrity Audit on branch `archive/research-history`)
 
 # Prototype Delivery Report: Dense Retrieval Fine-Tuning with Soup
 
@@ -208,10 +208,10 @@ To assess model safety and identify edge cases, all queries where the fine-tuned
 | **Primary Report** | [`docs/reports/PHASE_1_DELIVERY_REPORT.md`](PHASE_1_DELIVERY_REPORT.md) | This formal delivery document |
 | **Reproduction Guide** | [`REPRODUCE.md`](../../REPRODUCE.md) | Step-by-step reproduction instructions |
 | **Repository Overview** | [`README.md`](../../README.md) | Landing page with final benchmark scorecard |
-| **Bootstrap Analysis** | [`results/comparison.md`](../../results/comparison.md) | Paired bootstrap uncertainty analysis report vs baseline |
+| **Bootstrap Analysis** | [`results/comparison.md`](https://github.com/harshitthek/soup-rag-prototype/blob/archive/research-history/results/comparison.md) | Paired bootstrap uncertainty analysis report vs baseline (on `archive/research-history`) |
 | **Trained Adapter** | [`output_embedding/`](../../output_embedding/) | Fine-tuned LoRA weights and configuration |
-| **Evaluation Data** | [`results/candidate.json`](../../results/candidate.json) | Full per-query retrieval predictions on test set |
-| **Baseline Data** | [`results/baseline.json`](../../results/baseline.json) | Baseline retrieval predictions on test set |
+| **Evaluation Data** | [`results/candidate.json`](https://github.com/harshitthek/soup-rag-prototype/blob/archive/research-history/results/candidate.json) | Full per-query retrieval predictions on test set (on `archive/research-history`) |
+| **Baseline Data** | [`results/baseline.json`](https://github.com/harshitthek/soup-rag-prototype/blob/archive/research-history/results/baseline.json) | Baseline retrieval predictions on test set (on `archive/research-history`) |
 | **Automated Tests** | [`tests/test_retrieval_pipeline.py`](../../tests/test_retrieval_pipeline.py) | 15 unit and integration test assertions |
 
 ---
@@ -221,12 +221,12 @@ To assess model safety and identify edge cases, all queries where the fine-tuned
 This report describes the historical v1 controlled benchmark. The subsequent Evaluation v2 established a manual benchmark on **54 owner-approved queries, manually crafted by the project owner with AI assistance**, with multi-chunk/multi-section labels, which was subsequently expanded in Phase 3 into a comprehensive **9-retriever benchmark** evaluating diverse query training distributions (Exp B, C-matched, C-matched-balanced, C-full).
 
 For the definitive multi-retriever benchmark results, paired bootstrap analysis, and failure taxonomy, see:
-- [`results/PHASE_3_BENCHMARK_EVALUATION_REPORT.md`](../../results/PHASE_3_BENCHMARK_EVALUATION_REPORT.md)
-- [`results/PHASE_3_1_INTEGRITY_AUDIT.md`](../../results/PHASE_3_1_INTEGRITY_AUDIT.md)
+- [`results/PHASE_3_BENCHMARK_EVALUATION_REPORT.md`](https://github.com/harshitthek/soup-rag-prototype/blob/archive/research-history/results/PHASE_3_BENCHMARK_EVALUATION_REPORT.md) (on branch `archive/research-history`)
+- [`results/PHASE_3_1_INTEGRITY_AUDIT.md`](https://github.com/harshitthek/soup-rag-prototype/blob/archive/research-history/results/PHASE_3_1_INTEGRITY_AUDIT.md) (on branch `archive/research-history`)
 
 ### Historical 4-Way v2 Benchmark Results
 
-Methodology: [`docs/EVALUATION_V2_SPEC.md`](../EVALUATION_V2_SPEC.md); report: [`results/v2/comparison.md`](../../results/v2/comparison.md).
+Methodology: [`docs/EVALUATION_V2_SPEC.md`](../EVALUATION_V2_SPEC.md); report: [`results/v2/comparison.md`](https://github.com/harshitthek/soup-rag-prototype/blob/archive/research-history/results/v2/comparison.md) (on branch `archive/research-history`).
 
 | Retriever | Hit@1 | Hit@5 | MRR@10 | Sec Hit@1 | Sec MRR@10 |
 |---|:---:|:---:|:---:|:---:|:---:|
