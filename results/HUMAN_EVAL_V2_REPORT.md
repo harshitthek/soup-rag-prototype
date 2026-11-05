@@ -1,6 +1,6 @@
 # Independent Owner-Authored Evaluation Benchmark (v2) Report
 
-**Date:** 2026-11-05 13:10:06 UTC
+**Date:** 2026-11-05 13:39:42 UTC
 **Benchmark:** `data/human_eval/manifest_v2.json` (24 queries authored directly by project owner without AI assistance; target sections mechanically mapped to canonical chunk IDs; no third-party relevance annotation; not representative of production telemetry or sampled populations)
 **Corpus:** `data/corpus.jsonl` (1,068 canonical chunks across 12 Soup documentation files)
 
@@ -78,7 +78,7 @@ Values reported as `observed delta [95% CI lower, 95% CI upper]` with document s
 - **Recall@5:** Hybrid RRF reaches **0.5551** vs **0.5690** for Frozen E5 (Delta: **-0.0139**, 95% CI `[-0.1181, +0.0833]`).
 - **Hit@1:** Hit@1 is tied at **0.6250** (15 of 24 queries correct at rank 1) across Hybrid RRF, Frozen E5-small, and Improved BM25.
 - **Sec-MRR@10:** Reaches **0.7292** vs **0.7240** for Frozen E5 (Delta: **+0.0052**, 95% CI `[-0.0750, +0.0867]`).
-- **Inference:** Because the paired 95% bootstrap CI for MRR@10 includes zero (`[-0.0687, +0.0996]`), the observed MRR@10 difference between Hybrid RRF and Frozen E5 includes zero on this 24-query sample. The observed benefit of RRF fusion specifically over Frozen E5 on $N=24$ where the paired 95% bootstrap CI excludes zero is improved top-3 candidate recall.
+- **Inference:** The observed MRR@10 difference between Hybrid RRF and Frozen E5 is +0.0153; its paired 95% bootstrap confidence interval `[-0.0687, +0.0996]` includes zero. The observed benefit of RRF fusion specifically over Frozen E5 on $N=24$ where the paired 95% bootstrap confidence interval strictly excludes zero is improved top-3 candidate recall (+0.0361, 95% bootstrap CI `[+0.0069, +0.0653]`).
 
 ### 2. Does fine-tuning E5-small with matched lr=2e-5 improve over frozen E5-small on human queries?
 
@@ -93,7 +93,7 @@ Values reported as `observed delta [95% CI lower, 95% CI upper]` with document s
 **Positive observed point estimates, but within sampling uncertainty on $N=24$.**
 - **Point estimates:** `C-matched-balanced` achieved an MRR@10 of **0.7004** versus **0.6587** for Frozen MiniLM-L6-v2 (Observed Delta: **+0.0417**), Hit@1 of **0.5833** vs **0.5417** (Observed Delta: **+0.0417**), and Sec-MRR@10 of **0.7073** vs **0.6622** (Observed Delta: **+0.0451**).
 - **Confidence intervals:** The 95% bootstrap confidence intervals for all metrics span zero (e.g. MRR@10 CI `[-0.0382, +0.1215]`, Hit@1 CI `[-0.0833, +0.1667]`).
-- **Inference:** While the observed direction of improvement matches earlier observations (+0.0417 MRR@10), a sample size of $N=24$ does not provide sufficient statistical power to establish a reliable improvement over frozen MiniLM.
+- **Inference:** While the observed direction of improvement matches earlier observations (+0.0417 MRR@10), the paired 95% bootstrap confidence intervals include zero and the evaluation therefore does not establish a clear improvement over frozen MiniLM.
 
 ### 4. How does BM25 perform on human queries compared to the baseline?
 

@@ -82,14 +82,21 @@ cd ../..
 ## 4. Running Independent Human Evaluation Benchmark (v2)
 
 The primary benchmark evaluates 7 retrieval systems across 24 human-authored queries:
+- Original BM25
+- Improved BM25
+- Frozen E5-small
+- Fine-Tuned E5-small (`lr=2e-5`)
+- Hybrid RRF (Improved BM25 + Frozen E5, RRF k=60)
+- Frozen MiniLM-L6-v2
+- C-matched-balanced MiniLM adapter
 
 ```bash
 python scripts/evaluate_human_eval_v2.py
 ```
 
-*Executes the 7-system evaluation (Original BM25, Improved BM25, Frozen MiniLM, Adapter C-matched, Frozen E5, Fine-Tuned E5 lr=2e-4, Fine-Tuned E5 lr=2e-5) over the 1,068-chunk Soup documentation corpus, computes 10,000 paired bootstrap intervals (seed 42), and writes:*
+*Executes the 7-system evaluation over the 1,068-chunk Soup documentation corpus, computes 10,000 paired bootstrap intervals (seed 42), and writes:*
 - `results/HUMAN_EVAL_V2_REPORT.md`: Comprehensive evaluation report and answers to research questions.
-- `results/human_eval_v2/summary.json`: Micro-averaged retrieval metrics across all 6 systems.
+- `results/human_eval_v2/summary.json`: Micro-averaged retrieval metrics across all 7 systems.
 - `results/human_eval_v2/bootstrap_intervals.json`: Document-stratified bootstrap confidence intervals.
 - `results/human_eval_v2/latency.json`: Cold-start and steady-state latency profiles.
 - `results/human_eval_v2/per_query_results.json`: Full rankings and query-level scores.
