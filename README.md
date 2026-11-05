@@ -11,10 +11,10 @@ The proposed pipeline is a hybrid retrieval architecture combining:
 
 ## Key Findings
 
-Evaluated against 24 unassisted owner-authored technical queries over the complete 1,068-chunk Soup documentation corpus:
-- **Hybrid RRF** achieved the highest observed MRR@10 (**0.7254**) and Sec-MRR@10 (**0.7292**), improving top-3 recall over Frozen E5 (**0.4923** vs **0.4562**; the paired 95% bootstrap CI excludes zero: `[+0.0069, +0.0653]`). The paired 95% bootstrap interval for the MRR@10 difference against Frozen E5 includes zero (`[-0.0687, +0.0996]`).
+Evaluated against 24 technical queries authored by Pernav and Harshit without AI assistance over the complete 1,068-chunk Soup documentation corpus:
+- **Hybrid RRF and Frozen E5 Perform on Par Across Ranking Metrics:** Reciprocal Rank Fusion ($k=60$) combining domain-aware BM25 and frozen E5-small achieves an observed MRR@10 of **0.7254** (vs **0.7101** for Frozen E5) and ties top-1 hit accuracy at **0.6250** (15 of 24 queries correct). The paired 95% bootstrap confidence interval for MRR@10 includes zero (`[-0.0687, +0.0996]`). On Recall@3, Hybrid RRF improves top-3 candidate coverage over Frozen E5 (**0.4923** vs **0.4562**; paired 95% bootstrap CI `[+0.0069, +0.0653]`), though this gain is driven by positive differences on only 3 queries and does not survive multiple testing correction. Claiming general statistical superiority is unsupported.
 - **Fine-Tuned E5-small (lr=2e-5):** Evaluated against Frozen E5-small across the 24 human queries (Frozen E5: MRR@10 0.7101, Hit@1 0.6250, Recall@3 0.4562 vs Fine-Tuned E5: MRR@10 0.6413, Hit@1 0.5417, Recall@3 0.5177). Frozen E5-small achieved higher observed MRR@10 and Hit@1, while Fine-Tuned E5-small achieved higher observed Recall@3, and all paired 95% bootstrap confidence intervals between them include zero.
-- **Domain-Aware BM25** substantially outperformed the standard whitespace baseline (MRR@10 **0.6921** vs **0.4140**; the paired 95% bootstrap CI excludes zero), matching Frozen E5 top-1 accuracy (**0.6250**) at **2.4 ms** query latency and **107 ms** index cold-start.
+- **Domain-Aware BM25 Substantially Outperforms Whitespace Baseline:** Moving from whitespace tokenization to domain-aware parsing increased MRR@10 from **0.4140 to 0.6921** (paired 95% bootstrap CI `[+0.1685, +0.3912]` strictly excludes zero), matching Frozen E5 top-1 accuracy (**0.6250**) at **2.4 ms** query latency and **107 ms** index cold-start. Whitespace BM25 represents the unmodified baseline; domain-aware tokenization was introduced concurrently during the benchmark development cycle (earliest Git commit 11m 56s after the manifest freeze timestamp).
 
 ## Observed Latency Trade-offs
 
@@ -25,9 +25,9 @@ While BM25 is the fastest single retriever and Hybrid RRF achieves the highest o
 
 ## Evaluation Limitations
 
-- **Benchmark Size:** Evaluated on 24 owner-authored queries; sample size limits statistical resolution between high-performing systems.
-- **Annotation Methodology:** Relevance targets were identified directly by the project owner and mechanically mapped to canonical chunk IDs; no independent third-party annotation was conducted.
-- **Telemetry:** Queries reflect project owner authoring, not production user query telemetry.
+- **Document Stratification & Generalization:** 16 queries target training documents (seen during adapter training) and only 8 queries target held-out documents (unseen). The held-out subset ($N=8$, 2 queries per document) is exploratory and sample-constrained (each query represents 12.5 percentage points in Hit@1); it does not establish statistically significant cross-document generalization.
+- **Annotation Methodology:** Relevance targets were designated by prototype authors and mechanically mapped to canonical chunk IDs; no independent third-party annotation was conducted.
+- **Telemetry:** Queries reflect author formulation (Pernav and Harshit without AI assistance), not production user query telemetry.
 
 ## Upstream Integration Status
 
