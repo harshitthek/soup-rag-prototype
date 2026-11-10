@@ -53,7 +53,7 @@ For historical continuity, the table below records performance on the initial 54
 | **Adapter C-matched-bal** (MiniLM LoRA) | 0.6852 | 0.5722 | 0.6599 | 0.7681 | 0.7037 | 0.7793 | Best candidate adapter on 54q |
 | **Frozen E5-small** (`e5-small-v2`) | 0.6852 | 0.6694 | 0.7302 | 0.7834 | 0.7222 | 0.8165 | Strongest single dense model |
 | **Fine-Tuned E5** (lr=2e-5) | 0.5000 | 0.5506 | 0.6444 | 0.6458 | 0.5741 | 0.7087 | Degradation vs Frozen (-0.1376 MRR) |
-| **Fine-Tuned E5** (lr=2e-4) | 0.3148 | 0.3210 | 0.3210 | 0.3530 | 0.3333 | 0.3725 | Severe collapse from overshooting |
+| **Fine-Tuned E5** (lr=2e-4) | 0.3148 | 0.3210 | 0.3210 | 0.3530 | 0.3333 | 0.3725 | Severe performance degradation |
 | **Hybrid RRF** (BM25 + Frozen E5) | **0.7778** | **0.7466** | **0.8228** | **0.8552** | **0.8148** | **0.8771** | Highest benchmark score |
 
 ---
