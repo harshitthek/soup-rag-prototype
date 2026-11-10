@@ -11,18 +11,19 @@
 
 As Soup has expanded to cover multiple training routines (SFT, DPO, GRPO, KTO, RMU unlearning), quantization schemes (NF4, AWQ, HQQ, GGUF), governance workflows (BOM, in-toto attestations, EU AI Act documentation), and execution backends (CUDA, MLX, vLLM), locating exact command syntax, configuration keys, and error diagnostics across 12 reference guides has become challenging for developers working in the terminal.
 
-The goal of this project is to provide fast, reliable, and completely offline documentation search directly within the Soup CLI (`soup docs search "<query>"`), which can also feed grounded context to downstream commands (`soup advise`, `soup init`, or chat assistants) without introducing heavy external databases or services.
+The goal of this project is to provide fast, reliable, and completely offline documentation search directly within the Soup CLI (`soup docs search "<query>"`), which can also feed grounded context to downstream commands (`soup advise`, `soup init`, or chat assistants) without introducing heavy external databases or persistent background daemons.
 
 ---
 
 ## 2. What the Retrieval Prototype Implements
 
-The prototype implements a minimal, decoupled retriever (`DocumentationRetriever`, $\approx 300\text{--}350$ lines of clean Python) supporting:
+The prototype repository implements and benchmarks the core retrieval algorithms:
 - **Heading-Aware Markdown Chunking:** Deterministic section extraction (`#`, `##`, `###`) preserving document hierarchy, line bounds, and section paths across all 12 reference guides (1,068 canonical chunks).
 - **Domain-Aware Lexical Indexing (BM25):** Custom regex tokenization preserving CLI flags (`--track-energy`, `--annex-xi`), compound identifiers (`bitnet_1.58`), and dotted config keys (`soup.yaml`).
 - **Dense Semantic Retrieval:** Pretrained `intfloat/e5-small-v2` (33M parameters, 384 dimensions) providing conceptual and natural-language matching.
 - **Reciprocal Rank Fusion (RRF $k=60$):** Unweighted rank-level score fusion combining lexical and dense candidate lists without learned weights.
-- **Local Hermetic Cache:** File-based index caching in `.soup/cache/docs/` with SHA-256 corpus fingerprinting for automatic cache invalidation upon documentation edits.
+
+*Note on Upstream Architecture:* The unified `DocumentationRetriever` class interface (~300 lines of Python), file-based index caching in `.soup/cache/docs/` with SHA-256 corpus fingerprinting, and lightweight `fit_in_memory()` test fixtures are **proposed upstream integration features** detailed in Section 6, rather than existing implementations in the prototype scripts.
 
 ---
 
@@ -37,7 +38,7 @@ Three retrieval paradigms were selected to evaluate the trade-off between implem
 
 ## 4. Summary of Empirical Findings (Cohort 1, $N=28$ External Developer Queries)
 
-The benchmark was officially executed on 28 genuine developer queries authored manually by three external contributors outside the prototype development team:
+The benchmark was officially executed on 28 genuine developer queries authored manually by three external contributors outside the prototype development team. Protocol Amendment 1.1.0 was adopted after receiving the 28 candidate questions (to partition the evaluation into two independent cohorts while awaiting Alpamys's questions) but strictly before freezing the dataset and before official Stage A execution:
 
 | System | Architecture / Mode | Hit@1 | Recall@3 | Recall@5 | MRR@10 (Primary) | Sec-Hit@1 | Sec-MRR@10 | Mean Warm Query | Median | P95 |
 | :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
@@ -50,7 +51,7 @@ The benchmark was officially executed on 28 genuine developer queries authored m
   - *Improved BM25 vs Frozen E5:* $\Delta = -0.0024$, Bonferroni CI `[-0.1036, +0.0929]` (spans zero).
   - *Hybrid RRF vs Frozen E5:* $\Delta = +0.0179$, Bonferroni CI `[-0.0536, +0.1071]` (spans zero).
   - *Hybrid RRF vs Improved BM25:* $\Delta = +0.0202$, Bonferroni CI `[-0.0226, +0.0952]` (spans zero).
-  - *Interpretation:* All three systems achieve strong top-1 accuracy ($\ge 0.88$ MRR@10). No confirmatory comparison detected a statistically significant difference on MRR@10. This failure to detect a difference is reported as confidence intervals crossing zero, **not** as proof of parity or equivalence.
+  - *Interpretation:* All three systems achieve high ranking effectiveness ($\ge 0.88$ MRR@10, $\ge 0.82$ Hit@1). No confirmatory comparison detected a statistically significant difference on the primary metric MRR@10. In accordance with pre-registered protocol rules, this failure to detect a difference is reported as confidence intervals crossing zero, **not** as proof of parity or equivalence.
 - **Exploratory Secondary Metric (Recall@5):** Frozen E5 achieves higher observed Recall@5 than Improved BM25 ($\Delta = +0.0940$, Bonferroni CI `[+0.0042, +0.1935]` excluding zero). This is an exploratory secondary finding: MRR@10 was the sole confirmatory primary metric, and the Bonferroni adjustment accounted for 3 system comparisons on this metric but did not control family-wise error across multiple secondary endpoints.
 
 Full experimental data, per-query breakdowns, and historical benchmark comparisons are documented in [`RESULTS.md`](RESULTS.md).
@@ -61,9 +62,9 @@ Full experimental data, per-query breakdowns, and historical benchmark compariso
 
 While Hybrid RRF achieved the highest ranking point estimate (0.9048 MRR@10, 24/28 top-1 hits, +1 query over BM25), **Domain-Aware BM25 is recommended as the default initial integration strategy** for the following architectural reasons:
 
-1. **Top-1 Accuracy Parity on 82% of Queries:** BM25 achieves 0.8845 MRR@10 and 82.1% Hit@1 (23/28 correct at rank 1), matching Frozen E5.
-2. **Sub-Millisecond Warm Retrieval:** Measured at **0.80 ms** mean query latency on Apple Silicon.
-3. **Fast Cold CLI Startup:** Executes in an estimated **~250–350 ms** from a cold shell prompt (Python runtime startup + Click CLI dispatch + index unpickling), compared to **~1.5–2.5 s** for Dense/Hybrid which must import PyTorch and `transformers` and instantiate model weights.
+1. **Identical Overall Top-1 Accuracy Rate (82.1% / 23 of 28 Queries):** While BM25 and Frozen E5 achieve the identical overall Hit@1 score (0.8214), their per-query success sets differ: BM25 won 2 queries with exact CLI flags where E5 placed targets at rank 2, while E5 won 2 conceptual queries where BM25 placed targets at ranks 2–3. Across the cohort, both systems placed the correct documentation chunk at rank 1 on 23 out of 28 queries.
+2. **Sub-Millisecond Warm Retrieval:** Measured at **0.80 ms** mean query latency on local Apple Silicon hardware.
+3. **Fast Cold CLI Startup:** Executes in an estimated **~250–350 ms** from a cold shell prompt (Python runtime startup + Click CLI dispatch + index unpickling), compared to **~1.5–2.5 s** for Dense/Hybrid which must import PyTorch and `transformers` and instantiate model weights. Executing an end-to-end CLI command in under 10 ms from a cold shell prompt is generally impractical in standard Python due to base interpreter and runtime import overhead (~100–300 ms for Python startup alone), which is why sub-10 ms latency applies strictly to warm in-memory retrieval.
 4. **Zero GPU / Deep Learning Dependencies:** Requires only `rank-bm25` (a 50 KB pure Python package). Users can search documentation immediately without downloading Hugging Face model weights (~133 MB for `e5-small-v2`) or requiring PyTorch in non-training environments.
 
 ---
@@ -74,7 +75,7 @@ To adhere to Soup's clean architecture and Unix philosophy:
 - **No External Databases:** Zero ChromaDB, Pinecone, Milvus, Qdrant, or Postgres dependencies.
 - **No Background Services:** Strictly in-process CLI execution; zero daemons.
 - **Decoupled Engine:** Search returns structured dataclasses (`RetrievedChunk`); prompt synthesis and LLM generation remain with the caller.
-- **CI Testability:** Core retriever logic includes `retriever.fit_in_memory(...)`, allowing unit tests in Soup's CI suite to test retrieval without downloading Hugging Face weights or requiring GPU access.
+- **Proposed CI Testability:** The proposed upstream retriever interface specifies `retriever.fit_in_memory(...)`, allowing unit tests in Soup's CI suite to test retrieval logic without downloading Hugging Face weights or requiring GPU access.
 - **Graceful Fallback:** If PyTorch or model weights are unavailable, the CLI automatically falls back to Domain-Aware BM25.
 
 ### Proposed Code Placement in Upstream Repository
@@ -91,8 +92,8 @@ Before preparing a clean pull request, please indicate your preferences on three
 1. **CLI Command Naming:**
    - `soup docs search "<query>"` (Recommended: cleanly groups with `soup docs index` and avoids top-level CLI namespace pollution) vs. `soup search "<query>"`.
 2. **Default Retrieval Strategy:**
-   - **`bm25` (Recommended Default):** Fast cold startup (~250 ms), sub-millisecond warm query latency (0.80 ms), zero GPU/PyTorch requirement, 50 KB pure Python dependency (`rank-bm25`), zero model weight downloads.
-   - **`hybrid`:** Highest ranking point estimate (0.9048 MRR@10, 85.7% Hit@1, +1 query over BM25) and higher secondary candidate recall (Recall@5 0.7869 vs 0.7167), but incurs a ~2 s cold process startup from importing PyTorch/transformers and requires downloading `e5-small-v2` (~133 MB).
+   - **`bm25` (Recommended Default):** Fast cold startup (~250–350 ms), sub-millisecond warm query latency (0.80 ms), zero GPU/PyTorch requirement, 50 KB pure Python dependency (`rank-bm25`), zero model weight downloads.
+   - **`hybrid`:** Highest ranking point estimate (0.9048 MRR@10, 85.7% Hit@1, +1 query over BM25) and higher secondary candidate recall (Recall@5 0.7869 vs 0.7167), but incurs a ~1.5–2.5 s cold process startup from importing PyTorch/transformers and requires downloading `e5-small-v2` (~133 MB).
 3. **Upstream Packaging:**
    - Include `rank-bm25` in base `pyproject.toml` dependencies (~50 KB pure Python) vs. gating under an optional extra (e.g. `pip install soup-cli[docs]`).
 
