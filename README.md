@@ -38,7 +38,7 @@ Three retrieval paradigms were selected to evaluate the trade-off between implem
 
 ## 4. Summary of Empirical Findings (Cohort 1, $N=28$ External Developer Queries)
 
-The benchmark was officially executed on 28 genuine developer queries authored manually by three external contributors outside the prototype development team. Protocol Amendment 1.1.0 was adopted after receiving the 28 candidate questions (to partition the evaluation into two independent cohorts while awaiting Alpamys's questions) but strictly before freezing the dataset and before official Stage A execution:
+The benchmark was officially executed on 28 genuine developer queries authored manually by three external contributors outside the prototype development team. Original Protocol 1.0.0 was pre-registered prior to data collection. Protocol Amendment 1.1.0 was adopted as a prospective methodological change after receiving the 28 candidate questions from external contributors (partitioning the study into two independent cohorts while awaiting Alpamys's eventual queries) but strictly before dataset freezing and official Stage A execution:
 
 | System | Architecture / Mode | Hit@1 | Recall@3 | Recall@5 | MRR@10 (Primary) | Sec-Hit@1 | Sec-MRR@10 | Mean Warm Query | Median | P95 |
 | :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
